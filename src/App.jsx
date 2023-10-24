@@ -76,6 +76,8 @@ import TooltipPage from './pages/component/TooltipPage';
 import AccordionPage from './pages/component/AccordionPage';
 import IconsPage from './pages/component/IconsPage';
 
+import ProtectedRoute from "./utils/ProtectedRoute";
+
 function App() {
 
   const location = useLocation();
@@ -89,7 +91,12 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/" element={<ProtectedRoute><Feed /></ProtectedRoute>} />
+        <Route path="/influencers" element={<UsersTabs />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/happyhours" element={<Meetups />} />
+        <Route path="/community/meetups-post" element={<MeetupsPost />} />
         <Route path="/dashboard/analytics" element={<Analytics />} />
         <Route path="/dashboard/fintech" element={<Fintech />} />
         <Route path="/ecommerce/customers" element={<Customers />} />
@@ -102,15 +109,7 @@ function App() {
         <Route path="/ecommerce/cart-2" element={<Cart2 />} />
         <Route path="/ecommerce/cart-3" element={<Cart3 />} />
         <Route path="/ecommerce/pay" element={<Pay />} />
-        <Route path="/campaigns" element={<Campaigns />} />
-        <Route path="/community/users-tabs" element={<UsersTabs />} />
-        <Route path="/community/users-tiles" element={<UsersTiles />} />
-        <Route path="/community/profile" element={<Profile />} />
-        <Route path="/community/feed" element={<Feed />} />
-        <Route path="/community/forum" element={<Forum />} />
-        <Route path="/community/forum-post" element={<ForumPost />} />
-        <Route path="/community/meetups" element={<Meetups />} />
-        <Route path="/community/meetups-post" element={<MeetupsPost />} />
+        <Route path="/campaigns" element={<Campaigns />} /> 
         <Route path="/finance/cards" element={<CreditCards />} />
         <Route path="/finance/transactions" element={<Transactions />} />
         <Route path="/finance/transaction-details" element={<TransactionDetails />} />

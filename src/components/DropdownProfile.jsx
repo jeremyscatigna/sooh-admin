@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Transition from '../utils/Transition';
 
 import UserAvatar from '../images/user-avatar-32.png';
+import { signOut } from 'firebase/auth';
 
 function DropdownProfile({
   align
@@ -85,7 +86,10 @@ function DropdownProfile({
               <Link
                 className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
                 to="/signin"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onClick={() => {
+                  setDropdownOpen(!dropdownOpen)
+                  signOut()
+                }}
               >
                 Sign Out
               </Link>
