@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import OnboardingImage from '../images/onboarding-image.jpg';
 import OnboardingDecoration from '../images/auth-decoration.png';
 import { db } from "../main";
-import { atom, useAtomValue, useSetAtom } from "jotai";
-import { currentUserDocumentIdAtom } from "./Signup";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { currentUser, currentUserDocumentIdAtom } from "./Signup";
 import { doc, updateDoc } from "firebase/firestore";
 
 export const userTypeAtom = atom(undefined);
@@ -15,6 +15,7 @@ function Onboarding01() {
     const [type, setType] = React.useState("business");
     const currentUserDocumentId = useAtomValue(currentUserDocumentIdAtom);
     const setCurrentType = useSetAtom(userTypeAtom);
+    const [user, setCurrentUser] = useAtom(currentUser);
 
     const onTypeChange = (e) => {
         setType(e.target.value);
@@ -28,6 +29,7 @@ function Onboarding01() {
             type: type,
         });
 
+        setCurrentUser({...user, type: type})
         setCurrentType(type);
         if(type === "business" || type === "influencer") {
           navigate("/onboarding-02");

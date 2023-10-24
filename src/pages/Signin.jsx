@@ -5,7 +5,7 @@ import AuthImage from '../images/auth-image.jpg';
 import AuthDecoration from '../images/auth-decoration.png';
 import { useUserAuth } from '../context/UserAuthContext';
 import { userTypeAtom } from './Onboarding01';
-import { currentUserDocumentIdAtom, userIdAtom, userNameAtom } from './Signup';
+import { currentUser, currentUserDocumentIdAtom, userIdAtom, userNameAtom } from './Signup';
 import { useSetAtom } from 'jotai';
 import { auth, db } from '../main';
 import { collection, getDocs, query, where } from 'firebase/firestore';
@@ -22,6 +22,7 @@ function Signin() {
     const setUserId = useSetAtom(userIdAtom);
     const setUserName = useSetAtom(userNameAtom);
     const setUserType = useSetAtom(userTypeAtom);
+    const setCurrentUser = useSetAtom(currentUser)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,6 +37,7 @@ function Signin() {
 
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
+                setCurrentUser(doc.data());
                 setUserType(doc.data().type);
                 setUserName(doc.data().name);
                 setLoading(false);

@@ -8,10 +8,14 @@ import { addDoc, collection } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../main';
 import { atom, useSetAtom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 
 export const userIdAtom = atom(undefined);
 export const currentUserDocumentIdAtom = atom(undefined);
 export const userNameAtom = atom(undefined);
+export const currentUser = atomWithStorage('currentUser', {
+    type: 'business',
+});
 
 function Signup() {
     const navigate = useNavigate();
@@ -25,6 +29,7 @@ function Signup() {
     const setUserId = useSetAtom(userIdAtom);
     const setCurrentUserDocumentId = useSetAtom(currentUserDocumentIdAtom);
     const setUserName = useSetAtom(userNameAtom);
+    const setCurrentUser = useSetAtom(currentUser);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -48,6 +53,7 @@ function Signup() {
                     details: '',
                 });
 
+                setCurrentUser(document.data());
                 setCurrentUserDocumentId(document.id);
 
                 navigate('/onboarding-01');
@@ -179,10 +185,7 @@ function Signup() {
                             <div className='pt-5 mt-6 border-t border-slate-200'>
                                 <div className='text-sm'>
                                     Have an account?{' '}
-                                    <Link
-                                        className='font-medium text-indigo-500 hover:text-indigo-600'
-                                        to='/signin'
-                                    >
+                                    <Link className='font-medium text-indigo-500 hover:text-indigo-600' to='/signin'>
                                         Sign In
                                     </Link>
                                 </div>

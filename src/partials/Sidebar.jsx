@@ -4,13 +4,15 @@ import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import { Calendar, DashboardSpeed, MessageText, PeopleTag, Post, Settings, TwoSeaterSofa } from 'iconoir-react';
 import { useAtomValue } from 'jotai';
-import { userTypeAtom } from '../pages/Onboarding01';
+import { currentUser } from '../pages/Signup';
 
+// TODO: Loading state
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
     const location = useLocation();
     const { pathname } = location;
 
-    const userType = useAtomValue(userTypeAtom);
+    const user = useAtomValue(currentUser);
+    console.log(user)
 
     const trigger = useRef(null);
     const sidebar = useRef(null);
@@ -146,7 +148,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                     </div>
                                 </NavLink>
                             </li>
-                            {userType === 'business' && (
+                            {user.type === 'business' && (
                                 <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname === '/influencers' && 'bg-slate-900'}`}>
                                     <NavLink
                                         end
@@ -194,7 +196,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                     </div>
                                 </NavLink>
                             </li>
-                            {userType === 'business' && (
+                            {user.type === 'business' && (
                                 <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname === '/dashboard' && 'bg-slate-900'}`}>
                                     <NavLink
                                         end
@@ -249,7 +251,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                     </div>
                                 </NavLink>
                             </li>
-                            {userType === 'business' && (
+                            {user.type === 'business' && (
                                 <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('calendar') && 'bg-slate-900'}`}>
                                     <NavLink
                                         end
