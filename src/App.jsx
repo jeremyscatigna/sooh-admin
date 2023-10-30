@@ -96,6 +96,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/happyhours" element={<Meetups />} />
+        <Route path="/happyhours/:id" element={<MeetupsPost />} />
         <Route path="/community/meetups-post" element={<MeetupsPost />} />
         <Route path="/dashboard/analytics" element={<Analytics />} />
         <Route path="/dashboard/fintech" element={<Fintech />} />

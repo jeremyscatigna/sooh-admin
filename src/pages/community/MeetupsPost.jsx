@@ -21,8 +21,7 @@ import Avatar02 from '../../images/avatar-02.jpg';
 import Avatar03 from '../../images/avatar-03.jpg';
 import Avatar04 from '../../images/avatar-04.jpg';
 
-function MeetupsPost() {
-
+function MeetupsPost({ data }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -43,7 +42,7 @@ function MeetupsPost() {
               {/* Content */}
               <div>
                 <div className="mb-6">
-                  <Link className="btn-sm px-3 bg-white border-slate-200 hover:border-slate-300 text-slate-600" to="/community/meetups">
+                  <Link className="btn-sm px-3 bg-white border-slate-200 hover:border-slate-300 text-slate-600" to="/happyhours">
                     <svg className="fill-current text-slate-400 mr-2" width="7" height="12" viewBox="0 0 7 12">
                       <path d="M5.4.6 6.8 2l-4 4 4 4-1.4 1.4L0 6z" />
                     </svg>

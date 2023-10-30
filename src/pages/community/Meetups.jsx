@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
@@ -7,22 +7,56 @@ import MeetupsPosts from '../../partials/community/MeetupsPosts';
 import PaginationNumeric from '../../components/PaginationNumeric';
 import ModalBasic from '../../components/ModalBasic';
 import Datepicker from '../../components/Datepicker';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { auth, db } from '../../main';
+import { v4 as uuidv4 } from 'uuid';
 
 function Meetups() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [createModalOpen, setCreateModalOpen] = useState(false);
+
+    const [data, setData] = useState([]);
+
     const [selectedDates, setSelectedDates] = useState([new Date().setDate(new Date().getDate() - 6), new Date()]);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [details, setDetails] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleCreate = () => {
-        console.log('Create');
-        console.log(name);
-        console.log(description);
-        console.log(details);
-        console.log(selectedDates);
-    }
+    const currentUser = auth.currentUser;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await getDocs(collection(db, 'happyhours'));
+            setData(res.docs.map((doc) => doc.data()));
+        };
+        fetchData();
+    }, []);
+
+    const handleCreate = async () => {
+        setLoading(true);
+        const toAdd = {
+            uid: uuidv4(),
+            name,
+            description,
+            details,
+            imageUrl: '',
+            userId: currentUser.uid,
+            date: selectedDates[0],
+        };
+        try {
+            await addDoc(collection(db, 'happyhours'), {
+                ...toAdd,
+            });
+        } catch (e) {
+            console.log(e);
+            setLoading(false);
+        }
+
+        setData([...data, toAdd]);
+        setLoading(false);
+        setCreateModalOpen(false);
+    };
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -129,15 +163,14 @@ function Meetups() {
                                             >
                                                 Close
                                             </button>
-                                            <button 
-                                              className='btn-sm bg-indigo-500 hover:bg-indigo-600 text-white'
-                                              onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleCreate();
-                                                setCreateModalOpen(false);
-                                              }}
+                                            <button
+                                                className='btn-sm bg-indigo-500 hover:bg-indigo-600 text-white'
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleCreate();
+                                                }}
                                             >
-                                              Create
+                                                {loading ? 'Loading...' : 'Create'}
                                             </button>
                                         </div>
                                     </div>
@@ -183,7 +216,7 @@ function Meetups() {
                         <div className='text-sm text-slate-500 italic mb-4'>289 Happy Hours</div>
 
                         {/* Content */}
-                        <MeetupsPosts />
+                        <MeetupsPosts data={data} />
 
                         {/* Pagination */}
                         <div className='mt-8'>
