@@ -8,8 +8,9 @@ import PaginationNumeric from '../../components/PaginationNumeric';
 import ModalBasic from '../../components/ModalBasic';
 import Datepicker from '../../components/Datepicker';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
-import { auth, db } from '../../main';
+import { auth, db, storage } from '../../main';
 import { v4 as uuidv4 } from 'uuid';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
 function Meetups() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,7 +18,11 @@ function Meetups() {
 
     const [data, setData] = useState([]);
 
-    const [selectedDates, setSelectedDates] = useState([new Date().setDate(new Date().getDate() - 6), new Date()]);
+    const [imgUrl, setImgUrl] = useState(null);
+    const [progresspercent, setProgresspercent] = useState(0);
+    const [fileLoading, setFileLoading] = useState(false);
+
+    const [selectedDates, setSelectedDates] = useState(new Date().setDate(new Date().getDate()));
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [details, setDetails] = useState('');
@@ -33,6 +38,33 @@ function Meetups() {
         fetchData();
     }, []);
 
+    const handleUpload = (e) => {
+        e.preventDefault();
+        setFileLoading(true);
+        const file = e.target[0]?.files[0];
+        if (!file) return;
+        const storageRef = ref(storage, `happyhours/${uuidv4()}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                setProgresspercent(progress);
+            },
+            (error) => {
+                setFileLoading(false);
+                alert(error);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    setFileLoading(false);
+                    setImgUrl(downloadURL);
+                });
+            },
+        );
+    };
+
     const handleCreate = async () => {
         setLoading(true);
         const toAdd = {
@@ -40,9 +72,9 @@ function Meetups() {
             name,
             description,
             details,
-            imageUrl: '',
+            imageUrl: imgUrl,
             userId: currentUser.uid,
-            date: selectedDates[0],
+            date: new Date(selectedDates).toString(),
         };
         try {
             await addDoc(collection(db, 'happyhours'), {
@@ -150,6 +182,19 @@ function Meetups() {
                                                 placeholder='Add as much details as possible'
                                             />
                                         </div>
+                                        {!imgUrl && (
+                                            <form onSubmit={handleUpload} className='flex flex-row justify-between items-center'>
+                                                <input
+                                                    className='block border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4'
+                                                    type='file'
+                                                />
+                                                <button className='btn py-3 bg-indigo-500 hover:bg-indigo-600 text-white' type='submit'>
+                                                    {fileLoading ? 'Loading...' : 'Upload'}
+                                                </button>
+                                            </form>
+                                        )}
+
+                                        {imgUrl && <img src={imgUrl} alt='uploaded file' height={200} />}
                                     </div>
                                     {/* Modal footer */}
                                     <div className='px-5 py-4'>

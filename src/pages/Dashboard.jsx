@@ -40,19 +40,6 @@ function Dashboard() {
             {/* Welcome banner */}
             <WelcomeBanner />
 
-            {/* Dashboard actions */}
-            <div className="sm:flex sm:justify-between sm:items-center mb-8">
-
-              {/* Right: Actions */}
-              <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                {/* Filter button */}
-                <FilterButton align="right" />
-                {/* Datepicker built with flatpickr */}
-                <Datepicker align="right" />              
-              </div>
-
-            </div>
-
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
 

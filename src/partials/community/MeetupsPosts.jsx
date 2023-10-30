@@ -1,23 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import * as dayjs from 'dayjs'
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
 
 import MeetupsThumb01 from '../../images/meetups-thumb-01.jpg';
-import MeetupsThumb02 from '../../images/meetups-thumb-02.jpg';
-import MeetupsThumb03 from '../../images/meetups-thumb-03.jpg';
-import MeetupsThumb04 from '../../images/meetups-thumb-04.jpg';
-import MeetupsThumb05 from '../../images/meetups-thumb-05.jpg';
-import MeetupsThumb06 from '../../images/meetups-thumb-06.jpg';
-import MeetupsThumb07 from '../../images/meetups-thumb-07.jpg';
-import MeetupsThumb08 from '../../images/meetups-thumb-08.jpg';
 import UserImage01 from '../../images/avatar-01.jpg';
-import UserImage02 from '../../images/avatar-02.jpg';
-import UserImage03 from '../../images/avatar-03.jpg';
 import UserImage04 from '../../images/avatar-04.jpg';
 import UserImage05 from '../../images/avatar-05.jpg';
-import UserImage06 from '../../images/avatar-06.jpg';
 
 function MeetupsPosts({ data }) {
-  console.log(data);
+  dayjs.extend(LocalizedFormat)
     return (
         <div className='grid xl:grid-cols-2 gap-6'>
             {data.map((item, i) => (
@@ -29,7 +21,7 @@ function MeetupsPosts({ data }) {
                     >
                         <img
                             className='absolute object-cover object-center w-full h-full'
-                            src={MeetupsThumb01}
+                            src={item.imageUrl || MeetupsThumb01}
                             width='220'
                             height='236'
                             alt='Meetup 01'
@@ -47,7 +39,7 @@ function MeetupsPosts({ data }) {
                     {/* Content */}
                     <div className='grow p-5 flex flex-col'>
                         <div className='grow'>
-                            <div className='text-sm font-semibold text-indigo-500 uppercase mb-2'>Mon 27 Dec, 2021</div>
+                            <div className='text-sm font-semibold text-indigo-500 uppercase mb-2'>{dayjs(item.date).format('LLL')}</div>
                             <Link className='inline-flex mb-2' to={`/happyhours/${item.uid}`}>
                                 <h3 className='text-lg font-bold text-slate-800'>{item.name}</h3>
                             </Link>
