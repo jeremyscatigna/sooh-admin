@@ -125,7 +125,7 @@ function MeetupsPost() {
 
                                 {/* Image */}
                                 <figure className='mb-6'>
-                                    <img className='w-full rounded-sm' src={MeetupImage} width='640' height='360' alt='Meetup' />
+                                    <img className='w-full rounded-sm' src={happyHour.imageUrl || MeetupImage} width='640' height='360' alt='Meetup' />
                                 </figure>
 
                                 {/* Post content */}
@@ -133,42 +133,6 @@ function MeetupsPost() {
                                     <h2 className='text-xl leading-snug text-slate-800 font-bold mb-2'>Happy Hour Details</h2>
                                     <p className='mb-6'>{happyHour.details}</p>
                                 </div>
-                                <hr className='my-6 border-t border-slate-200' />
-
-                                {/* Photos */}
-                                <div>
-                                    <h2 className='text-xl leading-snug text-slate-800 font-bold mb-2'>Photos (3)</h2>
-                                    <div className='grid grid-cols-3 gap-4 my-6'>
-                                        <a className='block' href='#0'>
-                                            <img
-                                                className='w-full rounded-sm'
-                                                src={MeetupPhoto01}
-                                                width='203'
-                                                height='152'
-                                                alt='Meetup photo 01'
-                                            />
-                                        </a>
-                                        <a className='block' href='#0'>
-                                            <img
-                                                className='w-full rounded-sm'
-                                                src={MeetupPhoto02}
-                                                width='203'
-                                                height='152'
-                                                alt='Meetup photo 02'
-                                            />
-                                        </a>
-                                        <a className='block' href='#0'>
-                                            <img
-                                                className='w-full rounded-sm'
-                                                src={MeetupPhoto03}
-                                                width='203'
-                                                height='152'
-                                                alt='Meetup photo 03'
-                                            />
-                                        </a>
-                                    </div>
-                                </div>
-
                                 <hr className='my-6 border-t border-slate-200' />
 
                                 {/* Comments */}
