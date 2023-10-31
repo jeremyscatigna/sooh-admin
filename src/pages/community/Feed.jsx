@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
@@ -7,9 +7,97 @@ import FeedPosts from '../../partials/community/FeedPosts';
 import FeedRightContent from '../../partials/community/FeedRightContent';
 
 import Avatar from '../../images/user-40-02.jpg';
+import { useAtomValue } from 'jotai';
+import { currentUser } from '../Signup';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { auth, db, storage } from '../../main';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { v4 as uuidv4 } from 'uuid';
 
 function Feed() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [postText, setPostText] = useState('');
+    const [postImage, setPostImage] = useState(null);
+    const [data, setData] = useState([]);
+
+    const [imgUrl, setImgUrl] = useState(null);
+    const [progresspercent, setProgresspercent] = useState(0);
+    const [fileLoading, setFileLoading] = useState(false);
+
+    const [loading, setLoading] = useState(false);
+
+    const inputRef = useRef(null);
+
+    const user = useAtomValue(currentUser);
+    const currentUserAuth = auth.currentUser;
+
+    useEffect(() => {
+      const fetchData = async () => {
+          const res = await getDocs(collection(db, 'posts'));
+          console.log(res.docs.map((doc) => doc.data()));
+          setData(res.docs.map((doc) => doc.data()));
+      };
+      fetchData();
+  }, []);
+
+    const handleUpload = (e) => {
+        e.preventDefault();
+        setFileLoading(true);
+        const file = e.target.files[0];
+        console.log(file);
+        if (!file) return;
+        const storageRef = ref(storage, `posts/${uuidv4()}`);
+        console.log(storageRef);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                setProgresspercent(progress);
+            },
+            (error) => {
+                setFileLoading(false);
+                alert(error);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log('File available at', downloadURL);
+                    setFileLoading(false);
+                    setImgUrl(downloadURL);
+                });
+            },
+        );
+    };
+
+    const handleCreate = async () => {
+        setLoading(true);
+        const toAdd = {
+            uid: uuidv4(),
+            text: postText,
+            imageUrl: imgUrl,
+            userId: currentUserAuth.uid,
+            userFirstName: user.firstName,
+            userLastName: user.lastName,
+            userAvatar: user.avatar,
+            date: new Date(new Date().setDate(new Date().getDate())).toString(),
+        };
+
+        console.log(toAdd);
+        try {
+            await addDoc(collection(db, 'posts'), {
+                ...toAdd,
+            });
+        } catch (e) {
+            console.log(e);
+            setLoading(false);
+        }
+
+        setData([...data, toAdd]);
+        setImgUrl(null);
+        setPostText('');
+        setLoading(false);
+    };
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -68,27 +156,49 @@ function Feed() {
                                                     />
                                                     <div className='grow'>
                                                         <label htmlFor='status-input' className='sr-only'>
-                                                            What's happening, Mark?
+                                                            What's happening, {user.firstName}?
                                                         </label>
                                                         <input
                                                             id='status-input'
                                                             className='form-input w-full bg-slate-100 border-transparent focus:bg-white focus:border-slate-300 placeholder-slate-500'
                                                             type='text'
-                                                            placeholder="What's happening, Mark?"
+                                                            placeholder={`What's happening, ${user.firstName}?`}
+                                                            value={postText}
+                                                            onChange={(e) => setPostText(e.target.value)}
                                                         />
                                                     </div>
                                                 </div>
                                                 <div className='flex justify-between items-center'>
                                                     <div className='grow flex space-x-5'>
-                                                        <button className='inline-flex items-center text-sm font-medium text-slate-600 hover:text-slate-700'>
-                                                            <svg
-                                                                className='w-4 h-4 fill-indigo-400 mr-2'
-                                                                xmlns='http://www.w3.org/2000/svg'
-                                                            >
-                                                                <path d='M0 0h2v16H0V0Zm14 0h2v16h-2V0Zm-3 7H5c-.6 0-1-.4-1-1V1c0-.6.4-1 1-1h6c.6 0 1 .4 1 1v5c0 .6-.4 1-1 1ZM6 5h4V2H6v3Zm5 11H5c-.6 0-1-.4-1-1v-5c0-.6.4-1 1-1h6c.6 0 1 .4 1 1v5c0 .6-.4 1-1 1Zm-5-2h4v-3H6v3Z' />
-                                                            </svg>
-                                                            <span>Media</span>
+                                                        <button
+                                                            className='inline-flex items-center text-sm font-medium text-slate-600 hover:text-slate-700'
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                inputRef.current.click();
+                                                            }}
+                                                        >
+                                                            {!imgUrl ? (
+                                                                <svg
+                                                                    className='w-4 h-4 fill-indigo-400 mr-2'
+                                                                    xmlns='http://www.w3.org/2000/svg'
+                                                                >
+                                                                    <path d='M0 0h2v16H0V0Zm14 0h2v16h-2V0Zm-3 7H5c-.6 0-1-.4-1-1V1c0-.6.4-1 1-1h6c.6 0 1 .4 1 1v5c0 .6-.4 1-1 1ZM6 5h4V2H6v3Zm5 11H5c-.6 0-1-.4-1-1v-5c0-.6.4-1 1-1h6c.6 0 1 .4 1 1v5c0 .6-.4 1-1 1Zm-5-2h4v-3H6v3Z' />
+                                                                </svg>
+                                                            ) : (
+                                                                <div className='pr-3'>
+                                                                    <img src={imgUrl} alt='uploaded file' className='w-10 h-10' />
+                                                                </div>
+                                                            )}
+
+                                                            <span>{fileLoading ? 'Loading' : ' Media'}</span>
                                                         </button>
+                                                        <input
+                                                            ref={inputRef}
+                                                            type='file'
+                                                            id='file'
+                                                            className='hidden'
+                                                            onChange={handleUpload}
+                                                        />
                                                         <button className='inline-flex items-center text-sm font-medium text-slate-600 hover:text-slate-700'>
                                                             <svg
                                                                 className='w-4 h-4 fill-indigo-400 mr-2'
@@ -112,15 +222,23 @@ function Feed() {
                                                         <button
                                                             type='submit'
                                                             className='btn-sm bg-indigo-500 hover:bg-indigo-600 text-white whitespace-nowrap'
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+
+                                                                handleCreate();
+
+                                                                setPostText('');
+                                                                setPostImage(null);
+                                                            }}
                                                         >
-                                                            Send -&gt;
+                                                            {loading ? 'Loading...' : 'Send'}
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             {/* Posts */}
-                                            <FeedPosts />
+                                            <FeedPosts posts={data} />
                                         </div>
                                     </div>
                                 </div>
