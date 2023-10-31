@@ -11,8 +11,13 @@ import CommenterImage04 from '../../images/user-32-04.jpg';
 import CommenterImage05 from '../../images/user-32-05.jpg';
 import FeedImage01 from '../../images/feed-image-01.jpg';
 import FeedImage02 from '../../images/feed-image-02.jpg';
+import * as dayjs from 'dayjs';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import RelativeTime from 'dayjs/plugin/relativeTime';
 
 function FeedPosts({ posts }) {
+    dayjs.extend(LocalizedFormat);
+    dayjs.extend(RelativeTime);
     return (
         <>
             {/* Post 3 */}
@@ -146,7 +151,7 @@ function FeedPosts({ posts }) {
                 </div>
             </div>
             {posts.map((item, i) => (
-                <div className='bg-white shadow-md rounded border border-slate-200 p-5'>
+                <div key={item.uid} className='bg-white shadow-md rounded border border-slate-200 p-5'>
                     {/* Header */}
                     <header className='flex justify-between items-start space-x-3 mb-3'>
                         {/* User */}
@@ -158,7 +163,7 @@ function FeedPosts({ posts }) {
                                         Margaret Sullivan
                                     </a>
                                 </div>
-                                <div className='text-xs text-slate-500'>Yesterday at 4:56 PM</div>
+                                <div className='text-xs text-slate-500'>{dayjs(item.date).fromNow(true)} ago</div>
                             </div>
                         </div>
                         {/* Menu button */}
