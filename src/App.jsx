@@ -93,7 +93,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<ProtectedRoute><Feed /></ProtectedRoute>} />
         <Route path="/influencers" element={<UsersTabs />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/happyhours" element={<Meetups />} />
         <Route path="/happyhours/:id" element={<MeetupsPost />} />
