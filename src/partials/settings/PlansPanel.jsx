@@ -14,22 +14,21 @@ function PlansPanel() {
         <section>
           <div className="mb-8">
             <h2 className="text-2xl text-slate-800 font-bold mb-4">Plans</h2>
-            <div className="text-sm">This workspace’s Basic Plan is set to <strong className="font-medium">$34</strong> per month and will renew on <strong className="font-medium">July 9, 2021</strong>.</div>
           </div>
 
          {/* Pricing */}
           <div>
            {/* Toggle switch */}
             <div className="flex items-center space-x-3 mb-6">
-              <div className="text-sm text-slate-500 font-medium">Monthly</div>
+              <div className="text-sm text-slate-500 font-medium">Mensuel</div>
               <div className="form-switch">
                 <input type="checkbox" id="toggle" className="sr-only" checked={annual} onChange={() => setAnnual(!annual)} />
                 <label className="bg-slate-400" htmlFor="toggle">
                   <span className="bg-white shadow-sm" aria-hidden="true"></span>
-                  <span className="sr-only">Pay annually</span>
+                  <span className="sr-only">Payer annuellement</span>
                 </label>
               </div>
-              <div className="text-sm text-slate-500 font-medium">Annually <span className="text-emerald-500">(-20%)</span></div>
+              <div className="text-sm text-slate-500 font-medium">Annuel <span className="text-emerald-500">(-20%)</span></div>
             </div>
            {/* Pricing tabs */}
             <div className="grid grid-cols-12 gap-6">
@@ -216,42 +215,9 @@ function PlansPanel() {
        {/* Contact Sales */}
         <section>
           <div className="px-5 py-3 bg-indigo-50 border border-indigo-100 rounded-sm text-center xl:text-left xl:flex xl:flex-wrap xl:justify-between xl:items-center">
-            <div className="text-slate-800 font-semibold mb-2 xl:mb-0">Looking for different configurations?</div>
-            <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white">Contact Sales</button>
+            <div className="text-slate-800 font-semibold mb-2 xl:mb-0">Vous recherchez différentes configurations ?</div>
+            <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white">Contacter le service commercial</button>
           </div>
-        </section>
-
-       {/* FAQs */}
-        <section>
-          <div className="my-8">
-            <h2 className="text-2xl text-slate-800 font-bold">FAQs</h2>
-          </div>
-          <ul className="space-y-5">
-            <li>
-              <div className="font-semibold text-slate-800 mb-1">
-                What is the difference between the three versions?
-              </div>
-              <div className="text-sm">
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.
-              </div>
-            </li>
-            <li>
-              <div className="font-semibold text-slate-800 mb-1">
-                Is there any difference between Basic and Plus licenses?
-              </div>
-              <div className="text-sm">
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              </div>
-            </li>
-            <li>
-              <div className="font-semibold text-slate-800 mb-1">
-                Got more questions?
-              </div>
-              <div className="text-sm">
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum in voluptate velit esse cillum dolore eu fugiat <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">contact us</a>.
-              </div>
-            </li>
-          </ul>
         </section>
 
       </div>
@@ -260,8 +226,8 @@ function PlansPanel() {
       <footer>
         <div className="flex flex-col px-6 py-5 border-t border-slate-200">
           <div className="flex self-end">
-            <button className="btn border-slate-200 hover:border-slate-300 text-slate-600">Cancel</button>
-            <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3">Save Changes</button>
+            <button className="btn border-slate-200 hover:border-slate-300 text-slate-600">Annuler</button>
+            <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3">Sauvegarder</button>
           </div>
         </div>
       </footer>

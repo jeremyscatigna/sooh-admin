@@ -368,7 +368,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             }
                                                         >
                                                             <span className='text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200'>
-                                                                Paiement & Factures
+                                                                Facturation
                                                             </span>
                                                         </NavLink>
                                                     </li>
@@ -382,7 +382,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             }
                                                         >
                                                             <span className='text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200'>
-                                                                Give Feedback
+                                                                Donner votre avis
                                                             </span>
                                                         </NavLink>
                                                     </li>

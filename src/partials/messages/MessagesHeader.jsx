@@ -5,9 +5,16 @@ import User02 from '../../images/user-32-07.jpg';
 import { Plus } from 'iconoir-react';
 import ModalBasic from '../../components/ModalBasic';
 import DirectMessages from './DirectMessages';
+import { useAtomValue } from 'jotai';
+import { selectedConversationAtom } from '../../pages/Messages';
+import Avvvatars from 'avvvatars-react';
+import { currentUser } from '../../pages/Signup';
 
 function MessagesHeader({ msgSidebarOpen, setMsgSidebarOpen }) {
     const [basicModalOpen, setBasicModalOpen] = React.useState(false);
+    const selectedConversation = useAtomValue(selectedConversationAtom);
+    const authenticatedUser = useAtomValue(currentUser);
+
     return (
         <div className='sticky top-16'>
             <div className='flex items-center justify-between bg-white border-b border-slate-200 px-4 sm:px-6 md:px-5 h-16'>
@@ -28,22 +35,30 @@ function MessagesHeader({ msgSidebarOpen, setMsgSidebarOpen }) {
                     {/* People list */}
                     <div className='flex -space-x-3 -ml-px'>
                         <a className='block' href='#0'>
-                            <img
-                                className='rounded-full border-2 border-white box-content'
-                                src={User01}
-                                width='32'
-                                height='32'
-                                alt='User 01'
-                            />
+                            {authenticatedUser.avatar ? (
+                                <img
+                                    className='rounded-full border-2 border-white box-content'
+                                    src={authenticatedUser.avatar}
+                                    width='32'
+                                    height='32'
+                                    alt='User 04'
+                                />
+                            ) : (
+                                <Avvvatars value={`${authenticatedUser.firstName} ${authenticatedUser.lastName}`} />
+                            )}
                         </a>
                         <a className='block' href='#0'>
-                            <img
-                                className='rounded-full border-2 border-white box-content'
-                                src={User02}
-                                width='32'
-                                height='32'
-                                alt='User 04'
-                            />
+                            {selectedConversation.userAvatar ? (
+                                <img
+                                    className='rounded-full border-2 border-white box-content'
+                                    src={selectedConversation.userAvatar}
+                                    width='32'
+                                    height='32'
+                                    alt='User 01'
+                                />
+                            ) : (
+                                <Avvvatars value={`${selectedConversation.userFirstName} ${selectedConversation.userLastName}`} />
+                            )}
                         </a>
                     </div>
                 </div>
@@ -62,7 +77,7 @@ function MessagesHeader({ msgSidebarOpen, setMsgSidebarOpen }) {
                     <ModalBasic id='basic-modal' modalOpen={basicModalOpen} setModalOpen={setBasicModalOpen} title='New Conversation'>
                         {/* Modal content */}
                         <div className='px-5 pt-4 pb-1'>
-                          <DirectMessages msgSidebarOpen={msgSidebarOpen} setMsgSidebarOpen={setMsgSidebarOpen} />
+                            <DirectMessages msgSidebarOpen={msgSidebarOpen} setMsgSidebarOpen={setMsgSidebarOpen} />
                         </div>
                         {/* Modal footer */}
                         <div className='px-5 py-4'>
@@ -76,12 +91,12 @@ function MessagesHeader({ msgSidebarOpen, setMsgSidebarOpen }) {
                                 >
                                     Close
                                 </button>
-                                <button 
-                                  className='btn-sm bg-indigo-500 hover:bg-indigo-600 text-white' 
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setBasicModalOpen(false);
-                                  }}
+                                <button
+                                    className='btn-sm bg-indigo-500 hover:bg-indigo-600 text-white'
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setBasicModalOpen(false);
+                                    }}
                                 >
                                     Create
                                 </button>

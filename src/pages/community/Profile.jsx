@@ -18,25 +18,33 @@ function Profile() {
     useEffect(() => {
         const collectionQuery = query(collection(db, 'users'), where('uid', '==', id));
 
-        onSnapshot(collectionQuery, (snapshot) => {
+        const unsub = onSnapshot(collectionQuery, (snapshot) => {
             const data = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
             }));
             setUser(data[0]);
         });
+
+        return () => {
+          unsub();
+        }
     }, []);
 
     useEffect(() => {
         const collectionQuery = query(collection(db, 'posts'), where('userId', '==', id));
 
-        onSnapshot(collectionQuery, (snapshot) => {
+        const unsub = onSnapshot(collectionQuery, (snapshot) => {
             const data = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
             }));
             setPosts(data);
         });
+
+        return () => {
+          unsub();
+        }
     }, []);
 
     return (

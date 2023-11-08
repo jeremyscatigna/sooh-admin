@@ -53,7 +53,15 @@ function Signup() {
                     details: '',
                 });
 
-                setCurrentUser(document.data());
+                setCurrentUser({
+                    uid: user.uid,
+                    firstName,
+                    lastName,
+                    email,
+                    avatar: '',
+                    type: '',
+                    details: '',
+                });
                 setCurrentUserDocumentId(document.id);
 
                 navigate('/onboarding-01');
@@ -109,13 +117,13 @@ function Signup() {
                         </div>
 
                         <div className='max-w-sm mx-auto w-full px-4 py-8'>
-                            <h1 className='text-3xl text-slate-800 font-bold mb-6'>Create your Account ✨</h1>
+                            <h1 className='text-3xl text-slate-800 font-bold mb-6'>Créez votre compte ✨</h1>
                             {/* Form */}
                             <form>
                                 <div className='space-y-4'>
                                     <div>
                                         <label className='block text-sm font-medium mb-1' htmlFor='email'>
-                                            Email Address <span className='text-rose-500'>*</span>
+                                            Adresse e-mail <span className='text-rose-500'>*</span>
                                         </label>
                                         <input
                                             id='email'
@@ -126,7 +134,7 @@ function Signup() {
                                     </div>
                                     <div>
                                         <label className='block text-sm font-medium mb-1' htmlFor='name'>
-                                            First Name <span className='text-rose-500'>*</span>
+                                            Prénom <span className='text-rose-500'>*</span>
                                         </label>
                                         <input
                                             id='name'
@@ -137,7 +145,7 @@ function Signup() {
                                     </div>
                                     <div>
                                         <label className='block text-sm font-medium mb-1' htmlFor='name'>
-                                            Last Name <span className='text-rose-500'>*</span>
+                                            Nom <span className='text-rose-500'>*</span>
                                         </label>
                                         <input
                                             id='name'
@@ -155,7 +163,7 @@ function Signup() {
                   </div> */}
                                     <div>
                                         <label className='block text-sm font-medium mb-1' htmlFor='password'>
-                                            Password
+                                            Mot de passe
                                         </label>
                                         <input
                                             id='password'
@@ -170,23 +178,23 @@ function Signup() {
                                     <div className='mr-1'>
                                         <label className='flex items-center'>
                                             <input type='checkbox' className='form-checkbox' />
-                                            <span className='text-sm ml-2'>Email me about product news.</span>
+                                            <span className='text-sm ml-2'>Envoyez-moi un e-mail pour les nouvelles des produits.</span>
                                         </label>
                                     </div>
                                     <button
                                         className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap'
                                         onClick={(e) => handleSubmit(e)}
                                     >
-                                        {loading ? 'Loading...' : 'Sign Up'}
+                                        {loading ? 'Chargement en cours...' : "S'inscrire"}
                                     </button>
                                 </div>
                             </form>
                             {/* Footer */}
                             <div className='pt-5 mt-6 border-t border-slate-200'>
                                 <div className='text-sm'>
-                                    Have an account?{' '}
+                                    Vous avez un compte ?{' '}
                                     <Link className='font-medium text-indigo-500 hover:text-indigo-600' to='/signin'>
-                                        Sign In
+                                        Se connecter
                                     </Link>
                                 </div>
                             </div>

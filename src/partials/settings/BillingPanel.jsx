@@ -7,57 +7,56 @@ function BillingPanel() {
       {/* Panel body */}
       <div className="p-6 space-y-6">
         <div>
-          <h2 className="text-2xl text-slate-800 font-bold mb-4">Billing & Invoices</h2>
-          <div className="text-sm">This workspace’s Basic Plan is set to <strong className="font-medium">$34</strong> per month and will renew on <strong className="font-medium">July 9, 2021</strong>.</div>
+          <h2 className="text-2xl text-slate-800 font-bold mb-4">Facturation</h2>
         </div>
 
         {/* Billing Information */}
         <section>
-          <h3 className="text-xl leading-snug text-slate-800 font-bold mb-1">Billing Information</h3>
+         
           <ul>
             <li className="md:flex md:justify-between md:items-center py-3 border-b border-slate-200">
               {/* Left */}
-              <div className="text-sm text-slate-800 font-medium">Payment Method</div>
+              <div className="text-sm text-slate-800 font-medium">Mode de paiement</div>
               {/* Right */}
               <div className="text-sm text-slate-800ml-4">
                 <span className="mr-3">Mastercard ending 9282</span>
-                <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">Edit</a>
+                <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">Modifier</a>
               </div>
             </li>
             <li className="md:flex md:justify-between md:items-center py-3 border-b border-slate-200">
               {/* Left */}
-              <div className="text-sm text-slate-800 font-medium">Billing Interval</div>
+              <div className="text-sm text-slate-800 font-medium">Intervalle de facturation</div>
               {/* Right */}
               <div className="text-sm text-slate-800ml-4">
-                <span className="mr-3">Annually</span>
-                <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">Edit</a>
+                <span className="mr-3">Annuel</span>
+                <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">Modifier</a>
               </div>
             </li>
             <li className="md:flex md:justify-between md:items-center py-3 border-b border-slate-200">
               {/* Left */}
-              <div className="text-sm text-slate-800 font-medium">VAT/GST Number</div>
+              <div className="text-sm text-slate-800 font-medium">Numéro de TVA</div>
               {/* Right */}
               <div className="text-sm text-slate-800ml-4">
                 <span className="mr-3">UK849700927</span>
-                <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">Edit</a>
+                <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">Modifier</a>
               </div>
             </li>
             <li className="md:flex md:justify-between md:items-center py-3 border-b border-slate-200">
               {/* Left */}
-              <div className="text-sm text-slate-800 font-medium">Your Address</div>
+              <div className="text-sm text-slate-800 font-medium">Addresse</div>
               {/* Right */}
               <div className="text-sm text-slate-800ml-4">
                 <span className="mr-3">34 Savoy Street, London, UK, 24E8X</span>
-                <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">Edit</a>
+                <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">Modifier</a>
               </div>
             </li>
             <li className="md:flex md:justify-between md:items-center py-3 border-b border-slate-200">
               {/* Left */}
-              <div className="text-sm text-slate-800 font-medium">Billing Address</div>
+              <div className="text-sm text-slate-800 font-medium">Addresse de facturation</div>
               {/* Right */}
               <div className="text-sm text-slate-800ml-4">
                 <span className="mr-3">hello@cruip.com</span>
-                <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">Edit</a>
+                <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">Modifier</a>
               </div>
             </li>
           </ul>
@@ -65,20 +64,20 @@ function BillingPanel() {
 
         {/* Invoices */}
         <section>
-          <h3 className="text-xl leading-snug text-slate-800 font-bold mb-1">Invoices</h3>
+          <h3 className="text-xl leading-snug text-slate-800 font-bold mb-1">Factures</h3>
           {/* Table */}
           <table className="table-auto w-full">
             {/* Table header */}
             <thead className="text-xs uppercase text-slate-400">
               <tr className="flex flex-wrap md:table-row md:flex-no-wrap">
                 <th className="w-full block md:w-auto md:table-cell py-2">
-                  <div className="font-semibold text-left">Year</div>
+                  <div className="font-semibold text-left">Année</div>
                 </th>
                 <th className="w-full hidden md:w-auto md:table-cell py-2">
                   <div className="font-semibold text-left">Plan</div>
                 </th>
                 <th className="w-full hidden md:w-auto md:table-cell py-2">
-                  <div className="font-semibold text-left">Amount</div>
+                  <div className="font-semibold text-left">Montant</div>
                 </th>
                 <th className="w-full hidden md:w-auto md:table-cell py-2">
                   <div className="font-semibold text-right"></div>

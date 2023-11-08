@@ -129,7 +129,7 @@ function Meetups() {
                                         <svg className='w-4 h-4 fill-current opacity-50 shrink-0' viewBox='0 0 16 16'>
                                             <path d='M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z' />
                                         </svg>
-                                        <span className='hidden xs:block ml-2'>Add Happy Hour</span>
+                                        <span className='hidden xs:block ml-2'>Happy Hour</span>
                                     </button>
                                 )}
 
@@ -149,7 +149,7 @@ function Meetups() {
                                         </div>
                                         <div>
                                             <label className='block text-sm font-medium mb-1' htmlFor='placeholder'>
-                                                Name
+                                                Nom
                                             </label>
                                             <input
                                                 id='placeholder'
@@ -194,7 +194,7 @@ function Meetups() {
                                                     type='file'
                                                 />
                                                 <button className='btn py-3 bg-indigo-500 hover:bg-indigo-600 text-white' type='submit'>
-                                                    {fileLoading ? 'Loading...' : 'Upload'}
+                                                    {fileLoading ? 'Chargement en cours...' : 'Télécharger'}
                                                 </button>
                                             </form>
                                         )}
@@ -211,7 +211,7 @@ function Meetups() {
                                                     setCreateModalOpen(false);
                                                 }}
                                             >
-                                                Close
+                                                Fermer
                                             </button>
                                             <button
                                                 className='btn-sm bg-indigo-500 hover:bg-indigo-600 text-white'
@@ -220,7 +220,7 @@ function Meetups() {
                                                     handleCreate();
                                                 }}
                                             >
-                                                {loading ? 'Loading...' : 'Create'}
+                                                {loading ? 'hargement en cours...' : 'Créer'}
                                             </button>
                                         </div>
                                     </div>
@@ -233,27 +233,27 @@ function Meetups() {
                             <ul className='flex flex-wrap -m-1'>
                                 <li className='m-1'>
                                     <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-indigo-500 text-white duration-150 ease-in-out'>
-                                        View All
+                                        Voir tout
                                     </button>
                                 </li>
                                 <li className='m-1'>
                                     <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 hover:border-slate-300 shadow-sm bg-white text-slate-500 duration-150 ease-in-out'>
-                                        Online
+                                        En ligne
                                     </button>
                                 </li>
                                 <li className='m-1'>
                                     <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 hover:border-slate-300 shadow-sm bg-white text-slate-500 duration-150 ease-in-out'>
-                                        Local
+                                        Locale
                                     </button>
                                 </li>
                                 <li className='m-1'>
                                     <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 hover:border-slate-300 shadow-sm bg-white text-slate-500 duration-150 ease-in-out'>
-                                        This Week
+                                        Cette semaine
                                     </button>
                                 </li>
                                 <li className='m-1'>
                                     <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 hover:border-slate-300 shadow-sm bg-white text-slate-500 duration-150 ease-in-out'>
-                                        This Month
+                                        Ce mois
                                     </button>
                                 </li>
                                 <li className='m-1'>

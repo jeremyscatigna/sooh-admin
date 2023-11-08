@@ -11,17 +11,16 @@ function NotificationsPanel() {
 
       {/* Panel body */}
       <div className="p-6 space-y-6">
-        <h2 className="text-2xl text-slate-800 font-bold mb-5">My Notifications</h2>
+        <h2 className="text-2xl text-slate-800 font-bold mb-5">Mes Notifications</h2>
 
         {/* General */}
         <section>
-          <h3 className="text-xl leading-snug text-slate-800 font-bold mb-1">General</h3>
+          <h3 className="text-xl leading-snug text-slate-800 font-bold mb-1">Generale</h3>
           <ul>
             <li className="flex justify-between items-center py-3 border-b border-slate-200">
               {/* Left */}
               <div>
-                <div className="text-slate-800 font-semibold">Comments and replies</div>
-                <div className="text-sm">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.</div>
+                <div className="text-slate-800 font-semibold">Commentaires and réponses</div>
               </div>
               {/* Right */}
               <div className="flex items-center ml-4">
@@ -39,7 +38,6 @@ function NotificationsPanel() {
               {/* Left */}
               <div>
                 <div className="text-slate-800 font-semibold">Messages</div>
-                <div className="text-sm">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.</div>
               </div>
               {/* Right */}
               <div className="flex items-center ml-4">
@@ -57,7 +55,6 @@ function NotificationsPanel() {
               {/* Left */}
               <div>
                 <div className="text-slate-800 font-semibold">Mentions</div>
-                <div className="text-sm">Excepteur sint occaecat cupidatat non in culpa qui officia deserunt mollit.</div>
               </div>
               {/* Right */}
               <div className="flex items-center ml-4">
@@ -73,55 +70,14 @@ function NotificationsPanel() {
             </li>
           </ul>
         </section>
-
-        {/* Shares */}
-        <section>
-          <h3 className="text-xl leading-snug text-slate-800 font-bold mb-1">Shares</h3>
-          <ul>
-            <li className="flex justify-between items-center py-3 border-b border-slate-200">
-              {/* Left */}
-              <div>
-                <div className="text-slate-800 font-semibold">Shares of my content</div>
-                <div className="text-sm">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.</div>
-              </div>
-              {/* Right */}
-              <div className="flex items-center ml-4">
-                <button className="btn-sm border-slate-200 hover:border-slate-300 shadow-sm">Manage</button>
-              </div>
-            </li>
-            <li className="flex justify-between items-center py-3 border-b border-slate-200">
-              {/* Left */}
-              <div>
-                <div className="text-slate-800 font-semibold">Team invites</div>
-                <div className="text-sm">Excepteur sint occaecat cupidatat non in culpa qui officia deserunt mollit.</div>
-              </div>
-              {/* Right */}
-              <div className="flex items-center ml-4">
-                <button className="btn-sm border-slate-200 hover:border-slate-300 shadow-sm">Manage</button>
-              </div>
-            </li>
-            <li className="flex justify-between items-center py-3 border-b border-slate-200">
-              {/* Left */}
-              <div>
-                <div className="text-slate-800 font-semibold">Smart connection</div>
-                <div className="text-sm">Excepteur sint occaecat cupidatat non in culpa qui officia deserunt mollit.</div>
-              </div>
-              {/* Right */}
-              <div className="flex items-center ml-4">
-                <div className="text-sm text-slate-400 italic mr-2 hidden md:block">Active</div>
-                <button className="btn-sm border-slate-200 hover:border-slate-300 shadow-sm text-rose-500">Disable</button>
-              </div>
-            </li>
-          </ul>
-        </section>
       </div>
 
       {/* Panel footer */}
       <footer>
         <div className="flex flex-col px-6 py-5 border-t border-slate-200">
           <div className="flex self-end">
-            <button className="btn border-slate-200 hover:border-slate-300 text-slate-600">Cancel</button>
-            <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3">Save Changes</button>
+            <button className="btn border-slate-200 hover:border-slate-300 text-slate-600">Annuler</button>
+            <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3">Sauvegarder</button>
           </div>
         </div>
       </footer>

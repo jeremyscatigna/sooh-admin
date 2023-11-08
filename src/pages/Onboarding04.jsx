@@ -42,7 +42,7 @@ function Onboarding04() {
                   </svg>
                 </Link>
                 <div className="text-sm">
-                  Have an account? <Link className="font-medium text-indigo-500 hover:text-indigo-600" to="/signin">Sign In</Link>
+                    Vous avez un compte ? <Link className="font-medium text-indigo-500 hover:text-indigo-600" to="/signin">Se connecter</Link>
                 </div>
               </div>
 
@@ -78,8 +78,8 @@ function Onboarding04() {
                     <circle className="text-emerald-100" cx="32" cy="32" r="32" />
                     <path className="text-emerald-500" d="m28.5 41-8-8 3-3 5 5 12-12 3 3z" />
                   </svg>
-                  <h1 className="text-3xl text-slate-800 font-bold mb-8">Nice to have you, {name} 🙌</h1>
-                  <Link className="btn bg-indigo-500 hover:bg-indigo-600 text-white" to="/">Go To Dashboard -&gt;</Link>
+                  <h1 className="text-3xl text-slate-800 font-bold mb-8">Ravi de vous avoir, {name} 🙌</h1>
+                  <Link className="btn bg-indigo-500 hover:bg-indigo-600 text-white" to="/">Aller au Feed -&gt;</Link>
                 </div>
 
               </div>

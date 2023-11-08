@@ -33,13 +33,15 @@ function MeetupsPost() {
     useEffect(() => {
         const collectionQuery = query(collection(db, 'happyhours'), where('uid', '==', id));
 
-        onSnapshot(collectionQuery, (snapshot) => {
+        const unsub = onSnapshot(collectionQuery, (snapshot) => {
             const data = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
             }));
             setHappyHour(data[0]);
         });
+
+        return () => unsub();
     }, []);
 
     useEffect(() => {
@@ -82,7 +84,7 @@ function MeetupsPost() {
                                         <svg className='fill-current text-slate-400 mr-2' width='7' height='12' viewBox='0 0 7 12'>
                                             <path d='M5.4.6 6.8 2l-4 4 4 4-1.4 1.4L0 6z' />
                                         </svg>
-                                        <span>Back To Happy Hours</span>
+                                        <span>Retours</span>
                                     </Link>
                                 </div>
                                 <div className='text-sm font-semibold text-indigo-500 uppercase mb-2'>
@@ -102,7 +104,7 @@ function MeetupsPost() {
                                           <Avvvatars value={`${user.firstName} ${user.lastName}`} />
                                         </a>
                                         <div className='text-sm whitespace-nowrap'>
-                                            Hosted by{' '}
+                                            Hébergé par{' '}
                                             <a className='font-semibold text-slate-800' href='#0'>
                                                 {user.firstName} {user.lastName}
                                             </a>
@@ -115,7 +117,7 @@ function MeetupsPost() {
                                             <svg className='w-4 h-3 fill-slate-400 mr-2' viewBox='0 0 16 12'>
                                                 <path d='m16 2-4 2.4V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7.6l4 2.4V2ZM2 10V2h8v8H2Z' />
                                             </svg>
-                                            <span>Online Event</span>
+                                            <span>Événement en ligne</span>
                                         </div>
                                         <div className='text-xs inline-flex font-medium uppercase bg-emerald-100 text-emerald-600 rounded-full text-center px-2.5 py-1'>
                                             Free
@@ -130,62 +132,14 @@ function MeetupsPost() {
 
                                 {/* Post content */}
                                 <div>
-                                    <h2 className='text-xl leading-snug text-slate-800 font-bold mb-2'>Happy Hour Details</h2>
+                                    <h2 className='text-xl leading-snug text-slate-800 font-bold mb-2'>Détails</h2>
                                     <p className='mb-6'>{happyHour.details}</p>
                                 </div>
                                 <hr className='my-6 border-t border-slate-200' />
 
-                                {/* Comments */}
-                                <div>
-                                    <h2 className='text-xl leading-snug text-slate-800 font-bold mb-2'>Comments (3)</h2>
-                                    <ul className='space-y-5 my-6'>
-                                        {/* Comment */}
-                                        <li className='flex items-start'>
-                                            <a className='block mr-3 shrink-0' href='#0'>
-                                                <img className='rounded-full' src={UserImage07} width='32' height='32' alt='User 07' />
-                                            </a>
-                                            <div className='grow'>
-                                                <div className='text-sm font-semibold text-slate-800 mb-2'>Taylor Nieman</div>
-                                                <div className='italic'>
-                                                    “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.”
-                                                </div>
-                                            </div>
-                                        </li>
-                                        {/* Comment */}
-                                        <li className='flex items-start'>
-                                            <a className='block mr-3 shrink-0' href='#0'>
-                                                <img className='rounded-full' src={UserImage08} width='32' height='32' alt='User 08' />
-                                            </a>
-                                            <div className='grow'>
-                                                <div className='text-sm font-semibold text-slate-800 mb-2'>Meagan Loyst</div>
-                                                <div className='italic'>
-                                                    “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.”
-                                                </div>
-                                            </div>
-                                        </li>
-                                        {/* Comment */}
-                                        <li className='flex items-start'>
-                                            <a className='block mr-3 shrink-0' href='#0'>
-                                                <img className='rounded-full' src={UserImage02} width='32' height='32' alt='User 02' />
-                                            </a>
-                                            <div className='grow'>
-                                                <div className='text-sm font-semibold text-slate-800 mb-2'>Frank Malik</div>
-                                                <div className='italic'>
-                                                    “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.”
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <hr className='my-6 border-t border-slate-200' />
-
                                 {/* Similar Meetups */}
                                 <div>
-                                    <h2 className='text-xl leading-snug text-slate-800 font-bold mb-2'>Similar Happy Hours</h2>
+                                    <h2 className='text-xl leading-snug text-slate-800 font-bold mb-2'>Similaires</h2>
                                     <div className='space-y-8 sm:space-y-5 my-6 lg:mb-0'>
                                         {/* Related item */}
                                         <article className='flex bg-white shadow-lg rounded-sm border border-slate-200 overflow-hidden'>
@@ -234,7 +188,7 @@ function MeetupsPost() {
                                                         <svg className='w-4 h-3 fill-slate-400 mr-2' viewBox='0 0 16 12'>
                                                             <path d='m16 2-4 2.4V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7.6l4 2.4V2ZM2 10V2h8v8H2Z' />
                                                         </svg>
-                                                        <span>Online Event</span>
+                                                        <span>Événement en ligne</span>
                                                     </div>
                                                     {/* Avatars */}
                                                     <div className='flex items-center space-x-2'>
@@ -279,7 +233,7 @@ function MeetupsPost() {
                                             <svg className='w-4 h-4 fill-current shrink-0' viewBox='0 0 16 16'>
                                                 <path d='m2.457 8.516.969-.99 2.516 2.481 5.324-5.304.985.989-6.309 6.284z' />
                                             </svg>
-                                            <span className='ml-1'>Attending</span>
+                                            <span className='ml-1'>Participer</span>
                                         </button>
                                         <button className='btn w-full border-slate-200 hover:border-slate-300 text-slate-600'>
                                             <svg className='w-4 h-4 fill-rose-500 shrink-0' viewBox='0 0 16 16'>
@@ -293,7 +247,7 @@ function MeetupsPost() {
                                 {/* 2nd block */}
                                 <div className='bg-white p-5 shadow-lg rounded-sm border border-slate-200 lg:w-72 xl:w-80'>
                                     <div className='flex justify-between space-x-1 mb-5'>
-                                        <div className='text-sm text-slate-800 font-semibold'>Attendees (127)</div>
+                                        <div className='text-sm text-slate-800 font-semibold'>Participants (127)</div>
                                         <a className='text-sm font-medium text-indigo-500 hover:text-indigo-600' href='#0'>
                                             View All
                                         </a>
@@ -409,7 +363,7 @@ function MeetupsPost() {
                                 {/* 3rd block */}
                                 <div className='bg-white p-5 shadow-lg rounded-sm border border-slate-200 lg:w-72 xl:w-80'>
                                     <div className='flex justify-between space-x-1 mb-5'>
-                                        <div className='text-sm text-slate-800 font-semibold'>Invite Friends</div>
+                                        <div className='text-sm text-slate-800 font-semibold'>Inviter des amis</div>
                                         <a className='text-sm font-medium text-indigo-500 hover:text-indigo-600' href='#0'>
                                             View All
                                         </a>

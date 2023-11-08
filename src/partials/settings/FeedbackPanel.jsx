@@ -7,13 +7,13 @@ function FeedbackPanel() {
       {/* Panel body */}
       <div className="p-6 space-y-6">
         <div>
-          <h2 className="text-2xl text-slate-800 font-bold mb-4">Give Feedback</h2>
-          <div className="text-sm">Our product depends on customer feedback to improve the overall experience!</div>
+          <h2 className="text-2xl text-slate-800 font-bold mb-4">Donner votre avis</h2>
+          <div className="text-sm">Notre produit dépend des commentaires des clients pour améliorer l'expérience globale !</div>
         </div>
 
         {/* Rate */}
         <section>
-          <h3 className="text-xl leading-snug text-slate-800 font-bold mb-6">How likely would you recommend us to a friend or colleague?</h3>
+          <h3 className="text-xl leading-snug text-slate-800 font-bold mb-6">Dans quelle mesure nous recommanderiez-vous à un ami ou un collègue ?</h3>
           <div className="w-full max-w-xl">
             <div className="relative">
               <div className="absolute left-0 top-1/2 -mt-px w-full h-0.5 bg-slate-200" aria-hidden="true"></div>
@@ -54,10 +54,10 @@ function FeedbackPanel() {
 
         {/* Tell us in words */}
         <section>
-          <h3 className="text-xl leading-snug text-slate-800 font-bold mb-5">Tell us in words</h3>
+          <h3 className="text-xl leading-snug text-slate-800 font-bold mb-5">Dites-nous avec des mots</h3>
           {/* Form */}
-          <label className="sr-only" htmlFor="feedback">Leave a feedback</label>
-          <textarea id="feedback" className="form-textarea w-full focus:border-slate-300" rows="4" placeholder="I really enjoy…"></textarea>
+          <label className="sr-only" htmlFor="feedback">Laisser un commentaire</label>
+          <textarea id="feedback" className="form-textarea w-full focus:border-slate-300" rows="4" placeholder="j'apprécie vraiment…"></textarea>
         </section>
       </div>
 
@@ -65,8 +65,8 @@ function FeedbackPanel() {
       <footer>
         <div className="flex flex-col px-6 py-5 border-t border-slate-200">
           <div className="flex self-end">
-            <button className="btn border-slate-200 hover:border-slate-300 text-slate-600">Cancel</button>
-            <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3">Save Changes</button>
+            <button className="btn border-slate-200 hover:border-slate-300 text-slate-600">Annuler</button>
+            <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3">Sauvegarder</button>
           </div>
         </div>
       </footer>

@@ -91,13 +91,13 @@ function Signin() {
                         </div>
 
                         <div className='max-w-sm mx-auto w-full px-4 py-8'>
-                            <h1 className='text-3xl text-slate-800 font-bold mb-6'>Welcome back! ✨</h1>
+                            <h1 className='text-3xl text-slate-800 font-bold mb-6'>Content de te revoir! ✨</h1>
                             {/* Form */}
                             <form>
                                 <div className='space-y-4'>
                                     <div>
                                         <label className='block text-sm font-medium mb-1' htmlFor='email'>
-                                            Email Address
+                                            Adresse e-mail
                                         </label>
                                         <input
                                             id='email'
@@ -108,7 +108,7 @@ function Signin() {
                                     </div>
                                     <div>
                                         <label className='block text-sm font-medium mb-1' htmlFor='password'>
-                                            Password
+                                            Mot de passe
                                         </label>
                                         <input
                                             id='password'
@@ -122,23 +122,23 @@ function Signin() {
                                 <div className='flex items-center justify-between mt-6'>
                                     <div className='mr-1'>
                                         <Link className='text-sm underline hover:no-underline' to='/reset-password'>
-                                            Forgot Password?
+                                            Mot de passe oublié?
                                         </Link>
                                     </div>
                                     <button
                                         className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3'
                                         onClick={(e) => handleSubmit(e)}
                                     >
-                                        {loading ? 'Loading...' : 'Sign In'}
+                                        {loading ? 'Chargement en cours...' : 'Se connecter'}
                                     </button>
                                 </div>
                             </form>
                             {/* Footer */}
                             <div className='pt-5 mt-6 border-t border-slate-200'>
                                 <div className='text-sm'>
-                                    Don’t you have an account?{' '}
+                                    Vous n'avez pas de compte ?{' '}
                                     <Link className='font-medium text-indigo-500 hover:text-indigo-600' to='/signup'>
-                                        Sign Up
+                                        S'inscrire
                                     </Link>
                                 </div>
                                 {/* Warning */}

@@ -1,8 +1,14 @@
 import React from 'react';
 import DirectMessages from './DirectMessages';
 import { Plus } from 'iconoir-react';
+import Avvvatars from 'avvvatars-react';
+import { useAtom, useAtomValue } from 'jotai';
+import { searchAtom, usersAtom } from '../../pages/Messages';
 
-function MessagesSidebar({ msgSidebarOpen, setMsgSidebarOpen }) {
+function MessagesSidebar({ msgSidebarOpen, setMsgSidebarOpen, createConversation }) {
+  const [search, setSearch] = useAtom(searchAtom);
+  const users = useAtomValue(usersAtom);
+
     return (
         <div
             id='messages-sidebar'
@@ -25,6 +31,8 @@ function MessagesSidebar({ msgSidebarOpen, setMsgSidebarOpen }) {
                                     className='form-input w-full pl-9 focus:border-slate-300'
                                     type='search'
                                     placeholder='Search…'
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
                                 />
                                 <button className='absolute inset-0 right-auto group' type='submit' aria-label='Search'>
                                     <svg
@@ -41,8 +49,55 @@ function MessagesSidebar({ msgSidebarOpen, setMsgSidebarOpen }) {
                                 <Plus />
                             </button>
                         </div>
+
+                        {search.length > 0 && (
+                            <div className='mt-4'>
+                                <ul className='mb-6'>
+                                    {users
+                                        .filter((user) => {
+                                            if (
+                                                user.firstName.toLowerCase().includes(search.toLowerCase()) ||
+                                                user.lastName.toLowerCase().includes(search.toLowerCase())
+                                            ) {
+                                                return user;
+                                            }
+                                        })
+                                        .map((user) => (
+                                            <li className='-mx-2'>
+                                                <button
+                                                    className='flex items-center justify-between w-full p-2 rounded hover:bg-indigo-100 focus:outline-none focus:bg-slate-50 transition duration-150 ease-in-out'
+                                                    onClick={() => createConversation(user)}
+                                                >
+                                                    <div className='flex items-center truncate space-x-2'>
+                                                        {user.avatar ? (
+                                                            <img
+                                                                className='w-8 h-8 rounded-full'
+                                                                src={user.avatar}
+                                                                width='32'
+                                                                height='32'
+                                                                alt='User 01'
+                                                            />
+                                                        ) : (
+                                                            <Avvvatars value={`${user.firstName} ${user.lastName}`} />
+                                                        )}
+
+                                                        <div className='truncate'>
+                                                            <span className='text-sm font-medium text-slate-800'>
+                                                                {user.firstName} {user.lastName}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </li>
+                                        ))}
+                                </ul>
+                            </div>
+                        )}
                         {/* Direct messages */}
-                        <DirectMessages msgSidebarOpen={msgSidebarOpen} setMsgSidebarOpen={setMsgSidebarOpen} />
+                        <DirectMessages
+                            msgSidebarOpen={msgSidebarOpen}
+                            setMsgSidebarOpen={setMsgSidebarOpen}
+                        />
                     </div>
                 </div>
             </div>

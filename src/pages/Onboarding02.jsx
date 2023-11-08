@@ -95,9 +95,9 @@ function Onboarding02() {
                                     </svg>
                                 </Link>
                                 <div className='text-sm'>
-                                    Have an account?{' '}
+                                    Vous avez un compte ?{' '}
                                     <Link className='font-medium text-indigo-500 hover:text-indigo-600' to='/signin'>
-                                        Sign In
+                                        Se connecter
                                     </Link>
                                 </div>
                             </div>
@@ -148,14 +148,14 @@ function Onboarding02() {
                         {userType === 'business' && (
                             <div className='px-4 py-8'>
                                 <div className='max-w-md mx-auto'>
-                                    <h1 className='text-3xl text-slate-800 font-bold mb-6'>Company information ✨</h1>
+                                    <h1 className='text-3xl text-slate-800 font-bold mb-6'>Informations sur la société ✨</h1>
                                     {/* htmlForm */}
                                     <form>
                                         <div className='space-y-4 mb-8'>
                                             {/* Company Name */}
                                             <div>
                                                 <label className='block text-sm font-medium mb-1' htmlFor='company-name'>
-                                                    Company Name <span className='text-rose-500'>*</span>
+                                                    Nom de l'entreprise <span className='text-rose-500'>*</span>
                                                 </label>
                                                 <input
                                                     id='company-name'
@@ -169,7 +169,7 @@ function Onboarding02() {
                                             <div className='flex space-x-4'>
                                                 <div className='flex-1'>
                                                     <label className='block text-sm font-medium mb-1' htmlFor='city'>
-                                                        City <span className='text-rose-500'>*</span>
+                                                        Ville <span className='text-rose-500'>*</span>
                                                     </label>
                                                     <input
                                                         id='city'
@@ -181,7 +181,7 @@ function Onboarding02() {
                                                 </div>
                                                 <div className='flex-1'>
                                                     <label className='block text-sm font-medium mb-1' htmlFor='postal-code'>
-                                                        Postal Code <span className='text-rose-500'>*</span>
+                                                        Code Postal <span className='text-rose-500'>*</span>
                                                     </label>
                                                     <input
                                                         id='postal-code'
@@ -195,7 +195,7 @@ function Onboarding02() {
                                             {/* Street Address */}
                                             <div>
                                                 <label className='block text-sm font-medium mb-1' htmlFor='street'>
-                                                    Street Address <span className='text-rose-500'>*</span>
+                                                    Adresse <span className='text-rose-500'>*</span>
                                                 </label>
                                                 <input
                                                     id='street'
@@ -208,7 +208,7 @@ function Onboarding02() {
                                             {/* Country */}
                                             <div>
                                                 <label className='block text-sm font-medium mb-1' htmlFor='country'>
-                                                    Country <span className='text-rose-500'>*</span>
+                                                    Pays <span className='text-rose-500'>*</span>
                                                 </label>
                                                 <select
                                                     id='country'
@@ -216,9 +216,10 @@ function Onboarding02() {
                                                     value={country}
                                                     onChange={(e) => setCountry(e.target.value)}
                                                 >
-                                                    <option>USA</option>
-                                                    <option>Italy</option>
-                                                    <option>United Kingdom</option>
+                                                    <option value='USA'>USA</option>
+                                                    <option value='Italie'>Italie</option>
+                                                    <option value='UK'>UK</option>
+                                                    <option value='France'>France</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -230,7 +231,7 @@ function Onboarding02() {
                                                 className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-auto'
                                                 onClick={(e) => handleSubmit(e)}
                                             >
-                                                Next Step -&gt;
+                                                Etape suivante -&gt;
                                             </button>
                                         </div>
                                     </form>
@@ -241,7 +242,7 @@ function Onboarding02() {
                         {userType === 'influencer' && (
                             <div className='px-4 py-8'>
                                 <div className='max-w-md mx-auto'>
-                                    <h1 className='text-3xl text-slate-800 font-bold mb-6'>Your links ✨</h1>
+                                    <h1 className='text-3xl text-slate-800 font-bold mb-6'>Vos liens ✨</h1>
                                     {/* htmlForm */}
                                     <form>
                                         <div className='space-y-4 mb-8'>
@@ -285,13 +286,13 @@ function Onboarding02() {
                                         </div>
                                         <div className='flex items-center justify-between'>
                                             <Link className='text-sm underline hover:no-underline' to='/onboarding-01'>
-                                                &lt;- Back
+                                                &lt;- Retour
                                             </Link>
                                             <button
                                                 className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-auto'
                                                 onClick={(e) => handleSubmit(e)}
                                             >
-                                                Next Step -&gt;
+                                                Etape suivante -&gt;
                                             </button>
                                         </div>
                                     </form>

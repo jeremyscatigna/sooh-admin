@@ -170,7 +170,7 @@ function Feed() {
                                                             id='status-input'
                                                             className='form-input w-full bg-slate-100 border-transparent focus:bg-white focus:border-slate-300 placeholder-slate-500'
                                                             type='text'
-                                                            placeholder={`What's happening, ${user.firstName}?`}
+                                                            placeholder={`Que se passe-t-il, ${user.firstName}?`}
                                                             value={postText}
                                                             onChange={(e) => setPostText(e.target.value)}
                                                         />

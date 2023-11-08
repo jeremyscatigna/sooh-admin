@@ -108,7 +108,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, user, posts })
                     <div className='space-y-5 mb-8 xl:mb-0'>
                         {/* About Me */}
                         <div>
-                            <h2 className='text-slate-800 font-semibold mb-2'>About Me</h2>
+                            <h2 className='text-slate-800 font-semibold mb-2'>À propos de moi</h2>
                             <div className='text-sm space-y-2'>
                                 <p>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et

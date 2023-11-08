@@ -180,13 +180,13 @@ function FeedPosts({ posts }) {
 
                         <div className='flex w-full'>
                             <label htmlFor='comment-form' className='sr-only'>
-                                Write a comment…
+                                Écrire un commentaire…
                             </label>
                             <input
                                 id='comment-form'
                                 className='form-input w-full bg-slate-100 border-transparent focus:bg-white focus:border-slate-300 placeholder-slate-500'
                                 type='text'
-                                placeholder='Write a comment…'
+                                placeholder='Écrire un commentaire…'
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
                             />

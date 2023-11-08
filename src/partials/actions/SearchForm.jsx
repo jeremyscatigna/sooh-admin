@@ -5,7 +5,7 @@ function SearchForm({
 }) {
   return (
     <form className="relative">
-      <label htmlFor="action-search" className="sr-only">Search</label>
+      <label htmlFor="action-search" className="sr-only">Rechercher</label>
       <input id="action-search" className="form-input pl-9 focus:border-slate-300" type="search" placeholder={placeholder} />
       <button className="absolute inset-0 right-auto group" type="submit" aria-label="Search">
         <svg className="w-4 h-4 shrink-0 fill-current text-slate-400 group-hover:text-slate-500 ml-3 mr-2" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +18,7 @@ function SearchForm({
 }
 
 SearchForm.defaultProps = {
-  placeholder: 'Search…'
+  placeholder: 'Rechercher…'
 }
 
 export default SearchForm;
