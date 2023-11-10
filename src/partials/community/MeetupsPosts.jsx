@@ -49,13 +49,6 @@ function MeetupsPosts({ data }) {
                         </div>
                         {/* Footer */}
                         <div className='flex justify-between mt-3'>
-                            {/* Tag */}
-                            <div className='text-xs inline-flex items-center font-medium bg-slate-100 text-slate-600 rounded-full text-center px-2.5 py-1'>
-                                <svg className='w-4 h-3 fill-slate-400 mr-2' viewBox='0 0 16 12'>
-                                    <path d='m16 2-4 2.4V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7.6l4 2.4V2ZM2 10V2h8v8H2Z' />
-                                </svg>
-                                <span>Online Event</span>
-                            </div>
                             {/* Avatars */}
                             <div className='flex items-center space-x-2'>
                                 <div className='flex -space-x-3 -ml-0.5'>

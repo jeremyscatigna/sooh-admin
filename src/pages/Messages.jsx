@@ -6,7 +6,7 @@ import MessagesSidebar from '../partials/messages/MessagesSidebar';
 import MessagesHeader from '../partials/messages/MessagesHeader';
 import MessagesBody from '../partials/messages/MessagesBody';
 import MessagesFooter from '../partials/messages/MessagesFooter';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { addDoc, collection, getDocs, onSnapshot, query } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { atom, useAtom, useAtomValue } from 'jotai';
@@ -17,30 +17,43 @@ export const conversationsAtom = atom([]);
 export const selectedConversationAtom = atom({});
 export const usersAtom = atom([]);
 export const searchAtom = atom('');
+export const selectedConversationMessagesAtom = atom([]);
 
 function Messages() {
     const contentArea = useRef(null);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [msgSidebarOpen, setMsgSidebarOpen] = useState(true);
     const [selectedConversation, setSelectedConversation] = useAtom(selectedConversationAtom);
     const [users, setUsers] = useAtom(usersAtom);
     const [conversations, setConversations] = useAtom(conversationsAtom);
+    const [selectedConversationMessages, setSelectedConversationMessages] = useAtom(selectedConversationMessagesAtom);
 
     const authenticatedUser = useAtomValue(currentUser);
 
     useEffect(() => {
-      const fetchConversations = async () => {
-          const res = await getDocs(collection(db, `users/${authenticatedUser.uid}/conversations`));
+        const fetchConversations = async () => {
+            const res = await getDocs(collection(db, `users/${authenticatedUser.uid}/conversations`));
 
-          setConversations(res.docs.map((doc) => doc.data()));
-          console.log(res.docs.map((doc) => doc.data()));
-      };
+            setConversations(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+            console.log(res.docs.map((doc) => doc.data()));
+        };
 
-      if(conversations === undefined || conversations.length === 0) {
-        fetchConversations();
-      }
-  }, [conversations]);
+        if (conversations === undefined || conversations.length === 0) {
+            fetchConversations();
+        }
+    }, [conversations]);
+
+    useEffect(() => {
+        if (searchParams.get('conversation')) {
+            setSelectedConversation(conversations.find((conversation) => conversation.uid === searchParams.get('conversation')));
+            const conv = conversations.find((conversation) => conversation.uid === searchParams.get('conversation'));
+            if (conv) {
+                setSelectedConversationMessages(conv.messages || []);
+            }
+        }
+    }, [searchParams.get('conversation'), conversations]);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -66,6 +79,7 @@ function Messages() {
                 const newConversation = {
                     uid: uuidv4(),
                     userId: user.uid,
+                    toUserId: authenticatedUser.uid,
                     userFirstName: user.firstName,
                     userLastName: user.lastName,
                     userAvatar: user.avatar,
@@ -75,6 +89,7 @@ function Messages() {
                 const newUserConversation = {
                     uid: newConversation.uid,
                     userId: authenticatedUser.uid,
+                    toUserId: user.uid,
                     userFirstName: authenticatedUser.firstName,
                     userLastName: authenticatedUser.lastName,
                     userAvatar: authenticatedUser.avatar,

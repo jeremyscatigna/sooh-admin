@@ -7,7 +7,7 @@ import MeetupsPosts from '../../partials/community/MeetupsPosts';
 import PaginationNumeric from '../../components/PaginationNumeric';
 import ModalBasic from '../../components/ModalBasic';
 import Datepicker from '../../components/Datepicker';
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { auth, db, storage } from '../../main';
 import { v4 as uuidv4 } from 'uuid';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
@@ -28,6 +28,7 @@ function Meetups() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [details, setDetails] = useState('');
+    const [recurency, setRecurency] = useState('Unique');
     const [loading, setLoading] = useState(false);
 
     const currentUser = auth.currentUser;
@@ -35,7 +36,7 @@ function Meetups() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getDocs(collection(db, 'happyhours'));
+            const res = await getDocs(query(collection(db, 'happyhours'), orderBy('date', 'desc')));
             setData(res.docs.map((doc) => doc.data()));
         };
         fetchData();
@@ -75,6 +76,7 @@ function Meetups() {
             name,
             description,
             details,
+            recurency,
             imageUrl: imgUrl,
             userId: currentUser.uid,
             date: new Date(selectedDates).toString(),
@@ -83,6 +85,9 @@ function Meetups() {
             await addDoc(collection(db, 'happyhours'), {
                 ...toAdd,
             });
+            await addDoc(collection(db, `happyhours/${uid}/participants`), {
+                ...user
+            })
         } catch (e) {
             console.log(e);
             setLoading(false);
@@ -147,6 +152,22 @@ function Meetups() {
                                             </label>
                                             <Datepicker selectedDates={selectedDates} setSelectedDates={setSelectedDates} />
                                         </div>
+                                        <div>
+                                                <label className='block text-sm font-medium mb-1' htmlFor='country'>
+                                                    Recurence <span className='text-rose-500'>*</span>
+                                                </label>
+                                                <select
+                                                    id='country'
+                                                    className='form-select w-full'
+                                                    value={recurency}
+                                                    onChange={(e) => setRecurency(e.target.value)}
+                                                >
+                                                    <option value='Unique'>Unique</option>
+                                                    <option value='Daily'>Tout les jours</option>
+                                                    <option value='Weekly'>Toute les semaines</option>
+                                                    <option value='Monthly'>Tout les mois</option>
+                                                </select>
+                                            </div>
                                         <div>
                                             <label className='block text-sm font-medium mb-1' htmlFor='placeholder'>
                                                 Nom
@@ -220,7 +241,7 @@ function Meetups() {
                                                     handleCreate();
                                                 }}
                                             >
-                                                {loading ? 'hargement en cours...' : 'Créer'}
+                                                {loading ? 'Chargement en cours...' : 'Créer'}
                                             </button>
                                         </div>
                                     </div>

@@ -1,0 +1,8 @@
+{
+  "appId": "com.sooh.sooh",
+  "appName": "Sooh",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

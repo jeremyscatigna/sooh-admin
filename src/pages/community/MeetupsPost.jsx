@@ -20,15 +20,20 @@ import UserImage08 from '../../images/user-32-08.jpg';
 import Avatar02 from '../../images/avatar-02.jpg';
 import Avatar03 from '../../images/avatar-03.jpg';
 import Avatar04 from '../../images/avatar-04.jpg';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { addDoc, collection, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../../main';
-import Avvvatars from 'avvvatars-react'
+import Avvvatars from 'avvvatars-react';
+import { useAtomValue } from 'jotai';
+import { currentUser } from '../Signup';
 
 function MeetupsPost() {
     const { id } = useParams();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [happyHour, setHappyHour] = useState([]);
     const [user, setUser] = useState({});
+    const [attendees, setAttendees] = useState([]);
+
+    const connectedUser = useAtomValue(currentUser);
 
     useEffect(() => {
         const collectionQuery = query(collection(db, 'happyhours'), where('uid', '==', id));
@@ -42,6 +47,15 @@ function MeetupsPost() {
         });
 
         return () => unsub();
+    }, []);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const res = await getDocs(collection(db, `happyhours/${id}/participants`));
+            setAttendees(res.docs.map((doc) => doc.data()) || []);
+        };
+
+        fetchUser();
     }, []);
 
     useEffect(() => {
@@ -59,6 +73,19 @@ function MeetupsPost() {
             });
         }
     }, [happyHour]);
+
+    const handleAddAttendee = async (e) => {
+        e.preventDefault();
+        try {
+            await addDoc(collection(db, `happyhours/${id}/participants`), {
+                ...connectedUser,
+            });
+        } catch (e) {
+            console.log(e);
+        }
+
+        setAttendees([...attendees, connectedUser]);
+    };
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -101,7 +128,7 @@ function MeetupsPost() {
                                     {/* Author */}
                                     <div className='flex items-center sm:mr-4'>
                                         <a className='block mr-2 shrink-0' href='#0'>
-                                          <Avvvatars value={`${user.firstName} ${user.lastName}`} />
+                                            <Avvvatars value={`${user.firstName} ${user.lastName}`} />
                                         </a>
                                         <div className='text-sm whitespace-nowrap'>
                                             Hébergé par{' '}
@@ -111,23 +138,17 @@ function MeetupsPost() {
                                         </div>
                                     </div>
                                     {/* Right side */}
-                                    <div className='flex flex-wrap items-center sm:justify-end space-x-2'>
-                                        {/* Tags */}
-                                        <div className='text-xs inline-flex items-center font-medium bg-white text-slate-600 rounded-full text-center px-2.5 py-1'>
-                                            <svg className='w-4 h-3 fill-slate-400 mr-2' viewBox='0 0 16 12'>
-                                                <path d='m16 2-4 2.4V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7.6l4 2.4V2ZM2 10V2h8v8H2Z' />
-                                            </svg>
-                                            <span>Événement en ligne</span>
-                                        </div>
-                                        <div className='text-xs inline-flex font-medium uppercase bg-emerald-100 text-emerald-600 rounded-full text-center px-2.5 py-1'>
-                                            Free
-                                        </div>
-                                    </div>
                                 </div>
 
                                 {/* Image */}
                                 <figure className='mb-6'>
-                                    <img className='w-full rounded-sm' src={happyHour.imageUrl || MeetupImage} width='640' height='360' alt='Meetup' />
+                                    <img
+                                        className='w-full rounded-sm'
+                                        src={happyHour.imageUrl || MeetupImage}
+                                        width='640'
+                                        height='360'
+                                        alt='Meetup'
+                                    />
                                 </figure>
 
                                 {/* Post content */}
@@ -227,232 +248,63 @@ function MeetupsPost() {
                             {/* Sidebar */}
                             <div className='space-y-4'>
                                 {/* 1st block */}
-                                <div className='bg-white p-5 shadow-lg rounded-sm border border-slate-200 lg:w-72 xl:w-80'>
-                                    <div className='space-y-2'>
-                                        <button className='btn w-full bg-indigo-500 hover:bg-indigo-600 text-white'>
+
+                                <div className='space-y-2'>
+                                    {!attendees.includes(connectedUser) && (
+                                        <button
+                                            onClick={(e) => handleAddAttendee(e)}
+                                            className='btn w-full bg-indigo-500 hover:bg-indigo-600 text-white'
+                                        >
                                             <svg className='w-4 h-4 fill-current shrink-0' viewBox='0 0 16 16'>
                                                 <path d='m2.457 8.516.969-.99 2.516 2.481 5.324-5.304.985.989-6.309 6.284z' />
                                             </svg>
                                             <span className='ml-1'>Participer</span>
                                         </button>
-                                        <button className='btn w-full border-slate-200 hover:border-slate-300 text-slate-600'>
-                                            <svg className='w-4 h-4 fill-rose-500 shrink-0' viewBox='0 0 16 16'>
-                                                <path d='M14.682 2.318A4.485 4.485 0 0 0 11.5 1 4.377 4.377 0 0 0 8 2.707 4.383 4.383 0 0 0 4.5 1a4.5 4.5 0 0 0-3.182 7.682L8 15l6.682-6.318a4.5 4.5 0 0 0 0-6.364Zm-1.4 4.933L8 12.247l-5.285-5A2.5 2.5 0 0 1 4.5 3c1.437 0 2.312.681 3.5 2.625C9.187 3.681 10.062 3 11.5 3a2.5 2.5 0 0 1 1.785 4.251h-.003Z' />
-                                            </svg>
-                                            <span className='ml-2'>Favorite</span>
-                                        </button>
-                                    </div>
+                                    )}
                                 </div>
 
                                 {/* 2nd block */}
                                 <div className='bg-white p-5 shadow-lg rounded-sm border border-slate-200 lg:w-72 xl:w-80'>
                                     <div className='flex justify-between space-x-1 mb-5'>
-                                        <div className='text-sm text-slate-800 font-semibold'>Participants (127)</div>
-                                        <a className='text-sm font-medium text-indigo-500 hover:text-indigo-600' href='#0'>
-                                            View All
-                                        </a>
+                                        <div className='text-sm text-slate-800 font-semibold'>Participants ({attendees.length || 0})</div>
                                     </div>
                                     <ul className='space-y-3'>
-                                        <li>
-                                            <div className='flex justify-between'>
-                                                <div className='grow flex items-center'>
-                                                    <div className='relative mr-3'>
-                                                        <img
-                                                            className='w-8 h-8 rounded-full'
-                                                            src={UserImage08}
-                                                            width='32'
-                                                            height='32'
-                                                            alt='User 08'
-                                                        />
+                                        {attendees &&
+                                            attendees.length > 0 &&
+                                            attendees.map((attendee) => (
+                                                <li>
+                                                    <div className='flex justify-between'>
+                                                        <div className='grow flex items-center'>
+                                                            <div className='relative mr-3'>
+                                                                {attendee.avatar ? (
+                                                                    <img
+                                                                        className='w-8 h-8 rounded-full'
+                                                                        src={attendee.avatar}
+                                                                        width='32'
+                                                                        height='32'
+                                                                        alt='User 08'
+                                                                    />
+                                                                ) : (
+                                                                    <Avvvatars value={`${attendee.firstName} ${attendee.lastName}`} />
+                                                                )}
+                                                            </div>
+                                                            <div className='truncate'>
+                                                                <span className='text-sm font-medium text-slate-800'>
+                                                                    {attendee.firstName} {attendee.lastName}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <button className='text-slate-400 hover:text-slate-500 rounded-full'>
+                                                            <span className='sr-only'>Menu</span>
+                                                            <svg className='w-8 h-8 fill-current' viewBox='0 0 32 32'>
+                                                                <circle cx='16' cy='16' r='2' />
+                                                                <circle cx='10' cy='16' r='2' />
+                                                                <circle cx='22' cy='16' r='2' />
+                                                            </svg>
+                                                        </button>
                                                     </div>
-                                                    <div className='truncate'>
-                                                        <span className='text-sm font-medium text-slate-800'>Carolyn McNeail</span>
-                                                    </div>
-                                                </div>
-                                                <button className='text-slate-400 hover:text-slate-500 rounded-full'>
-                                                    <span className='sr-only'>Menu</span>
-                                                    <svg className='w-8 h-8 fill-current' viewBox='0 0 32 32'>
-                                                        <circle cx='16' cy='16' r='2' />
-                                                        <circle cx='10' cy='16' r='2' />
-                                                        <circle cx='22' cy='16' r='2' />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className='flex justify-between'>
-                                                <div className='grow flex items-center'>
-                                                    <div className='relative mr-3'>
-                                                        <img
-                                                            className='w-8 h-8 rounded-full'
-                                                            src={UserImage01}
-                                                            width='32'
-                                                            height='32'
-                                                            alt='User 01'
-                                                        />
-                                                    </div>
-                                                    <div className='truncate'>
-                                                        <span className='text-sm font-medium text-slate-800'>Dominik Lamakani</span>
-                                                    </div>
-                                                </div>
-                                                <button className='text-slate-400 hover:text-slate-500 rounded-full'>
-                                                    <span className='sr-only'>Menu</span>
-                                                    <svg className='w-8 h-8 fill-current' viewBox='0 0 32 32'>
-                                                        <circle cx='16' cy='16' r='2' />
-                                                        <circle cx='10' cy='16' r='2' />
-                                                        <circle cx='22' cy='16' r='2' />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className='flex justify-between'>
-                                                <div className='grow flex items-center'>
-                                                    <div className='relative mr-3'>
-                                                        <img
-                                                            className='w-8 h-8 rounded-full'
-                                                            src={UserImage03}
-                                                            width='32'
-                                                            height='32'
-                                                            alt='User 03'
-                                                        />
-                                                    </div>
-                                                    <div className='truncate'>
-                                                        <span className='text-sm font-medium text-slate-800'>Ivan Mesaros</span>
-                                                    </div>
-                                                </div>
-                                                <button className='text-slate-400 hover:text-slate-500 rounded-full'>
-                                                    <span className='sr-only'>Menu</span>
-                                                    <svg className='w-8 h-8 fill-current' viewBox='0 0 32 32'>
-                                                        <circle cx='16' cy='16' r='2' />
-                                                        <circle cx='10' cy='16' r='2' />
-                                                        <circle cx='22' cy='16' r='2' />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className='flex justify-between'>
-                                                <div className='grow flex items-center'>
-                                                    <div className='relative mr-3'>
-                                                        <img
-                                                            className='w-8 h-8 rounded-full'
-                                                            src={UserImage05}
-                                                            width='32'
-                                                            height='32'
-                                                            alt='User 05'
-                                                        />
-                                                    </div>
-                                                    <div className='truncate'>
-                                                        <span className='text-sm font-medium text-slate-800'>Maria Martinez</span>
-                                                    </div>
-                                                </div>
-                                                <button className='text-slate-400 hover:text-slate-500 rounded-full'>
-                                                    <span className='sr-only'>Menu</span>
-                                                    <svg className='w-8 h-8 fill-current' viewBox='0 0 32 32'>
-                                                        <circle cx='16' cy='16' r='2' />
-                                                        <circle cx='10' cy='16' r='2' />
-                                                        <circle cx='22' cy='16' r='2' />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                {/* 3rd block */}
-                                <div className='bg-white p-5 shadow-lg rounded-sm border border-slate-200 lg:w-72 xl:w-80'>
-                                    <div className='flex justify-between space-x-1 mb-5'>
-                                        <div className='text-sm text-slate-800 font-semibold'>Inviter des amis</div>
-                                        <a className='text-sm font-medium text-indigo-500 hover:text-indigo-600' href='#0'>
-                                            View All
-                                        </a>
-                                    </div>
-                                    <ul className='space-y-3'>
-                                        <li>
-                                            <div className='flex items-center justify-between'>
-                                                <div className='grow flex items-center'>
-                                                    <div className='relative mr-3'>
-                                                        <img
-                                                            className='w-8 h-8 rounded-full'
-                                                            src={UserImage02}
-                                                            width='32'
-                                                            height='32'
-                                                            alt='User 02'
-                                                        />
-                                                    </div>
-                                                    <div className='truncate'>
-                                                        <span className='text-sm font-medium text-slate-800'>Haruki Masuno</span>
-                                                    </div>
-                                                </div>
-                                                <button className='text-xs inline-flex font-medium bg-indigo-100 text-indigo-600 rounded-full text-center px-2.5 py-1'>
-                                                    Invite
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className='flex items-center justify-between'>
-                                                <div className='grow flex items-center'>
-                                                    <div className='relative mr-3'>
-                                                        <img
-                                                            className='w-8 h-8 rounded-full'
-                                                            src={UserImage04}
-                                                            width='32'
-                                                            height='32'
-                                                            alt='User 04'
-                                                        />
-                                                    </div>
-                                                    <div className='truncate'>
-                                                        <span className='text-sm font-medium text-slate-800'>Joe Huang</span>
-                                                    </div>
-                                                </div>
-                                                <button className='text-xs inline-flex font-medium bg-indigo-100 text-indigo-600 rounded-full text-center px-2.5 py-1'>
-                                                    Invite
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className='flex items-center justify-between'>
-                                                <div className='grow flex items-center'>
-                                                    <div className='relative mr-3'>
-                                                        <img
-                                                            className='w-8 h-8 rounded-full'
-                                                            src={UserImage06}
-                                                            width='32'
-                                                            height='32'
-                                                            alt='User 06'
-                                                        />
-                                                    </div>
-                                                    <div className='truncate'>
-                                                        <span className='text-sm font-medium text-slate-800'>Carolyn McNeail</span>
-                                                    </div>
-                                                </div>
-                                                <button className='text-xs inline-flex font-medium bg-indigo-100 text-indigo-600 rounded-full text-center px-2.5 py-1'>
-                                                    Invite
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className='flex items-center justify-between'>
-                                                <div className='grow flex items-center'>
-                                                    <div className='relative mr-3'>
-                                                        <img
-                                                            className='w-8 h-8 rounded-full'
-                                                            src={UserImage08}
-                                                            width='32'
-                                                            height='32'
-                                                            alt='User 08'
-                                                        />
-                                                    </div>
-                                                    <div className='truncate'>
-                                                        <span className='text-sm font-medium text-slate-800'>Lisa Sitwala</span>
-                                                    </div>
-                                                </div>
-                                                <button className='text-xs inline-flex font-medium bg-indigo-100 text-indigo-600 rounded-full text-center px-2.5 py-1'>
-                                                    Invite
-                                                </button>
-                                            </div>
-                                        </li>
+                                                </li>
+                                            ))}
                                     </ul>
                                 </div>
                             </div>
