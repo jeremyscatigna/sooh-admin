@@ -27,6 +27,7 @@ function DirectMessages({ setMsgSidebarOpen }) {
                                     setSelectedConversation(conversation);
                                     setSearchParams({ conversation: conversation.uid });
                                     setSelectedConversationMessages(conversation.messages);
+                                    setMsgSidebarOpen(false)
                                 }}
                             >
                                 <div className='flex items-center truncate'>

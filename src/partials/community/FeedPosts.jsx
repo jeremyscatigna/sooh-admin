@@ -105,9 +105,11 @@ function FeedPosts({ posts }) {
                     {/* Body */}
                     <div className='text-sm text-slate-800 space-y-2 mb-5'>
                         <p>{item.text}</p>
-                        <div className='relative flex items-center justify-center !my-4'>
-                            <img className='block w-full' src={item.imageUrl} width='590' height='332' alt='Feed 01' />
-                        </div>
+                        {item.imageUrl && (
+                            <div className='relative flex items-center justify-center !my-4'>
+                                <img className='block w-full' src={item.imageUrl} width='590' height='332' alt='Feed 01' />
+                            </div>
+                        )}
                     </div>
                     {/* Footer */}
                     <footer className='flex items-center space-x-4'>
