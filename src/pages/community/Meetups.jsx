@@ -36,7 +36,7 @@ function Meetups() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getDocs(query(collection(db, 'happyhours'), orderBy('date', 'desc')));
+            const res = await getDocs(query(collection(db, 'happyhours'), orderBy('date', 'asc')));
             setData(res.docs.map((doc) => doc.data()));
         };
         fetchData();

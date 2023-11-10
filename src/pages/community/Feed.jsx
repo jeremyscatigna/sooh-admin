@@ -34,7 +34,7 @@ function Feed() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getDocs(query(collection(db, 'posts'), orderBy('date', 'desc')));
+            const res = await getDocs(query(collection(db, 'posts'), orderBy('date', 'asc')));
 
             res.docs.forEach(async () => {
                 setData(res.docs.map((doc) => ({ ...doc.data(), comments: [] })));
