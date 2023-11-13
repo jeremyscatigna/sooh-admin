@@ -15,6 +15,7 @@ import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from 'fi
 import { v4 as uuidv4 } from 'uuid';
 import Avvvatars from 'avvvatars-react';
 import { SlidingTabBar } from '../../partials/Tabbar';
+import { Link } from 'react-router-dom';
 
 function Feed() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -121,18 +122,12 @@ function Feed() {
     return (
         <div className='flex h-screen overflow-hidden'>
             {/* Sidebar */}
-            {mobile ? (
-                <SlidingTabBar />
-            ): (
-                <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-            )}
+            {mobile ? <SlidingTabBar /> : <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
             {/* Content area */}
             <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
                 {/*  Site header */}
-                {!mobile && (
-                    <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-                )}
+                {!mobile && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
                 <main>
                     <div className='px-4 sm:px-6 lg:px-8 py-8 md:py-0 w-full max-w-9xl mx-auto'>
@@ -140,7 +135,20 @@ function Feed() {
                             {/* Left + Middle content */}
                             <div className='md:flex flex-1'>
                                 {/* Left content */}
-                                <FeedLeftContent />
+                                {!mobile && <FeedLeftContent />}
+                                {mobile && (
+                                    <header className='mb-6 flex flex-row w-full justify-between'>
+                                        <h1 className='text-2xl md:text-3xl text-slate-800 font-bold'>Feed</h1>
+                                        <Link
+                                            className='flex items-center justify-center p-2 rounded-full bg-slate-300'
+                                            to={`/profile/${user.uid}`}
+                                        >
+                                            <svg className='w-4 h-4 shrink-0 fill-current text-slate-400' viewBox='0 0 16 16'>
+                                                <path d='M12.311 9.527c-1.161-.393-1.85-.825-2.143-1.175A3.991 3.991 0 0012 5V4c0-2.206-1.794-4-4-4S4 1.794 4 4v1c0 1.406.732 2.639 1.832 3.352-.292.35-.981.782-2.142 1.175A3.942 3.942 0 001 13.26V16h14v-2.74c0-1.69-1.081-3.19-2.689-3.733zM6 4c0-1.103.897-2 2-2s2 .897 2 2v1c0 1.103-.897 2-2 2s-2-.897-2-2V4zm7 10H3v-.74c0-.831.534-1.569 1.33-1.838 1.845-.624 3-1.436 3.452-2.422h.436c.452.986 1.607 1.798 3.453 2.422A1.943 1.943 0 0113 13.26V14z' />
+                                            </svg>
+                                        </Link>
+                                    </header>
+                                )}
 
                                 {/* Middle content */}
                                 <div className='flex-1 md:ml-8 xl:mx-4 2xl:mx-8'>
