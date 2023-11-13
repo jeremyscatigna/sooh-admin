@@ -10,10 +10,6 @@ import { getStorage } from "firebase/storage";
 import { UserAuthContextProvider } from "./context/UserAuthContext";
 import dayjs from 'dayjs';
 
-import 'react-datetime-picker/dist/DateTimePicker.css';
-import 'react-calendar/dist/Calendar.css';
-import 'react-clock/dist/Clock.css';
-
 import 'dayjs/locale/fr'
 
 const firebaseConfig = {

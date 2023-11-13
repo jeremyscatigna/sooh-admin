@@ -11,7 +11,7 @@ import { useAtomValue } from 'jotai';
 import { currentUser } from '../Signup';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { auth, db, storage } from '../../main';
-import { addDoc, collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import Avvvatars from 'avvvatars-react';
 
@@ -34,7 +34,7 @@ function Feed() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getDocs(query(collection(db, 'posts'), orderBy('date', 'asc')));
+            const res = await getDocs(query(collection(db, 'posts'), orderBy('timestamp', 'desc')));
 
             res.docs.forEach(async () => {
                 setData(res.docs.map((doc) => ({ ...doc.data(), comments: [] })));
@@ -84,6 +84,7 @@ function Feed() {
             userLastName: user.lastName,
             userAvatar: user.avatar,
             date: new Date(new Date().setDate(new Date().getDate())).toString(),
+            timestamp: serverTimestamp()
         };
 
         console.log(toAdd);
