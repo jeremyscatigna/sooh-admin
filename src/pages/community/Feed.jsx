@@ -37,7 +37,7 @@ function Feed() {
             const res = await getDocs(query(collection(db, 'posts'), orderBy('timestamp', 'desc')));
 
             res.docs.forEach(async () => {
-                setData(res.docs.map((doc) => ({ ...doc.data(), comments: [] })));
+                setData(res.docs.map((doc) => ({id: doc.id, ...doc.data() })));
             });
         };
         fetchData();
@@ -84,6 +84,8 @@ function Feed() {
             userLastName: user.lastName,
             userAvatar: user.avatar,
             date: new Date(new Date().setDate(new Date().getDate())).toString(),
+            likes: [],
+            comments: [],
             timestamp: serverTimestamp()
         };
 
