@@ -14,6 +14,7 @@ import { auth, db, storage } from '../../main';
 import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import Avvvatars from 'avvvatars-react';
+import { SlidingTabBar } from '../../partials/Tabbar';
 
 function Feed() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -26,6 +27,18 @@ function Feed() {
     const [fileLoading, setFileLoading] = useState(false);
 
     const [loading, setLoading] = useState(false);
+    const [mobile, setMobile] = useState(window.innerWidth <= 500);
+
+    const handleWindowSizeChange = () => {
+        setMobile(window.innerWidth <= 500);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        };
+    }, []);
 
     const inputRef = useRef(null);
 
@@ -37,7 +50,7 @@ function Feed() {
             const res = await getDocs(query(collection(db, 'posts'), orderBy('timestamp', 'desc')));
 
             res.docs.forEach(async () => {
-                setData(res.docs.map((doc) => ({id: doc.id, ...doc.data() })));
+                setData(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
             });
         };
         fetchData();
@@ -86,7 +99,7 @@ function Feed() {
             date: new Date(new Date().setDate(new Date().getDate())).toString(),
             likes: [],
             comments: [],
-            timestamp: serverTimestamp()
+            timestamp: serverTimestamp(),
         };
 
         console.log(toAdd);
@@ -109,6 +122,9 @@ function Feed() {
         <div className='flex h-screen overflow-hidden'>
             {/* Sidebar */}
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            {mobile && (
+                <SlidingTabBar />
+            )}
 
             {/* Content area */}
             <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
