@@ -8,6 +8,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { UserAuthContextProvider } from "./context/UserAuthContext";
+import dayjs from 'dayjs';
+
+import 'react-datetime-picker/dist/DateTimePicker.css';
+import 'react-calendar/dist/Calendar.css';
+import 'react-clock/dist/Clock.css';
+
+import 'dayjs/locale/fr'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDKA0-9oe-3DiCe72QqoaaTlSZAacrBf08",
@@ -27,6 +34,8 @@ export const storage = getStorage(app);
 
 document.documentElement.classList.add("light");
 document.documentElement.style.colorScheme = "light";
+
+dayjs.locale('fr')
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

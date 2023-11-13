@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import * as dayjs from 'dayjs'
-import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import dayjs from 'dayjs';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import RelativeTime from 'dayjs/plugin/relativeTime';
 
 import MeetupsThumb01 from '../../images/meetups-thumb-01.jpg';
 import UserImage01 from '../../images/avatar-01.jpg';
@@ -9,7 +10,8 @@ import UserImage04 from '../../images/avatar-04.jpg';
 import UserImage05 from '../../images/avatar-05.jpg';
 
 function MeetupsPosts({ data }) {
-  dayjs.extend(LocalizedFormat)
+    dayjs.extend(LocalizedFormat);
+    dayjs.extend(RelativeTime);
     return (
         <div className='grid xl:grid-cols-2 gap-6'>
             {data.map((item, i) => (
@@ -43,9 +45,7 @@ function MeetupsPosts({ data }) {
                             <Link className='inline-flex mb-2' to={`/happyhours/${item.uid}`}>
                                 <h3 className='text-lg font-bold text-slate-800'>{item.name}</h3>
                             </Link>
-                            <div className='text-sm'>
-                                {item.description}
-                            </div>
+                            <div className='text-sm'>{item.description}</div>
                         </div>
                         {/* Footer */}
                         <div className='flex justify-between mt-3'>
