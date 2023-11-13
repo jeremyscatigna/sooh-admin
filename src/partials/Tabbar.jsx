@@ -42,12 +42,12 @@ export const SlidingTabBar = () => {
 
     return (
         <div className='absolute z-50 bottom-4 left-1/2 -translate-x-1/2'>
-            <div className='flew-row relative mx-auto flex h-12 rounded-3xl border border-black/40 bg-neutral-800 px-2 backdrop-blur-sm'>
+            <div className='flew-row relative mx-auto flex h-12 rounded-3xl border border-black/40 bg-background px-2 backdrop-blur-sm'>
                 <span
                     className='absolute bottom-0 top-0 -z-10 flex overflow-hidden rounded-3xl py-2 transition-all duration-300'
                     style={{ left: tabUnderlineLeft, width: tabUnderlineWidth }}
                 >
-                    <span className='h-full w-full rounded-3xl bg-gray-200/30' />
+                    <span className='h-full w-full rounded-3xl bg-gradient-to-r from-fuchsia-600 to-pink-600' />
                 </span>
                 {allTabs.map((tab, index) => {
                     const isActive = activeTabIndex === index;

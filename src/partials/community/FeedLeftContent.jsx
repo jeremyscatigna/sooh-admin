@@ -13,7 +13,7 @@ function FeedLeftContent() {
           
           {/* Title */}
           <header className="mb-6">
-            <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Feed ✨</h1>
+            <h1 className="text-2xl md:text-3xl text-white font-bold">Feed ✨</h1>
           </header>
           
           {/* Links */}

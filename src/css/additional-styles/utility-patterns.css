@@ -63,7 +63,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .form-select,
 .form-checkbox,
 .form-radio {
-    @apply text-sm text-slate-800 bg-white border;
+    @apply text-sm text-primary bg-white;
 }
 
 .form-input,
@@ -78,7 +78,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .form-textarea,
 .form-multiselect,
 .form-select {
-    @apply leading-5 py-2 px-3 border-slate-200 hover:border-slate-300 focus:border-indigo-300 shadow-sm;
+    @apply leading-5 py-2 px-3 shadow-sm;
 }
 
 .form-input,

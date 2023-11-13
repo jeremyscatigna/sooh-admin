@@ -138,12 +138,12 @@ function Feed() {
                                 {!mobile && <FeedLeftContent />}
                                 {mobile && (
                                     <header className='mb-6 flex flex-row w-full justify-between'>
-                                        <h1 className='text-2xl md:text-3xl text-slate-800 font-bold'>Feed</h1>
+                                        <h1 className='text-2xl md:text-3xl text-primary font-bold'>Feed</h1>
                                         <Link
-                                            className='flex items-center justify-center p-2 rounded-full bg-slate-300'
+                                            className='flex items-center justify-center p-2 rounded-full bg-card'
                                             to={`/profile/${user.uid}`}
                                         >
-                                            <svg className='w-4 h-4 shrink-0 fill-current text-slate-400' viewBox='0 0 16 16'>
+                                            <svg className='w-4 h-4 shrink-0 fill-current text-primary' viewBox='0 0 16 16'>
                                                 <path d='M12.311 9.527c-1.161-.393-1.85-.825-2.143-1.175A3.991 3.991 0 0012 5V4c0-2.206-1.794-4-4-4S4 1.794 4 4v1c0 1.406.732 2.639 1.832 3.352-.292.35-.981.782-2.142 1.175A3.942 3.942 0 001 13.26V16h14v-2.74c0-1.69-1.081-3.19-2.689-3.733zM6 4c0-1.103.897-2 2-2s2 .897 2 2v1c0 1.103-.897 2-2 2s-2-.897-2-2V4zm7 10H3v-.74c0-.831.534-1.569 1.33-1.838 1.845-.624 3-1.436 3.452-2.422h.436c.452.986 1.607 1.798 3.453 2.422A1.943 1.943 0 0113 13.26V14z' />
                                             </svg>
                                         </Link>
@@ -161,7 +161,7 @@ function Feed() {
                                                 </label>
                                                 <input
                                                     id='feed-search-desktop'
-                                                    className='form-input w-full pl-9 focus:border-slate-300'
+                                                    className='form-input rounded-full w-full pl-9 focus:border-slate-300'
                                                     type='search'
                                                     placeholder='Search…'
                                                 />
@@ -178,7 +178,7 @@ function Feed() {
                                             </form>
 
                                             {/* Post Block */}
-                                            <div className='bg-white shadow-md rounded border border-slate-200 p-5'>
+                                            <div className='bg-card shadow-md rounded-xl p-5'>
                                                 <div className='flex items-center space-x-3 mb-5'>
                                                     {user.avatar ? (
                                                         <img
@@ -198,7 +198,7 @@ function Feed() {
                                                         </label>
                                                         <input
                                                             id='status-input'
-                                                            className='form-input w-full bg-slate-100 border-transparent focus:bg-white focus:border-slate-300 placeholder-slate-500'
+                                                            className='form-input w-full bg-hover text-secondary border-none rounded-full placeholder-secondary'
                                                             type='text'
                                                             placeholder={`Que se passe-t-il, ${user.firstName}?`}
                                                             value={postText}
@@ -209,7 +209,7 @@ function Feed() {
                                                 <div className='flex justify-between items-center'>
                                                     <div className='grow flex space-x-5'>
                                                         <button
-                                                            className='inline-flex items-center text-sm font-medium text-slate-600 hover:text-slate-700'
+                                                            className='inline-flex items-center text-sm font-medium text-secondary hover:text-slate-700'
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
                                                                 inputRef.current.click();
@@ -217,7 +217,7 @@ function Feed() {
                                                         >
                                                             {!imgUrl ? (
                                                                 <svg
-                                                                    className='w-4 h-4 fill-indigo-400 mr-2'
+                                                                    className='w-4 h-4 fill-pink-600 mr-2'
                                                                     xmlns='http://www.w3.org/2000/svg'
                                                                 >
                                                                     <path d='M0 0h2v16H0V0Zm14 0h2v16h-2V0Zm-3 7H5c-.6 0-1-.4-1-1V1c0-.6.4-1 1-1h6c.6 0 1 .4 1 1v5c0 .6-.4 1-1 1ZM6 5h4V2H6v3Zm5 11H5c-.6 0-1-.4-1-1v-5c0-.6.4-1 1-1h6c.6 0 1 .4 1 1v5c0 .6-.4 1-1 1Zm-5-2h4v-3H6v3Z' />
@@ -241,7 +241,7 @@ function Feed() {
                                                     <div>
                                                         <button
                                                             type='submit'
-                                                            className='btn-sm bg-indigo-500 hover:bg-indigo-600 text-white whitespace-nowrap'
+                                                            className='btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 hover:bg-indigo-600 text-primary whitespace-nowrap rounded-lg'
                                                             onClick={(e) => {
                                                                 e.preventDefault();
 

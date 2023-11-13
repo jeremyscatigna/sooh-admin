@@ -28,9 +28,6 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-document.documentElement.classList.add("light");
-document.documentElement.style.colorScheme = "light";
-
 dayjs.locale('fr')
 
 ReactDOM.createRoot(document.getElementById('root')).render(
