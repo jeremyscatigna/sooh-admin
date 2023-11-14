@@ -21,8 +21,8 @@ function MessagesSidebar({ msgSidebarOpen, setMsgSidebarOpen, createConversation
                 <div>
                     {/* Group body */}
                     <div className='px-5 py-4'>
-                        <div className='flex flex-row grow justify-between items-start'>
-                            <form className='relative'>
+                        <div className='flex flex-row w-full items-start'>
+                            <form className='relative w-full'>
                                 <label htmlFor='msg-search' className='sr-only'>
                                     Search
                                 </label>
@@ -45,9 +45,6 @@ function MessagesSidebar({ msgSidebarOpen, setMsgSidebarOpen, createConversation
                                     </svg>
                                 </button>
                             </form>
-                            <button className='xl:hidden p-1.5 shrink-0 rounded border border-slate-200 hover:border-slate-300 shadow-sm ml-2'>
-                                <Plus />
-                            </button>
                         </div>
 
                         {search.length > 0 && (

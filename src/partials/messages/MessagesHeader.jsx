@@ -16,7 +16,7 @@ function MessagesHeader({ msgSidebarOpen, setMsgSidebarOpen }) {
     const authenticatedUser = useAtomValue(currentUser);
 
     return (
-        <div className='sticky top-16'>
+        <div className='sticky top-0'>
             <div className='flex items-center justify-between bg-card px-4 sm:px-6 md:px-5 h-16'>
                 {/* People */}
                 <div className='flex items-center'>
