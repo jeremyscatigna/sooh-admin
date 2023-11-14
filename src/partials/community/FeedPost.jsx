@@ -58,7 +58,13 @@ function FeedPost({ item }) {
                 {/* User */}
                 <div className='flex items-start space-x-3'>
                     {item.userAvatar ? (
-                        <img className='rounded-full shrink-0 object-fit w-10 h-10' src={item.userAvatar} width='40' height='40' alt='User 08' />
+                        <img
+                            className='rounded-full shrink-0 object-fit w-10 h-10'
+                            src={item.userAvatar}
+                            width='40'
+                            height='40'
+                            alt='User 08'
+                        />
                     ) : (
                         <Avvvatars value={`${item.userFirstName} ${item.userLastName}`} />
                     )}
@@ -96,7 +102,16 @@ function FeedPost({ item }) {
                 <p>{item.text}</p>
                 {item.imageUrl && (
                     <div className='relative flex items-center justify-center !my-4'>
-                        <img className='block w-full' src={item.imageUrl} width='590' height='332' alt='Feed 01' />
+                        <video
+                            className='block w-full'
+                            width='590'
+                            height='332'
+                            poster={item.imageUrl}
+                            src={item.imageUrl}
+                            muted
+                            autoPlay
+                            loop
+                        ></video>
                     </div>
                 )}
             </div>
@@ -119,7 +134,7 @@ function FeedPost({ item }) {
                     <svg className='w-4 h-4 shrink-0 fill-current mr-1.5' viewBox='0 0 16 16'>
                         <path d='M8 0C3.6 0 0 3.1 0 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7zm4 10.8v2.3L8.9 12H8c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8z' />
                     </svg>
-                    <div className='text-sm text-secondary'>{item.comments && item.comments.length || 0}</div>
+                    <div className='text-sm text-secondary'>{(item.comments && item.comments.length) || 0}</div>
                 </button>
             </footer>
             {seeComments && (

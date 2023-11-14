@@ -82,6 +82,7 @@ import { SlidingTabBar } from './partials/Tabbar';
 function App() {
 
   const location = useLocation();
+  const { pathname } = location;
   const [mobile, setMobile] = useState(window.innerWidth <= 500);
 
   const handleWindowSizeChange = () => {
@@ -169,7 +170,7 @@ useEffect(() => {
         <Route path="/component/icons" element={<IconsPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-      {mobile && <SlidingTabBar />}
+      {mobile && pathname !== 'signin' && pathname !== 'signup' && <SlidingTabBar />}
     </>
   );
 }
