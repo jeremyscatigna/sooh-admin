@@ -16,7 +16,7 @@ function MessagesSidebar({ msgSidebarOpen, setMsgSidebarOpen, createConversation
                 msgSidebarOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
         >
-            <div className='sticky top-16 bg-white overflow-x-hidden overflow-y-auto no-scrollbar shrink-0 border-r border-slate-200 md:w-72 xl:w-80 h-[calc(100vh-64px)]'>
+            <div className='sticky top-16 bg-background overflow-x-hidden overflow-y-auto no-scrollbar shrink-0 md:w-72 xl:w-80 h-[calc(100vh-64px)]'>
                 {/* #Marketing group */}
                 <div>
                     {/* Group body */}
@@ -28,7 +28,7 @@ function MessagesSidebar({ msgSidebarOpen, setMsgSidebarOpen, createConversation
                                 </label>
                                 <input
                                     id='msg-search'
-                                    className='form-input w-full pl-9 focus:border-slate-300'
+                                    className='form-input rounded-full border-none bg-hover text-secondary placeholder-secondary w-full pl-9 focus:border-slate-300'
                                     type='search'
                                     placeholder='Search…'
                                     value={search}
@@ -65,7 +65,7 @@ function MessagesSidebar({ msgSidebarOpen, setMsgSidebarOpen, createConversation
                                         .map((user) => (
                                             <li className='-mx-2'>
                                                 <button
-                                                    className='flex items-center justify-between w-full p-2 rounded hover:bg-indigo-100 focus:outline-none focus:bg-slate-50 transition duration-150 ease-in-out'
+                                                    className='flex items-center justify-between w-full p-2 rounded-xl hover:bg-hover focus:outline-none focus:bg-gradient-to-r from-fuchsia-600 to-pink-600 transition duration-150 ease-in-out'
                                                     onClick={() => createConversation(user)}
                                                 >
                                                     <div className='flex items-center truncate space-x-2'>
@@ -82,7 +82,7 @@ function MessagesSidebar({ msgSidebarOpen, setMsgSidebarOpen, createConversation
                                                         )}
 
                                                         <div className='truncate'>
-                                                            <span className='text-sm font-medium text-slate-800'>
+                                                            <span className='text-sm font-medium text-primary'>
                                                                 {user.firstName} {user.lastName}
                                                             </span>
                                                         </div>

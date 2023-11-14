@@ -5,6 +5,7 @@ import SidebarLinkGroup from './SidebarLinkGroup';
 import { Calendar, DashboardSpeed, MessageText, PeopleTag, Post, Settings, TwoSeaterSofa } from 'iconoir-react';
 import { useAtomValue } from 'jotai';
 import { currentUser } from '../pages/Signup';
+import Logo from '../images/logo1.jpg';
 
 // TODO: Loading state
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
@@ -54,7 +55,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
         <div>
             {/* Sidebar backdrop (mobile only) */}
             <div
-                className={`fixed inset-0 bg-slate-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
+                className={`fixed inset-0 bg-gradient-to-r from-fuchsia-600 to-pink-600 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
                     sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
                 aria-hidden='true'
@@ -64,7 +65,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             <div
                 id='sidebar'
                 ref={sidebar}
-                className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-800 p-4 transition-all duration-200 ease-in-out ${
+                className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-card p-4 transition-all duration-200 ease-in-out ${
                     sidebarOpen ? 'translate-x-0' : '-translate-x-64'
                 }`}
             >
@@ -85,31 +86,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     </button>
                     {/* Logo */}
                     <NavLink end to='/' className='block'>
-                        <svg width='32' height='32' viewBox='0 0 32 32'>
-                            <defs>
-                                <linearGradient x1='28.538%' y1='20.229%' x2='100%' y2='108.156%' id='logo-a'>
-                                    <stop stopColor='#A5B4FC' stopOpacity='0' offset='0%' />
-                                    <stop stopColor='#A5B4FC' offset='100%' />
-                                </linearGradient>
-                                <linearGradient x1='88.638%' y1='29.267%' x2='22.42%' y2='100%' id='logo-b'>
-                                    <stop stopColor='#38BDF8' stopOpacity='0' offset='0%' />
-                                    <stop stopColor='#38BDF8' offset='100%' />
-                                </linearGradient>
-                            </defs>
-                            <rect fill='#6366F1' width='32' height='32' rx='16' />
-                            <path
-                                d='M18.277.16C26.035 1.267 32 7.938 32 16c0 8.837-7.163 16-16 16a15.937 15.937 0 01-10.426-3.863L18.277.161z'
-                                fill='#4F46E5'
-                            />
-                            <path
-                                d='M7.404 2.503l18.339 26.19A15.93 15.93 0 0116 32C7.163 32 0 24.837 0 16 0 10.327 2.952 5.344 7.404 2.503z'
-                                fill='url(#logo-a)'
-                            />
-                            <path
-                                d='M2.223 24.14L29.777 7.86A15.926 15.926 0 0132 16c0 8.837-7.163 16-16 16-5.864 0-10.991-3.154-13.777-7.86z'
-                                fill='url(#logo-b)'
-                            />
-                        </svg>
+                        <img className='w-12 h-12 rounded-full' src={Logo} alt='Logo' />
                     </NavLink>
                 </div>
 
@@ -117,14 +94,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 <div className='space-y-8'>
                     {/* Pages group */}
                     <div>
-                        <h3 className='text-xs uppercase text-slate-500 font-semibold pl-3'>
-                            <span className='hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6' aria-hidden='true'>
-                                •••
-                            </span>
-                            <span className='lg:hidden lg:sidebar-expanded:block 2xl:block'>Pages</span>
-                        </h3>
                         <ul className='mt-3'>
-                            <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname === '/' && 'bg-slate-900'}`}>
+                            <li className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${pathname === '/' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'}`}>
                                 <NavLink
                                     end
                                     to='/'
@@ -136,7 +107,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                         <div className='grow flex items-center'>
                                             <Post
                                                 className={`shrink-0 h-6 w-6 ${
-                                                    pathname === '/' || pathname.includes('feed') ? 'text-indigo-500' : 'text-slate-600'
+                                                    pathname === '/' || pathname.includes('feed') ? 'text-primary' : 'text-secondary'
                                                 }`}
                                                 viewBox='0 0 24 24'
                                             />
@@ -149,7 +120,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                 </NavLink>
                             </li>
                             {user.type === 'business' && (
-                                <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname === '/influencers' && 'bg-slate-900'}`}>
+                                <li className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${pathname === '/influencers' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'}`}>
                                     <NavLink
                                         end
                                         to='/influencers'
@@ -161,7 +132,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                             <div className='grow flex items-center'>
                                                 <PeopleTag
                                                     className={`shrink-0 h-6 w-6 ${
-                                                        pathname === '/influencers' ? 'text-indigo-500' : 'text-slate-600'
+                                                        pathname === '/influencers' ? 'text-primary' : 'text-secondary'
                                                     }`}
                                                     viewBox='0 0 24 24'
                                                 />
@@ -173,7 +144,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                     </NavLink>
                                 </li>
                             )}
-                            <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname === '/happyhours' && 'bg-slate-900'}`}>
+                            <li className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${pathname === '/happyhours' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'}`}>
                                 <NavLink
                                     end
                                     to='/happyhours'
@@ -185,7 +156,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                         <div className='grow flex items-center'>
                                             <TwoSeaterSofa
                                                 className={`shrink-0 h-6 w-6 ${
-                                                    pathname === '/happyhours' ? 'text-indigo-500' : 'text-slate-600'
+                                                    pathname === '/happyhours' ? 'text-primary' : 'text-secondary'
                                                 }`}
                                                 viewBox='0 0 24 24'
                                             />
@@ -197,7 +168,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                 </NavLink>
                             </li>
                             {user.type === 'business' && (
-                                <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname === '/dashboard' && 'bg-slate-900'}`}>
+                                <li className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${pathname === '/dashboard' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'}`}>
                                     <NavLink
                                         end
                                         to='/dashboard'
@@ -209,7 +180,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                             <div className='grow flex items-center'>
                                                 <DashboardSpeed
                                                     className={`shrink-0 h-6 w-6 ${
-                                                        pathname === '/dashboard' ? 'text-indigo-500' : 'text-slate-600'
+                                                        pathname === '/dashboard' ? 'text-primary' : 'text-secondary'
                                                     }`}
                                                     viewBox='0 0 24 24'
                                                 />
@@ -222,7 +193,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                 </li>
                             )}
                             {/* Messages */}
-                            <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('messages') && 'bg-slate-900'}`}>
+                            <li className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${pathname.includes('messages') && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'}`}>
                                 <NavLink
                                     end
                                     to='/messages'
@@ -234,7 +205,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                         <div className='grow flex items-center'>
                                             <MessageText
                                                 className={`shrink-0 h-6 w-6 ${
-                                                    pathname === '/messages' ? 'text-indigo-500' : 'text-slate-600'
+                                                    pathname === '/messages' ? 'text-primary' : 'text-secondary'
                                                 }`}
                                                 viewBox='0 0 24 24'
                                             />
@@ -244,43 +215,20 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                         </div>
                                         {/* Badge */}
                                         <div className='flex flex-shrink-0 ml-2'>
-                                            <span className='inline-flex items-center justify-center h-5 text-xs font-medium text-white bg-indigo-500 px-2 rounded'>
+                                            <span className='inline-flex items-center justify-center h-5 text-xs font-medium text-pink-600 bg-white px-2 rounded-xl'>
                                                 4
                                             </span>
                                         </div>
                                     </div>
                                 </NavLink>
                             </li>
-                            {user.type === 'business' && (
-                                <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('calendar') && 'bg-slate-900'}`}>
-                                    <NavLink
-                                        end
-                                        to='/calendar'
-                                        className={`block text-slate-200 truncate transition duration-150 ${
-                                            pathname.includes('calendar') ? 'hover:text-slate-200' : 'hover:text-white'
-                                        }`}
-                                    >
-                                        <div className='flex items-center'>
-                                            <Calendar
-                                                className={`shrink-0 h-6 w-6 ${
-                                                    pathname === '/calendar' ? 'text-indigo-500' : 'text-slate-600'
-                                                }`}
-                                                viewBox='0 0 24 24'
-                                            />
-                                            <span className='text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200'>
-                                                Calendar
-                                            </span>
-                                        </div>
-                                    </NavLink>
-                                </li>
-                            )}
                             <SidebarLinkGroup activecondition={pathname.includes('settings')}>
                                 {(handleClick, open) => {
                                     return (
                                         <React.Fragment>
                                             <a
                                                 href='#0'
-                                                className={`block text-slate-200 truncate transition duration-150 ${
+                                                className={`block text-primary truncate transition duration-150 ${
                                                     pathname.includes('settings') ? 'hover:text-slate-200' : 'hover:text-white'
                                                 }`}
                                                 onClick={(e) => {
@@ -293,7 +241,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                     <div className='flex items-center'>
                                                         <Settings
                                                             className={`shrink-0 h-6 w-6 ${
-                                                                pathname.includes('settings') ? 'text-indigo-500' : 'text-slate-600'
+                                                                pathname.includes('settings') ? 'text-primary' : 'text-secondary'
                                                             }`}
                                                             viewBox='0 0 24 24'
                                                         />
@@ -304,7 +252,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                     {/* Icon */}
                                                     <div className='flex shrink-0 ml-2'>
                                                         <svg
-                                                            className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${
+                                                            className={`w-3 h-3 shrink-0 ml-1 fill-current text-primary ${
                                                                 open && 'rotate-180'
                                                             }`}
                                                             viewBox='0 0 12 12'
@@ -322,7 +270,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             to='/settings/account'
                                                             className={({ isActive }) =>
                                                                 'block transition duration-150 truncate ' +
-                                                                (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                                                                (isActive ? 'text-primary' : 'text-secondary hover:text-slate-200')
                                                             }
                                                         >
                                                             <span className='text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200'>
@@ -336,7 +284,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             to='/settings/notifications'
                                                             className={({ isActive }) =>
                                                                 'block transition duration-150 truncate ' +
-                                                                (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                                                                (isActive ? 'text-primary' : 'text-secondary hover:text-slate-200')
                                                             }
                                                         >
                                                             <span className='text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200'>
@@ -350,7 +298,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             to='/settings/plans'
                                                             className={({ isActive }) =>
                                                                 'block transition duration-150 truncate ' +
-                                                                (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                                                                (isActive ? 'text-primary' : 'text-secondary hover:text-slate-200')
                                                             }
                                                         >
                                                             <span className='text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200'>
@@ -364,7 +312,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             to='/settings/billing'
                                                             className={({ isActive }) =>
                                                                 'block transition duration-150 truncate ' +
-                                                                (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                                                                (isActive ? 'text-primary' : 'text-secondary hover:text-slate-200')
                                                             }
                                                         >
                                                             <span className='text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200'>
@@ -378,7 +326,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                                             to='/settings/feedback'
                                                             className={({ isActive }) =>
                                                                 'block transition duration-150 truncate ' +
-                                                                (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                                                                (isActive ? 'text-primary' : 'text-secondary hover:text-slate-200')
                                                             }
                                                         >
                                                             <span className='text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200'>
@@ -402,8 +350,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         <button onClick={() => setSidebarExpanded(!sidebarExpanded)}>
                             <span className='sr-only'>Expand / collapse sidebar</span>
                             <svg className='w-6 h-6 fill-current sidebar-expanded:rotate-180' viewBox='0 0 24 24'>
-                                <path className='text-slate-400' d='M19.586 11l-5-5L16 4.586 23.414 12 16 19.414 14.586 18l5-5H7v-2z' />
-                                <path className='text-slate-600' d='M3 23H1V1h2z' />
+                                <path className='text-secondary' d='M19.586 11l-5-5L16 4.586 23.414 12 16 19.414 14.586 18l5-5H7v-2z' />
+                                <path className='text-secondary' d='M3 23H1V1h2z' />
                             </svg>
                         </button>
                     </div>

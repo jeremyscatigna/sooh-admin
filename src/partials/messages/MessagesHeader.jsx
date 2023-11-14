@@ -17,12 +17,12 @@ function MessagesHeader({ msgSidebarOpen, setMsgSidebarOpen }) {
 
     return (
         <div className='sticky top-16'>
-            <div className='flex items-center justify-between bg-white border-b border-slate-200 px-4 sm:px-6 md:px-5 h-16'>
+            <div className='flex items-center justify-between bg-card px-4 sm:px-6 md:px-5 h-16'>
                 {/* People */}
                 <div className='flex items-center'>
                     {/* Close button */}
                     <button
-                        className='md:hidden text-slate-400 hover:text-slate-500 mr-4'
+                        className='md:hidden text-primary hover:text-slate-500 mr-4'
                         onClick={() => setMsgSidebarOpen(!msgSidebarOpen)}
                         aria-controls='messages-sidebar'
                         aria-expanded={msgSidebarOpen}
@@ -64,16 +64,6 @@ function MessagesHeader({ msgSidebarOpen, setMsgSidebarOpen }) {
                 </div>
                 {/* Buttons on the right side */}
                 <div className='flex'>
-                    <button
-                        className='p-1.5 shrink-0 rounded border border-slate-200 hover:border-slate-300 shadow-sm ml-2'
-                        aria-controls='basic-modal'
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            setBasicModalOpen(true);
-                        }}
-                    >
-                        <Plus />
-                    </button>
                     <ModalBasic id='basic-modal' modalOpen={basicModalOpen} setModalOpen={setBasicModalOpen} title='New Conversation'>
                         {/* Modal content */}
                         <div className='px-5 pt-4 pb-1'>

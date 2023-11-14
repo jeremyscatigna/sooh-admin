@@ -10,7 +10,7 @@ function AccountPanel() {
     <div className="grow">
       {/* Panel body */}
       <div className="p-6 space-y-6">
-        <h2 className="text-2xl text-slate-800 font-bold mb-5">Mon compte</h2>
+        <h2 className="text-2xl text-primary font-bold mb-5">Mon compte</h2>
         {/* Picture */}
         <section>
           <div className="flex items-center">

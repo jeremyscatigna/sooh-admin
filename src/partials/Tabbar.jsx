@@ -1,30 +1,48 @@
 import { Home } from 'iconoir-react';
+import { useAtomValue } from 'jotai';
 import React, { useEffect, useRef, useState } from 'react';
-
-let allTabs = [
-    {
-        id: 'home',
-        name: 'Home',
-    },
-    {
-        id: 'blog',
-        name: 'Blog',
-    },
-    {
-        id: 'projects',
-        name: 'Projects',
-    },
-    {
-        id: 'arts',
-        name: 'Arts',
-    },
-];
+import { currentUser } from '../pages/Signup';
+import { Link, useLocation } from 'react-router-dom';
 
 export const SlidingTabBar = () => {
     const tabsRef = useRef([]);
     const [activeTabIndex, setActiveTabIndex] = useState(null);
     const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
     const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
+    const user = useAtomValue(currentUser);
+
+    const location = useLocation();
+    const { pathname } = location;
+
+    let allTabs = [
+        {
+            id: 'feed',
+            name: 'Feed',
+        },
+        user.type === 'business' &&
+        {
+            id: 'influencers',
+            name: 'Influenceurs',
+        },
+        {
+            id: 'happyhours',
+            name: 'Deals',
+        },
+        user.type === 'business' &&
+        {
+            id: 'dashboard',
+            name: 'Dashboard',
+        },
+    ];
+
+    useEffect(() => {
+        const activeTabIndex = allTabs.findIndex((tab) => `/${tab.id}` === pathname);
+        if(pathname === "/") {
+            setActiveTabIndex(0);
+            return;
+        }
+        setActiveTabIndex(activeTabIndex);
+    }, [pathname]);
 
     useEffect(() => {
         if (activeTabIndex === null) {
@@ -53,8 +71,9 @@ export const SlidingTabBar = () => {
                     const isActive = activeTabIndex === index;
 
                     return (
-                        <button
+                        <Link
                             key={index}
+                            to={`/${tab.id === "feed" ? "" : tab.id}`}
                             ref={(el) => (tabsRef.current[index] = el)}
                             className={`${
                                 isActive ? `` : `hover:text-neutral-300`
@@ -63,7 +82,7 @@ export const SlidingTabBar = () => {
                         >
                             {/* <Home className='h-4 w-4' /> */}
                             {tab.name}
-                        </button>
+                        </Link>
                     );
                 })}
             </div>

@@ -114,7 +114,7 @@ function Meetups() {
                         <div className='sm:flex sm:justify-between sm:items-center mb-5'>
                             {/* Left: Title */}
                             <div className='mb-4 sm:mb-0'>
-                                <h1 className='text-2xl md:text-3xl text-slate-800 font-bold'>Happy Hours ✨</h1>
+                                <h1 className='text-2xl md:text-3xl text-primary font-bold'>Happy Hours</h1>
                             </div>
 
                             {/* Right: Actions */}
@@ -125,13 +125,13 @@ function Meetups() {
                                 {/* Add meetup button */}
                                 {user.type === 'business' && (
                                     <button
-                                        className='btn bg-indigo-500 hover:bg-indigo-600 text-white'
+                                        className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white'
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             setCreateModalOpen(true);
                                         }}
                                     >
-                                        <svg className='w-4 h-4 fill-current opacity-50 shrink-0' viewBox='0 0 16 16'>
+                                        <svg className='w-4 h-4 fill-current shrink-0' viewBox='0 0 16 16'>
                                             <path d='M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z' />
                                         </svg>
                                         <span className='hidden xs:block ml-2'>Happy Hour</span>
@@ -253,38 +253,37 @@ function Meetups() {
                         <div className='mb-5'>
                             <ul className='flex flex-wrap -m-1'>
                                 <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-indigo-500 text-white duration-150 ease-in-out'>
+                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary duration-150 ease-in-out'>
                                         Voir tout
                                     </button>
                                 </li>
                                 <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 hover:border-slate-300 shadow-sm bg-white text-slate-500 duration-150 ease-in-out'>
+                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-hover text-primary duration-150 ease-in-out'>
                                         En ligne
                                     </button>
                                 </li>
                                 <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 hover:border-slate-300 shadow-sm bg-white text-slate-500 duration-150 ease-in-out'>
+                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-hover text-primary duration-150 ease-in-out'>
                                         Locale
                                     </button>
                                 </li>
                                 <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 hover:border-slate-300 shadow-sm bg-white text-slate-500 duration-150 ease-in-out'>
+                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-hover text-primary duration-150 ease-in-out'>
                                         Cette semaine
                                     </button>
                                 </li>
                                 <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 hover:border-slate-300 shadow-sm bg-white text-slate-500 duration-150 ease-in-out'>
+                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-hover text-primary duration-150 ease-in-out'>
                                         Ce mois
                                     </button>
                                 </li>
                                 <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 hover:border-slate-300 shadow-sm bg-white text-slate-500 duration-150 ease-in-out'>
+                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-hover text-primary duration-150 ease-in-out'>
                                         Following
                                     </button>
                                 </li>
                             </ul>
                         </div>
-                        <div className='text-sm text-slate-500 italic mb-4'>289 Happy Hours</div>
 
                         {/* Content */}
                         <MeetupsPosts data={data} />

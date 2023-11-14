@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Avvvatars from 'avvvatars-react';
 import { SlidingTabBar } from '../../partials/Tabbar';
 import { Link } from 'react-router-dom';
+import { MediaImage, Message, Search, Settings } from 'iconoir-react';
 
 function Feed() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -122,7 +123,7 @@ function Feed() {
     return (
         <div className='flex h-screen overflow-hidden'>
             {/* Sidebar */}
-            {mobile ? <SlidingTabBar /> : <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
+            {!mobile && <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
             {/* Content area */}
             <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
@@ -139,14 +140,28 @@ function Feed() {
                                 {mobile && (
                                     <header className='mb-6 flex flex-row w-full justify-between'>
                                         <h1 className='text-2xl md:text-3xl text-primary font-bold'>Feed</h1>
-                                        <Link
-                                            className='flex items-center justify-center p-2 rounded-full bg-card'
-                                            to={`/profile/${user.uid}`}
-                                        >
-                                            <svg className='w-4 h-4 shrink-0 fill-current text-primary' viewBox='0 0 16 16'>
-                                                <path d='M12.311 9.527c-1.161-.393-1.85-.825-2.143-1.175A3.991 3.991 0 0012 5V4c0-2.206-1.794-4-4-4S4 1.794 4 4v1c0 1.406.732 2.639 1.832 3.352-.292.35-.981.782-2.142 1.175A3.942 3.942 0 001 13.26V16h14v-2.74c0-1.69-1.081-3.19-2.689-3.733zM6 4c0-1.103.897-2 2-2s2 .897 2 2v1c0 1.103-.897 2-2 2s-2-.897-2-2V4zm7 10H3v-.74c0-.831.534-1.569 1.33-1.838 1.845-.624 3-1.436 3.452-2.422h.436c.452.986 1.607 1.798 3.453 2.422A1.943 1.943 0 0113 13.26V14z' />
-                                            </svg>
-                                        </Link>
+                                        <div className='flex flex-row space-x-2'>
+                                            <Link
+                                                className='flex items-center justify-center p-2 rounded-full bg-card'
+                                                to={`/profile/${user.uid}`}
+                                            >
+                                                <svg className='w-4 h-4 shrink-0 fill-current text-primary' viewBox='0 0 16 16'>
+                                                    <path d='M12.311 9.527c-1.161-.393-1.85-.825-2.143-1.175A3.991 3.991 0 0012 5V4c0-2.206-1.794-4-4-4S4 1.794 4 4v1c0 1.406.732 2.639 1.832 3.352-.292.35-.981.782-2.142 1.175A3.942 3.942 0 001 13.26V16h14v-2.74c0-1.69-1.081-3.19-2.689-3.733zM6 4c0-1.103.897-2 2-2s2 .897 2 2v1c0 1.103-.897 2-2 2s-2-.897-2-2V4zm7 10H3v-.74c0-.831.534-1.569 1.33-1.838 1.845-.624 3-1.436 3.452-2.422h.436c.452.986 1.607 1.798 3.453 2.422A1.943 1.943 0 0113 13.26V14z' />
+                                                </svg>
+                                            </Link>
+                                            <Link
+                                                className='flex items-center justify-center p-2 rounded-full bg-card'
+                                                to={`/messages`}
+                                            >
+                                                <Message className='w-4 h-4 shrink-0 text-primary' />
+                                            </Link>
+                                            <Link
+                                                className='flex items-center justify-center p-2 rounded-full bg-card'
+                                                to={`/settings/account`}
+                                            >
+                                                <Settings className='w-4 h-4 shrink-0 text-primary' />
+                                            </Link>
+                                        </div>
                                     </header>
                                 )}
 
@@ -161,19 +176,12 @@ function Feed() {
                                                 </label>
                                                 <input
                                                     id='feed-search-desktop'
-                                                    className='form-input rounded-full w-full pl-9 focus:border-slate-300'
+                                                    className='form-input bg-hover text-secondary border-none rounded-full w-full pl-9 focus:border-slate-300'
                                                     type='search'
                                                     placeholder='Search…'
                                                 />
                                                 <button className='absolute inset-0 right-auto group' type='submit' aria-label='Search'>
-                                                    <svg
-                                                        className='w-4 h-4 shrink-0 fill-current text-slate-400 group-hover:text-slate-500 ml-3 mr-2'
-                                                        viewBox='0 0 16 16'
-                                                        xmlns='http://www.w3.org/2000/svg'
-                                                    >
-                                                        <path d='M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z' />
-                                                        <path d='M15.707 14.293L13.314 11.9a8.019 8.019 0 01-1.414 1.414l2.393 2.393a.997.997 0 001.414 0 .999.999 0 000-1.414z' />
-                                                    </svg>
+                                                    <Search className='w-4 h-4 shrink-0 text-secondary group-hover:text-slate-500 ml-3 mr-2' />
                                                 </button>
                                             </form>
 
@@ -216,19 +224,14 @@ function Feed() {
                                                             }}
                                                         >
                                                             {!imgUrl ? (
-                                                                <svg
-                                                                    className='w-4 h-4 fill-pink-600 mr-2'
-                                                                    xmlns='http://www.w3.org/2000/svg'
-                                                                >
-                                                                    <path d='M0 0h2v16H0V0Zm14 0h2v16h-2V0Zm-3 7H5c-.6 0-1-.4-1-1V1c0-.6.4-1 1-1h6c.6 0 1 .4 1 1v5c0 .6-.4 1-1 1ZM6 5h4V2H6v3Zm5 11H5c-.6 0-1-.4-1-1v-5c0-.6.4-1 1-1h6c.6 0 1 .4 1 1v5c0 .6-.4 1-1 1Zm-5-2h4v-3H6v3Z' />
-                                                                </svg>
+                                                                <MediaImage className='w-5 h-5 bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded mr-2' />
                                                             ) : (
                                                                 <div className='pr-3'>
                                                                     <img src={imgUrl} alt='uploaded file' className='w-10 h-10' />
                                                                 </div>
                                                             )}
 
-                                                            <span>{fileLoading ? 'Loading' : ' Image'}</span>
+                                                            <span>{fileLoading ? 'Loading' : ' Ajouter une image'}</span>
                                                         </button>
                                                         <input
                                                             ref={inputRef}

@@ -105,21 +105,21 @@ function MeetupsPost() {
                             <div>
                                 <div className='mb-6'>
                                     <Link
-                                        className='btn-sm px-3 bg-white border-slate-200 hover:border-slate-300 text-slate-600'
+                                        className='btn-sm rounded-full px-3 bg-hover hover:bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary'
                                         to='/happyhours'
                                     >
-                                        <svg className='fill-current text-slate-400 mr-2' width='7' height='12' viewBox='0 0 7 12'>
+                                        <svg className='fill-current text-primary mr-2' width='7' height='12' viewBox='0 0 7 12'>
                                             <path d='M5.4.6 6.8 2l-4 4 4 4-1.4 1.4L0 6z' />
                                         </svg>
                                         <span>Retours</span>
                                     </Link>
                                 </div>
-                                <div className='text-sm font-semibold text-indigo-500 uppercase mb-2'>
+                                <div className='text-sm font-semibold text-pink-500 uppercase mb-2'>
                                     Mon 27 Dec, 2021 - 9:00 PM -&gt; 10:00 PM
                                 </div>
                                 <header className='mb-4'>
                                     {/* Title */}
-                                    <h1 className='text-2xl md:text-3xl text-slate-800 font-bold mb-2'>{happyHour.name}</h1>
+                                    <h1 className='text-2xl md:text-3xl text-primary font-bold mb-2'>{happyHour.name}</h1>
                                     <p>{happyHour.description}</p>
                                 </header>
 
@@ -132,7 +132,7 @@ function MeetupsPost() {
                                         </a>
                                         <div className='text-sm whitespace-nowrap'>
                                             Hébergé par{' '}
-                                            <a className='font-semibold text-slate-800' href='#0'>
+                                            <a className='font-semibold text-pink-500' href='#0'>
                                                 {user.firstName} {user.lastName}
                                             </a>
                                         </div>
@@ -153,17 +153,17 @@ function MeetupsPost() {
 
                                 {/* Post content */}
                                 <div>
-                                    <h2 className='text-xl leading-snug text-slate-800 font-bold mb-2'>Détails</h2>
+                                    <h2 className='text-xl leading-snug text-primary font-bold mb-2'>Détails</h2>
                                     <p className='mb-6'>{happyHour.details}</p>
                                 </div>
                                 <hr className='my-6 border-t border-slate-200' />
 
                                 {/* Similar Meetups */}
                                 <div>
-                                    <h2 className='text-xl leading-snug text-slate-800 font-bold mb-2'>Similaires</h2>
+                                    <h2 className='text-xl leading-snug text-primary font-bold mb-2'>Similaires</h2>
                                     <div className='space-y-8 sm:space-y-5 my-6 lg:mb-0'>
                                         {/* Related item */}
-                                        <article className='flex bg-white shadow-lg rounded-sm border border-slate-200 overflow-hidden'>
+                                        <article className='flex bg-card shadow-lg rounded-xl overflow-hidden'>
                                             {/* Image */}
                                             <a
                                                 className='relative block w-24 sm:w-56 lg:sidebar-expanded:w-20 xl:sidebar-expanded:w-56 shrink-0'
@@ -189,11 +189,11 @@ function MeetupsPost() {
                                             {/* Content */}
                                             <div className='grow p-5 flex flex-col'>
                                                 <div className='grow'>
-                                                    <div className='text-sm font-semibold text-indigo-500 uppercase mb-2'>
+                                                    <div className='text-sm font-semibold text-pink-500 uppercase mb-2'>
                                                         Mon 27 Dec, 2021
                                                     </div>
                                                     <a className='inline-flex mb-2' href='#0'>
-                                                        <h3 className='text-lg font-bold text-slate-800'>
+                                                        <h3 className='text-lg font-bold text-primary'>
                                                             New York &amp; New Jersey Virtual Retreat 2021
                                                         </h3>
                                                     </a>
@@ -236,7 +236,7 @@ function MeetupsPost() {
                                                                 alt='User 04'
                                                             />
                                                         </div>
-                                                        <div className='text-xs font-medium text-slate-400 italic'>+132</div>
+                                                        <div className='text-xs font-medium text-secondary italic'>+132</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -253,7 +253,7 @@ function MeetupsPost() {
                                     {!attendees.includes(connectedUser) && (
                                         <button
                                             onClick={(e) => handleAddAttendee(e)}
-                                            className='btn w-full bg-indigo-500 hover:bg-indigo-600 text-white'
+                                            className='btn w-full bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded-full'
                                         >
                                             <svg className='w-4 h-4 fill-current shrink-0' viewBox='0 0 16 16'>
                                                 <path d='m2.457 8.516.969-.99 2.516 2.481 5.324-5.304.985.989-6.309 6.284z' />
@@ -264,9 +264,9 @@ function MeetupsPost() {
                                 </div>
 
                                 {/* 2nd block */}
-                                <div className='bg-white p-5 shadow-lg rounded-sm border border-slate-200 lg:w-72 xl:w-80'>
+                                <div className='bg-card p-5 shadow-lg rounded-xl lg:w-72 xl:w-80'>
                                     <div className='flex justify-between space-x-1 mb-5'>
-                                        <div className='text-sm text-slate-800 font-semibold'>Participants ({attendees.length || 0})</div>
+                                        <div className='text-sm text-primary font-semibold'>Participants ({attendees.length || 0})</div>
                                     </div>
                                     <ul className='space-y-3'>
                                         {attendees &&
@@ -289,7 +289,7 @@ function MeetupsPost() {
                                                                 )}
                                                             </div>
                                                             <div className='truncate'>
-                                                                <span className='text-sm font-medium text-slate-800'>
+                                                                <span className='text-sm font-medium text-primary'>
                                                                     {attendee.firstName} {attendee.lastName}
                                                                 </span>
                                                             </div>

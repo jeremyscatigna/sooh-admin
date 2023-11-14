@@ -24,7 +24,7 @@ function MessagesBody() {
                         )}
 
                         <div className='ml-4'>
-                            <div className={`text-sm ${message.senderFirstName === user.firstName ? 'bg-indigo-500 text-white' : 'bg-white text-slate-800'} p-3 rounded-lg rounded-tl-none border border-slate-200 shadow-md mb-1`}>
+                            <div className={`text-sm ${message.senderFirstName === user.firstName ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary' : 'bg-white text-slate-800'} p-3 rounded-xl rounded-tl-none shadow-md mb-1`}>
                                 {message.text}
                             </div>
                             <div className='flex items-center justify-between'>

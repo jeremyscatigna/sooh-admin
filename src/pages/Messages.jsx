@@ -129,7 +129,7 @@ function Messages() {
 
                         {/* Messages body */}
                         <div
-                            className={`grow flex flex-col md:translate-x-0 transition-transform duration-300 ease-in-out ${
+                            className={`grow flex bg-card flex-col md:translate-x-0 transition-transform duration-300 ease-in-out ${
                                 msgSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
                             }`}
                         >

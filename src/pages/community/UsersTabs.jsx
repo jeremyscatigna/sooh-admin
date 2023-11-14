@@ -27,7 +27,7 @@ function UsersTabs() {
       name: 'Dominik McNeail',
       image: Image01,
       link: '/community/profile',
-      location: '🇮🇹',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
     {
@@ -35,7 +35,7 @@ function UsersTabs() {
       name: 'Ivan Mesaros',
       image: Image02,
       link: '/community/profile',
-      location: '🇫🇷',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
     {
@@ -43,7 +43,7 @@ function UsersTabs() {
       name: 'Tisha Yanchev',
       image: Image03,
       link: '/community/profile',
-      location: '🇩🇪',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
     {
@@ -51,7 +51,7 @@ function UsersTabs() {
       name: 'Sergio Gonnelli',
       image: Image04,
       link: '/community/profile',
-      location: '🇮🇹',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
     {
@@ -59,7 +59,7 @@ function UsersTabs() {
       name: 'Jerzy Wierzy',
       image: Image05,
       link: '/community/profile',
-      location: '🇪🇸',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
     {
@@ -67,7 +67,7 @@ function UsersTabs() {
       name: 'Mirko Grubisic',
       image: Image06,
       link: '/community/profile',
-      location: '🇩🇪',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
     {
@@ -75,7 +75,7 @@ function UsersTabs() {
       name: 'Alisha Acharya',
       image: Image07,
       link: '/community/profile',
-      location: '🇬🇧',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
     {
@@ -83,7 +83,7 @@ function UsersTabs() {
       name: 'Brian Halligan',
       image: Image08,
       link: '/community/profile',
-      location: '🇺🇸',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
     {
@@ -91,7 +91,7 @@ function UsersTabs() {
       name: 'Patricia Semklo',
       image: Image09,
       link: '/community/profile',
-      location: '🇮🇳',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
     {
@@ -99,7 +99,7 @@ function UsersTabs() {
       name: 'Maria Martinez',
       image: Image10,
       link: '/community/profile',
-      location: '🇮🇹',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
     {
@@ -107,7 +107,7 @@ function UsersTabs() {
       name: 'Vedad Siljak',
       image: Image11,
       link: '/community/profile',
-      location: '🇨🇦',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
     {
@@ -115,7 +115,7 @@ function UsersTabs() {
       name: 'Dominik Lamakani',
       image: Image12,
       link: '/community/profile',
-      location: '🇧🇪',
+      location: 'Nice, France',
       content: 'Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.',
     },
   ];
@@ -142,7 +142,7 @@ function UsersTabs() {
 
               {/* Left: Title */}
               <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Sooh ✨</h1>
+                <h1 className="text-2xl md:text-3xl text-primary font-bold">Influenceurs</h1>
               </div>
 
               {/* Right: Actions */}

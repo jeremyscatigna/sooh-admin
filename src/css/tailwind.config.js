@@ -1,4 +1,3 @@
-const { default: daisyui } = require('daisyui');
 const plugin = require('tailwindcss/plugin');
 
 module.exports = {

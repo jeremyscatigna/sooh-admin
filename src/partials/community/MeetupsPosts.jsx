@@ -15,7 +15,7 @@ function MeetupsPosts({ data }) {
     return (
         <div className='grid xl:grid-cols-2 gap-6'>
             {data.map((item, i) => (
-                <article className='flex bg-white shadow-lg rounded-sm border border-slate-200 overflow-hidden' key={i}>
+                <article className='flex bg-card shadow-lg rounded-lg overflow-hidden' key={i}>
                     {/* Image */}
                     <Link
                         className='relative block w-24 sm:w-56 xl:sidebar-expanded:w-40 2xl:sidebar-expanded:w-56 shrink-0'
@@ -41,9 +41,9 @@ function MeetupsPosts({ data }) {
                     {/* Content */}
                     <div className='grow p-5 flex flex-col'>
                         <div className='grow'>
-                            <div className='text-sm font-semibold text-indigo-500 uppercase mb-2'>{dayjs(item.date).format('LLL')}</div>
+                            <div className='text-sm font-semibold text-pink-500 uppercase mb-2'>{dayjs(item.date).format('LLL')}</div>
                             <Link className='inline-flex mb-2' to={`/happyhours/${item.uid}`}>
-                                <h3 className='text-lg font-bold text-slate-800'>{item.name}</h3>
+                                <h3 className='text-lg font-bold text-primary'>{item.name}</h3>
                             </Link>
                             <div className='text-sm'>{item.description}</div>
                         </div>
@@ -74,7 +74,7 @@ function MeetupsPosts({ data }) {
                                         alt='User 05'
                                     />
                                 </div>
-                                <div className='text-xs font-medium text-slate-400 italic'>+22</div>
+                                <div className='text-xs font-medium text-secondary italic'>+22</div>
                             </div>
                         </div>
                     </div>

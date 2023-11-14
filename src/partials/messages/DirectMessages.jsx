@@ -13,14 +13,14 @@ function DirectMessages({ setMsgSidebarOpen }) {
     const setSelectedConversationMessages = useSetAtom(selectedConversationMessagesAtom);
     return (
         <div className='mt-4'>
-            <div className='text-xs font-semibold text-slate-400 uppercase mb-3'>Messages ({conversations.length})</div>
+            <div className='text-xs font-semibold text-primary uppercase mb-3'>Messages ({conversations.length})</div>
             {conversations.length > 0 && (
                 <ul className='mb-6'>
                     {conversations.map((conversation) => (
                         <li className='-mx-2' key={conversation.uid}>
                             <button
-                                className={`flex items-center justify-between w-full p-2 rounded ${
-                                    selectedConversation?.uid === conversation.uid ? 'bg-indigo-100' : 'hover:bg-indigo-100'
+                                className={`flex items-center justify-between w-full p-2 rounded-xl ${
+                                    selectedConversation?.uid === conversation.uid ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600' : 'hover:bg-hover'
                                 } transition duration-150 ease-in-out`}
                                 onClick={() => {
                                     console.log(conversation);
@@ -44,7 +44,7 @@ function DirectMessages({ setMsgSidebarOpen }) {
                                     )}
 
                                     <div className='truncate ml-2'>
-                                        <span className='text-sm font-medium text-slate-800'>
+                                        <span className='text-sm font-medium text-primary'>
                                             {conversation.userFirstName} {conversation.userLastName}
                                         </span>
                                     </div>

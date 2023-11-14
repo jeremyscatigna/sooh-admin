@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Routes,
   Route,
@@ -77,10 +77,23 @@ import AccordionPage from './pages/component/AccordionPage';
 import IconsPage from './pages/component/IconsPage';
 
 import ProtectedRoute from "./utils/ProtectedRoute";
+import { SlidingTabBar } from './partials/Tabbar';
 
 function App() {
 
   const location = useLocation();
+  const [mobile, setMobile] = useState(window.innerWidth <= 500);
+
+  const handleWindowSizeChange = () => {
+    setMobile(window.innerWidth <= 500);
+};
+
+useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange);
+    return () => {
+        window.removeEventListener('resize', handleWindowSizeChange);
+    };
+}, []);
 
   useEffect(() => {
     document.querySelector('html').style.scrollBehavior = 'auto'
@@ -156,6 +169,7 @@ function App() {
         <Route path="/component/icons" element={<IconsPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      {mobile && <SlidingTabBar />}
     </>
   );
 }
