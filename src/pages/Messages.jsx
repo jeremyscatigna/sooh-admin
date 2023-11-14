@@ -31,6 +31,18 @@ function Messages() {
     const [selectedConversationMessages, setSelectedConversationMessages] = useAtom(selectedConversationMessagesAtom);
 
     const authenticatedUser = useAtomValue(currentUser);
+    const [mobile, setMobile] = useState(window.innerWidth <= 500);
+
+    const handleWindowSizeChange = () => {
+        setMobile(window.innerWidth <= 500);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        };
+    }, []);
 
     useEffect(() => {
         const fetchConversations = async () => {
@@ -111,12 +123,12 @@ function Messages() {
     return (
         <div className='flex h-screen overflow-hidden'>
             {/* Sidebar */}
-            <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            {!mobile && <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
             {/* Content area */}
             <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden' ref={contentArea}>
                 {/*  Site header */}
-                <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                {!mobile && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
                 <main>
                     <div className='relative flex'>

@@ -58,7 +58,7 @@ function FeedPost({ item }) {
                 {/* User */}
                 <div className='flex items-start space-x-3'>
                     {item.userAvatar ? (
-                        <img className='rounded-full shrink-0' src={item.userAvatar} width='40' height='40' alt='User 08' />
+                        <img className='rounded-full shrink-0 object-fit w-10 h-10' src={item.userAvatar} width='40' height='40' alt='User 08' />
                     ) : (
                         <Avvvatars value={`${item.userFirstName} ${item.userLastName}`} />
                     )}
@@ -157,7 +157,7 @@ function FeedPost({ item }) {
 
             <div className='flex items-center space-x-3 mt-3'>
                 {item.userAvatar ? (
-                    <img className='rounded-full shrink-0' src={UserImage02} width='32' height='32' alt='User 02' />
+                    <img className='rounded-full shrink-0 w-8 h-8 object-fit' src={item.userAvatar} width='32' height='32' alt='User 02' />
                 ) : (
                     <Avvvatars value={`${item.userFirstName} ${item.userLastName}`} />
                 )}

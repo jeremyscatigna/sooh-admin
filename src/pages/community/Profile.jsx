@@ -29,6 +29,19 @@ function Profile() {
 
     const { id } = useParams();
 
+    const [mobile, setMobile] = useState(window.innerWidth <= 500);
+
+    const handleWindowSizeChange = () => {
+        setMobile(window.innerWidth <= 500);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        };
+    }, []);
+
     useEffect(() => {
         const collectionQuery = query(collection(db, 'users'), where('uid', '==', id));
 
@@ -120,12 +133,12 @@ function Profile() {
     return (
         <div className='flex h-screen overflow-hidden'>
             {/* Sidebar */}
-            <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            {!mobile && <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
             {/* Content area */}
-            <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-white'>
+            <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-background'>
                 {/*  Site header */}
-                <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                {!mobile && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
                 <main>
                     <ModalBasic id='basic-modal' modalOpen={basicModalOpen} setModalOpen={setBasicModalOpen} title='Modifie ton profil'>
