@@ -183,7 +183,7 @@ function FeedPost({ item }) {
                     </label>
                     <input
                         id='comment-form'
-                        className='form-input border-0 w-full bg-hover text-primary rounded-full focus:bg-white placeholder-secondary'
+                        className='form-input border-0 w-full bg-hover text-primary rounded-full placeholder-secondary'
                         type='text'
                         placeholder='Écrire un commentaire…'
                         value={comment}
