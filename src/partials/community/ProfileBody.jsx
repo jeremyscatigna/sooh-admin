@@ -6,6 +6,8 @@ import { useAtomValue } from 'jotai';
 import { currentUser } from '../../pages/Signup';
 import { Edit } from 'iconoir-react';
 import ModalBasic from '../../components/ModalBasic';
+import { signOut } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 
 function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalOpen, user, posts }) {
     const connectedUser = useAtomValue(currentUser);
@@ -80,6 +82,15 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                                 >
                                     <Edit />
                                 </button>
+                                <Link
+                                    className='btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full p-2 hover:bg-indigo-600 text-white'
+                                    to='/signin'
+                                    onClick={() => {
+                                        signOut();
+                                    }}
+                                >
+                                    Se deconnecter
+                                </Link>
                             </div>
                         )}
                     </div>
