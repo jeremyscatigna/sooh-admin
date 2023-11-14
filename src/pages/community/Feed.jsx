@@ -244,7 +244,7 @@ function Feed() {
                                                     <div>
                                                         <button
                                                             type='submit'
-                                                            className='btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 hover:bg-indigo-600 text-primary whitespace-nowrap rounded-lg'
+                                                            className='btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary whitespace-nowrap rounded-lg'
                                                             onClick={(e) => {
                                                                 e.preventDefault();
 

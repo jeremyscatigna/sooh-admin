@@ -58,7 +58,7 @@ function Onboarding02() {
     };
 
     return (
-        <main className='bg-white'>
+        <main className='bg-card'>
             <div className='relative flex'>
                 {/* Content */}
                 <div className='w-full md:w-1/2'>
@@ -96,7 +96,7 @@ function Onboarding02() {
                                 </Link>
                                 <div className='text-sm'>
                                     Vous avez un compte ?{' '}
-                                    <Link className='font-medium text-indigo-500 hover:text-indigo-600' to='/signin'>
+                                    <Link className='font-medium text-pink-500 hover:text-secondary' to='/signin'>
                                         Se connecter
                                     </Link>
                                 </div>
@@ -106,11 +106,11 @@ function Onboarding02() {
                             <div className='px-4 pt-12 pb-8'>
                                 <div className='max-w-md mx-auto w-full'>
                                     <div className='relative'>
-                                        <div className='absolute left-0 top-1/2 -mt-px w-full h-0.5 bg-slate-200' aria-hidden='true'></div>
+                                        <div className='absolute left-0 top-1/2 -mt-px w-full h-0.5 bg-secondary' aria-hidden='true'></div>
                                         <ul className='relative flex justify-between w-full'>
                                             <li>
                                                 <Link
-                                                    className='flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white'
+                                                    className='flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
                                                     to='/onboarding-01'
                                                 >
                                                     1
@@ -118,7 +118,7 @@ function Onboarding02() {
                                             </li>
                                             <li>
                                                 <Link
-                                                    className='flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white'
+                                                    className='flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
                                                     to='/onboarding-02'
                                                 >
                                                     2
@@ -126,7 +126,7 @@ function Onboarding02() {
                                             </li>
                                             <li>
                                                 <Link
-                                                    className='flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-slate-100 text-slate-500'
+                                                    className='flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-white text-background'
                                                     to='/onboarding-03'
                                                 >
                                                     3
@@ -134,7 +134,7 @@ function Onboarding02() {
                                             </li>
                                             <li>
                                                 <Link
-                                                    className='flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-slate-100 text-slate-500'
+                                                    className='flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-white text-background'
                                                     to='/onboarding-04'
                                                 >
                                                     4
@@ -148,18 +148,16 @@ function Onboarding02() {
                         {userType === 'business' && (
                             <div className='px-4 py-8'>
                                 <div className='max-w-md mx-auto'>
-                                    <h1 className='text-3xl text-slate-800 font-bold mb-6'>Informations sur la société ✨</h1>
+                                    <h1 className='text-3xl text-primary font-bold mb-6'>Informations sur la société</h1>
                                     {/* htmlForm */}
                                     <form>
                                         <div className='space-y-4 mb-8'>
                                             {/* Company Name */}
                                             <div>
-                                                <label className='block text-sm font-medium mb-1' htmlFor='company-name'>
-                                                    Nom de l'entreprise <span className='text-rose-500'>*</span>
-                                                </label>
                                                 <input
                                                     id='company-name'
-                                                    className='form-input w-full'
+                                                    className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
+                                                    placeholder="Nom de l'entreprise"
                                                     type='text'
                                                     value={companyName}
                                                     onChange={(e) => setCompanyName(e.target.value)}
@@ -168,25 +166,21 @@ function Onboarding02() {
                                             {/* City and Postal Code */}
                                             <div className='flex space-x-4'>
                                                 <div className='flex-1'>
-                                                    <label className='block text-sm font-medium mb-1' htmlFor='city'>
-                                                        Ville <span className='text-rose-500'>*</span>
-                                                    </label>
                                                     <input
                                                         id='city'
-                                                        className='form-input w-full'
+                                                        className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
                                                         type='text'
+                                                        placeholder='Ville'
                                                         value={city}
                                                         onChange={(e) => setCity(e.target.value)}
                                                     />
                                                 </div>
                                                 <div className='flex-1'>
-                                                    <label className='block text-sm font-medium mb-1' htmlFor='postal-code'>
-                                                        Code Postal <span className='text-rose-500'>*</span>
-                                                    </label>
                                                     <input
                                                         id='postal-code'
-                                                        className='form-input w-full'
+                                                        className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
                                                         type='text'
+                                                        placeholder='Code Postal'
                                                         value={postalCode}
                                                         onChange={(e) => setPostalCode(e.target.value)}
                                                     />
@@ -194,26 +188,22 @@ function Onboarding02() {
                                             </div>
                                             {/* Street Address */}
                                             <div>
-                                                <label className='block text-sm font-medium mb-1' htmlFor='street'>
-                                                    Adresse <span className='text-rose-500'>*</span>
-                                                </label>
                                                 <input
                                                     id='street'
-                                                    className='form-input w-full'
+                                                    className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
                                                     type='text'
+                                                    placeholder='Adresse'
                                                     value={street}
                                                     onChange={(e) => setStreet(e.target.value)}
                                                 />
                                             </div>
                                             {/* Country */}
                                             <div>
-                                                <label className='block text-sm font-medium mb-1' htmlFor='country'>
-                                                    Pays <span className='text-rose-500'>*</span>
-                                                </label>
                                                 <select
                                                     id='country'
-                                                    className='form-select w-full'
+                                                    className='form-select rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
                                                     value={country}
+                                                    placeholder='Pays'
                                                     onChange={(e) => setCountry(e.target.value)}
                                                 >
                                                     <option value='USA'>USA</option>
@@ -228,7 +218,7 @@ function Onboarding02() {
                                                 &lt;- Back
                                             </Link>
                                             <button
-                                                className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-auto'
+                                                className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white ml-auto'
                                                 onClick={(e) => handleSubmit(e)}
                                             >
                                                 Etape suivante -&gt;
@@ -242,7 +232,7 @@ function Onboarding02() {
                         {userType === 'influencer' && (
                             <div className='px-4 py-8'>
                                 <div className='max-w-md mx-auto'>
-                                    <h1 className='text-3xl text-slate-800 font-bold mb-6'>Vos liens ✨</h1>
+                                    <h1 className='text-3xl text-primary font-bold mb-6'>Vos liens</h1>
                                     {/* htmlForm */}
                                     <form>
                                         <div className='space-y-4 mb-8'>
@@ -253,8 +243,9 @@ function Onboarding02() {
                                                 </label>
                                                 <input
                                                     id='company-name'
-                                                    className='form-input w-full'
+                                                    className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
                                                     type='text'
+                                                    placeholder='https://www.instagram.com/...'
                                                     value={instagram}
                                                     onChange={(e) => setInstagram(e.target.value)}
                                                 />
@@ -265,8 +256,9 @@ function Onboarding02() {
                                                 </label>
                                                 <input
                                                     id='company-name'
-                                                    className='form-input w-full'
+                                                    className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
                                                     type='text'
+                                                    placeholder='https://www.tiktok.com/...'
                                                     value={tiktok}
                                                     onChange={(e) => setTiktok(e.target.value)}
                                                 />
@@ -277,8 +269,9 @@ function Onboarding02() {
                                                 </label>
                                                 <input
                                                     id='company-name'
-                                                    className='form-input w-full'
+                                                    className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
                                                     type='text'
+                                                    placeholder='https://www.youtube.com/...'
                                                     value={youtube}
                                                     onChange={(e) => setYoutube(e.target.value)}
                                                 />
@@ -289,7 +282,7 @@ function Onboarding02() {
                                                 &lt;- Retour
                                             </Link>
                                             <button
-                                                className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-auto'
+                                                className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white ml-auto'
                                                 onClick={(e) => handleSubmit(e)}
                                             >
                                                 Etape suivante -&gt;

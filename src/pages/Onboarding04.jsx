@@ -9,7 +9,7 @@ import { useAtomValue } from 'jotai';
 function Onboarding04() {
   const name = useAtomValue(userNameAtom);
   return (
-    <main className="bg-white">
+    <main className="bg-background">
 
       <div className="relative flex">
 
@@ -42,7 +42,7 @@ function Onboarding04() {
                   </svg>
                 </Link>
                 <div className="text-sm">
-                    Vous avez un compte ? <Link className="font-medium text-indigo-500 hover:text-indigo-600" to="/signin">Se connecter</Link>
+                    Vous avez un compte ? <Link className="font-medium text-pink-500 hover:text-secondary" to="/signin">Se connecter</Link>
                 </div>
               </div>
 
@@ -50,19 +50,19 @@ function Onboarding04() {
               <div className="px-4 pt-12 pb-8">
                 <div className="max-w-md mx-auto w-full">
                   <div className="relative">
-                    <div className="absolute left-0 top-1/2 -mt-px w-full h-0.5 bg-slate-200" aria-hidden="true"></div>
+                    <div className="absolute left-0 top-1/2 -mt-px w-full h-0.5 bg-secondary" aria-hidden="true"></div>
                     <ul className="relative flex justify-between w-full">
                       <li>
-                        <Link className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white" to="/onboarding-01">1</Link>
+                        <Link className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white" to="/onboarding-01">1</Link>
                       </li>
                       <li>
-                        <Link className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white" to="/onboarding-02">2</Link>
+                        <Link className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white" to="/onboarding-02">2</Link>
                       </li>
                       <li>
-                        <Link className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white" to="/onboarding-03">3</Link>
+                        <Link className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white" to="/onboarding-03">3</Link>
                       </li>
                       <li>
-                        <Link className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white" to="/onboarding-04">4</Link>
+                        <Link className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white" to="/onboarding-04">4</Link>
                       </li>
                     </ul>
                   </div>
@@ -78,8 +78,8 @@ function Onboarding04() {
                     <circle className="text-emerald-100" cx="32" cy="32" r="32" />
                     <path className="text-emerald-500" d="m28.5 41-8-8 3-3 5 5 12-12 3 3z" />
                   </svg>
-                  <h1 className="text-3xl text-slate-800 font-bold mb-8">Ravi de vous avoir, {name} 🙌</h1>
-                  <Link className="btn bg-indigo-500 hover:bg-indigo-600 text-white" to="/">Aller au Feed -&gt;</Link>
+                  <h1 className="text-3xl text-primary font-bold mb-8">Ravi de vous avoir, {name}</h1>
+                  <Link className="btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white" to="/">Aller au Feed -&gt;</Link>
                 </div>
 
               </div>

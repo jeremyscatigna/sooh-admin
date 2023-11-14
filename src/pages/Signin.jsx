@@ -51,7 +51,7 @@ function Signin() {
     };
 
     return (
-        <main className='bg-white'>
+        <main className='bg-background'>
             <div className='relative md:flex'>
                 {/* Content */}
                 <div className='md:w-1/2'>
@@ -91,29 +91,25 @@ function Signin() {
                         </div>
 
                         <div className='max-w-sm mx-auto w-full px-4 py-8'>
-                            <h1 className='text-3xl text-slate-800 font-bold mb-6'>Content de te revoir! ✨</h1>
+                            <h1 className='text-3xl text-primary font-bold mb-6'>Content de te revoir!</h1>
                             {/* Form */}
                             <form>
                                 <div className='space-y-4'>
                                     <div>
-                                        <label className='block text-sm font-medium mb-1' htmlFor='email'>
-                                            Adresse e-mail
-                                        </label>
                                         <input
                                             id='email'
-                                            className='form-input w-full'
+                                            className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
                                             type='email'
+                                            placeholder='Adresse e-mail'
                                             onChange={(e) => setEmail(e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className='block text-sm font-medium mb-1' htmlFor='password'>
-                                            Mot de passe
-                                        </label>
                                         <input
                                             id='password'
-                                            className='form-input w-full'
+                                            className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
                                             type='password'
+                                            placeholder='Mot de passe'
                                             autoComplete='on'
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
@@ -126,7 +122,7 @@ function Signin() {
                                         </Link>
                                     </div>
                                     <button
-                                        className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3'
+                                        className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white ml-3'
                                         onClick={(e) => handleSubmit(e)}
                                     >
                                         {loading ? 'Chargement en cours...' : 'Se connecter'}
@@ -137,7 +133,7 @@ function Signin() {
                             <div className='pt-5 mt-6 border-t border-slate-200'>
                                 <div className='text-sm'>
                                     Vous n'avez pas de compte ?{' '}
-                                    <Link className='font-medium text-indigo-500 hover:text-indigo-600' to='/signup'>
+                                    <Link className='font-medium text-pink-500 hover:text-secondary' to='/signup'>
                                         S'inscrire
                                     </Link>
                                 </div>

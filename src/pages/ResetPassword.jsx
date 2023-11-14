@@ -6,7 +6,7 @@ import AuthDecoration from '../images/auth-decoration.png';
 
 function ResetPassword() {
   return (
-    <main className="bg-white">
+    <main className="bg-background">
 
       <div className="relative md:flex">
 
@@ -40,17 +40,16 @@ function ResetPassword() {
             </div>
 
             <div className="max-w-sm mx-auto px-4 py-8">
-              <h1 className="text-3xl text-slate-800 font-bold mb-6">Reset your Password ✨</h1>
+              <h1 className="text-3xl text-primary font-bold mb-6">Reinitialiser</h1>
               {/* Form */}
               <form>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1" htmlFor="email">Email Address <span className="text-rose-500">*</span></label>
-                    <input id="email" className="form-input w-full" type="email" />
+                    <input id="email" placeholder='Adresse email' className="form-input bg-hover border-none rounded-full placeholder-secondary text-secondary w-full" type="email" />
                   </div>
                 </div>
-                <div className="flex justify-end mt-6">
-                  <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white whitespace-nowrap">Send Reset Link</button>
+                <div className="flex justify-center mt-6">
+                  <button className="btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white whitespace-nowrap">Send Reset Link</button>
                 </div>
               </form>
             </div>

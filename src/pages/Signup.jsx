@@ -77,7 +77,7 @@ function Signup() {
     };
 
     return (
-        <main className='bg-white'>
+        <main className='bg-background'>
             <div className='relative md:flex'>
                 {/* Content */}
                 <div className='md:w-1/2'>
@@ -117,40 +117,34 @@ function Signup() {
                         </div>
 
                         <div className='max-w-sm mx-auto w-full px-4 py-8'>
-                            <h1 className='text-3xl text-slate-800 font-bold mb-6'>Créez votre compte ✨</h1>
+                            <h1 className='text-3xl text-primary font-bold mb-6'>Créez votre compte</h1>
                             {/* Form */}
                             <form>
                                 <div className='space-y-4'>
                                     <div>
-                                        <label className='block text-sm font-medium mb-1' htmlFor='email'>
-                                            Adresse e-mail <span className='text-rose-500'>*</span>
-                                        </label>
                                         <input
                                             id='email'
-                                            className='form-input w-full'
+                                            className='form-input bg-hover rounded-full border-none text-secondary placeholder-secondary w-full'
                                             type='email'
+                                            placeholder='Adresse e-mail'
                                             onChange={(e) => setEmail(e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className='block text-sm font-medium mb-1' htmlFor='name'>
-                                            Prénom <span className='text-rose-500'>*</span>
-                                        </label>
                                         <input
                                             id='name'
-                                            className='form-input w-full'
+                                            className='form-input bg-hover rounded-full border-none text-secondary placeholder-secondary w-full'
                                             type='text'
+                                            placeholder='Prénom'
                                             onChange={(e) => setFirstName(e.target.value)}
                                         />
                                     </div>
                                     <div>
-                                        <label className='block text-sm font-medium mb-1' htmlFor='name'>
-                                            Nom <span className='text-rose-500'>*</span>
-                                        </label>
                                         <input
                                             id='name'
-                                            className='form-input w-full'
+                                            className='form-input bg-hover rounded-full border-none text-secondary placeholder-secondary w-full'
                                             type='text'
+                                            placeholder='Nom'
                                             onChange={(e) => setLastName(e.target.value)}
                                         />
                                     </div>
@@ -162,27 +156,19 @@ function Signup() {
                     </select>
                   </div> */}
                                     <div>
-                                        <label className='block text-sm font-medium mb-1' htmlFor='password'>
-                                            Mot de passe
-                                        </label>
                                         <input
                                             id='password'
-                                            className='form-input w-full'
+                                            className='form-input bg-hover rounded-full border-none text-secondary placeholder-secondary w-full'
                                             type='password'
+                                            placeholder='Mot de passe'
                                             autoComplete='on'
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
                                     </div>
                                 </div>
                                 <div className='flex items-center justify-between mt-6'>
-                                    <div className='mr-1'>
-                                        <label className='flex items-center'>
-                                            <input type='checkbox' className='form-checkbox' />
-                                            <span className='text-sm ml-2'>Envoyez-moi un e-mail pour les nouvelles des produits.</span>
-                                        </label>
-                                    </div>
                                     <button
-                                        className='btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap'
+                                        className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white whitespace-nowrap'
                                         onClick={(e) => handleSubmit(e)}
                                     >
                                         {loading ? 'Chargement en cours...' : "S'inscrire"}
@@ -193,7 +179,7 @@ function Signup() {
                             <div className='pt-5 mt-6 border-t border-slate-200'>
                                 <div className='text-sm'>
                                     Vous avez un compte ?{' '}
-                                    <Link className='font-medium text-indigo-500 hover:text-indigo-600' to='/signin'>
+                                    <Link className='font-medium text-pink-500 hover:text-secondary' to='/signin'>
                                         Se connecter
                                     </Link>
                                 </div>
