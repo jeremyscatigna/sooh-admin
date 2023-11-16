@@ -13,11 +13,11 @@ export default defineConfig({
     },
     plugins: [
         react(),
-        eslintPlugin({
-            cache: false,
-            include: ['./src/**/*.js', './src/**/*.jsx'],
-            exclude: [],
-        }),
+        // eslintPlugin({
+        //     cache: false,
+        //     include: ['./src/**/*.js', './src/**/*.jsx'],
+        //     exclude: [],
+        // }),
     ],
     resolve: {
         alias: [

@@ -1,16 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import EditMenu from '../../components/DropdownEditMenu';
 
-import UserImage02 from '../../images/user-40-02.jpg';
-import UserImage08 from '../../images/user-40-08.jpg';
-import CommenterImage04 from '../../images/user-32-04.jpg';
-import CommenterImage05 from '../../images/user-32-05.jpg';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import RelativeTime from 'dayjs/plugin/relativeTime';
 import { Heart, SendDiagonal } from 'iconoir-react';
-import { addDoc, collection, doc, getDocs, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { useAtomValue } from 'jotai';
 import { currentUser } from '../../pages/Signup';
 import { v4 as uuidv4 } from 'uuid';
@@ -24,7 +19,6 @@ function FeedPost({ item }) {
     const user = useAtomValue(currentUser);
 
     const [like, setLike] = React.useState(false);
-    const [share, setShare] = React.useState(false);
     const [comment, setComment] = React.useState('');
     const [seeComments, setSeeComments] = React.useState(false);
 

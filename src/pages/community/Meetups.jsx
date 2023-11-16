@@ -154,7 +154,7 @@ function Meetups() {
                                     id='basic-modal'
                                     modalOpen={createModalOpen}
                                     setModalOpen={setCreateModalOpen}
-                                    title='Create your Happy Hour'
+                                    title='Creer votre Happy Hour'
                                 >
                                     {/* Modal content */}
                                     <div className='px-5 pt-4 pb-1 space-y-4'>
@@ -170,7 +170,7 @@ function Meetups() {
                                                 </label>
                                                 <select
                                                     id='country'
-                                                    className='form-select w-full'
+                                                    className='form-select rounded-xl border-none bg-hover text-secondary w-full'
                                                     value={recurency}
                                                     onChange={(e) => setRecurency(e.target.value)}
                                                 >
@@ -186,7 +186,7 @@ function Meetups() {
                                             </label>
                                             <input
                                                 id='placeholder'
-                                                className='form-input w-full'
+                                                className='form-input rounded-xl border-none bg-hover text-secondary w-full'
                                                 type='text'
                                                 value={name}
                                                 onChange={(e) => setName(e.target.value)}
@@ -199,7 +199,7 @@ function Meetups() {
                                             </label>
                                             <input
                                                 id='placeholder'
-                                                className='form-input w-full'
+                                                className='form-input rounded-xl border-none bg-hover text-secondary w-full'
                                                 type='text'
                                                 value={description}
                                                 onChange={(e) => setDescription(e.target.value)}
@@ -212,7 +212,7 @@ function Meetups() {
                                             </label>
                                             <textarea
                                                 id='placeholder'
-                                                className='form-input w-full'
+                                                className='form-input rounded-xl border-none bg-hover text-secondary w-full'
                                                 type='text'
                                                 rows={5}
                                                 value={details}
@@ -223,10 +223,10 @@ function Meetups() {
                                         {!imgUrl && (
                                             <form onSubmit={handleUpload} className='flex flex-row justify-between items-center'>
                                                 <input
-                                                    className='block border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4'
+                                                    className='block border border-gray-200 text-primary shadow-sm rounded-xl text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 file:bg-transparent file:border-0 file:bg-gray-100 file:text-primary file:mr-4 file:py-3 file:px-4'
                                                     type='file'
                                                 />
-                                                <button className='btn py-3 bg-indigo-500 hover:bg-indigo-600 text-white' type='submit'>
+                                                <button className='btn py-3 bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white' type='submit'>
                                                     {fileLoading ? 'Chargement en cours...' : 'Télécharger'}
                                                 </button>
                                             </form>
@@ -238,7 +238,7 @@ function Meetups() {
                                     <div className='px-5 py-4'>
                                         <div className='flex flex-wrap justify-end space-x-2'>
                                             <button
-                                                className='btn-sm border-slate-200 hover:border-slate-300 text-slate-600'
+                                                className='btn-sm border-slate-200 hover:border-slate-300 rounded-full text-primary'
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     setCreateModalOpen(false);
@@ -247,7 +247,7 @@ function Meetups() {
                                                 Fermer
                                             </button>
                                             <button
-                                                className='btn-sm bg-indigo-500 hover:bg-indigo-600 text-white'
+                                                className='btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white'
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     handleCreate();
