@@ -5,18 +5,7 @@ import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
 
 import MeetupImage from '../../images/meetup-image.jpg';
-import MeetupPhoto01 from '../../images/meetup-photo-01.jpg';
-import MeetupPhoto02 from '../../images/meetup-photo-02.jpg';
-import MeetupPhoto03 from '../../images/meetup-photo-03.jpg';
 import MeetupThumb from '../../images/meetups-thumb-02.jpg';
-import UserImage01 from '../../images/user-32-01.jpg';
-import UserImage02 from '../../images/user-32-02.jpg';
-import UserImage03 from '../../images/user-32-03.jpg';
-import UserImage04 from '../../images/user-32-04.jpg';
-import UserImage05 from '../../images/user-32-05.jpg';
-import UserImage06 from '../../images/user-32-06.jpg';
-import UserImage07 from '../../images/user-32-07.jpg';
-import UserImage08 from '../../images/user-32-08.jpg';
 import Avatar02 from '../../images/avatar-02.jpg';
 import Avatar03 from '../../images/avatar-03.jpg';
 import Avatar04 from '../../images/avatar-04.jpg';
@@ -25,6 +14,7 @@ import { db } from '../../main';
 import Avvvatars from 'avvvatars-react';
 import { useAtomValue } from 'jotai';
 import { currentUser } from '../Signup';
+import useTimer from '../../components/Timer';
 
 function MeetupsPost() {
     const { id } = useParams();
@@ -120,7 +110,7 @@ function MeetupsPost() {
                                 <header className='mb-4'>
                                     {/* Title */}
                                     <h1 className='text-2xl md:text-3xl text-primary font-bold mb-2'>{happyHour.name}</h1>
-                                    <p>{happyHour.description}</p>
+                                    <p>{happyHour.description}</p> 
                                 </header>
 
                                 {/* Meta */}
