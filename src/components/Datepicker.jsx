@@ -1,28 +1,7 @@
 import React from 'react';
 
 function Datepicker({ align, selectedDates, setSelectedDates }) {
-    const options = {
-        mode: 'single',
-        static: true,
-        monthSelectorType: 'static',
-        dateFormat: 'M j, Y H:i',
-        enableTime: true,
-        time_24hr: true,
-        defaultDate: new Date().setDate(new Date().getDate()),
-        prevArrow:
-            '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
-        nextArrow:
-            '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M1.4 10.8L0 9.4l4-4-4-4L1.4 0l5.4 5.4z" /></svg>',
-        onReady: (selectedDates, dateStr, instance) => {
-            instance.element.value = dateStr.replace('to', '-');
-            const customClass = align ? align : '';
-            instance.calendarContainer.classList.add(`flatpickr-${customClass}`);
-        },
-        onChange: (selectedDates, dateStr, instance) => {
-            instance.element.value = dateStr.replace('to', '-');
-        },
-    };
-
+    console.log(selectedDates)
     return (
         <div className='relative'>
             <input
@@ -31,7 +10,12 @@ function Datepicker({ align, selectedDates, setSelectedDates }) {
                 name='meeting-time'
                 className='form-input rounded-xl border-none bg-hover text-secondary font-medium w-60'
                 value={selectedDates}
-                onChange={setSelectedDates}
+                onChange={(e) => {
+                  const d = new Date(e.target.value);
+                  const dateTimeLocalValue = (new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString()).slice(0, -5)
+                  console.log(dateTimeLocalValue);
+                  setSelectedDates(dateTimeLocalValue)
+                }}
             />
             {/* <div className='absolute inset-0 right-auto flex items-center pointer-events-none'>
                 <svg className='w-4 h-4 fill-current text-secondary ml-3' viewBox='0 0 16 16'>

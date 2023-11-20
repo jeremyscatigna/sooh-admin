@@ -75,6 +75,7 @@ import IconsPage from './pages/component/IconsPage';
 
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { SlidingTabBar } from './partials/Tabbar';
+import CreateHappyHour from './pages/community/CreateHappyHour';
 
 function App() {
 
@@ -107,6 +108,7 @@ useEffect(() => {
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/happyhours" element={<Meetups />} />
+        <Route path="/happyhours/new" element={<CreateHappyHour />} />
         <Route path="/happyhours/:id" element={<MeetupsPost />} />
         <Route path="/community/meetups-post" element={<MeetupsPost />} />
         <Route path="/dashboard/analytics" element={<Analytics />} />
