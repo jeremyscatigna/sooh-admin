@@ -9,6 +9,7 @@ import UserImage01 from '../../images/avatar-01.jpg';
 import UserImage04 from '../../images/avatar-04.jpg';
 import UserImage05 from '../../images/avatar-05.jpg';
 import useTimer from '../../components/Timer';
+import { getCategoriesShadowColor } from '../../utils/categories';
 
 function MeetupsPosts({ data }) {
     dayjs.extend(LocalizedFormat);
@@ -19,7 +20,7 @@ function MeetupsPosts({ data }) {
             {data.map((item, i) => {
                 const { days, hours, minutes, seconds } = useTimer(item.date);
                 return (
-                    <article className='flex bg-card shadow-lg rounded-lg overflow-hidden' key={i}>
+                    <article className={`flex bg-card shadow-lg ${item.category && getCategoriesShadowColor(item.category)} rounded-lg overflow-hidden`} key={i}>
                         {/* Image */}
                         <Link
                             className='relative block w-24 sm:w-56 xl:sidebar-expanded:w-40 2xl:sidebar-expanded:w-56 shrink-0'

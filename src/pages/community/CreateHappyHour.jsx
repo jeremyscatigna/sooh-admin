@@ -14,6 +14,7 @@ import Datepicker from '../../components/Datepicker';
 import dayjs from 'dayjs';
 import Avvvatars from 'avvvatars-react';
 import { Cancel, Check, Edit } from 'iconoir-react';
+import { categories } from '../../utils/categories';
 
 const getLocaleDateTime = () => {
     let d = new Date();
@@ -40,6 +41,7 @@ function CreateHappyHour() {
     const [details, setDetails] = useState('');
     const [validateDetails, setValidateDetails] = useState(false);
     const [recurency, setRecurency] = useState('Unique');
+    const [category, setCategory] = useState('Autres');
     const [loading, setLoading] = useState(false);
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -92,6 +94,7 @@ function CreateHappyHour() {
             recurency,
             imageUrl: imgUrl,
             userId: connectedUser.uid,
+            category,
             date: selectedDates,
         };
 
@@ -125,7 +128,7 @@ function CreateHappyHour() {
                 {!mobile && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
                 <main>
-                    <div className={`px-4 sm:px-6 lg:px-8 py-8 w-full ${mobile && 'mb-24'}`}>
+                    <div className={`px-4 sm:px-6 lg:px-8 py-8 w-full ${mobile && 'mb-32'}`}>
                         {/* Page content */}
                         <div className='w-full mx-auto flex flex-col lg:flex-row lg:space-x-8 xl:space-x-16'>
                             {/* Content */}
@@ -249,6 +252,22 @@ function CreateHappyHour() {
                                         <option value='Daily'>Tout les jours</option>
                                         <option value='Weekly'>Toute les semaines</option>
                                         <option value='Monthly'>Tout les mois</option>
+                                    </select>
+                                </div>
+
+                                <div className='mt-4'>
+                                    <label className='block text-sm font-medium mb-1' htmlFor='country'>
+                                        Categorie <span className='text-rose-500'>*</span>
+                                    </label>
+                                    <select
+                                        id='country'
+                                        className='form-select rounded-xl border-none bg-hover text-secondary w-full'
+                                        value={category}
+                                        onChange={(e) => setCategory(e.target.value)}
+                                    >
+                                    {categories.map((category) => (
+                                        <option key={category} value={category}>{category}</option>
+                                    ))}
                                     </select>
                                 </div>
 
