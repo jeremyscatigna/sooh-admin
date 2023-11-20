@@ -5,11 +5,17 @@ import Header from '../../partials/Header';
 import SearchForm from '../../partials/actions/SearchForm';
 import MeetupsPosts from '../../partials/community/MeetupsPosts';
 import PaginationNumeric from '../../components/PaginationNumeric';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { db } from '../../main';
 import { useAtomValue } from 'jotai';
 import { currentUser as userType } from '../Signup';
 import { useNavigate } from 'react-router-dom';
+
+const getLocaleDateTime = () => {
+    let d = new Date();
+    const dateTimeLocalValue = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, -5);
+    return dateTimeLocalValue;
+};
 
 function Meetups() {
     const navigate = useNavigate()
@@ -33,7 +39,7 @@ function Meetups() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getDocs(query(collection(db, 'happyhours'), orderBy('date', 'asc')));
+            const res = await getDocs(query(collection(db, 'happyhours'), orderBy('date', 'asc'), where('date', '>=', getLocaleDateTime()), where('date', '!=', 'Invalid Date')));
             setData(res.docs.map((doc) => doc.data()));
         };
         fetchData();
