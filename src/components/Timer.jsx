@@ -7,8 +7,6 @@ const DAY = HOUR * 24;
 
 export default function useTimer(deadline, interval = SECOND) {
     const [timespan, setTimespan] = useState(new Date(deadline) - Date.now());
-    console.log(deadline);
-    console.log(timespan);
 
     useEffect(() => {
         const intervalId = setInterval(() => {

@@ -1,7 +1,6 @@
 import React from 'react';
 
 function Datepicker({ align, selectedDates, setSelectedDates }) {
-    console.log(selectedDates)
     return (
         <div className='relative'>
             <input
@@ -13,7 +12,6 @@ function Datepicker({ align, selectedDates, setSelectedDates }) {
                 onChange={(e) => {
                   const d = new Date(e.target.value);
                   const dateTimeLocalValue = (new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString()).slice(0, -5)
-                  console.log(dateTimeLocalValue);
                   setSelectedDates(dateTimeLocalValue)
                 }}
             />

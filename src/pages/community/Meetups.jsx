@@ -18,7 +18,7 @@ const getLocaleDateTime = () => {
 };
 
 function Meetups() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const [data, setData] = useState([]);
@@ -39,8 +39,15 @@ function Meetups() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getDocs(query(collection(db, 'happyhours'), orderBy('date', 'asc'), where('date', '>=', getLocaleDateTime()), where('date', '!=', 'Invalid Date')));
-            setData(res.docs.map((doc) => doc.data()));
+            const res = await getDocs(
+                query(
+                    collection(db, 'happyhours'),
+                    orderBy('date', 'asc'),
+                    where('date', '>=', getLocaleDateTime()),
+                    where('date', '!=', 'Invalid Date'),
+                ),
+            );
+            setData(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
         };
         fetchData();
     }, []);
@@ -75,7 +82,7 @@ function Meetups() {
                                         className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white'
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            navigate('/happyhours/new')
+                                            navigate('/happyhours/new');
                                         }}
                                     >
                                         <svg className='w-4 h-4 fill-current shrink-0' viewBox='0 0 16 16'>

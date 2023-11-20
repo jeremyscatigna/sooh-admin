@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
@@ -10,6 +10,9 @@ import UserImage04 from '../../images/avatar-04.jpg';
 import UserImage05 from '../../images/avatar-05.jpg';
 import useTimer from '../../components/Timer';
 import { getCategoriesShadowColor } from '../../utils/categories';
+import { MapsArrowDiagonal } from 'iconoir-react';
+import { collection, getDocs, query } from 'firebase/firestore';
+import { db } from '../../main';
 
 function MeetupsPosts({ data }) {
     dayjs.extend(LocalizedFormat);
@@ -20,9 +23,19 @@ function MeetupsPosts({ data }) {
             {data.map((item, i) => {
                 const { days, hours, minutes, seconds } = useTimer(item.date);
                 const [like, setLike] = useState(false);
+                const [city, setCity] = useState('');
+
+                useEffect(() => {
+                    const fetchData = async () => {
+                        const userCompany = await getDocs(query(collection(db, `users/${item.userId}/company`)));
+                        const c = userCompany.docs.map((doc) => doc.data());
+                        setCity(c[0].city);
+                    };
+                    fetchData();
+                }, []);
                 return (
                     <article
-                        className={`flex bg-card shadow-lg ${
+                        className={`flex bg-card ${window.innerWidth <= 500 && 'h-38'} shadow-lg ${
                             item.category && getCategoriesShadowColor(item.category)
                         } rounded-lg overflow-hidden`}
                         key={i}
@@ -45,10 +58,14 @@ function MeetupsPosts({ data }) {
                             <div className='grow mb-2'>
                                 <div className='text-xs font-semibold text-pink-500 uppercase mb-2'>{dayjs(item.date).format('LLL')}</div>
                                 <Link className='inline-flex' to={`/happyhours/${item.uid}`}>
-                                    <h3 className='text-medium font-bold text-primary'>{item.name}</h3>
+                                    <h3 className='text-sm font-bold text-primary'>{item.name}</h3>
                                 </Link>
                                 <p className='text-secondary text-xs'>
-                                    Commence dans: {days}j {hours}h {minutes}m {seconds}s
+                                    Commence: {days}j {hours}h {minutes}m {seconds}s
+                                </p>
+                                <p className='text-secondary text-xs flex flex row mt-1'>
+                                    <MapsArrowDiagonal className='h-4 w-4 mr-1' />
+                                    {city}
                                 </p>
                             </div>
                             {/* Footer */}
