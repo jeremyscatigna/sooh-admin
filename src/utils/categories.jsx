@@ -41,7 +41,7 @@ export const getCateroriesColor = (category) => {
         case 'Maison / Jardin':
             return '#065A54';
         case 'Prestations de services':
-            return '#000000';
+            return '#ffffff';
         case 'Banque / Assurance':
             return '#581845';
         case 'Autres':
@@ -76,7 +76,7 @@ export const getCategoriesShadowColor = (category) => {
         case 'Maison / Jardin':
             return 'shadow-[#065A54]';
         case 'Prestations de services':
-            return 'shadow-[#000000]';
+            return 'shadow-[#ffffff]';
         case 'Banque / Assurance':
             return 'shadow-[#581845]/50';
         case 'Autres':

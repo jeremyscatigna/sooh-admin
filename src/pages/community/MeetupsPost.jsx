@@ -15,6 +15,7 @@ import Avvvatars from 'avvvatars-react';
 import { useAtomValue } from 'jotai';
 import { currentUser } from '../Signup';
 import useTimer from '../../components/Timer';
+import { getCategoriesShadowColor } from '../../utils/categories';
 
 function MeetupsPost() {
     const { id } = useParams();
