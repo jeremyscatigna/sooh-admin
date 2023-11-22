@@ -35,7 +35,7 @@ function MeetupsPost() {
                 id: doc.id,
                 ...doc.data(),
             }));
-            setHappyHour(data[0]);
+            setHappyHour(data[0] || null);
         });
 
         return () => unsub();
@@ -107,7 +107,7 @@ function MeetupsPost() {
                                     </Link>
                                 </div>
                                 <div className='text-sm font-semibold text-pink-500 uppercase mb-2'>
-                                {dayjs(happyHour.date).format('LLL')}
+                                {happyHour && dayjs(happyHour.date).format('LLL')}
                                 </div>
                                 <header className='mb-4'>
                                     {/* Title */}

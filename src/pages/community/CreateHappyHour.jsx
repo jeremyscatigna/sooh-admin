@@ -92,6 +92,7 @@ function CreateHappyHour() {
 
     const handleCreate = async () => {
         setLoading(true);
+        console
         const toAdd = {
             uid: uuidv4(),
             name,
@@ -120,7 +121,7 @@ function CreateHappyHour() {
             });
 
             setLoading(false);
-            navigate(`/happyhours/${toAdd.uid}}`);
+            navigate(`/happyhours`);
         } catch (e) {
             console.log(e);
             setLoading(false);
