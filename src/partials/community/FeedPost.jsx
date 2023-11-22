@@ -41,6 +41,7 @@ function FeedPost({ item }) {
         };
 
         const updatedComments = [...post.comments, commentObject];
+        item.comments = updatedComments;
         setSeeComments(true);
         const convcollref = doc(db, 'posts', post.id);
 
