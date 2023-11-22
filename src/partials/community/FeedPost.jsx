@@ -12,6 +12,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../main';
 import Avvvatars from 'avvvatars-react';
 
+const getLocaleDateTime = () => {
+    let d = new Date();
+    const dateTimeLocalValue = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, -5);
+    return dateTimeLocalValue;
+};
+
 function FeedPost({ item }) {
     dayjs.extend(LocalizedFormat);
     dayjs.extend(RelativeTime);
@@ -31,15 +37,16 @@ function FeedPost({ item }) {
             userFirstName: user.firstName,
             userLastName: user.lastName,
             userAvatar: user.avatar,
-            timestamp: new Date(new Date().setDate(new Date().getDate())).toString(),
+            timestamp: getLocaleDateTime(),
         };
 
-        post.comments.push(commentObject);
+        const updatedComments = [...post.comments, commentObject];
         setSeeComments(true);
         const convcollref = doc(db, 'posts', post.id);
 
+        // Update the Firestore document with the new comments array
         updateDoc(convcollref, {
-            comments: [...post.comments, commentObject],
+            comments: updatedComments,
         });
 
         setComment('');
@@ -153,7 +160,7 @@ function FeedPost({ item }) {
                                             <a className='font-semibold text-white' href='#0'>
                                                 {comment.userFirstName} {comment.userLastName}
                                             </a>{' '}
-                                            · 44min
+                                            <span className='text-secondary'>{dayjs(comment.timestamp).fromNow(true)}</span>
                                         </div>
                                         <div className='text-sm'>{comment.text}</div>
                                     </div>

@@ -254,7 +254,7 @@ function Feed() {
                                                                 setPostImage(null);
                                                             }}
                                                         >
-                                                            {loading ? 'Loading...' : 'Send'}
+                                                            {loading ? 'Loading...' : 'Envoyer'}
                                                         </button>
                                                     </div>
                                                 </div>
