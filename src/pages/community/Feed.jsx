@@ -202,7 +202,7 @@ function Feed() {
 
                                                     <div className='grow'>
                                                         <label htmlFor='status-input' className='sr-only'>
-                                                            What's happening, {user.firstName}?
+                                                            Quoi de neuf, {user.firstName}?
                                                         </label>
                                                         <input
                                                             id='status-input'
@@ -231,7 +231,7 @@ function Feed() {
                                                                 </div>
                                                             )}
 
-                                                            <span>{fileLoading ? 'Loading' : ' Ajouter une image'}</span>
+                                                            <span>{fileLoading ? 'Loading' : ' Ajouter un média'}</span>
                                                         </button>
                                                         <input
                                                             ref={inputRef}

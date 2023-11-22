@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Routes,
-  Route,
-  useLocation
-} from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import './css/style.css';
 
@@ -73,105 +69,112 @@ import TooltipPage from './pages/component/TooltipPage';
 import AccordionPage from './pages/component/AccordionPage';
 import IconsPage from './pages/component/IconsPage';
 
-import ProtectedRoute from "./utils/ProtectedRoute";
+import ProtectedRoute from './utils/ProtectedRoute';
 import { SlidingTabBar } from './partials/Tabbar';
 import CreateHappyHour from './pages/community/CreateHappyHour';
 
 function App() {
+    const location = useLocation();
+    const { pathname } = location;
+    const [mobile, setMobile] = useState(window.innerWidth <= 500);
 
-  const location = useLocation();
-  const { pathname } = location;
-  const [mobile, setMobile] = useState(window.innerWidth <= 500);
-
-  const handleWindowSizeChange = () => {
-    setMobile(window.innerWidth <= 500);
-};
-
-useEffect(() => {
-    window.addEventListener('resize', handleWindowSizeChange);
-    return () => {
-        window.removeEventListener('resize', handleWindowSizeChange);
+    const handleWindowSizeChange = () => {
+        setMobile(window.innerWidth <= 500);
     };
-}, []);
 
-  useEffect(() => {
-    document.querySelector('html').style.scrollBehavior = 'auto'
-    window.scroll({ top: 0 })
-    document.querySelector('html').style.scrollBehavior = ''
-  }, [location.pathname]); // triggered on route change
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        };
+    }, []);
 
-  return (
-    <>
-      <Routes>
-        <Route exact path="/" element={<ProtectedRoute><Feed /></ProtectedRoute>} />
-        <Route path="/influencers" element={<UsersTabs />} />
-        <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/happyhours" element={<Meetups />} />
-        <Route path="/happyhours/new" element={<CreateHappyHour />} />
-        <Route path="/happyhours/:id" element={<MeetupsPost />} />
-        <Route path="/community/meetups-post" element={<MeetupsPost />} />
-        <Route path="/dashboard/analytics" element={<Analytics />} />
-        <Route path="/dashboard/fintech" element={<Fintech />} />
-        <Route path="/ecommerce/customers" element={<Customers />} />
-        <Route path="/ecommerce/orders" element={<Orders />} />
-        <Route path="/ecommerce/invoices" element={<Invoices />} />
-        <Route path="/ecommerce/shop" element={<Shop />} />
-        <Route path="/ecommerce/shop-2" element={<Shop2 />} />
-        <Route path="/ecommerce/product" element={<Product />} />
-        <Route path="/ecommerce/cart" element={<Cart />} />
-        <Route path="/ecommerce/cart-2" element={<Cart2 />} />
-        <Route path="/ecommerce/cart-3" element={<Cart3 />} />
-        <Route path="/ecommerce/pay" element={<Pay />} />
-        <Route path="/campaigns" element={<Campaigns />} /> 
-        <Route path="/finance/cards" element={<CreditCards />} />
-        <Route path="/finance/transactions" element={<Transactions />} />
-        <Route path="/finance/transaction-details" element={<TransactionDetails />} />
-        <Route path="/job/job-listing" element={<JobListing />} />
-        <Route path="/job/job-post" element={<JobPost />} />
-        <Route path="/job/company-profile" element={<CompanyProfile />} />
-        <Route path="/messages" element={<Messages />} />
-        <Route path="/tasks/kanban" element={<TasksKanban />} />
-        <Route path="/tasks/list" element={<TasksList />} />
-        <Route path="/inbox" element={<Inbox />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/settings/account" element={<Account />} />
-        <Route path="/settings/notifications" element={<Notifications />} />
-        <Route path="/settings/apps" element={<Apps />} />
-        <Route path="/settings/plans" element={<Plans />} />
-        <Route path="/settings/billing" element={<Billing />} />
-        <Route path="/settings/feedback" element={<Feedback />} />
-        <Route path="/utility/changelog" element={<Changelog />} />
-        <Route path="/utility/roadmap" element={<Roadmap />} />
-        <Route path="/utility/faqs" element={<Faqs />} />
-        <Route path="/utility/empty-state" element={<EmptyState />} />
-        <Route path="/utility/404" element={<PageNotFound />} />
-        <Route path="/utility/knowledge-base" element={<KnowledgeBase />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/onboarding-01" element={<Onboarding01 />} />
-        <Route path="/onboarding-02" element={<Onboarding02 />} />
-        <Route path="/onboarding-03" element={<Onboarding03 />} />
-        <Route path="/onboarding-04" element={<Onboarding04 />} />
-        <Route path="/component/button" element={<ButtonPage />} />
-        <Route path="/component/form" element={<FormPage />} />
-        <Route path="/component/dropdown" element={<DropdownPage />} />
-        <Route path="/component/alert" element={<AlertPage />} />
-        <Route path="/component/modal" element={<ModalPage />} />
-        <Route path="/component/pagination" element={<PaginationPage />} />
-        <Route path="/component/tabs" element={<TabsPage />} />
-        <Route path="/component/breadcrumb" element={<BreadcrumbPage />} />
-        <Route path="/component/badge" element={<BadgePage />} />
-        <Route path="/component/avatar" element={<AvatarPage />} />
-        <Route path="/component/tooltip" element={<TooltipPage />} />
-        <Route path="/component/accordion" element={<AccordionPage />} />
-        <Route path="/component/icons" element={<IconsPage />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-      {mobile && pathname !== 'signin' && pathname !== 'signup' && <SlidingTabBar />}
-    </>
-  );
+    useEffect(() => {
+        document.querySelector('html').style.scrollBehavior = 'auto';
+        window.scroll({ top: 0 });
+        document.querySelector('html').style.scrollBehavior = '';
+    }, [location.pathname]); // triggered on route change
+
+    return (
+        <>
+            <Routes>
+                <Route
+                    exact
+                    path='/'
+                    element={
+                        <ProtectedRoute>
+                            <Feed />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route path='/influencers' element={<UsersTabs />} />
+                <Route path='/profile/:id' element={<Profile />} />
+                <Route path='/dashboard' element={<Dashboard />} />
+                <Route path='/happyhours' element={<Meetups />} />
+                <Route path='/happyhours/new' element={<CreateHappyHour />} />
+                <Route path='/happyhours/:id' element={<MeetupsPost />} />
+                <Route path='/community/meetups-post' element={<MeetupsPost />} />
+                <Route path='/dashboard/analytics' element={<Analytics />} />
+                <Route path='/dashboard/fintech' element={<Fintech />} />
+                <Route path='/ecommerce/customers' element={<Customers />} />
+                <Route path='/ecommerce/orders' element={<Orders />} />
+                <Route path='/ecommerce/invoices' element={<Invoices />} />
+                <Route path='/ecommerce/shop' element={<Shop />} />
+                <Route path='/ecommerce/shop-2' element={<Shop2 />} />
+                <Route path='/ecommerce/product' element={<Product />} />
+                <Route path='/ecommerce/cart' element={<Cart />} />
+                <Route path='/ecommerce/cart-2' element={<Cart2 />} />
+                <Route path='/ecommerce/cart-3' element={<Cart3 />} />
+                <Route path='/ecommerce/pay' element={<Pay />} />
+                <Route path='/campaigns' element={<Campaigns />} />
+                <Route path='/finance/cards' element={<CreditCards />} />
+                <Route path='/finance/transactions' element={<Transactions />} />
+                <Route path='/finance/transaction-details' element={<TransactionDetails />} />
+                <Route path='/job/job-listing' element={<JobListing />} />
+                <Route path='/job/job-post' element={<JobPost />} />
+                <Route path='/job/company-profile' element={<CompanyProfile />} />
+                <Route path='/messages' element={<Messages />} />
+                <Route path='/tasks/kanban' element={<TasksKanban />} />
+                <Route path='/tasks/list' element={<TasksList />} />
+                <Route path='/inbox' element={<Inbox />} />
+                <Route path='/calendar' element={<Calendar />} />
+                <Route path='/settings/account' element={<Account />} />
+                <Route path='/settings/notifications' element={<Notifications />} />
+                <Route path='/settings/apps' element={<Apps />} />
+                <Route path='/settings/plans' element={<Plans />} />
+                <Route path='/settings/billing' element={<Billing />} />
+                <Route path='/settings/feedback' element={<Feedback />} />
+                <Route path='/utility/changelog' element={<Changelog />} />
+                <Route path='/utility/roadmap' element={<Roadmap />} />
+                <Route path='/utility/faqs' element={<Faqs />} />
+                <Route path='/utility/empty-state' element={<EmptyState />} />
+                <Route path='/utility/404' element={<PageNotFound />} />
+                <Route path='/utility/knowledge-base' element={<KnowledgeBase />} />
+                <Route path='/signin' element={<Signin />} />
+                <Route path='/signup' element={<Signup />} />
+                <Route path='/reset-password' element={<ResetPassword />} />
+                <Route path='/onboarding-01' element={<Onboarding01 />} />
+                <Route path='/onboarding-02' element={<Onboarding02 />} />
+                <Route path='/onboarding-03' element={<Onboarding03 />} />
+                <Route path='/onboarding-04' element={<Onboarding04 />} />
+                <Route path='/component/button' element={<ButtonPage />} />
+                <Route path='/component/form' element={<FormPage />} />
+                <Route path='/component/dropdown' element={<DropdownPage />} />
+                <Route path='/component/alert' element={<AlertPage />} />
+                <Route path='/component/modal' element={<ModalPage />} />
+                <Route path='/component/pagination' element={<PaginationPage />} />
+                <Route path='/component/tabs' element={<TabsPage />} />
+                <Route path='/component/breadcrumb' element={<BreadcrumbPage />} />
+                <Route path='/component/badge' element={<BadgePage />} />
+                <Route path='/component/avatar' element={<AvatarPage />} />
+                <Route path='/component/tooltip' element={<TooltipPage />} />
+                <Route path='/component/accordion' element={<AccordionPage />} />
+                <Route path='/component/icons' element={<IconsPage />} />
+                <Route path='*' element={<PageNotFound />} />
+            </Routes>
+            {mobile && pathname !== 'signin' && pathname !== 'signup' && !pathname.includes('onboarding') && <SlidingTabBar />}
+        </>
+    );
 }
 
 export default App;
