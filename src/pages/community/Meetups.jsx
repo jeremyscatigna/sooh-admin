@@ -10,6 +10,7 @@ import { db } from '../../main';
 import { useAtomValue } from 'jotai';
 import { currentUser as userType } from '../Signup';
 import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 const getLocaleDateTime = () => {
     let d = new Date();
@@ -17,9 +18,37 @@ const getLocaleDateTime = () => {
     return dateTimeLocalValue;
 };
 
+const filters = [
+    {
+        id: 'all',
+        name: 'Voir tout',
+    },
+    {
+        id: 'online',
+        name: 'En ligne',
+    },
+    {
+        id: 'instore',
+        name: 'En boutique',
+    },
+    {
+        id: 'thisweek',
+        name: 'Cette semaine',
+    },
+    {
+        id: 'thismonth',
+        name: 'Ce mois',
+    },
+    {
+        id: 'favorites',
+        name: 'Favoris',
+    },
+];
+
 function Meetups() {
     const navigate = useNavigate();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [filtering, setFiltering] = useState('all');
 
     const [data, setData] = useState([]);
 
@@ -66,7 +95,6 @@ function Meetups() {
                     <div className='px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto'>
                         {/* Page header */}
                         <div className='sm:flex sm:justify-between sm:items-center mb-5'>
-
                             {/* Right: Actions */}
                             <div className='grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2'>
                                 {/* Search form */}
@@ -93,41 +121,23 @@ function Meetups() {
                         {/* Filters */}
                         <div className='mb-5'>
                             <ul className='flex flex-wrap -m-1'>
-                                <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary duration-150 ease-in-out'>
-                                        Voir tout
-                                    </button>
-                                </li>
-                                <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-hover text-primary duration-150 ease-in-out'>
-                                        En ligne
-                                    </button>
-                                </li>
-                                <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-hover text-primary duration-150 ease-in-out'>
-                                        Locale
-                                    </button>
-                                </li>
-                                <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-hover text-primary duration-150 ease-in-out'>
-                                        Cette semaine
-                                    </button>
-                                </li>
-                                <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-hover text-primary duration-150 ease-in-out'>
-                                        Ce mois
-                                    </button>
-                                </li>
-                                <li className='m-1'>
-                                    <button className='inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-hover text-primary duration-150 ease-in-out'>
-                                        Following
-                                    </button>
-                                </li>
+                                {filters.map((filter) => (
+                                    <li className='m-1' key={filter.id}>
+                                        <button
+                                            onClick={() => setFiltering(filter.id)}
+                                            className={`inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm ${
+                                                filter.id === filtering ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600' : 'bg-hover'
+                                            } text-primary duration-150 ease-in-out`}
+                                        >
+                                            {filter.name}
+                                        </button>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
 
                         {/* Content */}
-                        <MeetupsPosts data={data} />
+                        <MeetupsPosts data={data} filtering={filtering} />
 
                         {/* Pagination */}
                         <div className='mt-8'>

@@ -11,20 +11,20 @@ function NotificationsPanel() {
 
       {/* Panel body */}
       <div className="p-6 space-y-6">
-        <h2 className="text-2xl text-slate-800 font-bold mb-5">Mes Notifications</h2>
+        <h2 className="text-2xl text-primary font-bold mb-5">Mes Notifications</h2>
 
         {/* General */}
         <section>
-          <h3 className="text-xl leading-snug text-slate-800 font-bold mb-1">Generale</h3>
+          <h3 className="text-xl leading-snug text-primary font-bold mb-1">Generale</h3>
           <ul>
             <li className="flex justify-between items-center py-3 border-b border-slate-200">
               {/* Left */}
               <div>
-                <div className="text-slate-800 font-semibold">Commentaires and réponses</div>
+                <div className="text-primary font-semibold">Commentaires and réponses</div>
               </div>
               {/* Right */}
               <div className="flex items-center ml-4">
-                <div className="text-sm text-slate-400 italic mr-2">{comments ? 'On' : 'Off'}</div>
+                <div className="text-sm text-secondary italic mr-2">{comments ? 'On' : 'Off'}</div>
                 <div className="form-switch">
                   <input type="checkbox" id="comments" className="sr-only" checked={comments} onChange={() => setComments(!comments)} />
                   <label className="bg-slate-400" htmlFor="comments">
@@ -37,7 +37,7 @@ function NotificationsPanel() {
             <li className="flex justify-between items-center py-3 border-b border-slate-200">
               {/* Left */}
               <div>
-                <div className="text-slate-800 font-semibold">Messages</div>
+                <div className="text-primary font-semibold">Messages</div>
               </div>
               {/* Right */}
               <div className="flex items-center ml-4">
@@ -54,7 +54,7 @@ function NotificationsPanel() {
             <li className="flex justify-between items-center py-3 border-b border-slate-200">
               {/* Left */}
               <div>
-                <div className="text-slate-800 font-semibold">Mentions</div>
+                <div className="text-primary font-semibold">Mentions</div>
               </div>
               {/* Right */}
               <div className="flex items-center ml-4">
@@ -76,8 +76,8 @@ function NotificationsPanel() {
       <footer>
         <div className="flex flex-col px-6 py-5 border-t border-slate-200">
           <div className="flex self-end">
-            <button className="btn border-slate-200 hover:border-slate-300 text-slate-600">Annuler</button>
-            <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3">Sauvegarder</button>
+            <button className="btn border-primary hover:border-slate-300 text-primary">Annuler</button>
+            <button className="btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white ml-3">Sauvegarder</button>
           </div>
         </div>
       </footer>
