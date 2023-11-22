@@ -34,6 +34,7 @@ function CreateHappyHour() {
     const [fileLoading, setFileLoading] = useState(false);
 
     const [selectedDates, setSelectedDates] = useState(() => getLocaleDateTime());
+    const [endDate, setEndDate] = useState(() => getLocaleDateTime());
     const [name, setName] = useState('');
     const [validateName, setValidateName] = useState(false);
     const [description, setDescription] = useState('');
@@ -42,6 +43,11 @@ function CreateHappyHour() {
     const [validateDetails, setValidateDetails] = useState(false);
     const [recurency, setRecurency] = useState('Unique');
     const [category, setCategory] = useState('Autres');
+    const [type, setType] = useState('online');
+    const [addEndDate, setAddEndDate] = useState(false);
+    const [deal, setDeal] = useState('20%');
+    const [location, setLocation] = useState('');
+    const [validateLocation, setValidateLocation] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -90,15 +96,18 @@ function CreateHappyHour() {
             uid: uuidv4(),
             name,
             description,
+            location,
             details,
             recurency,
-            type: 'online',
+            type,
+            deal,
             favorites: [],
             likes: [],
             imageUrl: imgUrl,
             userId: connectedUser.uid,
             category,
             date: selectedDates,
+            endDate: addEndDate ? endDate : null,
         };
 
         console.log(toAdd);
@@ -111,7 +120,7 @@ function CreateHappyHour() {
             });
 
             setLoading(false);
-            navigate('/happyhours');
+            navigate(`/happyhours/${toAdd.uid}}`);
         } catch (e) {
             console.log(e);
             setLoading(false);
@@ -147,8 +156,22 @@ function CreateHappyHour() {
                                         <span>Retours</span>
                                     </Link>
                                 </div>
-                                <div className='text-sm font-semibold text-pink-500 uppercase mb-2'>
+                                <div
+                                    className={`text-sm font-sm mb-2 flex ${
+                                        mobile ? 'flex-col justify-center space-y-2' : 'flex-row items-center space-x-2'
+                                    }`}
+                                >
                                     <Datepicker align='left' selectedDates={selectedDates} setSelectedDates={setSelectedDates} />
+                                    <div className='text-sm font-sm'>
+                                        <input
+                                            onClick={() => setAddEndDate(!addEndDate)}
+                                            value={addEndDate}
+                                            type='checkbox'
+                                            className='mr-2 rounded bg-hover border-none focus:ring-pink-500 text-pink-500'
+                                        />
+                                        <label className='text-sm font-sm mb-1'>Ajouter une date de fin</label>
+                                    </div>
+                                    {addEndDate && <Datepicker align='left' selectedDates={endDate} setSelectedDates={setEndDate} />}
                                 </div>
                                 <header className='mb-4'>
                                     {/* Title */}
@@ -166,7 +189,7 @@ function CreateHappyHour() {
                                     ) : (
                                         <div className='mt-4'>
                                             <label className='block text-sm font-medium mb-1' htmlFor='placeholder'>
-                                                Nom
+                                                Titre
                                             </label>
                                             <div className='flex flex-row space-x-2'>
                                                 <input
@@ -175,7 +198,7 @@ function CreateHappyHour() {
                                                     type='text'
                                                     value={name}
                                                     onChange={(e) => setName(e.target.value)}
-                                                    placeholder='Add the name of your Happy Hour'
+                                                    placeholder='Ce qui apparaîtra sur la vignettes visible par les utilisateurs'
                                                 />
 
                                                 <>
@@ -217,7 +240,7 @@ function CreateHappyHour() {
                                                     type='text'
                                                     value={description}
                                                     onChange={(e) => setDescription(e.target.value)}
-                                                    placeholder='Add a short description'
+                                                    placeholder='Une description courte pour donner envie a vos clients'
                                                 />
 
                                                 <>
@@ -231,6 +254,48 @@ function CreateHappyHour() {
                                                     <button
                                                         onClick={() => {
                                                             setDescription('');
+                                                        }}
+                                                    >
+                                                        <Cancel />
+                                                    </button>
+                                                </>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {validateLocation ? (
+                                        <div className='flex flex-row space-x-2'>
+                                            {type === 'online' ? <a href={location}>{location}</a> : <p>{location}</p>}
+                                            <button onClick={() => setValidateLocation(false)}>
+                                                <Edit />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className='mt-4'>
+                                            <label className='block text-sm font-medium mb-1' htmlFor='placeholder'>
+                                                Localisation
+                                            </label>
+                                            <div className='flex flex-row space-x-2'>
+                                                <input
+                                                    id='placeholder'
+                                                    className='form-input rounded-xl border-none bg-hover text-secondary w-full'
+                                                    type='text'
+                                                    value={location}
+                                                    onChange={(e) => setLocation(e.target.value)}
+                                                    placeholder={type === "online" ? "Ajouter le site web ou aura lieu votre Happy Hour" : "Ajoutez l'adresses de la boutique"}
+                                                />
+
+                                                <>
+                                                    <button
+                                                        onClick={() => {
+                                                            setValidateLocation(true);
+                                                        }}
+                                                    >
+                                                        <Check />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            setLocation('');
                                                         }}
                                                     >
                                                         <Cancel />
@@ -260,6 +325,41 @@ function CreateHappyHour() {
 
                                 <div className='mt-4'>
                                     <label className='block text-sm font-medium mb-1' htmlFor='country'>
+                                        Type <span className='text-rose-500'>*</span>
+                                    </label>
+                                    <select
+                                        id='country'
+                                        className='form-select rounded-xl border-none bg-hover text-secondary w-full'
+                                        value={type}
+                                        onChange={(e) => setType(e.target.value)}
+                                    >
+                                        <option value='online'>En ligne</option>
+                                        <option value='instore'>En boutique</option>
+                                    </select>
+                                </div>
+
+                                <div className='mt-4'>
+                                    <label className='block text-sm font-medium mb-1' htmlFor='country'>
+                                        Montant de la remise <span className='text-rose-500'>*</span>
+                                    </label>
+                                    <select
+                                        id='country'
+                                        className='form-select rounded-xl border-none bg-hover text-secondary w-full'
+                                        value={deal}
+                                        onChange={(e) => setDeal(e.target.value)}
+                                    >
+                                        <option value='20%'>20%</option>
+                                        <option value='30%'>30%</option>
+                                        <option value='40%'>40%</option>
+                                        <option value='50%'>50%</option>
+                                        <option value='60%'>60%</option>
+                                        <option value='70%'>70%</option>
+                                        <option value='80%'>80%</option>
+                                    </select>
+                                </div>
+
+                                <div className='mt-4'>
+                                    <label className='block text-sm font-medium mb-1' htmlFor='country'>
                                         Categorie <span className='text-rose-500'>*</span>
                                     </label>
                                     <select
@@ -268,9 +368,11 @@ function CreateHappyHour() {
                                         value={category}
                                         onChange={(e) => setCategory(e.target.value)}
                                     >
-                                    {categories.map((category) => (
-                                        <option key={category} value={category}>{category}</option>
-                                    ))}
+                                        {categories.map((category) => (
+                                            <option key={category} value={category}>
+                                                {category}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
 
@@ -331,7 +433,7 @@ function CreateHappyHour() {
                                                     rows={5}
                                                     value={details}
                                                     onChange={(e) => setDetails(e.target.value)}
-                                                    placeholder='Add as much details as possible'
+                                                    placeholder='Ajoutez autant de détails que possible pour attirer vos clients'
                                                 />
                                                 <>
                                                     <button
