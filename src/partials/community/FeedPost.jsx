@@ -76,7 +76,7 @@ function FeedPost({ item }) {
                                 {item.userFirstName} {item.userLastName}
                             </Link>
                         </div>
-                        <div className='text-xs text-secondary'>{dayjs(item.date).fromNow(true)} ago</div>
+                        <div className='text-xs text-secondary'>Il y a {dayjs(item.date).fromNow(true)}</div>
                     </div>
                 </div>
                 {/* Menu button */}
@@ -146,7 +146,7 @@ function FeedPost({ item }) {
                                 <div className='flex items-center space-x-3'>
                                     {comment.userAvatar ? (
                                         <img
-                                            className='rounded-full shrink-0'
+                                            className='rounded-full shrink-0 object-fit w-10 h-10'
                                             src={comment.userAvatar}
                                             width='32'
                                             height='32'
@@ -160,7 +160,7 @@ function FeedPost({ item }) {
                                             <a className='font-semibold text-white' href='#0'>
                                                 {comment.userFirstName} {comment.userLastName}
                                             </a>{' '}
-                                            <span className='text-secondary'>{dayjs(comment.timestamp).fromNow(true)}</span>
+                                            <span className='text-secondary'>Il y a {dayjs(comment.timestamp).fromNow(true)}</span>
                                         </div>
                                         <div className='text-sm'>{comment.text}</div>
                                     </div>

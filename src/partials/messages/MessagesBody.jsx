@@ -7,6 +7,7 @@ import { useAtomValue } from 'jotai';
 import { selectedConversationMessagesAtom } from '../../pages/Messages';
 import Avvvatars from 'avvvatars-react';
 import { currentUser } from '../../pages/Signup';
+import dayjs from 'dayjs';
 
 function MessagesBody() {
     const selectedConversationMessages = useAtomValue(selectedConversationMessagesAtom);
@@ -16,7 +17,7 @@ function MessagesBody() {
             {selectedConversationMessages &&
                 selectedConversationMessages.length > 0 &&
                 selectedConversationMessages.map((message, index) => (
-                    <div className='flex items-start mb-4 last:mb-0'>
+                    <div className='flex items-start mb-4 last:mb-0' key={message.uid}>
                         {message.senderAvatar ? (
                             <img className='rounded-full mr-4 w-10 h-10' src={message.senderAvatar} width='40' height='40' alt='User 01' />
                         ) : (
@@ -28,7 +29,7 @@ function MessagesBody() {
                                 {message.text}
                             </div>
                             <div className='flex items-center justify-between'>
-                                <div className='text-xs text-slate-500 font-medium'>2:40 PM</div>
+                                {message.timestamp && <div className='text-xs text-slate-500 font-medium'>Il y a {dayjs(message.timestamp).fromNow(true)}</div>}
                             </div>
                         </div>
                     </div>

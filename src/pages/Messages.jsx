@@ -19,6 +19,12 @@ export const usersAtom = atom([]);
 export const searchAtom = atom('');
 export const selectedConversationMessagesAtom = atom([]);
 
+const getLocaleDateTime = () => {
+    let d = new Date();
+    const dateTimeLocalValue = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, -5);
+    return dateTimeLocalValue;
+}
+
 function Messages() {
     const contentArea = useRef(null);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -96,6 +102,7 @@ function Messages() {
                     userLastName: user.lastName,
                     userAvatar: user.avatar,
                     messages: [],
+                    timestamp: getLocaleDateTime(),
                 };
 
                 const newUserConversation = {
@@ -106,6 +113,7 @@ function Messages() {
                     userLastName: authenticatedUser.lastName,
                     userAvatar: authenticatedUser.avatar,
                     messages: [],
+                    timestamp: getLocaleDateTime(),
                 };
                 await addDoc(collection(db, `users/${authenticatedUser.uid}/conversations`), { ...newConversation });
                 await addDoc(collection(db, `users/${user.uid}/conversations`), { ...newUserConversation });
