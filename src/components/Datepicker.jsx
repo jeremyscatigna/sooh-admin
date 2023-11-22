@@ -1,6 +1,12 @@
 import React from 'react';
 
-function Datepicker({ align, selectedDates, setSelectedDates }) {
+const getLocaleDateTime = () => {
+    let d = new Date();
+    const dateTimeLocalValue = (new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString()).slice(0, -5);
+    return dateTimeLocalValue;
+}
+
+function Datepicker({ align, selectedDates, setSelectedDates, min }) {
     return (
         <div className='relative'>
             <input
@@ -9,6 +15,7 @@ function Datepicker({ align, selectedDates, setSelectedDates }) {
                 name='meeting-time'
                 className='form-input rounded-xl border-none bg-hover text-secondary font-medium w-60'
                 value={selectedDates}
+                min={min || getLocaleDateTime()}
                 onChange={(e) => {
                   const d = new Date(e.target.value);
                   const dateTimeLocalValue = (new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString()).slice(0, -5)
