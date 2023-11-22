@@ -119,6 +119,7 @@ function Profile() {
             lastName,
             email,
             details,
+            description,
             avatar: imgUrl || '',
         };
 
@@ -164,12 +165,12 @@ function Profile() {
                             {imgUrl && <img src={imgUrl} alt='uploaded file' height={200} />}
 
                             <div>
-                                <label className='block text-sm font-medium mb-1' htmlFor='placeholder'>
-                                    Nom
+                                <label className='block text-sm text-primary font-medium mb-1' htmlFor='placeholder'>
+                                    Prénom
                                 </label>
                                 <input
                                     id='placeholder'
-                                    className='form-input w-full'
+                                    className='form-input rounded-full border-none bg-hover text-secondary placeholder-secondary w-full'
                                     type='text'
                                     value={firstName}
                                     onChange={(e) => setFirstName(e.target.value)}
@@ -178,12 +179,12 @@ function Profile() {
                             </div>
 
                             <div>
-                                <label className='block text-sm font-medium mb-1' htmlFor='placeholder'>
+                                <label className='block text-sm text-primary font-medium mb-1' htmlFor='placeholder'>
                                     Nom
                                 </label>
                                 <input
                                     id='placeholder'
-                                    className='form-input w-full'
+                                    className='form-input rounded-full border-none bg-hover text-secondary placeholder-secondary w-full'
                                     type='text'
                                     value={lastName}
                                     onChange={(e) => setLastName(e.target.value)}
@@ -191,12 +192,12 @@ function Profile() {
                                 />
                             </div>
                             <div>
-                                <label className='block text-sm font-medium mb-1' htmlFor='placeholder'>
-                                    Nom
+                                <label className='block text-sm text-primary font-medium mb-1' htmlFor='placeholder'>
+                                    Email
                                 </label>
                                 <input
                                     id='placeholder'
-                                    className='form-input w-full'
+                                    className='form-input rounded-full border-none bg-hover text-secondary placeholder-secondary w-full'
                                     type='text'
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
@@ -204,12 +205,12 @@ function Profile() {
                                 />
                             </div>
                             <div>
-                                <label className='block text-sm font-medium mb-1' htmlFor='placeholder'>
+                                <label className='block text-sm text-primary font-medium mb-1' htmlFor='placeholder'>
                                     Bio
                                 </label>
                                 <input
                                     id='placeholder'
-                                    className='form-input w-full'
+                                    className='form-input rounded-full border-none bg-hover text-secondary placeholder-secondary w-full'
                                     type='text'
                                     value={details}
                                     onChange={(e) => setDetails(e.target.value)}
@@ -218,33 +219,34 @@ function Profile() {
                             </div>
 
                             <div>
-                                <label className='block text-sm font-medium mb-1' htmlFor='placeholder'>
+                                <label className='block text-sm text-primary font-medium mb-1' htmlFor='placeholder'>
                                     À propos de moi
                                 </label>
                                 <textarea
                                     id='placeholder'
-                                    className='form-input w-full'
+                                    className='form-input rounded-xl border-none bg-hover text-secondary placeholder-secondary w-full'
                                     type='text'
                                     rows={5}
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
-                                    placeholder='Add as much details as possible'
+                                    placeholder='Ajoute le plus de details possible'
                                 />
                             </div>
                         </div>
                         {/* Modal footer */}
-                        <div className='px-5 py-4'>
+                        <div className='px-5 py-4 mb-24'>
                             <div className='flex flex-wrap justify-end space-x-2'>
                                 <button
-                                    className='btn-sm border-slate-200 hover:border-slate-300 text-slate-600'
+                                    className='btn-sm border-primary hover:border-primary text-primary'
                                     onClick={(e) => {
                                         e.stopPropagation();
+                                        setBasicModalOpen(false);
                                     }}
                                 >
                                     Fermer
                                 </button>
                                 <button
-                                    className='btn-sm bg-indigo-500 hover:bg-indigo-600 text-white'
+                                    className='btn-sm rounded-full bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         handleEditProfile(e);

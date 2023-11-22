@@ -51,6 +51,7 @@ function Signup() {
                     avatar: '',
                     type: '',
                     details: '',
+                    description: '',
                 });
 
                 setCurrentUser({
@@ -61,6 +62,7 @@ function Signup() {
                     avatar: '',
                     type: '',
                     details: '',
+                    description: '',
                 });
                 setCurrentUserDocumentId(document.id);
 
