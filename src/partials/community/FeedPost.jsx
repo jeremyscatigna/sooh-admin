@@ -143,7 +143,7 @@ function FeedPost({ item }) {
                 <div className='mt-5 mb-5 pt-3'>
                     <ul className='space-y-2 mb-3'>
                         {item.comments.map((comment) => (
-                            <li className='p-3 bg-hover rounded-xl'>
+                            <li className='p-3 bg-hover rounded-xl' key={comment.uid}>
                                 <div className='flex items-center space-x-3'>
                                     {comment.userAvatar ? (
                                         <img
@@ -173,10 +173,10 @@ function FeedPost({ item }) {
             )}
 
             <div className='flex items-center space-x-3 mt-3'>
-                {item.userAvatar ? (
-                    <img className='rounded-full shrink-0 w-8 h-8 object-fit' src={item.userAvatar} width='32' height='32' alt='User 02' />
+                {user.avatar ? (
+                    <img className='rounded-full shrink-0 w-8 h-8 object-fit' src={user.avatar} width='32' height='32' alt='User 02' />
                 ) : (
-                    <Avvvatars value={`${item.userFirstName} ${item.userLastName}`} />
+                    <Avvvatars value={`${user.firstName} ${user.lastName}`} />
                 )}
 
                 <div className='flex w-full'>
