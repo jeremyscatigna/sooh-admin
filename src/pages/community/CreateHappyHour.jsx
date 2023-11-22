@@ -92,6 +92,8 @@ function CreateHappyHour() {
             description,
             details,
             recurency,
+            type: 'online',
+            favorites: [],
             imageUrl: imgUrl,
             userId: connectedUser.uid,
             category,
