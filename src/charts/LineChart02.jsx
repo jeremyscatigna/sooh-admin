@@ -117,7 +117,7 @@ function LineChart02({
               box.style.pointerEvents = 'none';
               // Label
               const label = document.createElement('span');
-              label.style.color = tailwindConfig().theme.colors.slate[500];
+              label.style.color = tailwindConfig().theme.colors.primary;
               label.style.fontSize = tailwindConfig().theme.fontSize.sm[0];
               label.style.lineHeight = tailwindConfig().theme.fontSize.sm[1].lineHeight;
               const labelText = document.createTextNode(item.text);
@@ -140,7 +140,7 @@ function LineChart02({
       <div className="px-5 py-3">
         <div className="flex flex-wrap justify-between items-end">
           <div className="flex items-start">
-            <div className="text-3xl font-bold text-slate-800 mr-2">$1,482</div>
+            <div className="text-3xl font-bold text-primary mr-2">$1,482</div>
             <div className="text-sm font-semibold text-white px-1.5 bg-amber-500 rounded-full">-22%</div>
           </div>
           <div className="grow ml-2 mb-1">

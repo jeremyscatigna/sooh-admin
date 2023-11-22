@@ -139,7 +139,7 @@ function Feed() {
                                 {!mobile && <FeedLeftContent />}
                                 {mobile && (
                                     <header className='mb-6 flex flex-row w-full justify-between'>
-                                        <h1 className='text-2xl md:text-3xl text-primary font-bold'>Feed</h1>
+                                        
                                         <div className='flex flex-row space-x-2'>
                                             <Link
                                                 className='flex items-center justify-center p-2 rounded-full bg-card'

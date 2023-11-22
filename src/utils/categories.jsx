@@ -1,5 +1,4 @@
 export const categories = [
-    'Tous',
     'Bars / Restaurants',
     'Loisirs / Sorties',
     'Mode / Beauté',

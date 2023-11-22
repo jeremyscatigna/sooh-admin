@@ -152,11 +152,6 @@ function UsersTabs() {
             {/* Page header */}
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
 
-              {/* Left: Title */}
-              <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-primary font-bold">Influenceurs</h1>
-              </div>
-
               {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 {/* Search form */}

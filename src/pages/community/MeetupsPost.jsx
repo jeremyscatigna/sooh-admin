@@ -16,6 +16,7 @@ import { useAtomValue } from 'jotai';
 import { currentUser } from '../Signup';
 import useTimer from '../../components/Timer';
 import { getCategoriesShadowColor } from '../../utils/categories';
+import dayjs from 'dayjs';
 
 function MeetupsPost() {
     const { id } = useParams();
@@ -106,7 +107,7 @@ function MeetupsPost() {
                                     </Link>
                                 </div>
                                 <div className='text-sm font-semibold text-pink-500 uppercase mb-2'>
-                                    Mon 27 Dec, 2021 - 9:00 PM -&gt; 10:00 PM
+                                {dayjs(happyHour.date).format('LLL')}
                                 </div>
                                 <header className='mb-4'>
                                     {/* Title */}

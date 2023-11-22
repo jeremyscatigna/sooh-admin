@@ -11,11 +11,6 @@ function FeedLeftContent() {
       <div className="md:sticky md:top-16 md:h-[calc(100vh-64px)] md:overflow-x-hidden md:overflow-y-auto no-scrollbar">
         <div className="md:py-8">
           
-          {/* Title */}
-          <header className="mb-6">
-            <h1 className="text-2xl md:text-3xl text-white font-bold">Feed</h1>
-          </header>
-          
           {/* Links */}
           <div className="flex flex-nowrap overflow-x-scroll no-scrollbar md:block md:overflow-auto px-4 md:space-y-3 -mx-4">
             {/* Group 1 */}

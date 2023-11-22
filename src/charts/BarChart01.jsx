@@ -120,14 +120,14 @@ function BarChart01({
             labelContainer.style.display = 'flex';
             labelContainer.style.alignItems = 'center';
             const value = document.createElement('span');
-            value.style.color = tailwindConfig().theme.colors.slate[800];
+            value.style.color = tailwindConfig().theme.colors.primary;
             value.style.fontSize = tailwindConfig().theme.fontSize['3xl'][0];
             value.style.lineHeight = tailwindConfig().theme.fontSize['3xl'][1].lineHeight;
             value.style.fontWeight = tailwindConfig().theme.fontWeight.bold;
             value.style.marginRight = tailwindConfig().theme.margin[2];
             value.style.pointerEvents = 'none';
             const label = document.createElement('span');
-            label.style.color = tailwindConfig().theme.colors.slate[500];
+            label.style.color = tailwindConfig().theme.colors.primary;
             label.style.fontSize = tailwindConfig().theme.fontSize.sm[0];
             label.style.lineHeight = tailwindConfig().theme.fontSize.sm[1].lineHeight;
             const theValue = c.data.datasets[item.datasetIndex].data.reduce((a, b) => a + b, 0);
