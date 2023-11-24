@@ -18,7 +18,7 @@ import Avvvatars from 'avvvatars-react';
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
 
-function MeetupsPosts({ data, filtering }) {
+function MeetupsPosts({ data, filtering, searchText }) {
     const user = useAtomValue(currentUser);
 
     // Filter function
@@ -39,14 +39,25 @@ function MeetupsPosts({ data, filtering }) {
         }
     };
 
+    // Additional search filter
+    const searchFilter = (item) => {
+        if (!searchText) return true; // If no search text, return all items
+        const lowerCaseSearchText = searchText.toLowerCase();
+        return item.name.toLowerCase().includes(lowerCaseSearchText)
+        // Add more fields to check as needed
+    };
+
     // Memoized data for optimization
-    const filteredData = useMemo(() => data.filter(filterMeetups), [data, filtering]);
+    const filteredData = useMemo(() => 
+        data.filter(item => filterMeetups(item) && searchFilter(item)),
+        [data, filtering, searchText]
+    );
 
     // Component rendering
     return (
         <div className='grid xl:grid-cols-2 gap-6'>
-            {filteredData.map((item) => (
-                <MeetupItem item={item} key={item.uid} />
+            {filteredData.map((item, i) => (
+                <MeetupItem item={item} key={`${item.uid}+${i}`} />
             ))}
         </div>
     );
