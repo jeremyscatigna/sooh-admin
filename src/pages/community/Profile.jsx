@@ -146,22 +146,18 @@ function Profile() {
                     <ModalBasic id='basic-modal' modalOpen={basicModalOpen} setModalOpen={setBasicModalOpen} title='Modifie ton profil'>
                         {/* Modal content */}
                         <div className='px-5 pt-4 pb-1 space-y-4'>
-                            {!imgUrl && (
-                                <form onSubmit={handleUpload} className='flex flex-col justify-center items-start'>
-                                    <label className='block text-sm font-medium mb-1' htmlFor='file'>
-                                        Photo de profil
-                                    </label>
-                                    <div className='flex flex-row justify-between items-center w-full'>
-                                        <input
-                                            className='block border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4'
-                                            type='file'
-                                        />
-                                        <button className='btn py-3 bg-indigo-500 hover:bg-indigo-600 text-white' type='submit'>
-                                            {fileLoading ? 'Chargement...' : 'Télécharger'}
-                                        </button>
-                                    </div>
-                                </form>
-                            )}
+                            <form onSubmit={handleUpload} className='flex flex-row justify-between items-center'>
+                                <input
+                                    className='block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100'
+                                    type='file'
+                                />
+                                <button
+                                    className='btn py-3 bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white'
+                                    type='submit'
+                                >
+                                    {fileLoading ? 'Chargement...' : 'Télécharger'}
+                                </button>
+                            </form>
 
                             {imgUrl && <img src={imgUrl} alt='uploaded file' height={200} />}
 
