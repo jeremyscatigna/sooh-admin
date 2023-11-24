@@ -42,7 +42,6 @@ function FeedPost({ item }) {
         const res = await getDocs(collection(db, 'users'));
 
         setUsers(res.docs.map((doc) => doc.data()));
-        console.log(res.docs.map((doc) => doc.data()));
     };
 
     // Handling comment input changes
@@ -292,15 +291,40 @@ function FeedPost({ item }) {
                 </div>
 
                 {isUserListVisible && (
-                    <ul className='list-of-users'>
-                        {users
-                            .filter((user) => `${user.firstName} ${user.lastName}`.toLowerCase().includes(userListFilter))
-                            .map((filteredUser) => (
-                                <li key={filteredUser.id} onClick={() => handleUserSelect(filteredUser.firstName, filteredUser.lastName)}>
-                                    {filteredUser.firstName} {filteredUser.lastName}
-                                </li>
-                            ))}
-                    </ul>
+                    <div className='flex w-full justify-start items-center space-y-2 pt-4'>
+                        <ul className='space-y-2 w-full max-h-72 overflow-scroll'>
+                            {users
+                                .filter((user) => `${user.firstName} ${user.lastName}`.toLowerCase().includes(userListFilter))
+                                .map((filteredUser) => (
+                                    <li
+                                        key={filteredUser.id}
+                                        onClick={() => handleUserSelect(filteredUser.firstName, filteredUser.lastName)}
+                                        className='p-3 bg-hover hover:bg-gradient-to-r from-fuchsia-600 to-pink-600 w-full rounded-xl cursor-pointer'
+                                    >
+                                        <div className='flex items-center space-x-3'>
+                                            {filteredUser.avatar ? (
+                                                <img
+                                                    className='rounded-full shrink-0 object-fit w-8 h-8'
+                                                    src={filteredUser.avatar}
+                                                    width='28'
+                                                    height='28'
+                                                    alt='User 04'
+                                                />
+                                            ) : (
+                                                <Avvvatars value={`${filteredUser.firstName} ${filteredUser.lastName}`} />
+                                            )}
+                                            <div>
+                                                <div className='text-xs text-white'>
+                                                    <a className='font-semibold text-white' href='#0'>
+                                                        {filteredUser.firstName} {filteredUser.lastName}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                ))}
+                        </ul>
+                    </div>
                 )}
             </div>
         </div>

@@ -276,7 +276,7 @@ function MeetupsPost() {
                                         {attendees &&
                                             attendees.length > 0 &&
                                             attendees.map((attendee) => (
-                                                <li>
+                                                <li key={attendee.uid}>
                                                     <div className='flex justify-between'>
                                                         <div className='grow flex items-center'>
                                                             <div className='relative mr-3'>
