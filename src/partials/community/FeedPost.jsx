@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import dayjs from 'dayjs';
@@ -18,15 +18,26 @@ const getLocaleDateTime = () => {
     return dateTimeLocalValue;
 };
 
+const doILikeThisPost = (item, user) => {
+    if (item.likes) {
+        return item.likes.filter((like) => like.userId === user.uid).length > 0;
+    }
+    return false;
+}
+
 function FeedPost({ item }) {
     dayjs.extend(LocalizedFormat);
     dayjs.extend(RelativeTime);
 
     const user = useAtomValue(currentUser);
 
-    const [like, setLike] = React.useState(false);
+    const [like, setLike] = React.useState(item.likes ? doILikeThisPost(item, user) : false);
     const [comment, setComment] = React.useState('');
     const [seeComments, setSeeComments] = React.useState(false);
+
+    useEffect(() => {
+        setLike(item.likes ? doILikeThisPost(item, user) : false);
+    }, [item]);
 
     const handleUpdate = async (e, post) => {
         e.preventDefault();
@@ -51,6 +62,23 @@ function FeedPost({ item }) {
         });
 
         setComment('');
+    };
+
+    const handleLikeUpdate = async (e, post) => {
+        e.preventDefault();
+        const likeObject = {
+            id: uuidv4(),
+            userId: user.uid,
+        };
+
+        const updatedLikes = [...post.likes, likeObject];
+        item.likes = updatedLikes;
+        const convcollref = doc(db, 'posts', post.id);
+
+        // Update the Firestore document with the new comments array
+        updateDoc(convcollref, {
+            likes: updatedLikes,
+        });
     };
 
     return (
@@ -120,9 +148,12 @@ function FeedPost({ item }) {
             {/* Footer */}
             <footer className='flex items-center space-x-4'>
                 {/* Like button */}
-                <button className={`flex items-center text-secondary`} onClick={() => setLike(!like)}>
+                <button className={`flex items-center text-secondary`} onClick={(e) => {
+                    setLike(!like);
+                    handleLikeUpdate(e, item);
+                }}>
                     <Heart className={`w-4 h-4 shrink-0 fill-current mr-1.5 ${like && 'text-pink-500'}`} />
-                    <div className={`text-sm ${like ? 'text-pink-500' : 'text-secondary'}`}>2.2K</div>
+                    <div className={`text-sm ${like ? 'text-pink-500' : 'text-secondary'}`}>{item.likes ? item.likes.length : 0}</div>
                 </button>
                 {/* Share button */}
                 {/* <button className='flex items-center text-secondary hover:text-indigo-500'>
