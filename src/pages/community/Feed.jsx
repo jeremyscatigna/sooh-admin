@@ -6,7 +6,6 @@ import FeedLeftContent from '../../partials/community/FeedLeftContent';
 import FeedPosts from '../../partials/community/FeedPosts';
 import FeedRightContent from '../../partials/community/FeedRightContent';
 
-import Avatar from '../../images/user-40-02.jpg';
 import { useAtomValue } from 'jotai';
 import { currentUser } from '../Signup';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
@@ -14,7 +13,6 @@ import { auth, db, storage } from '../../main';
 import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import Avvvatars from 'avvvatars-react';
-import { SlidingTabBar } from '../../partials/Tabbar';
 import { Link } from 'react-router-dom';
 import { MediaImage, Message, Search, Settings } from 'iconoir-react';
 import ModalBlank from '../../components/ModalBlank';
@@ -32,6 +30,8 @@ function Feed() {
     const [loading, setLoading] = useState(false);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [apercuModalOpen, setApercuModalOpen] = useState(false);
+    const [searchText, setSearchText] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -59,6 +59,19 @@ function Feed() {
         };
         fetchData();
     }, []);
+
+    useEffect(() => {
+        if (searchText.trim()) {
+            const lowercasedFilter = searchText.toLowerCase();
+            const filteredItems = data.filter((item) => {
+                // Assuming you want to search in the text of the post. Adjust accordingly
+                return item.text.toLowerCase().includes(lowercasedFilter);
+            });
+            setFilteredData(filteredItems);
+        } else {
+            setFilteredData(data);
+        }
+    }, [searchText, data]);
 
     const handleUpload = (e) => {
         e.preventDefault();
@@ -223,7 +236,9 @@ function Feed() {
                                                     id='feed-search-desktop'
                                                     className='form-input bg-hover text-secondary border-none rounded-full w-full pl-9 focus:border-slate-300'
                                                     type='search'
-                                                    placeholder='Search…'
+                                                    placeholder='Rechercher…'
+                                                    value={searchText}
+                                                    onChange={(e) => setSearchText(e.target.value)}
                                                 />
                                                 <button className='absolute inset-0 right-auto group' type='submit' aria-label='Search'>
                                                     <Search className='w-4 h-4 shrink-0 text-secondary group-hover:text-slate-500 ml-3 mr-2' />
@@ -310,7 +325,7 @@ function Feed() {
                                             </div>
 
                                             {/* Posts */}
-                                            <FeedPosts posts={data} />
+                                            <FeedPosts posts={filteredData} />
                                         </div>
                                     </div>
                                 </div>
