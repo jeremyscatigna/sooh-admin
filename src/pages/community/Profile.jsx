@@ -171,7 +171,7 @@ function Profile() {
                                     type='text'
                                     value={firstName}
                                     onChange={(e) => setFirstName(e.target.value)}
-                                    placeholder='Add the name of your Happy Hour'
+                                    placeholder='Ajoute ton prénom'
                                 />
                             </div>
 
@@ -185,7 +185,7 @@ function Profile() {
                                     type='text'
                                     value={lastName}
                                     onChange={(e) => setLastName(e.target.value)}
-                                    placeholder='Add the name of your Happy Hour'
+                                    placeholder='Ajoute ton nom'
                                 />
                             </div>
                             <div>
@@ -198,7 +198,7 @@ function Profile() {
                                     type='text'
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder='Add the name of your Happy Hour'
+                                    placeholder='Ajoute ton email'
                                 />
                             </div>
                             <div>
@@ -211,7 +211,7 @@ function Profile() {
                                     type='text'
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}
-                                    placeholder='Add the name of your Happy Hour'
+                                    placeholder='Ajoute ton adresse'
                                 />
                             </div>
                             <div>

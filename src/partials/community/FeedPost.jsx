@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import RelativeTime from 'dayjs/plugin/relativeTime';
-import { Heart, SendDiagonal } from 'iconoir-react';
+import { Heart, SendDiagonal, ShareIos } from 'iconoir-react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useAtomValue } from 'jotai';
 import { currentUser } from '../../pages/Signup';
@@ -86,6 +86,15 @@ function FeedPost({ item }) {
         updateDoc(convcollref, {
             likes: updatedLikes,
         });
+    };
+
+    const handleShare = async () => {
+        const postUrl = `http://yourwebsite.com/posts/${item.uid}`; // Adjust the URL to point to your post detail page
+        // Facebook share URL
+        const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`;
+
+        // Open a new window for the Facebook share dialog
+        window.open(facebookShareUrl, 'facebook-share-dialog', 'width=800,height=600');
     };
 
     return (
@@ -178,6 +187,11 @@ function FeedPost({ item }) {
                         <path d='M8 0C3.6 0 0 3.1 0 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7zm4 10.8v2.3L8.9 12H8c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8z' />
                     </svg>
                     <div className='text-sm text-secondary'>{(item.comments && item.comments.length) || 0}</div>
+                </button>
+                <button className='flex items-center text-secondary' onClick={handleShare}>
+                    {/* Replace with an appropriate share icon */}
+
+                    <ShareIos className='w-5 h-4 shrink-0 font-bold' strokeWidth={3} />
                 </button>
             </footer>
             {seeComments && (
