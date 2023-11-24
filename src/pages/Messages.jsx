@@ -7,7 +7,7 @@ import MessagesHeader from '../partials/messages/MessagesHeader';
 import MessagesBody from '../partials/messages/MessagesBody';
 import MessagesFooter from '../partials/messages/MessagesFooter';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { addDoc, collection, getDocs, onSnapshot, query } from 'firebase/firestore';
+import { addDoc, collection, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { atom, useAtom, useAtomValue } from 'jotai';
 import { currentUser } from './Signup';
@@ -54,7 +54,9 @@ function Messages() {
         const fetchConversations = async () => {
             const res = await getDocs(collection(db, `users/${authenticatedUser.uid}/conversations`));
 
-            setConversations(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+            const conversationsWithoutDeleted = res.docs.map((doc) => ({ id: doc.id, ...doc.data() })).filter((conversation) => !conversation.deleted);
+
+            setConversations(conversationsWithoutDeleted);
             console.log(res.docs.map((doc) => doc.data()));
         };
 

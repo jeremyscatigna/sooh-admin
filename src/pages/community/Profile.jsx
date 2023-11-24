@@ -54,9 +54,9 @@ function Profile() {
             setFirstName(data[0].firstName);
             setLastName(data[0].lastName);
             setEmail(data[0].email);
-            setDetails(data[0].details);
-            setDescription(data[0].description);
-            setLocation(data[0].location);
+            setDetails(data[0].details || '');
+            setDescription(data[0].description || '');
+            setLocation(data[0].location || '');
             setImgUrl(data[0].avatar);
         });
 
@@ -120,6 +120,7 @@ function Profile() {
             email,
             details,
             description,
+            location,
             avatar: imgUrl || '',
         };
 
@@ -201,6 +202,19 @@ function Profile() {
                                     type='text'
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    placeholder='Add the name of your Happy Hour'
+                                />
+                            </div>
+                            <div>
+                                <label className='block text-sm text-primary font-medium mb-1' htmlFor='placeholder'>
+                                    Location
+                                </label>
+                                <input
+                                    id='placeholder'
+                                    className='form-input rounded-full border-none bg-hover text-secondary placeholder-secondary w-full'
+                                    type='text'
+                                    value={location}
+                                    onChange={(e) => setLocation(e.target.value)}
                                     placeholder='Add the name of your Happy Hour'
                                 />
                             </div>
