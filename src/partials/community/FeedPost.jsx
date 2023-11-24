@@ -23,7 +23,7 @@ const doILikeThisPost = (item, user) => {
         return item.likes.filter((like) => like.userId === user.uid).length > 0;
     }
     return false;
-}
+};
 
 function FeedPost({ item }) {
     dayjs.extend(LocalizedFormat);
@@ -71,7 +71,14 @@ function FeedPost({ item }) {
             userId: user.uid,
         };
 
-        const updatedLikes = [...post.likes, likeObject];
+        let updatedLikes = [];
+        if (like) {
+            updatedLikes = post.likes.filter((like) => like.userId !== user.uid);
+            item.likes = updatedLikes;
+            setLike(false);
+        } else {
+            updatedLikes = [...post.likes, likeObject];
+        }
         item.likes = updatedLikes;
         const convcollref = doc(db, 'posts', post.id);
 
@@ -148,10 +155,13 @@ function FeedPost({ item }) {
             {/* Footer */}
             <footer className='flex items-center space-x-4'>
                 {/* Like button */}
-                <button className={`flex items-center text-secondary`} onClick={(e) => {
-                    setLike(!like);
-                    handleLikeUpdate(e, item);
-                }}>
+                <button
+                    className={`flex items-center text-secondary`}
+                    onClick={(e) => {
+                        setLike(!like);
+                        handleLikeUpdate(e, item);
+                    }}
+                >
                     <Heart className={`w-4 h-4 shrink-0 fill-current mr-1.5 ${like && 'text-pink-500'}`} />
                     <div className={`text-sm ${like ? 'text-pink-500' : 'text-secondary'}`}>{item.likes ? item.likes.length : 0}</div>
                 </button>
