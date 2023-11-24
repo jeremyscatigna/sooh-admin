@@ -17,6 +17,7 @@ import Avvvatars from 'avvvatars-react';
 import { SlidingTabBar } from '../../partials/Tabbar';
 import { Link } from 'react-router-dom';
 import { MediaImage, Message, Search, Settings } from 'iconoir-react';
+import ModalBlank from '../../components/ModalBlank';
 
 function Feed() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -30,6 +31,7 @@ function Feed() {
 
     const [loading, setLoading] = useState(false);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
+    const [apercuModalOpen, setApercuModalOpen] = useState(false);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -139,7 +141,6 @@ function Feed() {
                                 {!mobile && <FeedLeftContent />}
                                 {mobile && (
                                     <header className='mb-6 flex flex-row w-full justify-between'>
-                                        
                                         <div className='flex flex-row space-x-2'>
                                             <Link
                                                 className='flex items-center justify-center p-2 rounded-full bg-card'
@@ -149,10 +150,7 @@ function Feed() {
                                                     <path d='M12.311 9.527c-1.161-.393-1.85-.825-2.143-1.175A3.991 3.991 0 0012 5V4c0-2.206-1.794-4-4-4S4 1.794 4 4v1c0 1.406.732 2.639 1.832 3.352-.292.35-.981.782-2.142 1.175A3.942 3.942 0 001 13.26V16h14v-2.74c0-1.69-1.081-3.19-2.689-3.733zM6 4c0-1.103.897-2 2-2s2 .897 2 2v1c0 1.103-.897 2-2 2s-2-.897-2-2V4zm7 10H3v-.74c0-.831.534-1.569 1.33-1.838 1.845-.624 3-1.436 3.452-2.422h.436c.452.986 1.607 1.798 3.453 2.422A1.943 1.943 0 0113 13.26V14z' />
                                                 </svg>
                                             </Link>
-                                            <Link
-                                                className='flex items-center justify-center p-2 rounded-full bg-card'
-                                                to={`/messages`}
-                                            >
+                                            <Link className='flex items-center justify-center p-2 rounded-full bg-card' to={`/messages`}>
                                                 <Message className='w-4 h-4 shrink-0 text-primary' />
                                             </Link>
                                             <Link
@@ -167,6 +165,53 @@ function Feed() {
 
                                 {/* Middle content */}
                                 <div className='flex-1 md:ml-8 xl:mx-4 2xl:mx-8'>
+                                    <ModalBlank
+                                        id='basic-modal'
+                                        className='bg-card rounded-xl'
+                                        modalOpen={apercuModalOpen}
+                                        setModalOpen={setApercuModalOpen}
+                                    >
+                                        <div className='p-5 flex flex-col space-y-4 justify-center items-center bg-card rounded-xl'>
+                                            <div className='w-full flex justify-start items-start'>
+                                                <p className='text-sm text-primary text-center mb-2'>{postText}</p>
+                                            </div>
+                                            <video
+                                                className='block w-full'
+                                                width='590'
+                                                height='332'
+                                                poster={imgUrl}
+                                                src={imgUrl}
+                                                muted
+                                                autoPlay
+                                                loop
+                                            ></video>
+
+                                            {/* Modal footer */}
+                                            <div className='flex justify-end items-start w-full space-x-2'>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        setApercuModalOpen(false);
+                                                    }}
+                                                    className='btn-sm text-primary border border-primary whitespace-nowrap rounded-lg'
+                                                >
+                                                    Annuler
+                                                </button>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        handleCreate();
+                                                        setPostText('');
+                                                        setPostImage(null);
+                                                        setApercuModalOpen(false);
+                                                    }}
+                                                    className='btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary whitespace-nowrap rounded-lg'
+                                                >
+                                                    Envoyer
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </ModalBlank>
                                     <div className='md:py-8'>
                                         {/* Blocks */}
                                         <div className='space-y-4'>
@@ -246,15 +291,19 @@ function Feed() {
                                                             type='submit'
                                                             className='btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary whitespace-nowrap rounded-lg'
                                                             onClick={(e) => {
-                                                                e.preventDefault();
-
-                                                                handleCreate();
-
-                                                                setPostText('');
-                                                                setPostImage(null);
+                                                                if (imgUrl) {
+                                                                    e.preventDefault();
+                                                                    e.stopPropagation();
+                                                                    setApercuModalOpen(true);
+                                                                } else {
+                                                                    e.preventDefault();
+                                                                    handleCreate();
+                                                                    setPostText('');
+                                                                    setPostImage(null);
+                                                                }
                                                             }}
                                                         >
-                                                            {loading ? 'Loading...' : 'Envoyer'}
+                                                            {loading ? 'Loading...' : imgUrl ? 'Apercu' : 'Envoyer'}
                                                         </button>
                                                     </div>
                                                 </div>
