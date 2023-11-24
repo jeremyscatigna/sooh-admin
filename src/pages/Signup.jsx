@@ -78,6 +78,8 @@ function Signup() {
         }
     };
 
+    const isDisabled = !email || (!password && password.length < 6) || !firstName || !lastName;
+
     return (
         <main className='bg-background'>
             <div className='relative md:flex'>
@@ -119,7 +121,8 @@ function Signup() {
                         </div>
 
                         <div className='max-w-sm mx-auto w-full px-4 py-8'>
-                            <h1 className='text-3xl text-primary font-bold mb-6'>Créez votre compte</h1>
+                            <h1 className='text-3xl text-primary font-bold'>Créez votre compte</h1>
+                            <p className='text-xs text-pink-500 mb-6'>Tous les champs sont obligatoire</p>
                             {/* Form */}
                             <form>
                                 <div className='space-y-4'>
@@ -166,11 +169,13 @@ function Signup() {
                                             autoComplete='on'
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
+                                        {password.length < 6 && <p className='text-xs text-pink-500 mt-2'>Le mot de passe dois avoir au moins 6 characteres</p>}
                                     </div>
                                 </div>
                                 <div className='flex items-center justify-between mt-6'>
                                     <button
-                                        className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white whitespace-nowrap'
+                                        disabled={isDisabled}
+                                        className={`btn ${isDisabled ? 'bg-card text-secondary' : 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'} rounded-full whitespace-nowrap`}
                                         onClick={(e) => handleSubmit(e)}
                                     >
                                         {loading ? 'Chargement en cours...' : "S'inscrire"}

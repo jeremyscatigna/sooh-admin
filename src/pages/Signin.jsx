@@ -10,19 +10,21 @@ import { useSetAtom } from 'jotai';
 import { auth, db } from '../main';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { EyeAlt, EyeClose } from 'iconoir-react';
 
 function Signin() {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [error, setError] = React.useState('');
     const [loading, setLoading] = React.useState(false);
+    const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
     const navigate = useNavigate();
     const { logIn } = useUserAuth();
 
     const setUserId = useSetAtom(userIdAtom);
     const setUserName = useSetAtom(userNameAtom);
     const setUserType = useSetAtom(userTypeAtom);
-    const setCurrentUser = useSetAtom(currentUser)
+    const setCurrentUser = useSetAtom(currentUser);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -43,12 +45,13 @@ function Signin() {
                 setLoading(false);
                 navigate('/');
             });
-
         } catch (err) {
             setError(err.message);
             setLoading(false);
         }
     };
+
+    const isDisabled = !email || !password;
 
     return (
         <main className='bg-background'>
@@ -105,14 +108,28 @@ function Signin() {
                                         />
                                     </div>
                                     <div>
-                                        <input
-                                            id='password'
-                                            className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
-                                            type='password'
-                                            placeholder='Mot de passe'
-                                            autoComplete='on'
-                                            onChange={(e) => setPassword(e.target.value)}
-                                        />
+                                        <label htmlFor='email' className='relative text-gray-400 focus-within:text-gray-600 block'>
+                                            {isPasswordVisible ? (
+                                                <EyeAlt
+                                                    onClick={() => setIsPasswordVisible(false)}
+                                                    className='w-5 h-5 absolute top-1/2 transform -translate-y-1/2 right-4'
+                                                />
+                                            ) : (
+                                                <EyeClose
+                                                    onClick={() => setIsPasswordVisible(true)}
+                                                    className='w-5 h-5 absolute top-1/2 transform -translate-y-1/2 right-4'
+                                                />
+                                            )}
+
+                                            <input
+                                                id='password'
+                                                className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
+                                                type={isPasswordVisible ? 'text' : 'password'}
+                                                placeholder='Mot de passe'
+                                                autoComplete='on'
+                                                onChange={(e) => setPassword(e.target.value)}
+                                            />
+                                        </label>
                                     </div>
                                 </div>
                                 <div className='flex items-center justify-between mt-6'>
@@ -122,7 +139,12 @@ function Signin() {
                                         </Link>
                                     </div>
                                     <button
-                                        className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white ml-3'
+                                        disabled={isDisabled}
+                                        className={`btn ${
+                                            isDisabled
+                                                ? 'bg-card text-secondary'
+                                                : 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
+                                        } rounded-full whitespace-nowrap ml-3`}
                                         onClick={(e) => handleSubmit(e)}
                                     >
                                         {loading ? 'Chargement en cours...' : 'Se connecter'}
