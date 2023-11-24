@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import RelativeTime from 'dayjs/plugin/relativeTime';
 import { Heart, SendDiagonal, ShareIos } from 'iconoir-react';
-import { doc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { useAtomValue } from 'jotai';
 import { currentUser } from '../../pages/Signup';
 import { v4 as uuidv4 } from 'uuid';
@@ -34,6 +34,39 @@ function FeedPost({ item }) {
     const [like, setLike] = React.useState(item.likes ? doILikeThisPost(item, user) : false);
     const [comment, setComment] = React.useState('');
     const [seeComments, setSeeComments] = React.useState(false);
+    const [users, setUsers] = React.useState([]);
+    const [isUserListVisible, setIsUserListVisible] = React.useState(false);
+    const [userListFilter, setUserListFilter] = React.useState('');
+
+    const fetchUser = async () => {
+        const res = await getDocs(collection(db, 'users'));
+
+        setUsers(res.docs.map((doc) => doc.data()));
+        console.log(res.docs.map((doc) => doc.data()));
+    };
+
+    // Handling comment input changes
+    const handleCommentChange = (e) => {
+        const value = e.target.value;
+        setComment(value);
+
+        // Detect if "@" is present and show user list
+        const atIndex = value.lastIndexOf('@');
+        fetchUser();
+        if (atIndex > -1) {
+            setIsUserListVisible(true);
+            setUserListFilter(value.substring(atIndex + 1).toLowerCase());
+        } else {
+            setIsUserListVisible(false);
+        }
+    };
+
+    // Handling user selection from the list
+    const handleUserSelect = (firstName, lastName) => {
+        const lastAtIndex = comment.lastIndexOf('@');
+        setComment(`${comment.substring(0, lastAtIndex)}@${firstName} ${lastName} `);
+        setIsUserListVisible(false);
+    };
 
     useEffect(() => {
         setLike(item.likes ? doILikeThisPost(item, user) : false);
@@ -227,36 +260,48 @@ function FeedPost({ item }) {
                 </div>
             )}
 
-            <div className='flex items-center space-x-3 mt-3'>
-                {user.avatar ? (
-                    <img className='rounded-full shrink-0 w-8 h-8 object-fit' src={user.avatar} width='32' height='32' alt='User 02' />
-                ) : (
-                    <Avvvatars value={`${user.firstName} ${user.lastName}`} />
-                )}
+            <div className='flex flex-col items-center w-full space-x-3 mt-3'>
+                <div className='flex items-center space-x-3 w-full mt-3'>
+                    {user.avatar ? (
+                        <img className='rounded-full shrink-0 w-8 h-8 object-fit' src={user.avatar} width='32' height='32' alt='User 02' />
+                    ) : (
+                        <Avvvatars value={`${user.firstName} ${user.lastName}`} />
+                    )}
 
-                <div className='flex w-full'>
-                    <label htmlFor='comment-form' className='sr-only text-primary'>
-                        Écrire un commentaire…
-                    </label>
-                    <input
-                        id='comment-form'
-                        className='form-input border-0 w-full bg-hover text-primary rounded-full placeholder-secondary'
-                        type='text'
-                        placeholder='Écrire un commentaire…'
-                        value={comment}
-                        onChange={(e) => {
-                            setComment(e.target.value);
-                        }}
-                    />
-                    <button
-                        className='ml-4 btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-lg'
-                        onClick={(e) => {
-                            handleUpdate(e, item);
-                        }}
-                    >
-                        <SendDiagonal className='text-white' />
-                    </button>
+                    <div className='flex w-full'>
+                        <label htmlFor='comment-form' className='sr-only text-primary'>
+                            Écrire un commentaire…
+                        </label>
+                        <input
+                            id='comment-form'
+                            className='form-input border-0 w-full bg-hover text-primary rounded-full placeholder-secondary'
+                            type='text'
+                            placeholder='Écrire un commentaire…'
+                            value={comment}
+                            onChange={handleCommentChange}
+                        />
+                        <button
+                            className='ml-4 btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-lg'
+                            onClick={(e) => {
+                                handleUpdate(e, item);
+                            }}
+                        >
+                            <SendDiagonal className='text-white' />
+                        </button>
+                    </div>
                 </div>
+
+                {isUserListVisible && (
+                    <ul className='list-of-users'>
+                        {users
+                            .filter((user) => `${user.firstName} ${user.lastName}`.toLowerCase().includes(userListFilter))
+                            .map((filteredUser) => (
+                                <li key={filteredUser.id} onClick={() => handleUserSelect(filteredUser.firstName, filteredUser.lastName)}>
+                                    {filteredUser.firstName} {filteredUser.lastName}
+                                </li>
+                            ))}
+                    </ul>
+                )}
             </div>
         </div>
     );

@@ -200,7 +200,7 @@ function Feed() {
                                             ></video>
 
                                             {/* Modal footer */}
-                                            <div className='flex justify-end items-start w-full space-x-2'>
+                                            <div className='flex justify-end items-start w-full space-x-2 pb-10'>
                                                 <button
                                                     onClick={(e) => {
                                                         e.preventDefault();
