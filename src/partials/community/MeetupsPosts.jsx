@@ -17,6 +17,7 @@ import { useAtomValue } from 'jotai';
 import { userTypeAtom } from '../../pages/Onboarding01';
 import { v4 as uuidv4 } from 'uuid';
 import { currentUser } from '../../pages/Signup';
+import Avvvatars from 'avvvatars-react';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
@@ -67,6 +68,16 @@ function MeetupItem({ item }) {
     const { days, hours, minutes, seconds } = useTimer(item.date);
     const [like, setLike] = useState(item.likes ? doILikeThisHH(item, user) : false);
     const [city, setCity] = useState('');
+    const [attendees, setAttendees] = useState([]);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const res = await getDocs(collection(db, `happyhours/${item.uid}/participants`));
+            setAttendees(res.docs.map((doc) => doc.data()) || []);
+        };
+
+        fetchUser();
+    }, []);
 
     useEffect(() => {
         let isMounted = true; // To avoid setting state on unmounted component
@@ -151,29 +162,24 @@ function MeetupItem({ item }) {
                     {/* Avatars */}
                     <div className='flex items-center space-x-2'>
                         <div className='flex -space-x-3 -ml-0.5'>
-                            <img
-                                className='rounded-full border-2 border-white box-content'
-                                src={UserImage01}
-                                width='28'
-                                height='28'
-                                alt='User 01'
-                            />
-                            <img
-                                className='rounded-full border-2 border-white box-content'
-                                src={UserImage04}
-                                width='28'
-                                height='28'
-                                alt='User 04'
-                            />
-                            <img
-                                className='rounded-full border-2 border-white box-content'
-                                src={UserImage05}
-                                width='28'
-                                height='28'
-                                alt='User 05'
-                            />
+                            {attendees
+                                .slice(0, 3)
+                                .map((attendee) =>
+                                    attendee.avatar ? (
+                                        <img
+                                            key={attendee.uid}
+                                            className='rounded-full border-2 border-white box-content'
+                                            src={attendee.avatar}
+                                            width='28'
+                                            height='28'
+                                            alt='User 01'
+                                        />
+                                    ) : (
+                                        <Avvvatars key={attendee.uid} value={`${attendee.firstName} ${attendee.lastName}`} />
+                                    ),
+                                )}
                         </div>
-                        <div className='text-xs font-medium text-secondary italic'>+22</div>
+                        {attendees.length > 3 && <div className='text-xs font-medium text-secondary italic'>+{attendees.length - 3}</div>}
                     </div>
                     {/* Like button */}
                     <button
