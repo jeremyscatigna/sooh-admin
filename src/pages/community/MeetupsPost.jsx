@@ -24,8 +24,20 @@ function MeetupsPost() {
     const [happyHour, setHappyHour] = useState([]);
     const [user, setUser] = useState({});
     const [attendees, setAttendees] = useState([]);
+    const [mobile, setMobile] = useState(window.innerWidth <= 500);
 
     const connectedUser = useAtomValue(currentUser);
+
+    const handleWindowSizeChange = () => {
+        setMobile(window.innerWidth <= 500);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        };
+    }, []);
 
     useEffect(() => {
         const collectionQuery = query(collection(db, 'happyhours'), where('uid', '==', id));
@@ -82,12 +94,12 @@ function MeetupsPost() {
     return (
         <div className='flex h-screen overflow-hidden'>
             {/* Sidebar */}
-            <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            {!mobile && <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
             {/* Content area */}
             <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
                 {/*  Site header */}
-                <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                {!mobile && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
                 <main>
                     <div className='px-4 sm:px-6 lg:px-8 py-8 w-full'>

@@ -11,10 +11,12 @@ import UserImage05 from '../../images/avatar-05.jpg';
 import useTimer from '../../components/Timer';
 import { getCategoriesShadowColor } from '../../utils/categories';
 import { MapsArrowDiagonal } from 'iconoir-react';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, doc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { db } from '../../main';
 import { useAtomValue } from 'jotai';
 import { userTypeAtom } from '../../pages/Onboarding01';
+import { v4 as uuidv4 } from 'uuid';
+import { currentUser } from '../../pages/Signup';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
@@ -53,9 +55,17 @@ function MeetupsPosts({ data, filtering }) {
     );
 }
 
+const doILikeThisHH = (item, user) => {
+    if (item.likes) {
+        return item.likes.filter((like) => like.userId === user.uid).length > 0;
+    }
+    return false;
+};
+
 function MeetupItem({ item }) {
+    const user = useAtomValue(currentUser);
     const { days, hours, minutes, seconds } = useTimer(item.date);
-    const [like, setLike] = useState(false);
+    const [like, setLike] = useState(item.likes ? doILikeThisHH(item, user) : false);
     const [city, setCity] = useState('');
 
     useEffect(() => {
@@ -72,6 +82,34 @@ function MeetupItem({ item }) {
             isMounted = false;
         };
     }, [item.userId]);
+
+    useEffect(() => {
+        setLike(item.likes ? doILikeThisHH(item, user) : false);
+    }, [item]);
+
+    const handleLikeUpdate = async (e) => {
+        e.preventDefault();
+        const likeObject = {
+            id: uuidv4(),
+            userId: user.uid,
+        };
+
+        let updatedLikes = [];
+        if (like) {
+            updatedLikes = item.likes.filter((like) => like.userId !== user.uid);
+            item.likes = updatedLikes;
+            setLike(false);
+        } else {
+            updatedLikes = [...item.likes, likeObject];
+        }
+        item.likes = updatedLikes;
+        const convcollref = doc(db, 'happyhours', item.id);
+
+        // Update the Firestore document with the new comments array
+        updateDoc(convcollref, {
+            likes: updatedLikes,
+        });
+    };
 
     return (
         <article
@@ -138,7 +176,12 @@ function MeetupItem({ item }) {
                         <div className='text-xs font-medium text-secondary italic'>+22</div>
                     </div>
                     {/* Like button */}
-                    <button onClick={() => setLike(!like)}>
+                    <button
+                        onClick={(e) => {
+                            setLike(!like);
+                            handleLikeUpdate(e);
+                        }}
+                    >
                         <div className='text-slate-100 bg-slate-900 bg-opacity-60 rounded-full'>
                             <span className='sr-only'>Like</span>
                             <svg className={`h-8 w-8`} fill={like ? 'red' : 'white'} viewBox='0 0 32 32'>
