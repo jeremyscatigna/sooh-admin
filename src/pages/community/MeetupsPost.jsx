@@ -9,24 +9,31 @@ import MeetupThumb from '../../images/meetups-thumb-02.jpg';
 import Avatar02 from '../../images/avatar-02.jpg';
 import Avatar03 from '../../images/avatar-03.jpg';
 import Avatar04 from '../../images/avatar-04.jpg';
-import { addDoc, collection, getDocs, onSnapshot, query, where } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, onSnapshot, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '../../main';
 import Avvvatars from 'avvvatars-react';
 import { useAtomValue } from 'jotai';
 import { currentUser } from '../Signup';
-import useTimer from '../../components/Timer';
-import { getCategoriesShadowColor } from '../../utils/categories';
 import dayjs from 'dayjs';
+import { v4 as uuidv4 } from 'uuid';
+import { Check } from 'iconoir-react';
+
+const doIFavoriteThis = (item, user) => {
+    if (item.favorites) {
+        return item.favorites.filter((favorite) => favorite.userId === user.uid).length > 0;
+    }
+    return false;
+};
 
 function MeetupsPost() {
     const { id } = useParams();
+    const connectedUser = useAtomValue(currentUser);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [happyHour, setHappyHour] = useState([]);
     const [user, setUser] = useState({});
     const [attendees, setAttendees] = useState([]);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
-
-    const connectedUser = useAtomValue(currentUser);
+    const [favorite, setFavorite] = React.useState(false);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -78,6 +85,10 @@ function MeetupsPost() {
         }
     }, [happyHour]);
 
+    useEffect(() => {
+        setFavorite(happyHour.favorites ? doIFavoriteThis(happyHour, connectedUser) : false);
+    }, [happyHour, connectedUser]);
+
     const handleAddAttendee = async (e) => {
         e.preventDefault();
         try {
@@ -91,7 +102,33 @@ function MeetupsPost() {
         setAttendees([...attendees, connectedUser]);
     };
 
-    const isUserAttending = attendees.some(attendee => attendee.uid === connectedUser.uid);
+    const handleAddToFavorite = async () => {
+        // Prevent default form submission behavior
+        const favoriteObject = {
+            id: uuidv4(),
+            userId: connectedUser.uid,
+        };
+
+        let updatedFavorites = [];
+        if (favorite) {
+            updatedFavorites = happyHour.favorites.filter(fav => fav.userId !== connectedUser.uid);
+            setFavorite(false);
+        } else {
+            updatedFavorites = happyHour.favorites ? [...happyHour.favorites, favoriteObject] : [favoriteObject];
+            setFavorite(true);
+        }
+
+        const convcollref = doc(db, 'happyhours', happyHour.id);
+        try {
+            await updateDoc(convcollref, {
+                favorites: updatedFavorites,
+            });
+        } catch (error) {
+            console.error("Error updating favorites: ", error);
+        }
+    };
+
+    const isUserAttending = attendees.some((attendee) => attendee.uid === connectedUser.uid);
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -121,12 +158,12 @@ function MeetupsPost() {
                                     </Link>
                                 </div>
                                 <div className='text-sm font-semibold text-pink-500 uppercase mb-2'>
-                                {happyHour && dayjs(happyHour.date).format('LLL')}
+                                    {happyHour && dayjs(happyHour.date).format('LLL')}
                                 </div>
                                 <header className='mb-4'>
                                     {/* Title */}
                                     <h1 className='text-2xl md:text-3xl text-primary font-bold mb-2'>{happyHour.name}</h1>
-                                    <p>{happyHour.description}</p> 
+                                    <p>{happyHour.description}</p>
                                 </header>
 
                                 {/* Meta */}
@@ -254,6 +291,21 @@ function MeetupsPost() {
                             {/* Sidebar */}
                             <div className='space-y-4'>
                                 {/* 1st block */}
+                                <div className='space-y-2'>
+                                    <button
+                                        onClick={handleAddToFavorite}
+                                        className='btn w-full bg-card hover:bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded-full'
+                                    >
+                                        {favorite ? (
+                                            <Check />
+                                        ) : (
+                                            <svg className='w-4 h-4 fill-current shrink-0' viewBox='0 0 16 16'>
+                                                <path d='m2.457 8.516.969-.99 2.516 2.481 5.324-5.304.985.989-6.309 6.284z' />
+                                            </svg>
+                                        )}
+                                        <span className='ml-1'>{favorite ? 'Favoris' : 'Ajouter au favoris'}</span>
+                                    </button>
+                                </div>
 
                                 <div className='space-y-2'>
                                     {!isUserAttending && (

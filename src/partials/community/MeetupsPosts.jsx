@@ -5,16 +5,12 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import RelativeTime from 'dayjs/plugin/relativeTime';
 
 import MeetupsThumb01 from '../../images/meetups-thumb-01.jpg';
-import UserImage01 from '../../images/avatar-01.jpg';
-import UserImage04 from '../../images/avatar-04.jpg';
-import UserImage05 from '../../images/avatar-05.jpg';
 import useTimer from '../../components/Timer';
 import { getCategoriesShadowColor } from '../../utils/categories';
 import { MapsArrowDiagonal } from 'iconoir-react';
 import { collection, doc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { db } from '../../main';
 import { useAtomValue } from 'jotai';
-import { userTypeAtom } from '../../pages/Onboarding01';
 import { v4 as uuidv4 } from 'uuid';
 import { currentUser } from '../../pages/Signup';
 import Avvvatars from 'avvvatars-react';
@@ -23,7 +19,7 @@ dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
 
 function MeetupsPosts({ data, filtering }) {
-    const user = useAtomValue(userTypeAtom);
+    const user = useAtomValue(currentUser);
 
     // Filter function
     const filterMeetups = (item) => {
@@ -37,7 +33,7 @@ function MeetupsPosts({ data, filtering }) {
             case 'thismonth':
                 return item.date && dayjs(item.date).isBefore(dayjs().add(1, 'month'));
             case 'favorites':
-                return item.favorites.includes(user.uid);
+                return item.favorites && item.favorites.some((favorite) => favorite.userId === user.uid);
             default:
                 return true;
         }
