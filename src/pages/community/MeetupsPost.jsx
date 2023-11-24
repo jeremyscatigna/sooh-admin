@@ -91,6 +91,8 @@ function MeetupsPost() {
         setAttendees([...attendees, connectedUser]);
     };
 
+    const isUserAttending = attendees.some(attendee => attendee.uid === connectedUser.uid);
+
     return (
         <div className='flex h-screen overflow-hidden'>
             {/* Sidebar */}
@@ -254,7 +256,7 @@ function MeetupsPost() {
                                 {/* 1st block */}
 
                                 <div className='space-y-2'>
-                                    {!attendees.includes(connectedUser) && (
+                                    {!isUserAttending && (
                                         <button
                                             onClick={(e) => handleAddAttendee(e)}
                                             className='btn w-full bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded-full'
