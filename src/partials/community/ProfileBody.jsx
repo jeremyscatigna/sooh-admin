@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
-import ProfileBg from '../../images/profile-bg.jpg';
 import Avvvatars from 'avvvatars-react';
-import { useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { currentUser } from '../../pages/Signup';
 import { Edit } from 'iconoir-react';
-import ModalBasic from '../../components/ModalBasic';
 import { signOut } from 'firebase/auth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../main';
+import { selectedConversationAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
 
 function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalOpen, user, posts }) {
     const connectedUser = useAtomValue(currentUser);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
+    const [conversations, setConversations] = useState([]);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [selectedConversation, setSelectedConversation] = useAtom(selectedConversationAtom);
+    const setSelectedConversationMessages = useSetAtom(selectedConversationMessagesAtom);
+    const navigate = useNavigate();
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -23,6 +29,32 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
             window.removeEventListener('resize', handleWindowSizeChange);
         };
     }, []);
+
+    useEffect(() => {
+        const fetchConversations = async () => {
+            const res = await getDocs(collection(db, `users/${connectedUser.uid}/conversations`));
+
+            setConversations(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+            console.log(res.docs.map((doc) => doc.data()));
+        };
+
+        if (conversations === undefined || conversations.length === 0) {
+            fetchConversations();
+        }
+    }, [conversations]);
+
+    const doesConversationExist = () => {
+        const conv = conversations.filter((conversation) => conversation.userId === user.uid);
+        if (conv.length > 0) {
+            setSelectedConversation(conv[0]);
+            setSearchParams({ conversation: conv[0].uid });
+            setSelectedConversationMessages(conv[0].messages);
+            navigate(`/messages`);
+        } else {
+            navigate(`/messages`);
+        }
+    }
+
     return (
         <div
             className={`grow flex flex-col md:translate-x-0 transition-transform duration-300 ease-in-out ${
@@ -52,23 +84,15 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                         {/* Actions */}
                         {connectedUser.uid !== user.uid ? (
                             <div className='flex space-x-2 sm:mb-2'>
-                                <button className='p-1.5 shrink-0 rounded border border-slate-200 hover:border-slate-300 shadow-sm'>
-                                    <svg className='w-4 h-1 fill-current text-slate-400' viewBox='0 0 16 4'>
-                                        <circle cx='8' cy='2' r='2' />
-                                        <circle cx='2' cy='2' r='2' />
-                                        <circle cx='14' cy='2' r='2' />
-                                    </svg>
-                                </button>
-                                <button className='p-1.5 shrink-0 rounded border border-slate-200 hover:border-slate-300 shadow-sm'>
-                                    <svg className='w-4 h-4 fill-current text-indigo-500' viewBox='0 0 16 16'>
+                                <button 
+                                    onClick={() => {
+                                        doesConversationExist();
+                                    }}
+                                    className='p-3 shrink-0 rounded-full border-none bg-gradient-to-r from-fuchsia-600 to-pink-600 shadow-sm'
+                                >
+                                    <svg className='w-4 h-4 fill-current text-white' viewBox='0 0 16 16'>
                                         <path d='M8 0C3.6 0 0 3.1 0 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7Zm4 10.8v2.3L8.9 12H8c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8Z' />
                                     </svg>
-                                </button>
-                                <button className='btn-sm bg-indigo-500 hover:bg-indigo-600 text-white'>
-                                    <svg className='fill-current shrink-0' width='11' height='8' viewBox='0 0 11 8'>
-                                        <path d='m.457 4.516.969-.99 2.516 2.481L9.266.702l.985.99-6.309 6.284z' />
-                                    </svg>
-                                    <span className='ml-2'>Following</span>
                                 </button>
                             </div>
                         ) : (
