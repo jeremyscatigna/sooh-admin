@@ -34,7 +34,6 @@ function MeetupsPost() {
     const [attendees, setAttendees] = useState([]);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [favorite, setFavorite] = React.useState(false);
-    const [city, setCity] = useState('');
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -90,21 +89,6 @@ function MeetupsPost() {
         setFavorite(happyHour.favorites ? doIFavoriteThis(happyHour, connectedUser) : false);
     }, [happyHour, connectedUser]);
 
-    useEffect(() => {
-        let isMounted = true; // To avoid setting state on unmounted component
-        const fetchData = async () => {
-            const userCompany = await getDocs(query(collection(db, `users/${happyHour.userId}/company`)));
-            const c = userCompany.docs.map((doc) => doc.data());
-            if (isMounted) {
-                setCity(c[0].city);
-            }
-        };
-        fetchData();
-        return () => {
-            isMounted = false;
-        };
-    }, [happyHour.userId]);
-
     const handleAddAttendee = async (e) => {
         e.preventDefault();
         try {
@@ -145,8 +129,12 @@ function MeetupsPost() {
     };
 
     const removeFirstPartOfUrl = (url) => {
-        return url.replace('https://', '');
-    }
+        if (url) {
+            return url.replace('https://', '');
+        }
+
+        return url;
+    };
 
     const isUserAttending = attendees.some((attendee) => attendee.uid === connectedUser.uid);
 
@@ -192,15 +180,15 @@ function MeetupsPost() {
                                                 <a
                                                     href={`http://maps.google.com/?q=${happyHour.location}`}
                                                     target='_blank'
-                                                    rel='noreferrer'
+                                                    rel='noopener noreferrer'
                                                 >
-                                                    {city}
+                                                    {happyHour.location}
                                                 </a>
                                             </>
                                         ) : (
                                             <>
                                                 <Safari className='h-4 w-4 mr-1' />
-                                                <a href={happyHour.location} target='_blank' rel='noreferrer'>
+                                                <a href={happyHour.location} target='_blank' rel='noopener noreferrer'>
                                                     {removeFirstPartOfUrl(happyHour.location)}
                                                 </a>
                                             </>
