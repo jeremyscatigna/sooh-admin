@@ -51,6 +51,7 @@ exports.recreateDailyHH = onSchedule("every day 00:00", async (event) => {
 
 
   logger.log("Recreate Daily Happy hour");
+  logger.log("Done");
 });
 
 exports.recreateWeeklyHH = onSchedule("every day 00:00", async (event) => {
@@ -83,4 +84,5 @@ exports.recreateWeeklyHH = onSchedule("every day 00:00", async (event) => {
   await pool.start();
 
   logger.log("Recreate Weekly Happy hour");
+  logger.log("Done");
 });
