@@ -164,12 +164,12 @@ function MeetupItem({ item }) {
                         {item.type === 'instore' ? (
                             <>
                                 <MapsArrowDiagonal className='h-4 w-4 mr-1' />
-                                <a href={`http://maps.google.com/?q=${item.location}`} target='_blank' rel='noreferrer'>{city}</a>
+                                <a href={`http://maps.google.com/?q=${item.location}`} target='_blank' rel="noopener noreferrer">{item.location}</a>
                             </>
                         ) : (
                             <>
                                 <Safari className='h-4 w-4 mr-1' />
-                                <a href={item.location} target="_blank" rel="noreferrer">{removeFirstPartOfUrl(item.location)}</a>
+                                <a href={item.location} target="_blank" rel="noopener noreferrer">{removeFirstPartOfUrl(item.location)}</a>
                             </>
                         )}
                     </p>
