@@ -81,7 +81,7 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText }) {
                 ))}
             </div>
             <h2 className='text-2xl font-bold text-primary pt-6'>Prochainement</h2>
-            <div className={`grid xl:grid-cols-2 gap-6`}>
+            <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-24'}`}>
                 {filteredToCome.map((item, i) => (
                     <MeetupItem item={item} key={`${item.uid}+${i}`} />
                 ))}
