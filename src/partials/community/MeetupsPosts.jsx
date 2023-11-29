@@ -18,7 +18,7 @@ import Avvvatars from 'avvvatars-react';
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
 
-function MeetupsPosts({ data, filtering, searchText }) {
+function MeetupsPosts({ data, now, toCome, filtering, searchText }) {
     const user = useAtomValue(currentUser);
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -63,12 +63,29 @@ function MeetupsPosts({ data, filtering, searchText }) {
     // Memoized data for optimization
     const filteredData = useMemo(() => data.filter((item) => filterMeetups(item) && searchFilter(item)), [data, filtering, searchText]);
 
+    const applyFilters = (data) => {
+        return data.filter((item) => filterMeetups(item) && searchFilter(item));
+    };
+
+    // Memoized filtered data for 'now' and 'toCome'
+    const filteredNow = useMemo(() => applyFilters(now), [now, filtering, searchText]);
+    const filteredToCome = useMemo(() => applyFilters(toCome), [toCome, filtering, searchText]);
+
     // Component rendering
     return (
-        <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-24'}`}>
-            {filteredData.map((item, i) => (
-                <MeetupItem item={item} key={`${item.uid}+${i}`} />
-            ))}
+        <div className={`flex flex-col items-start mb-6 ${mobile && 'mb-24'} space-y-6 w-full`}>
+            <h2 className='text-2xl font-bold text-primary'>En ce moment</h2>
+            <div className={`grid xl:grid-cols-2 gap-6`}>
+                {filteredNow.map((item, i) => (
+                    <MeetupItem item={item} key={`${item.uid}+${i}`} />
+                ))}
+            </div>
+            <h2 className='text-2xl font-bold text-primary pt-6'>Prochainement</h2>
+            <div className={`grid xl:grid-cols-2 gap-6`}>
+                {filteredToCome.map((item, i) => (
+                    <MeetupItem item={item} key={`${item.uid}+${i}`} />
+                ))}
+            </div>
         </div>
     );
 }
@@ -82,7 +99,7 @@ const doILikeThisHH = (item, user) => {
 
 const removeFirstPartOfUrl = (url) => {
     return url.replace('https://', '');
-}
+};
 
 function MeetupItem({ item }) {
     const user = useAtomValue(currentUser);
@@ -177,12 +194,16 @@ function MeetupItem({ item }) {
                         {item.type === 'instore' ? (
                             <>
                                 <MapsArrowDiagonal className='h-4 w-4 mr-1' />
-                                <a href={`http://maps.google.com/?q=${item.location}`} target='_blank' rel="noopener noreferrer">{item.location}</a>
+                                <a href={`http://maps.google.com/?q=${item.location}`} target='_blank' rel='noopener noreferrer'>
+                                    {item.location}
+                                </a>
                             </>
                         ) : (
                             <>
                                 <Safari className='h-4 w-4 mr-1' />
-                                <a href={item.location} target="_blank" rel="noopener noreferrer">{removeFirstPartOfUrl(item.location)}</a>
+                                <a href={item.location} target='_blank' rel='noopener noreferrer'>
+                                    {removeFirstPartOfUrl(item.location)}
+                                </a>
                             </>
                         )}
                     </p>

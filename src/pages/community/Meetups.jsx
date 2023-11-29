@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
-import SearchForm from '../../partials/actions/SearchForm';
 import MeetupsPosts from '../../partials/community/MeetupsPosts';
-import PaginationNumeric from '../../components/PaginationNumeric';
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { db } from '../../main';
 import { useAtomValue } from 'jotai';
 import { currentUser as userType } from '../Signup';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
 
 const getLocaleDateTime = () => {
     let d = new Date();
@@ -46,18 +45,37 @@ const filters = [
 ];
 
 function Meetups() {
+    dayjs.extend(isBetween);
+
     const navigate = useNavigate();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [filtering, setFiltering] = useState('all');
     const [searchText, setSearchText] = useState('');
 
     const [data, setData] = useState([]);
+    const [now, setNow] = useState([]);
+    const [toCome, setToCome] = useState([]);
 
     const user = useAtomValue(userType);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
+    };
+
+    const getDataFromTodayToNextTwoWeeks = (data) => {
+        const today = dayjs();
+        const nextTwoWeeks = dayjs().add(2, 'week');
+        const toReturn = data.filter((item) => dayjs(item.date).isBetween(today, nextTwoWeeks, 'day', '()'));
+    
+        return toReturn;
+    };
+    
+    const getDataStartingNextTwoWeeks = (data) => {
+        const nextTwoWeeks = dayjs().add(2, 'week');
+        const toReturn = data.filter((item) => dayjs(item.date).isAfter(nextTwoWeeks));
+    
+        return toReturn;
     };
 
     useEffect(() => {
@@ -78,6 +96,8 @@ function Meetups() {
                 ),
             );
             setData(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+            setNow(getDataFromTodayToNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+            setToCome(getDataStartingNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
         };
         fetchData();
     }, []);
@@ -161,7 +181,7 @@ function Meetups() {
                         </div>
 
                         {/* Content */}
-                        <MeetupsPosts data={data} filtering={filtering} searchText={searchText}/>
+                        <MeetupsPosts now={now} toCome={toCome} data={data} filtering={filtering} searchText={searchText} />
                     </div>
                 </main>
             </div>
