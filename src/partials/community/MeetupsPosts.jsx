@@ -65,7 +65,7 @@ function MeetupsPosts({ data, filtering, searchText }) {
 
     // Component rendering
     return (
-        <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-12'}`}>
+        <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-24'}`}>
             {filteredData.map((item, i) => (
                 <MeetupItem item={item} key={`${item.uid}+${i}`} />
             ))}
