@@ -324,7 +324,6 @@ function CreateHappyHour() {
                                         <option value='Unique'>Unique</option>
                                         <option value='Daily'>Tout les jours</option>
                                         <option value='Weekly'>Toute les semaines</option>
-                                        <option value='Monthly'>Tout les mois</option>
                                     </select>
                                 </div>
 
