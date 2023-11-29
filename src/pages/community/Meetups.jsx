@@ -35,10 +35,6 @@ const filters = [
         name: 'Cette semaine',
     },
     {
-        id: 'thismonth',
-        name: 'Ce mois',
-    },
-    {
         id: 'favorites',
         name: 'Favoris',
     },
