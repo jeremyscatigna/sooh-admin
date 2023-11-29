@@ -16,7 +16,7 @@ import { useAtomValue } from 'jotai';
 import { currentUser } from '../Signup';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
-import { Check } from 'iconoir-react';
+import { Check, MapsArrowDiagonal, Safari } from 'iconoir-react';
 
 const doIFavoriteThis = (item, user) => {
     if (item.favorites) {
@@ -34,6 +34,7 @@ function MeetupsPost() {
     const [attendees, setAttendees] = useState([]);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [favorite, setFavorite] = React.useState(false);
+    const [city, setCity] = useState('');
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -89,6 +90,21 @@ function MeetupsPost() {
         setFavorite(happyHour.favorites ? doIFavoriteThis(happyHour, connectedUser) : false);
     }, [happyHour, connectedUser]);
 
+    useEffect(() => {
+        let isMounted = true; // To avoid setting state on unmounted component
+        const fetchData = async () => {
+            const userCompany = await getDocs(query(collection(db, `users/${happyHour.userId}/company`)));
+            const c = userCompany.docs.map((doc) => doc.data());
+            if (isMounted) {
+                setCity(c[0].city);
+            }
+        };
+        fetchData();
+        return () => {
+            isMounted = false;
+        };
+    }, [happyHour.userId]);
+
     const handleAddAttendee = async (e) => {
         e.preventDefault();
         try {
@@ -111,7 +127,7 @@ function MeetupsPost() {
 
         let updatedFavorites = [];
         if (favorite) {
-            updatedFavorites = happyHour.favorites.filter(fav => fav.userId !== connectedUser.uid);
+            updatedFavorites = happyHour.favorites.filter((fav) => fav.userId !== connectedUser.uid);
             setFavorite(false);
         } else {
             updatedFavorites = happyHour.favorites ? [...happyHour.favorites, favoriteObject] : [favoriteObject];
@@ -124,9 +140,13 @@ function MeetupsPost() {
                 favorites: updatedFavorites,
             });
         } catch (error) {
-            console.error("Error updating favorites: ", error);
+            console.error('Error updating favorites: ', error);
         }
     };
+
+    const removeFirstPartOfUrl = (url) => {
+        return url.replace('https://', '');
+    }
 
     const isUserAttending = attendees.some((attendee) => attendee.uid === connectedUser.uid);
 
@@ -164,6 +184,28 @@ function MeetupsPost() {
                                     {/* Title */}
                                     <h1 className='text-2xl md:text-3xl text-primary font-bold mb-2'>{happyHour.name}</h1>
                                     <p>{happyHour.description}</p>
+
+                                    <p className='text-secondary text-xs flex row mt-1'>
+                                        {happyHour.type === 'instore' ? (
+                                            <>
+                                                <MapsArrowDiagonal className='h-4 w-4 mr-1' />
+                                                <a
+                                                    href={`http://maps.google.com/?q=${happyHour.location}`}
+                                                    target='_blank'
+                                                    rel='noreferrer'
+                                                >
+                                                    {city}
+                                                </a>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Safari className='h-4 w-4 mr-1' />
+                                                <a href={happyHour.location} target='_blank' rel='noreferrer'>
+                                                    {removeFirstPartOfUrl(happyHour.location)}
+                                                </a>
+                                            </>
+                                        )}
+                                    </p>
                                 </header>
 
                                 {/* Meta */}
