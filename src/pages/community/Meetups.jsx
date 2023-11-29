@@ -113,7 +113,7 @@ function Meetups() {
                 {!mobile && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
                 <main>
-                    <div className='px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto'>
+                    <div className={`px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto ${mobile && 'mb-24'}`}>
                         {/* Page header */}
                         <div className='sm:flex sm:justify-between sm:items-center mb-5'>
                             {/* Right: Actions */}
