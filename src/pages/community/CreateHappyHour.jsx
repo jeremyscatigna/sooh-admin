@@ -92,7 +92,7 @@ function CreateHappyHour() {
 
     const handleCreate = async () => {
         setLoading(true);
-        console
+        console;
         const toAdd = {
             uid: uuidv4(),
             name,
@@ -283,7 +283,11 @@ function CreateHappyHour() {
                                                     type='text'
                                                     value={location}
                                                     onChange={(e) => setLocation(e.target.value)}
-                                                    placeholder={type === "online" ? "Ajouter le site web ou aura lieu votre Happy Hour" : "Ajoutez l'adresses de la boutique"}
+                                                    placeholder={
+                                                        type === 'online'
+                                                            ? 'Ajouter le site web ou aura lieu votre Happy Hour'
+                                                            : "Ajoutez l'adresses de la boutique"
+                                                    }
                                                 />
 
                                                 <>

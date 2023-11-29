@@ -7,7 +7,7 @@ import RelativeTime from 'dayjs/plugin/relativeTime';
 import MeetupsThumb01 from '../../images/meetups-thumb-01.jpg';
 import useTimer from '../../components/Timer';
 import { getCategoriesShadowColor } from '../../utils/categories';
-import { MapsArrowDiagonal } from 'iconoir-react';
+import { MapsArrowDiagonal, Safari } from 'iconoir-react';
 import { collection, doc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { db } from '../../main';
 import { useAtomValue } from 'jotai';
@@ -43,15 +43,12 @@ function MeetupsPosts({ data, filtering, searchText }) {
     const searchFilter = (item) => {
         if (!searchText) return true; // If no search text, return all items
         const lowerCaseSearchText = searchText.toLowerCase();
-        return item.name.toLowerCase().includes(lowerCaseSearchText)
+        return item.name.toLowerCase().includes(lowerCaseSearchText);
         // Add more fields to check as needed
     };
 
     // Memoized data for optimization
-    const filteredData = useMemo(() => 
-        data.filter(item => filterMeetups(item) && searchFilter(item)),
-        [data, filtering, searchText]
-    );
+    const filteredData = useMemo(() => data.filter((item) => filterMeetups(item) && searchFilter(item)), [data, filtering, searchText]);
 
     // Component rendering
     return (
@@ -69,6 +66,10 @@ const doILikeThisHH = (item, user) => {
     }
     return false;
 };
+
+const removeFirstPartOfUrl = (url) => {
+    return url.replace('https://', '');
+}
 
 function MeetupItem({ item }) {
     const user = useAtomValue(currentUser);
@@ -160,8 +161,17 @@ function MeetupItem({ item }) {
                         Commence: {days}j {hours}h {minutes}m {seconds}s
                     </p>
                     <p className='text-secondary text-xs flex flex row mt-1'>
-                        <MapsArrowDiagonal className='h-4 w-4 mr-1' />
-                        {city}
+                        {item.type === 'instore' ? (
+                            <>
+                                <MapsArrowDiagonal className='h-4 w-4 mr-1' />
+                                <a href={`http://maps.google.com/?q=${item.location}`} target='_blank' rel='noreferrer'>{city}</a>
+                            </>
+                        ) : (
+                            <>
+                                <Safari className='h-4 w-4 mr-1' />
+                                <a href={item.location} target="_blank" rel="noreferrer">{removeFirstPartOfUrl(item.location)}</a>
+                            </>
+                        )}
                     </p>
                 </div>
                 {/* Footer */}
