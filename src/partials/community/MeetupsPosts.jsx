@@ -21,6 +21,19 @@ dayjs.extend(RelativeTime);
 function MeetupsPosts({ data, filtering, searchText }) {
     const user = useAtomValue(currentUser);
 
+    const [mobile, setMobile] = useState(window.innerWidth <= 500);
+
+    const handleWindowSizeChange = () => {
+        setMobile(window.innerWidth <= 500);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        };
+    }, []);
+
     // Filter function
     const filterMeetups = (item) => {
         switch (filtering) {
@@ -52,7 +65,7 @@ function MeetupsPosts({ data, filtering, searchText }) {
 
     // Component rendering
     return (
-        <div className='grid xl:grid-cols-2 gap-6'>
+        <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-12'}`}>
             {filteredData.map((item, i) => (
                 <MeetupItem item={item} key={`${item.uid}+${i}`} />
             ))}
