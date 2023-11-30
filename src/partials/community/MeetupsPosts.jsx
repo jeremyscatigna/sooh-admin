@@ -18,7 +18,7 @@ import Avvvatars from 'avvvatars-react';
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
 
-function MeetupsPosts({ data, now, toCome, filtering, searchText }) {
+function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCategory }) {
     const user = useAtomValue(currentUser);
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -36,6 +36,11 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText }) {
 
     // Filter function
     const filterMeetups = (item) => {
+
+        if (selectedCategory && item.category !== selectedCategory) return false;
+
+        console.log(item.category, selectedCategory)
+
         switch (filtering) {
             case 'online':
                 return item.type === 'online';
@@ -60,37 +65,32 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText }) {
         // Add more fields to check as needed
     };
 
-    // Memoized data for optimization
-    const filteredData = useMemo(() => data.filter((item) => filterMeetups(item) && searchFilter(item)), [data, filtering, searchText]);
-
     const applyFilters = (data) => {
         return data.filter((item) => filterMeetups(item) && searchFilter(item));
     };
 
     // Memoized filtered data for 'now' and 'toCome'
-    const filteredNow = useMemo(() => applyFilters(now), [now, filtering, searchText]);
-    const filteredToCome = useMemo(() => applyFilters(toCome), [toCome, filtering, searchText]);
+    const filteredNow = useMemo(() => applyFilters(now), [now, filtering, searchText, selectedCategory]);
+    const filteredToCome = useMemo(() => applyFilters(toCome), [toCome, filtering, searchText, selectedCategory]);
 
     // Component rendering
     return (
         <div className={`flex flex-col items-start mb-6 ${mobile && 'mb-24'} space-y-6 w-full`}>
             <div className='w-full'>
-
-            <h2 className='text-2xl font-bold text-primary pb-6'>En ce moment</h2>
-            <div className={`grid xl:grid-cols-2 gap-6`}>
-                {filteredNow.map((item, i) => (
-                    <MeetupItem item={item} key={`${item.uid}+${i}`} />
-                ))}
-            </div>
+                <h2 className='text-2xl font-bold text-primary pb-6'>En ce moment</h2>
+                <div className={`grid xl:grid-cols-2 gap-6`}>
+                    {filteredNow.map((item, i) => (
+                        <MeetupItem item={item} key={`${item.uid}+${i}`} />
+                    ))}
+                </div>
             </div>
             <div className='w-full pt-6'>
-
-            <h2 className='text-2xl font-bold text-primary pb-6'>Prochainement</h2>
-            <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-24'}`}>
-                {filteredToCome.map((item, i) => (
-                    <MeetupItem item={item} key={`${item.uid}+${i}`} />
-                ))}
-            </div>
+                <h2 className='text-2xl font-bold text-primary pb-6'>Prochainement</h2>
+                <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-24'}`}>
+                    {filteredToCome.map((item, i) => (
+                        <MeetupItem item={item} key={`${item.uid}+${i}`} />
+                    ))}
+                </div>
             </div>
         </div>
     );

@@ -13,7 +13,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
     const { pathname } = location;
 
     const user = useAtomValue(currentUser);
-    console.log(user)
 
     const trigger = useRef(null);
     const sidebar = useRef(null);

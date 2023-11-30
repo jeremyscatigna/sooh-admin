@@ -10,6 +10,7 @@ import { currentUser as userType } from '../Signup';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
+import { categories } from '../../utils/categories';
 
 const getLocaleDateTime = () => {
     let d = new Date();
@@ -54,6 +55,11 @@ function Meetups() {
 
     const user = useAtomValue(userType);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
+    const [selectedCategory, setSelectedCategory] = useState('');
+
+    const handleCategoryChange = (event) => {
+        setSelectedCategory(event.target.value);
+    };
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -64,16 +70,14 @@ function Meetups() {
         const nextTwoWeeks = dayjs().add(2, 'week');
         return data.filter((item) => {
             const itemDate = dayjs(item.date);
-            console.log(`Item Date: ${itemDate.format()}, Today: ${today.format()}, Next Two Weeks: ${nextTwoWeeks.format()}`);
             return itemDate.isBetween(today, nextTwoWeeks, 'day', '[]'); // '[]' includes the start and end dates
         });
     };
-    
+
     const getDataStartingNextTwoWeeks = (data) => {
         const nextTwoWeeks = dayjs().add(2, 'week');
         return data.filter((item) => {
             const itemDate = dayjs(item.date);
-            console.log(`Item Date: ${itemDate.format()}, Next Two Weeks: ${nextTwoWeeks.format()}`);
             return itemDate.isAfter(nextTwoWeeks);
         });
     };
@@ -96,11 +100,8 @@ function Meetups() {
                 ),
             );
             setData(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-            console.log(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })))
-            setNow(getDataFromTodayToNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
-            console.log(getDataFromTodayToNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
-            setToCome(getDataStartingNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
-            console.log(getDataStartingNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+            setNow(getDataFromTodayToNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))));
+            setToCome(getDataStartingNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))));
         };
         fetchData();
     }, []);
@@ -183,8 +184,28 @@ function Meetups() {
                             </ul>
                         </div>
 
+                        <select
+                            className='form-select rounded-full border-none bg-hover text-secondary mb-5'
+                            value={selectedCategory}
+                            onChange={handleCategoryChange}
+                        >
+                            <option value=''>All Categories</option>
+                            {categories.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                        </select>
+
                         {/* Content */}
-                        <MeetupsPosts now={now} toCome={toCome} data={data} filtering={filtering} searchText={searchText} />
+                        <MeetupsPosts
+                            now={now}
+                            toCome={toCome}
+                            data={data}
+                            filtering={filtering}
+                            searchText={searchText}
+                            selectedCategory={selectedCategory}
+                        />
                     </div>
                 </main>
             </div>
