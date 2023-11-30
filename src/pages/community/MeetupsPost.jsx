@@ -175,7 +175,7 @@ function MeetupsPost() {
                 {!mobile && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
                 <main>
-                    <div className='px-4 sm:px-6 lg:px-8 py-8 w-full'>
+                    <div className={`px-4 sm:px-6 lg:px-8 py-8 w-full ${mobile && 'mb-24'}`}>
                         {/* Page content */}
                         <div className='max-w-5xl mx-auto flex flex-col lg:flex-row lg:space-x-8 xl:space-x-16'>
                             {/* Content */}

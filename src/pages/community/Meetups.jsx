@@ -56,6 +56,7 @@ function Meetups() {
     const user = useAtomValue(userType);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
 
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
@@ -105,6 +106,12 @@ function Meetups() {
         };
         fetchData();
     }, []);
+
+    const getCityFromData = (data) => {
+        const cities = data.map((item) => item.city);
+        const filteredCities = cities.filter((city) => city && city.trim() !== ''); // Filter out null, undefined, and empty strings
+        return [...new Set(filteredCities)]; // Remove duplicates
+    };
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -196,6 +203,21 @@ function Meetups() {
                                 </option>
                             ))}
                         </select>
+
+                        {getCityFromData(data).length >= 1 && (
+                            <select
+                                className='form-select rounded-full border-none bg-hover text-secondary mb-5 ml-2'
+                                value={selectedCity}
+                                onChange={(e) => setSelectedCity(e.target.value)}
+                            >
+                                <option value=''>Toutes les villes</option>
+                                {getCityFromData(data).map((city) => (
+                                    <option key={city} value={city}>
+                                        {city}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
 
                         {/* Content */}
                         <MeetupsPosts

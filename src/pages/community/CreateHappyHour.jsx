@@ -47,6 +47,7 @@ function CreateHappyHour() {
     const [location, setLocation] = useState('');
     const [validateLocation, setValidateLocation] = useState(false);
     const [endTime, setEndTime] = useState('');
+    const [city, setCity] = useState('');
     const [loading, setLoading] = useState(false);
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -97,6 +98,7 @@ function CreateHappyHour() {
             name,
             description,
             location,
+            city,
             details,
             recurency,
             type,
@@ -335,6 +337,24 @@ function CreateHappyHour() {
                                                         <Cancel />
                                                     </button>
                                                 </>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {type !== 'online' && (
+                                        <div className='mt-4'>
+                                            <label className='block text-sm font-medium mb-1' htmlFor='placeholder'>
+                                                Ville
+                                            </label>
+                                            <div className='flex flex-row space-x-2'>
+                                                <input
+                                                    id='placeholder'
+                                                    className='form-input rounded-xl border-none bg-hover text-secondary w-full'
+                                                    type='text'
+                                                    value={city}
+                                                    onChange={(e) => setCity(e.target.value)}
+                                                    placeholder={'Ajoutez la ville de la boutique'}
+                                                />
                                             </div>
                                         </div>
                                     )}
