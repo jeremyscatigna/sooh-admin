@@ -192,11 +192,11 @@ function Meetups() {
                         </div>
 
                         <select
-                            className='form-select pr-4 rounded-full border-none bg-hover text-secondary mb-5'
+                            className='form-select pr-0 rounded-full border-none bg-hover text-secondary mb-5'
                             value={selectedCategory}
                             onChange={handleCategoryChange}
                         >
-                            <option value=''>Toutes les categories</option>
+                            <option value=''>Categories</option>
                             {categories.map((category) => (
                                 <option key={category} value={category}>
                                     {category}
@@ -206,11 +206,11 @@ function Meetups() {
 
                         {getCityFromData(data).length >= 1 && (
                             <select
-                                className='form-select pr-7 rounded-full border-none bg-hover text-secondary mb-5 ml-2'
+                                className='form-select pr-6 rounded-full border-none bg-hover text-secondary mb-5 ml-2'
                                 value={selectedCity}
                                 onChange={(e) => setSelectedCity(e.target.value)}
                             >
-                                <option value=''>Toutes les villes</option>
+                                <option value=''>Villes</option>
                                 {getCityFromData(data).map((city) => (
                                     <option key={city} value={city}>
                                         {city}
