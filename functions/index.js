@@ -31,7 +31,7 @@ exports.recreateDailyHH = onSchedule("every day 00:00", async (event) => {
   console.log(happyHoursData);
 
   const happyHoursDataToRecreate = happyHoursData
-      .filter((happyHour) => happyHour.recurrency === "Daily");
+      .filter((happyHour) => happyHour.recurency === "Daily");
 
   console.log(happyHoursDataToRecreate);
 
@@ -69,7 +69,7 @@ exports.recreateWeeklyHH = onSchedule("every day 00:00", async (event) => {
 
   const happyHoursDataToRecreate = happyHoursData
       .filter((happyHour) => {
-        return happyHour.recurrency === "Weekly" &&
+        return happyHour.recurency === "Weekly" &&
         dayjs(happyHour.date).day() === 0;
       });
 
