@@ -36,10 +36,9 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCatego
 
     // Filter function
     const filterMeetups = (item) => {
-
         if (selectedCategory && item.category !== selectedCategory) return false;
 
-        console.log(item.category, selectedCategory)
+        console.log(item.category, selectedCategory);
 
         switch (filtering) {
             case 'online':
@@ -76,22 +75,26 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCatego
     // Component rendering
     return (
         <div className={`flex flex-col items-start mb-6 ${mobile && 'mb-24'} space-y-6 w-full`}>
-            <div className='w-full'>
-                <h2 className='text-2xl font-bold text-primary pb-6'>En ce moment</h2>
-                <div className={`grid xl:grid-cols-2 gap-6`}>
-                    {filteredNow.map((item, i) => (
-                        <MeetupItem item={item} key={`${item.uid}+${i}`} />
-                    ))}
+            {filteredNow.length > 0 && (
+                <div className='w-full'>
+                    <h2 className='text-2xl font-bold text-primary pb-6'>En ce moment</h2>
+                    <div className={`grid xl:grid-cols-2 gap-6`}>
+                        {filteredNow.map((item, i) => (
+                            <MeetupItem item={item} key={`${item.uid}+${i}`} />
+                        ))}
+                    </div>
                 </div>
-            </div>
-            <div className='w-full pt-6'>
-                <h2 className='text-2xl font-bold text-primary pb-6'>Prochainement</h2>
-                <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-24'}`}>
-                    {filteredToCome.map((item, i) => (
-                        <MeetupItem item={item} key={`${item.uid}+${i}`} />
-                    ))}
+            )}
+            {filteredToCome.length > 0 && (
+                <div className='w-full pt-6'>
+                    <h2 className='text-2xl font-bold text-primary pb-6'>Prochainement</h2>
+                    <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-24'}`}>
+                        {filteredToCome.map((item, i) => (
+                            <MeetupItem item={item} key={`${item.uid}+${i}`} />
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }

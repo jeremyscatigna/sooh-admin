@@ -189,7 +189,7 @@ function Meetups() {
                             value={selectedCategory}
                             onChange={handleCategoryChange}
                         >
-                            <option value=''>All Categories</option>
+                            <option value=''>Toutes les categories</option>
                             {categories.map((category) => (
                                 <option key={category} value={category}>
                                     {category}
