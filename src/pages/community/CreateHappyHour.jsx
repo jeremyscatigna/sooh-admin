@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
@@ -11,7 +11,6 @@ import { currentUser } from '../Signup';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import Datepicker from '../../components/Datepicker';
-import dayjs from 'dayjs';
 import Avvvatars from 'avvvatars-react';
 import { Cancel, Check, Edit } from 'iconoir-react';
 import { categories } from '../../utils/categories';
@@ -27,7 +26,6 @@ function CreateHappyHour() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const connectedUser = useAtomValue(currentUser);
-    const [data, setData] = useState([]);
 
     const [imgUrl, setImgUrl] = useState(null);
     const [progresspercent, setProgresspercent] = useState(0);
@@ -264,6 +262,21 @@ function CreateHappyHour() {
                                         </div>
                                     )}
 
+                                    <div className='mt-4'>
+                                        <label className='block text-sm font-medium mb-1' htmlFor='country'>
+                                            Type <span className='text-rose-500'>*</span>
+                                        </label>
+                                        <select
+                                            id='country'
+                                            className='form-select rounded-xl border-none bg-hover text-secondary w-full'
+                                            value={type}
+                                            onChange={(e) => setType(e.target.value)}
+                                        >
+                                            <option value='online'>En ligne</option>
+                                            <option value='instore'>En boutique</option>
+                                        </select>
+                                    </div>
+
                                     {validateLocation ? (
                                         <div className='flex flex-row space-x-2'>
                                             {type === 'online' ? <a href={location}>{location}</a> : <p>{location}</p>}
@@ -324,21 +337,6 @@ function CreateHappyHour() {
                                         <option value='Unique'>Unique</option>
                                         <option value='Daily'>Tout les jours</option>
                                         <option value='Weekly'>Toute les semaines</option>
-                                    </select>
-                                </div>
-
-                                <div className='mt-4'>
-                                    <label className='block text-sm font-medium mb-1' htmlFor='country'>
-                                        Type <span className='text-rose-500'>*</span>
-                                    </label>
-                                    <select
-                                        id='country'
-                                        className='form-select rounded-xl border-none bg-hover text-secondary w-full'
-                                        value={type}
-                                        onChange={(e) => setType(e.target.value)}
-                                    >
-                                        <option value='online'>En ligne</option>
-                                        <option value='instore'>En boutique</option>
                                     </select>
                                 </div>
 
