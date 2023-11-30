@@ -38,8 +38,6 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCatego
     const filterMeetups = (item) => {
         if (selectedCategory && item.category !== selectedCategory) return false;
 
-        console.log(item.category, selectedCategory);
-
         switch (filtering) {
             case 'online':
                 return item.type === 'online';
@@ -169,6 +167,32 @@ function MeetupItem({ item }) {
         });
     };
 
+    const getHoursFromDateTime = (date) => {
+        return dayjs(date).format('HH:mm');
+    }
+
+    const getDayFromDateTime = (date) => {
+        return dayjs(date).format('dddd');
+    }
+
+    const displayDateOrRecurency = (happyHour) => {
+        if (happyHour.recurency === 'Daily') {
+            if(happyHour.endTime) {
+                return 'Tous les jours de ' + getHoursFromDateTime(happyHour.date) + ' a ' + happyHour.endTime;
+            }
+            return 'Tous les jours a ' + getHoursFromDateTime(happyHour.date);
+        }
+
+        if (happyHour.recurency === 'Weekly') {
+            if(happyHour.endTime) {
+                return 'Toutes les ' + getDayFromDateTime(happyHour.date) + ' de ' + getHoursFromDateTime(happyHour.date) + ' a ' + happyHour.endTime;
+            }
+            return 'Toutes les ' + getDayFromDateTime(happyHour.date) + ' a ' + getHoursFromDateTime(happyHour.date);
+        }
+
+        return dayjs(happyHour.date).format('LLL');
+    }
+
     return (
         <article
             className={`flex bg-card ${window.innerWidth <= 500 && 'h-38'} shadow-lg ${
@@ -192,7 +216,7 @@ function MeetupItem({ item }) {
             {/* Content */}
             <div className='grow p-5 flex flex-col'>
                 <div className='grow mb-2'>
-                    <div className='text-xs font-semibold text-pink-500 uppercase mb-2'>{dayjs(item.date).format('LLL')}</div>
+                    <div className='text-xs font-semibold text-pink-500 uppercase mb-2'>{displayDateOrRecurency(item)}</div>
                     <Link className='inline-flex' to={`/happyhours/${item.uid}`}>
                         <h3 className='text-sm font-bold text-primary'>{item.name}</h3>
                     </Link>

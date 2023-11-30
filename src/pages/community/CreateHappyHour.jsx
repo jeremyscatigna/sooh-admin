@@ -46,6 +46,7 @@ function CreateHappyHour() {
     const [deal, setDeal] = useState('20%');
     const [location, setLocation] = useState('');
     const [validateLocation, setValidateLocation] = useState(false);
+    const [endTime, setEndTime] = useState('');
     const [loading, setLoading] = useState(false);
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -107,6 +108,7 @@ function CreateHappyHour() {
             category,
             date: selectedDates,
             endDate: addEndDate ? endDate : null,
+            endTime,
         };
 
         console.log(toAdd);
@@ -171,6 +173,20 @@ function CreateHappyHour() {
                                         <label className='text-sm font-sm mb-1'>Ajouter une date de fin</label>
                                     </div>
                                     {addEndDate && <Datepicker align='left' selectedDates={endDate} setSelectedDates={setEndDate} />}
+                                </div>
+                                <div className='flex flex-col pt-2'>
+                                    <label className='text-sm font-medium mb-2 ml-1'>Ajouter une heure de fin</label>
+                                    <input
+                                        type='time'
+                                        id='meeting-time'
+                                        name='meeting-time'
+                                        className='form-input rounded-xl border-none bg-hover text-secondary font-medium w-60'
+                                        value={endTime}
+                                        min={getLocaleDateTime()}
+                                        onChange={(e) => {
+                                            setEndTime(e.target.value);
+                                        }}
+                                    />
                                 </div>
                                 <header className='mb-4'>
                                     {/* Title */}

@@ -136,6 +136,32 @@ function MeetupsPost() {
         return url;
     };
 
+    const getHoursFromDateTime = (date) => {
+        return dayjs(date).format('HH:mm');
+    }
+
+    const getDayFromDateTime = (date) => {
+        return dayjs(date).format('dddd');
+    }
+
+    const displayDateOrRecurency = (happyHour) => {
+        if (happyHour.recurency === 'Daily') {
+            if(happyHour.endTime) {
+                return 'Tous les jours de ' + getHoursFromDateTime(happyHour.date) + ' a ' + happyHour.endTime;
+            }
+            return 'Tous les jours a ' + getHoursFromDateTime(happyHour.date);
+        }
+
+        if (happyHour.recurency === 'Weekly') {
+            if(happyHour.endTime) {
+                return 'Toutes les ' + getDayFromDateTime(happyHour.date) + ' de ' + getHoursFromDateTime(happyHour.date) + ' a ' + happyHour.endTime;
+            }
+            return 'Toutes les ' + getDayFromDateTime(happyHour.date) + ' a ' + getHoursFromDateTime(happyHour.date);
+        }
+
+        return dayjs(happyHour.date).format('LLL');
+    }
+
     const isUserAttending = attendees.some((attendee) => attendee.uid === connectedUser.uid);
 
     return (
@@ -166,7 +192,7 @@ function MeetupsPost() {
                                     </Link>
                                 </div>
                                 <div className='text-sm font-semibold text-pink-500 uppercase mb-2'>
-                                    {happyHour && dayjs(happyHour.date).format('LLL')}
+                                    {happyHour && displayDateOrRecurency(happyHour)}
                                 </div>
                                 <header className='mb-4'>
                                     {/* Title */}
