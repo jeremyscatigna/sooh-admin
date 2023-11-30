@@ -17,7 +17,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 
 // The es6-promise-pool to limit the concurrency of promises.
-const PromisePool = require("es6-promise-pool").default;
+const PromisePool = require("es6-promise-pool");
 // Maximum concurrent account deletions.
 const MAX_CONCURRENT = 3;
 
