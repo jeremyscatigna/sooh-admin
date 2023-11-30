@@ -62,16 +62,20 @@ function Meetups() {
     const getDataFromTodayToNextTwoWeeks = (data) => {
         const today = dayjs();
         const nextTwoWeeks = dayjs().add(2, 'week');
-        const toReturn = data.filter((item) => dayjs(item.date).isBetween(today, nextTwoWeeks, 'day', '()'));
-    
-        return toReturn;
+        return data.filter((item) => {
+            const itemDate = dayjs(item.date);
+            console.log(`Item Date: ${itemDate.format()}, Today: ${today.format()}, Next Two Weeks: ${nextTwoWeeks.format()}`);
+            return itemDate.isBetween(today, nextTwoWeeks, 'day', '[]'); // '[]' includes the start and end dates
+        });
     };
     
     const getDataStartingNextTwoWeeks = (data) => {
         const nextTwoWeeks = dayjs().add(2, 'week');
-        const toReturn = data.filter((item) => dayjs(item.date).isAfter(nextTwoWeeks));
-    
-        return toReturn;
+        return data.filter((item) => {
+            const itemDate = dayjs(item.date);
+            console.log(`Item Date: ${itemDate.format()}, Next Two Weeks: ${nextTwoWeeks.format()}`);
+            return itemDate.isAfter(nextTwoWeeks);
+        });
     };
 
     useEffect(() => {
@@ -92,8 +96,11 @@ function Meetups() {
                 ),
             );
             setData(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+            console.log(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })))
             setNow(getDataFromTodayToNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+            console.log(getDataFromTodayToNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
             setToCome(getDataStartingNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+            console.log(getDataStartingNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
         };
         fetchData();
     }, []);
