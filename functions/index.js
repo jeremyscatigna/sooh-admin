@@ -28,14 +28,20 @@ exports.recreateDailyHH = onSchedule("every day 00:00", async (event) => {
   const happyHoursData = happyHours.docs
       .map((doc) => ({id: doc.id, ...doc.data()}));
 
+  console.log(happyHoursData);
+
   const happyHoursDataToRecreate = happyHoursData
       .filter((happyHour) => happyHour.recurrency === "Daily");
+
+  console.log(happyHoursDataToRecreate);
 
   const happyHoursToRecreate = happyHoursDataToRecreate.map((happyHour) => {
     const newHappyHour = {...happyHour};
     newHappyHour.date = dayjs(happyHour.date).add(1, "day").toDate();
     return newHappyHour;
   });
+
+  console.log(happyHoursToRecreate);
 
   const happyHoursToRecreatePromises = happyHoursToRecreate.map((happyHour) =>
     admin.firestore()
