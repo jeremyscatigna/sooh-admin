@@ -37,7 +37,7 @@ exports.recreateDailyHH = onSchedule("every day 00:00", async (event) => {
 
   const happyHoursToRecreate = happyHoursDataToRecreate.map((happyHour) => {
     const newHappyHour = {...happyHour};
-    newHappyHour.date = dayjs(happyHour.date).add(1, "day").toDate();
+    newHappyHour.date = dayjs(happyHour.date).add(1, "day");
     return newHappyHour;
   });
 
@@ -75,7 +75,7 @@ exports.recreateWeeklyHH = onSchedule("every day 00:00", async (event) => {
 
   const happyHoursToRecreate = happyHoursDataToRecreate.map((happyHour) => {
     const newHappyHour = {...happyHour};
-    newHappyHour.date = dayjs(happyHour.date).add(1, "week").toDate();
+    newHappyHour.date = dayjs(happyHour.date).add(1, "week");
     return newHappyHour;
   });
 
