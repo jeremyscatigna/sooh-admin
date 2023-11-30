@@ -37,7 +37,13 @@ exports.recreateDailyHH = onSchedule("every day 00:00", async (event) => {
 
   const happyHoursToRecreate = happyHoursDataToRecreate.map((happyHour) => {
     const newHappyHour = {...happyHour};
-    newHappyHour.date = dayjs(happyHour.date).add(1, "day").toDate();
+    const d = new Date(dayjs(happyHour.date).add(1, "day").toDate());
+    const dateTimeLocalValue =
+      (new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+          .toISOString())
+          .slice(0, -5);
+    newHappyHour.date = dateTimeLocalValue;
+
     return newHappyHour;
   });
 
@@ -75,7 +81,12 @@ exports.recreateWeeklyHH = onSchedule("every day 00:00", async (event) => {
 
   const happyHoursToRecreate = happyHoursDataToRecreate.map((happyHour) => {
     const newHappyHour = {...happyHour};
-    newHappyHour.date = dayjs(happyHour.date).add(1, "week").toDate();
+    const d = new Date(dayjs(happyHour.date).add(1, "week").toDate());
+    const dateTimeLocalValue =
+      (new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+          .toISOString())
+          .slice(0, -5);
+    newHappyHour.date = dateTimeLocalValue;
     return newHappyHour;
   });
 
