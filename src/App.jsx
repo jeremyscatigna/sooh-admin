@@ -172,7 +172,7 @@ function App() {
                 <Route path='/component/icons' element={<IconsPage />} />
                 <Route path='*' element={<PageNotFound />} />
             </Routes>
-            {mobile && pathname !== 'signin' && pathname !== 'signup' && !pathname.includes('onboarding') && <SlidingTabBar />}
+            {mobile && !pathname.includes('signin') && !pathname.includes('signup') && !pathname.includes('onboarding') && <SlidingTabBar />}
         </>
     );
 }
