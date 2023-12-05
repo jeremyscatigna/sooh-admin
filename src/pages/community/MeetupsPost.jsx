@@ -155,7 +155,7 @@ function MeetupsPost() {
         if (happyHour.recurency === 'Weekly') {
             if (happyHour.endTime) {
                 return (
-                    'Toutes les ' +
+                    'Tous les ' +
                     getDayFromDateTime(happyHour.date) +
                     ' de ' +
                     getHoursFromDateTime(happyHour.date) +
@@ -163,7 +163,7 @@ function MeetupsPost() {
                     happyHour.endTime
                 );
             }
-            return 'Toutes les ' + getDayFromDateTime(happyHour.date) + ' a ' + getHoursFromDateTime(happyHour.date);
+            return 'Tous les ' + getDayFromDateTime(happyHour.date) + ' a ' + getHoursFromDateTime(happyHour.date);
         }
 
         return dayjs(happyHour.date).format('LLL');

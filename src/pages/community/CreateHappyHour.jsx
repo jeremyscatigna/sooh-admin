@@ -170,18 +170,8 @@ function CreateHappyHour() {
                                     }`}
                                 >
                                     <Datepicker align='left' selectedDates={selectedDates} setSelectedDates={setSelectedDates} />
-                                    <div className='text-sm font-sm'>
-                                        <input
-                                            onClick={() => setAddEndDate(!addEndDate)}
-                                            value={addEndDate}
-                                            type='checkbox'
-                                            className='mr-2 rounded bg-hover border-none focus:ring-pink-500 text-pink-500'
-                                        />
-                                        <label className='text-sm font-sm mb-1'>Ajouter une date de fin</label>
-                                    </div>
-                                    {addEndDate && <Datepicker align='left' selectedDates={endDate} setSelectedDates={setEndDate} />}
                                 </div>
-                                <div className='flex flex-col pt-2'>
+                                <div className='flex flex-col pt-2 pb-4'>
                                     <label className='text-sm font-medium mb-2 ml-1'>Ajouter une heure de fin</label>
                                     <input
                                         type='time'
@@ -194,6 +184,19 @@ function CreateHappyHour() {
                                             setEndTime(e.target.value);
                                         }}
                                     />
+                                </div>
+                                <div className='space-y-4'>
+
+                                <div className='text-sm font-sm'>
+                                    <input
+                                        onClick={() => setAddEndDate(!addEndDate)}
+                                        value={addEndDate}
+                                        type='checkbox'
+                                        className='mr-2 rounded bg-hover border-none focus:ring-pink-500 text-pink-500'
+                                    />
+                                    <label className='text-sm font-sm mb-1'>Ajouter une date de fin</label>
+                                </div>
+                                {addEndDate && <Datepicker align='left' selectedDates={endDate} setSelectedDates={setEndDate} />}
                                 </div>
                                 <header className='mb-4'>
                                     {/* Title */}
