@@ -196,6 +196,7 @@ function Feed() {
                                                 src={imgUrl}
                                                 muted
                                                 autoPlay
+                                                playsInline
                                                 loop
                                             ></video>
 

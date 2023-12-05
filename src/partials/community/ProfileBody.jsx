@@ -272,6 +272,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                                                         poster={item.imageUrl}
                                                         src={item.imageUrl}
                                                         muted
+                                                        playsInline
                                                         autoPlay
                                                         loop
                                                     ></video>

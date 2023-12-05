@@ -188,6 +188,7 @@ function FeedPost({ item }) {
                             src={item.imageUrl}
                             muted
                             autoPlay
+                            playsInline
                             loop
                         ></video>
                     </div>
