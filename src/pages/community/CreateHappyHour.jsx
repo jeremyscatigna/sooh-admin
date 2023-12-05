@@ -362,7 +362,7 @@ function CreateHappyHour() {
 
                                 <div className='mt-4'>
                                     <label className='block text-sm font-medium mb-1' htmlFor='country'>
-                                        Recurence <span className='text-rose-500'>*</span>
+                                        Recurrence <span className='text-rose-500'>*</span>
                                     </label>
                                     <select
                                         id='country'

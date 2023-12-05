@@ -83,6 +83,32 @@ function Meetups() {
         });
     };
 
+    const replaceGetLocalDateTimeTimeByEndTime = (date, endTime) => {
+        if (!endTime) return date;
+        const dateArray = date.split('T');
+        const timeArray = endTime.split(':');
+        const newDate = new Date(dateArray[0]);
+        newDate.setHours(timeArray[0]);
+        newDate.setMinutes(timeArray[1]);
+        return newDate.toISOString().slice(0, -5);
+    }
+    
+    const isToday = (date) => {
+        const today = dayjs();
+        const itemDate = dayjs(date);
+        return itemDate.isSame(today, 'day');
+    }
+    
+    const filterDataWhereEndTimeIsBeforeNow = (data) => {
+        const now = dayjs();
+        return data.filter((item) => {
+            if (!item.endTime) return true;
+            if (!isToday(item.date)) return true;  
+            const itemDate = dayjs(replaceGetLocalDateTimeTimeByEndTime(item.date, item.endTime));
+            return itemDate.isAfter(now);
+        });
+    }
+
     useEffect(() => {
         window.addEventListener('resize', handleWindowSizeChange);
         return () => {
@@ -101,8 +127,10 @@ function Meetups() {
                 ),
             );
             setData(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-            setNow(getDataFromTodayToNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))));
-            setToCome(getDataStartingNextTwoWeeks(res.docs.map((doc) => ({ id: doc.id, ...doc.data() }))));
+            const data = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            const filteredData = filterDataWhereEndTimeIsBeforeNow(data);
+            setNow(getDataFromTodayToNextTwoWeeks(filteredData));
+            setToCome(getDataStartingNextTwoWeeks(filteredData));
         };
         fetchData();
     }, []);
