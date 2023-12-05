@@ -14,12 +14,15 @@ import Datepicker from '../../components/Datepicker';
 import Avvvatars from 'avvvatars-react';
 import { Cancel, Check, Edit } from 'iconoir-react';
 import { categories } from '../../utils/categories';
+import MultiSelectDropdown from '../../components/MultiSelectDropdown';
 
 const getLocaleDateTime = () => {
     let d = new Date();
     const dateTimeLocalValue = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, -5);
     return dateTimeLocalValue;
 };
+
+const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
 function CreateHappyHour() {
     const navigate = useNavigate();
@@ -48,6 +51,7 @@ function CreateHappyHour() {
     const [validateLocation, setValidateLocation] = useState(false);
     const [endTime, setEndTime] = useState('');
     const [city, setCity] = useState('');
+    const [closedDays, setClosedDays] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -103,6 +107,7 @@ function CreateHappyHour() {
             recurency,
             type,
             deal,
+            closedDays,
             favorites: [],
             likes: [],
             imageUrl: imgUrl,
@@ -412,6 +417,15 @@ function CreateHappyHour() {
                                             </option>
                                         ))}
                                     </select>
+                                </div>
+
+                                <div className='mt-6 pb-4'>
+                                    <MultiSelectDropdown
+                                        formFieldName='Jours de fermeture'
+                                        options={days}
+                                        onChange={setClosedDays}
+                                        prompt='Jours de fermeture'
+                                    />
                                 </div>
 
                                 {/* Meta */}

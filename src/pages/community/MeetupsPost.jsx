@@ -234,6 +234,18 @@ function MeetupsPost() {
                                             </>
                                         )}
                                     </p>
+                                    <p className='text-secondary text-xs flex row mt-1'>
+                                        {happyHour.closedDays && (
+                                            <>
+                                                <span className='mr-1'>Fermé le(s) </span>
+                                                {happyHour.closedDays.map((day) => (
+                                                    <span key={day} className='mr-1'>
+                                                        {day}
+                                                    </span>
+                                                ))}
+                                            </>
+                                        )}
+                                    </p>
                                 </header>
 
                                 {/* Meta */}
