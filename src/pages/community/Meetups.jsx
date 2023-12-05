@@ -109,6 +109,12 @@ function Meetups() {
         });
     }
 
+    const getLocaleDateTimeAtBeginningOfDay = () => {
+        let d = new Date();
+        const dateTimeLocalValue = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, -14);
+        return dateTimeLocalValue;
+    }
+
     useEffect(() => {
         window.addEventListener('resize', handleWindowSizeChange);
         return () => {
@@ -122,7 +128,7 @@ function Meetups() {
                 query(
                     collection(db, 'happyhours'),
                     orderBy('date', 'asc'),
-                    where('date', '>=', getLocaleDateTime()),
+                    where('date', '>=', getLocaleDateTimeAtBeginningOfDay()),
                     where('date', '!=', 'Invalid Date'),
                 ),
             );
