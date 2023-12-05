@@ -5,7 +5,7 @@ import SidebarLinkGroup from './SidebarLinkGroup';
 import { Calendar, DashboardSpeed, MessageText, PeopleTag, Post, Settings, TwoSeaterSofa } from 'iconoir-react';
 import { useAtomValue } from 'jotai';
 import { currentUser } from '../pages/Signup';
-import Logo from '../images/logo1.jpg';
+import Logo from '../images/logo-nobg.png';
 
 // TODO: Loading state
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
@@ -85,7 +85,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     </button>
                     {/* Logo */}
                     <NavLink end to='/' className='block'>
-                        <img className='w-12 h-12 rounded-full object-fit' src={Logo} alt='Logo' />
+                        <img className='h-12 w-auto' src={Logo} alt='Logo' />
                     </NavLink>
                 </div>
 
