@@ -138,29 +138,36 @@ function MeetupsPost() {
 
     const getHoursFromDateTime = (date) => {
         return dayjs(date).format('HH:mm');
-    }
+    };
 
     const getDayFromDateTime = (date) => {
         return dayjs(date).format('dddd');
-    }
+    };
 
     const displayDateOrRecurency = (happyHour) => {
         if (happyHour.recurency === 'Daily') {
-            if(happyHour.endTime) {
+            if (happyHour.endTime) {
                 return 'Tous les jours de ' + getHoursFromDateTime(happyHour.date) + ' a ' + happyHour.endTime;
             }
             return 'Tous les jours a ' + getHoursFromDateTime(happyHour.date);
         }
 
         if (happyHour.recurency === 'Weekly') {
-            if(happyHour.endTime) {
-                return 'Toutes les ' + getDayFromDateTime(happyHour.date) + ' de ' + getHoursFromDateTime(happyHour.date) + ' a ' + happyHour.endTime;
+            if (happyHour.endTime) {
+                return (
+                    'Toutes les ' +
+                    getDayFromDateTime(happyHour.date) +
+                    ' de ' +
+                    getHoursFromDateTime(happyHour.date) +
+                    ' a ' +
+                    happyHour.endTime
+                );
             }
             return 'Toutes les ' + getDayFromDateTime(happyHour.date) + ' a ' + getHoursFromDateTime(happyHour.date);
         }
 
         return dayjs(happyHour.date).format('LLL');
-    }
+    };
 
     const isUserAttending = attendees.some((attendee) => attendee.uid === connectedUser.uid);
 
@@ -196,7 +203,14 @@ function MeetupsPost() {
                                 </div>
                                 <header className='mb-4'>
                                     {/* Title */}
-                                    <h1 className='text-2xl md:text-3xl text-primary font-bold mb-2'>{happyHour.name}</h1>
+                                    <div className='flex flex-wrap items-center mb-2'>
+                                        <h1 className='text-2xl md:text-3xl text-primary font-bold'>{happyHour.name}</h1>
+                                        {happyHour.deal && (
+                                            <span className='text-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded-full px-3 py-1 ml-2'>
+                                                -{happyHour.deal}
+                                            </span>
+                                        )}
+                                    </div>
                                     <p>{happyHour.description}</p>
 
                                     <p className='text-secondary text-xs flex row mt-1'>
@@ -254,93 +268,6 @@ function MeetupsPost() {
                                 <div>
                                     <h2 className='text-xl leading-snug text-primary font-bold mb-2'>Détails</h2>
                                     <p className='mb-6'>{happyHour.details}</p>
-                                </div>
-                                <hr className='my-6 border-t border-slate-200' />
-
-                                {/* Similar Meetups */}
-                                <div>
-                                    <h2 className='text-xl leading-snug text-primary font-bold mb-2'>Similaires</h2>
-                                    <div className='space-y-8 sm:space-y-5 my-6 lg:mb-0'>
-                                        {/* Related item */}
-                                        <article className='flex bg-card shadow-lg rounded-xl overflow-hidden'>
-                                            {/* Image */}
-                                            <a
-                                                className='relative block w-24 sm:w-56 lg:sidebar-expanded:w-20 xl:sidebar-expanded:w-56 shrink-0'
-                                                href='#0'
-                                            >
-                                                <img
-                                                    className='absolute object-cover object-center w-full h-full'
-                                                    src={MeetupThumb}
-                                                    width='220'
-                                                    height='236'
-                                                    alt='Meetup 02'
-                                                />
-                                                {/* Like button */}
-                                                <button className='absolute top-0 right-0 mt-4 mr-4'>
-                                                    <div className='text-slate-100 bg-slate-900 bg-opacity-60 rounded-full'>
-                                                        <span className='sr-only'>Like</span>
-                                                        <svg className='h-8 w-8 fill-current' viewBox='0 0 32 32'>
-                                                            <path d='M22.682 11.318A4.485 4.485 0 0019.5 10a4.377 4.377 0 00-3.5 1.707A4.383 4.383 0 0012.5 10a4.5 4.5 0 00-3.182 7.682L16 24l6.682-6.318a4.5 4.5 0 000-6.364zm-1.4 4.933L16 21.247l-5.285-5A2.5 2.5 0 0112.5 12c1.437 0 2.312.681 3.5 2.625C17.187 12.681 18.062 12 19.5 12a2.5 2.5 0 011.785 4.251h-.003z' />
-                                                        </svg>
-                                                    </div>
-                                                </button>
-                                            </a>
-                                            {/* Content */}
-                                            <div className='grow p-5 flex flex-col'>
-                                                <div className='grow'>
-                                                    <div className='text-sm font-semibold text-pink-500 uppercase mb-2'>
-                                                        Mon 27 Dec, 2021
-                                                    </div>
-                                                    <a className='inline-flex mb-2' href='#0'>
-                                                        <h3 className='text-lg font-bold text-primary'>
-                                                            New York &amp; New Jersey Virtual Retreat 2021
-                                                        </h3>
-                                                    </a>
-                                                    <div className='text-sm'>
-                                                        Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing
-                                                        industries for previewing layouts.
-                                                    </div>
-                                                </div>
-                                                {/* Footer */}
-                                                <div className='flex justify-between mt-3'>
-                                                    {/* Tag */}
-                                                    <div className='text-xs inline-flex items-center font-medium bg-slate-100 text-slate-600 rounded-full text-center px-2.5 py-1'>
-                                                        <svg className='w-4 h-3 fill-slate-400 mr-2' viewBox='0 0 16 12'>
-                                                            <path d='m16 2-4 2.4V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7.6l4 2.4V2ZM2 10V2h8v8H2Z' />
-                                                        </svg>
-                                                        <span>Événement en ligne</span>
-                                                    </div>
-                                                    {/* Avatars */}
-                                                    <div className='flex items-center space-x-2'>
-                                                        <div className='flex -space-x-3 -ml-0.5'>
-                                                            <img
-                                                                className='rounded-full border-2 border-white box-content'
-                                                                src={Avatar02}
-                                                                width='28'
-                                                                height='28'
-                                                                alt='User 02'
-                                                            />
-                                                            <img
-                                                                className='rounded-full border-2 border-white box-content'
-                                                                src={Avatar03}
-                                                                width='28'
-                                                                height='28'
-                                                                alt='User 03'
-                                                            />
-                                                            <img
-                                                                className='rounded-full border-2 border-white box-content'
-                                                                src={Avatar04}
-                                                                width='28'
-                                                                height='28'
-                                                                alt='User 04'
-                                                            />
-                                                        </div>
-                                                        <div className='text-xs font-medium text-secondary italic'>+132</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </article>
-                                    </div>
                                 </div>
                             </div>
 

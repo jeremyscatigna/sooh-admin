@@ -212,6 +212,11 @@ function MeetupItem({ item }) {
                     height='236'
                     alt='Meetup 01'
                 />
+                {item.deal && (
+                    <div className='absolute bottom-2 left-2 px-3 py-1 text-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded-full '>
+                        -{item.deal}
+                    </div>
+                )}
             </Link>
             {/* Content */}
             <div className='grow p-5 flex flex-col'>
