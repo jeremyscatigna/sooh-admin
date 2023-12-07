@@ -225,25 +225,11 @@ function MeetupItem({ item }) {
                     <Link className='inline-flex' to={`/happyhours/${item.uid}`}>
                         <h3 className='text-sm font-bold text-primary'>{item.name}</h3>
                     </Link>
-                    <p className='text-secondary text-xs'>
-                        Commence: {days}j {hours}h {minutes}m {seconds}s
-                    </p>
                     <p className='text-secondary text-xs flex flex row mt-1'>
-                        {item.type === 'instore' ? (
-                            <>
-                                <MapsArrowDiagonal className='h-4 w-4 mr-1' />
-                                <a href={`http://maps.google.com/?q=${item.location}`} target='_blank' rel='noopener noreferrer'>
-                                    {item.location}
-                                </a>
-                            </>
-                        ) : (
-                            <>
-                                <Safari className='h-4 w-4 mr-1' />
-                                <a href={item.location} target='_blank' rel='noopener noreferrer'>
-                                    {removeFirstPartOfUrl(item.location)}
-                                </a>
-                            </>
-                        )}
+                        {item.description}
+                    </p>
+                    <p className='text-secondary text-xs mt-1'>
+                        Debut: {days}j {hours}h {minutes}m {seconds}s
                     </p>
                 </div>
                 {/* Footer */}
