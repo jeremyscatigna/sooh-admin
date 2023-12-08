@@ -4,7 +4,7 @@ import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
 import ProfileBody from '../../partials/community/ProfileBody';
 import { useParams } from 'react-router-dom';
-import { collection, doc, onSnapshot, query, updateDoc, where } from 'firebase/firestore';
+import { collection, doc, getDocs, onSnapshot, query, updateDoc, where } from 'firebase/firestore';
 import { db, storage } from '../../main';
 import ModalBasic from '../../components/ModalBasic';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
@@ -30,6 +30,7 @@ function Profile() {
     const { id } = useParams();
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
+    const [influencer, setInfluencer] = useState({});
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -43,10 +44,11 @@ function Profile() {
     }, []);
 
     useEffect(() => {
-        const collectionQuery = query(collection(db, 'users'), where('uid', '==', id));
+        const fecthData = async () => {
+            const collectionQuery = query(collection(db, 'users'), where('uid', '==', id));
+            const user = await getDocs(collectionQuery);
 
-        const unsub = onSnapshot(collectionQuery, (snapshot) => {
-            const data = snapshot.docs.map((doc) => ({
+            const data = user.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
             }));
@@ -58,12 +60,24 @@ function Profile() {
             setDescription(data[0].description || '');
             setLocation(data[0].location || '');
             setImgUrl(data[0].avatar);
-        });
 
-        return () => {
-            unsub();
+            if (data[0].type === 'influencer') {
+                const res2 = await getDocs(query(collection(db, `users/${id}/influencer`)));
+                const influencer = res2.docs.map((doc) => doc.data());
+                const dataWithInfluencer = {
+                    category: influencer[0]?.category,
+                    city: influencer[0]?.city,
+                    influBio: influencer[0]?.bio,
+                    followers: influencer[0]?.followers,
+                };
+
+
+                setInfluencer(dataWithInfluencer);
+            }
         };
-    }, []);
+
+        fecthData();
+    }, [id]);
 
     useEffect(() => {
         const collectionQuery = query(collection(db, 'posts'), where('userId', '==', id));
@@ -270,6 +284,7 @@ function Profile() {
                     <div className='relative flex justify-center items-center'>
                         <ProfileBody
                             user={user}
+                            influencer={influencer}
                             posts={posts}
                             editProfile={handleEditProfile}
                             setBasicModalOpen={setBasicModalOpen}

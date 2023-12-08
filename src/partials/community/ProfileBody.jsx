@@ -10,7 +10,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../main';
 import { selectedConversationAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
 
-function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalOpen, user, posts }) {
+function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalOpen, user, posts, influencer }) {
     const connectedUser = useAtomValue(currentUser);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [conversations, setConversations] = useState([]);
@@ -53,7 +53,9 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
         } else {
             navigate(`/messages`);
         }
-    }
+    };
+
+    console.log(influencer);
 
     return (
         <div
@@ -84,7 +86,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                         {/* Actions */}
                         {connectedUser.uid !== user.uid ? (
                             <div className='flex space-x-2 sm:mb-2'>
-                                <button 
+                                <button
                                     onClick={() => {
                                         doesConversationExist();
                                     }}
@@ -129,7 +131,25 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                         </h1>
                     </div>
                     {/* Bio */}
-                    <div className='text-sm mb-3'>{user.details !== '' ? user.details : 'Ecris ta bio pour te presenter au monde'}</div>
+                    <div className='text-sm mb-3'>
+                        {influencer.influBio
+                            ? influencer.influBio
+                            : user.details !== ''
+                            ? user.details
+                            : 'Ecris ta bio pour te presenter au monde'}
+                    </div>
+                    {influencer.city && (
+                        <div className='mb-4'>
+                            <div className='flex items-start text-sm text-secondary'>
+                                {influencer.city}
+                                {influencer.followers ? ' • ' : ''}
+                                {influencer.followers}
+                            </div>
+                            {influencer.category && (
+                                <div className='flex items-start text-sm text-secondary'>{influencer.category}</div>
+                            )}
+                        </div>
+                    )}
                     {/* Meta */}
                     {mobile ? (
                         <div className='flex flex-col justify-center items-center space-y-2'>
@@ -146,7 +166,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                                     <path d='M8 8.992a2 2 0 1 1-.002-3.998A2 2 0 0 1 8 8.992Zm-.7 6.694c-.1-.1-4.2-3.696-4.2-3.796C1.7 10.69 1 8.892 1 6.994 1 3.097 4.1 0 8 0s7 3.097 7 6.994c0 1.898-.7 3.697-2.1 4.996-.1.1-4.1 3.696-4.2 3.796-.4.3-1 .3-1.4-.1Zm-2.7-4.995L8 13.688l3.4-2.997c1-1 1.6-2.198 1.6-3.597 0-2.798-2.2-4.996-5-4.996S3 4.196 3 6.994c0 1.399.6 2.698 1.6 3.697 0-.1 0-.1 0 0Z' />
                                 </svg>
                                 <span className='text-sm font-medium whitespace-nowrap text-secondary ml-2'>
-                                    {user.location || 'Ajoute ta localisation'}
+                                    {influencer.city ? influencer.city : user.location || 'Ajoute ta localisation'}
                                 </span>
                             </div>
                         </div>
@@ -165,7 +185,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                                     <path d='M8 8.992a2 2 0 1 1-.002-3.998A2 2 0 0 1 8 8.992Zm-.7 6.694c-.1-.1-4.2-3.696-4.2-3.796C1.7 10.69 1 8.892 1 6.994 1 3.097 4.1 0 8 0s7 3.097 7 6.994c0 1.898-.7 3.697-2.1 4.996-.1.1-4.1 3.696-4.2 3.796-.4.3-1 .3-1.4-.1Zm-2.7-4.995L8 13.688l3.4-2.997c1-1 1.6-2.198 1.6-3.597 0-2.798-2.2-4.996-5-4.996S3 4.196 3 6.994c0 1.399.6 2.698 1.6 3.697 0-.1 0-.1 0 0Z' />
                                 </svg>
                                 <span className='text-sm font-medium whitespace-nowrap text-secondary ml-2'>
-                                    {user.location || 'Ajoute ta localisation'}
+                                    {influencer.city ? influencer.city : user.location || 'Ajoute ta localisation'}
                                 </span>
                             </div>
                         </div>
