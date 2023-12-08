@@ -8,6 +8,7 @@ import { currentUserDocumentIdAtom, userIdAtom } from './Signup';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../main';
 import { userTypeAtom } from './Onboarding01';
+import { categories } from '../utils/categories';
 
 function Onboarding02() {
     const [companyName, setCompanyName] = React.useState('');
@@ -18,6 +19,11 @@ function Onboarding02() {
     const [instagram, setInstagram] = React.useState('');
     const [tiktok, setTiktok] = React.useState('');
     const [youtube, setYoutube] = React.useState('');
+    const [twitter, setTwitter] = React.useState('');
+    const [facebook, setFacebook] = React.useState('');
+    const [category, setCategory] = React.useState('Autres');
+    const [bio, setBio] = React.useState('');
+    const [followers, setFollowers] = React.useState('');
 
     const navigate = useNavigate();
     const userId = useAtomValue(userIdAtom);
@@ -27,12 +33,18 @@ function Onboarding02() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(userType === 'influencer') {
+        if (userType === 'influencer') {
             try {
                 await addDoc(collection(db, `users/${userId}/influencer`), {
                     instagram,
                     tiktok,
                     youtube,
+                    twitter,
+                    facebook,
+                    category,
+                    bio,
+                    followers,
+                    city,
                 });
 
                 navigate('/onboarding-04');
@@ -40,7 +52,7 @@ function Onboarding02() {
                 console.log(err);
             }
         }
-        if(userType === 'business') {
+        if (userType === 'business') {
             try {
                 await addDoc(collection(db, `users/${userId}/company`), {
                     companyName,
@@ -232,7 +244,70 @@ function Onboarding02() {
                         {userType === 'influencer' && (
                             <div className='px-4 py-8'>
                                 <div className='max-w-md mx-auto'>
-                                    <h1 className='text-3xl text-primary font-bold mb-6'>Vos liens</h1>
+                                    <h1 className='text-3xl text-primary font-bold mb-6'>Vos infos</h1>
+
+                                    <div className='mt-4 mb-4'>
+                                        <label className='block text-sm font-medium mb-1' htmlFor='country'>
+                                            Categorie de contenue <span className='text-rose-500'>*</span>
+                                        </label>
+                                        <select
+                                            id='country'
+                                            className='form-select rounded-xl border-none bg-hover text-secondary w-full'
+                                            value={category}
+                                            onChange={(e) => setCategory(e.target.value)}
+                                        >
+                                            {categories.map((category) => (
+                                                <option key={category} value={category}>
+                                                    {category}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div className='mb-4'>
+                                        <label className='block text-sm font-medium mb-1' htmlFor='country'>
+                                            Nombre de followers <span className='text-rose-500'>*</span>
+                                        </label>
+                                        <select
+                                            id='country'
+                                            className='form-select rounded-xl border-none bg-hover text-secondary w-full'
+                                            value={followers}
+                                            onChange={(e) => setFollowers(e.target.value)}
+                                        >
+                                            <option value={'0-1k'}>0-1k</option>
+                                            <option value={'1k-10k'}>1k-10k</option>
+                                            <option value={'10k-100k'}>10k-100k</option>
+                                            <option value={'100k-1M'}>100k-1M</option>
+                                            <option value={'1M+'}>1M+</option>
+                                        </select>
+                                    </div>
+
+                                    <div className='mb-4'>
+                                        <label className='block text-sm font-medium mb-1' htmlFor='company-name'>
+                                            Ville <span className='text-rose-500'>*</span>
+                                        </label>
+                                        <input
+                                            id='company-name'
+                                            className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
+                                            type='text'
+                                            placeholder='Ville'
+                                            value={city}
+                                            onChange={(e) => setCity(e.target.value)}
+                                        />
+                                    </div>
+
+                                    <div className='mb-4'>
+                                        <label className='block text-sm font-medium mb-1' htmlFor='company-name'>
+                                            Ecris ta bio <span className='text-rose-500'>*</span>
+                                        </label>
+                                        <input
+                                            id='company-name'
+                                            className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
+                                            type='text'
+                                            placeholder='Bio'
+                                            value={bio}
+                                            onChange={(e) => setBio(e.target.value)}
+                                        />
+                                    </div>
                                     {/* htmlForm */}
                                     <form>
                                         <div className='space-y-4 mb-8'>
@@ -274,6 +349,32 @@ function Onboarding02() {
                                                     placeholder='https://www.youtube.com/...'
                                                     value={youtube}
                                                     onChange={(e) => setYoutube(e.target.value)}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className='block text-sm font-medium mb-1' htmlFor='company-name'>
+                                                    Twitter <span className='text-rose-500'>*</span>
+                                                </label>
+                                                <input
+                                                    id='company-name'
+                                                    className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
+                                                    type='text'
+                                                    placeholder='https://www.twitter.com/...'
+                                                    value={twitter}
+                                                    onChange={(e) => setTwitter(e.target.value)}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className='block text-sm font-medium mb-1' htmlFor='company-name'>
+                                                    Facebook <span className='text-rose-500'>*</span>
+                                                </label>
+                                                <input
+                                                    id='company-name'
+                                                    className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
+                                                    type='text'
+                                                    placeholder='https://www.facebook.com/...'
+                                                    value={facebook}
+                                                    onChange={(e) => setFacebook(e.target.value)}
                                                 />
                                             </div>
                                         </div>
