@@ -65,6 +65,15 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
         >
             {/* Content */}
             <div className='relative px-4 sm:px-6 pb-8'>
+                <Link
+                    className='btn-sm mt-4 rounded-full px-3 bg-hover hover:bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary'
+                    to={user.type === 'influencer' ? '/influencers' : '/feed'}
+                >
+                    <svg className='fill-current text-primary mr-2' width='7' height='12' viewBox='0 0 7 12'>
+                        <path d='M5.4.6 6.8 2l-4 4 4 4-1.4 1.4L0 6z' />
+                    </svg>
+                    <span>Retours</span>
+                </Link>
                 {/* Pre-header */}
                 <div className='mt-8 mb-6 sm:mb-3'>
                     <div className='flex flex-col items-center sm:flex-row sm:justify-between sm:items-end'>

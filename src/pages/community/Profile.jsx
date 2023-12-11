@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
 import ProfileBody from '../../partials/community/ProfileBody';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { collection, doc, getDocs, onSnapshot, query, updateDoc, where } from 'firebase/firestore';
 import { db, storage } from '../../main';
 import ModalBasic from '../../components/ModalBasic';
@@ -75,7 +75,6 @@ function Profile() {
                     twitter: influencer[0]?.twitter,
                     facebook: influencer[0]?.facebook,
                 };
-
 
                 setInfluencer(dataWithInfluencer);
             }
