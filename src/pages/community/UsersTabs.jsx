@@ -76,7 +76,7 @@ function UsersTabs() {
             {!mobile && <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
             {/* Content area */}
-            <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
+            <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden pb-24'>
                 {/*  Site header */}
                 {!mobile && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
