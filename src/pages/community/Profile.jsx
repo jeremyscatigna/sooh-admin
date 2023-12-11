@@ -69,6 +69,11 @@ function Profile() {
                     city: influencer[0]?.city,
                     influBio: influencer[0]?.bio,
                     followers: influencer[0]?.followers,
+                    instagram: influencer[0]?.instagram,
+                    tiktok: influencer[0]?.tiktok,
+                    youtube: influencer[0]?.youtube,
+                    twitter: influencer[0]?.twitter,
+                    facebook: influencer[0]?.facebook,
                 };
 
 

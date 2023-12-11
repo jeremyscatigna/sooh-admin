@@ -186,17 +186,16 @@ function CreateHappyHour() {
                                     />
                                 </div>
                                 <div className='space-y-4'>
-
-                                <div className='text-sm font-sm'>
-                                    <input
-                                        onClick={() => setAddEndDate(!addEndDate)}
-                                        value={addEndDate}
-                                        type='checkbox'
-                                        className='mr-2 rounded bg-hover border-none focus:ring-pink-500 text-pink-500'
-                                    />
-                                    <label className='text-sm font-sm mb-1'>Ajouter une date de fin</label>
-                                </div>
-                                {addEndDate && <Datepicker align='left' selectedDates={endDate} setSelectedDates={setEndDate} />}
+                                    <div className='text-sm font-sm'>
+                                        <input
+                                            onClick={() => setAddEndDate(!addEndDate)}
+                                            value={addEndDate}
+                                            type='checkbox'
+                                            className='mr-2 rounded bg-hover border-none focus:ring-pink-500 text-pink-500'
+                                        />
+                                        <label className='text-sm font-sm mb-1'>Ajouter une date de fin</label>
+                                    </div>
+                                    {addEndDate && <Datepicker align='left' selectedDates={endDate} setSelectedDates={setEndDate} />}
                                 </div>
                                 <header className='mb-4'>
                                     {/* Title */}
@@ -214,7 +213,7 @@ function CreateHappyHour() {
                                     ) : (
                                         <div className='mt-4'>
                                             <label className='block text-sm font-medium mb-1' htmlFor='placeholder'>
-                                                Titre
+                                                Nom du commerce
                                             </label>
                                             <div className='flex flex-row space-x-2'>
                                                 <input
