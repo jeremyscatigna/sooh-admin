@@ -24,6 +24,8 @@ function Onboarding02() {
     const [category, setCategory] = React.useState('Autres');
     const [bio, setBio] = React.useState('');
     const [followers, setFollowers] = React.useState('');
+    const [minPrice, setMinPrice] = React.useState('');
+    const [maxPrice, setMaxPrice] = React.useState('');
 
     const navigate = useNavigate();
     const userId = useAtomValue(userIdAtom);
@@ -45,6 +47,8 @@ function Onboarding02() {
                     bio,
                     followers,
                     city,
+                    minPrice,
+                    maxPrice,
                 });
 
                 navigate('/onboarding-04');
@@ -279,6 +283,34 @@ function Onboarding02() {
                                             <option value={'100k-1M'}>100k-1M</option>
                                             <option value={'1M+'}>1M+</option>
                                         </select>
+                                    </div>
+
+                                    <div className='mb-4'>
+                                        <label className='block text-sm font-medium mb-1' htmlFor='company-name'>
+                                            Prix collabaration Minimum <span className='text-rose-500'>*</span>
+                                        </label>
+                                        <input
+                                            id='company-name'
+                                            className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
+                                            type='text'
+                                            placeholder='Minimum'
+                                            value={minPrice}
+                                            onChange={(e) => setMinPrice(e.target.value)}
+                                        />
+                                    </div>
+
+                                    <div className='mb-4'>
+                                        <label className='block text-sm font-medium mb-1' htmlFor='company-name'>
+                                            Prix collabaration Maximum <span className='text-rose-500'>*</span>
+                                        </label>
+                                        <input
+                                            id='company-name'
+                                            className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
+                                            type='text'
+                                            placeholder='Maximum'
+                                            value={maxPrice}
+                                            onChange={(e) => setMaxPrice(e.target.value)}
+                                        />
                                     </div>
 
                                     <div className='mb-4'>

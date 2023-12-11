@@ -48,6 +48,8 @@ function UsersTabs() {
                     twitter: influencer[0]?.twitter,
                     youtube: influencer[0]?.youtube,
                     tiktok: influencer[0]?.tiktok,
+                    minPrice: influencer[0]?.minPrice,
+                    maxPrice: influencer[0]?.maxPrice,
                 };
             });
 
@@ -226,6 +228,11 @@ function UsersTabs() {
                                                 <div className='text-center text-secondary mt-4'>
                                                     <div className='text-sm'>{item.influBio}</div>
                                                 </div>
+                                                  {item.minPrice && item.maxPrice && (
+                                                    <div className='text-center text-secondary mt-4'>
+                                                        <div className='text-sm'>Tarif : {item.minPrice}€ - {item.maxPrice}€</div>
+                                                    </div>
+                                                  )}
                                             </div>
                                         </div>
                                     </div>
