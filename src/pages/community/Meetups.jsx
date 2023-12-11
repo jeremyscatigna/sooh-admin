@@ -91,29 +91,29 @@ function Meetups() {
         newDate.setHours(timeArray[0]);
         newDate.setMinutes(timeArray[1]);
         return newDate.toISOString().slice(0, -5);
-    }
-    
+    };
+
     const isToday = (date) => {
         const today = dayjs();
         const itemDate = dayjs(date);
         return itemDate.isSame(today, 'day');
-    }
-    
+    };
+
     const filterDataWhereEndTimeIsBeforeNow = (data) => {
         const now = dayjs();
         return data.filter((item) => {
             if (!item.endTime) return true;
-            if (!isToday(item.date)) return true;  
+            if (!isToday(item.date)) return true;
             const itemDate = dayjs(replaceGetLocalDateTimeTimeByEndTime(item.date, item.endTime));
             return itemDate.isAfter(now);
         });
-    }
+    };
 
     const getLocaleDateTimeAtBeginningOfDay = () => {
         let d = new Date();
         const dateTimeLocalValue = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, -14);
         return dateTimeLocalValue;
-    }
+    };
 
     useEffect(() => {
         window.addEventListener('resize', handleWindowSizeChange);
@@ -160,36 +160,9 @@ function Meetups() {
                 <main>
                     <div className={`px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto ${mobile && 'mb-24'}`}>
                         {/* Page header */}
-                        <div className='sm:flex sm:justify-between sm:items-center mb-5'>
+                        <div className='sm:flex sm:justify-end sm:items-center mb-5'>
                             {/* Right: Actions */}
                             <div className='grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2'>
-                                {/* Search form */}
-
-                                <form className='relative'>
-                                    <label htmlFor='action-search' className='sr-only'>
-                                        Rechercher
-                                    </label>
-                                    <input
-                                        id='action-search'
-                                        className='form-input bg-hover text-secondary rounded-full border-none pl-9 placeholder-secondary'
-                                        type='search'
-                                        placeholder='Rechercher...'
-                                        value={searchText}
-                                        onChange={(e) => setSearchText(e.target.value)}
-                                    />
-                                    <button className='absolute inset-0 right-auto group' type='submit' aria-label='Search'>
-                                        <svg
-                                            className='w-4 h-4 shrink-0 fill-current text-secondary group-hover:text-primary ml-3 mr-2'
-                                            viewBox='0 0 16 16'
-                                            xmlns='http://www.w3.org/2000/svg'
-                                        >
-                                            <path d='M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z' />
-                                            <path d='M15.707 14.293L13.314 11.9a8.019 8.019 0 01-1.414 1.414l2.393 2.393a.997.997 0 001.414 0 .999.999 0 000-1.414z' />
-                                        </svg>
-                                    </button>
-                                </form>
-
-                                {/* Add meetup button */}
                                 {user.type === 'business' && (
                                     <button
                                         className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white'
