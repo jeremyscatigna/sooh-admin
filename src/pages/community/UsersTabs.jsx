@@ -8,7 +8,7 @@ import { db } from '../../main';
 import { getCategoriesShadowColor } from '../../utils/categories';
 import { Link } from 'react-router-dom';
 import Avvvatars from 'avvvatars-react';
-import { Search } from 'iconoir-react';
+import { Facebook, Instagram, Search, TikTok, Twitter, YouTube } from 'iconoir-react';
 
 function UsersTabs() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -43,6 +43,11 @@ function UsersTabs() {
                     city: influencer[0]?.city,
                     influBio: influencer[0]?.bio,
                     followers: influencer[0]?.followers,
+                    instagram: influencer[0]?.instagram,
+                    facebook: influencer[0]?.facebook,
+                    twitter: influencer[0]?.twitter,
+                    youtube: influencer[0]?.youtube,
+                    tiktok: influencer[0]?.tiktok,
                 };
             });
 
@@ -149,10 +154,52 @@ function UsersTabs() {
                                                     <div className='flex justify-center items-center text-sm text-secondary'>
                                                         {item.city}
                                                         {item.followers ? ' • ' : ''}
-                                                        {item.followers}
+                                                        {item.followers ? item.followers + ' abonnés' : ''}
                                                     </div>
                                                     <div className='flex justify-center items-center text-sm text-secondary'>
                                                         {item.category}
+                                                    </div>
+                                                    <div className='flex items-center justify-center pt-2'>
+                                                        {item.instagram && (
+                                                            <a
+                                                                className='text-sm font-medium whitespace-nowrap text-pink-500 ml-2'
+                                                                href={item.instagram}
+                                                            >
+                                                                <Instagram />
+                                                            </a>
+                                                        )}
+                                                        {item.tiktok && (
+                                                            <a
+                                                                className='text-sm font-medium whitespace-nowrap text-pink-500 ml-2'
+                                                                href={item.tiktok}
+                                                            >
+                                                                <TikTok />
+                                                            </a>
+                                                        )}
+                                                        {item.youtube && (
+                                                            <a
+                                                                className='text-sm font-medium whitespace-nowrap text-pink-500 ml-2'
+                                                                href={item.youtube}
+                                                            >
+                                                                <YouTube />
+                                                            </a>
+                                                        )}
+                                                        {item.twitter && (
+                                                            <a
+                                                                className='text-sm font-medium whitespace-nowrap text-pink-500 ml-2'
+                                                                href={item.twitter}
+                                                            >
+                                                                <Twitter />
+                                                            </a>
+                                                        )}
+                                                        {item.facebook && (
+                                                            <a
+                                                                className='text-sm font-medium whitespace-nowrap text-pink-500 ml-2'
+                                                                href={item.facebook}
+                                                            >
+                                                                <Facebook />
+                                                            </a>
+                                                        )}
                                                     </div>
                                                 </header>
                                                 {/* Bio */}
