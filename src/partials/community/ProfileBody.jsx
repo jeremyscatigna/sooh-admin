@@ -157,6 +157,15 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                                 {influencer.city}
                                 {influencer.followers ? ' • ' : ''}
                                 {influencer.followers}
+                                {influencer.minPrice && influencer.maxPrice ? ' • ' : ''}
+
+                                {influencer.minPrice && influencer.maxPrice && (
+                                <div className='text-center text-secondary'>
+                                    <div className='text-sm'>
+                                        Tarif : {influencer.minPrice}€ - {influencer.maxPrice}€
+                                    </div>
+                                </div>
+                                )}
                             </div>
                             {influencer.category && (
                                 <div

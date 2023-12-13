@@ -295,7 +295,7 @@ function Onboarding02() {
                                             type='text'
                                             placeholder='Minimum'
                                             value={minPrice}
-                                            onChange={(e) => setMinPrice(e.target.value)}
+                                            onChange={(e) => setMinPrice(e.target.value.replace(/\D/g, ''))}
                                         />
                                     </div>
 
@@ -309,7 +309,7 @@ function Onboarding02() {
                                             type='text'
                                             placeholder='Maximum'
                                             value={maxPrice}
-                                            onChange={(e) => setMaxPrice(e.target.value)}
+                                            onChange={(e) => setMaxPrice(e.target.value.replace(/\D/g, ''))}
                                         />
                                     </div>
 

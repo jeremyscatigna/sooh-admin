@@ -110,7 +110,7 @@ const removeFirstPartOfUrl = (url) => {
 
 function MeetupItem({ item }) {
     const user = useAtomValue(currentUser);
-    const { days, hours, minutes, seconds } = useTimer(item.date);
+    const { days, hours, minutes, seconds, text } = useTimer(item.date, item.endTime);
     const [like, setLike] = useState(item.likes ? doILikeThisHH(item, user) : false);
     const [city, setCity] = useState('');
     const [attendees, setAttendees] = useState([]);
@@ -229,7 +229,7 @@ function MeetupItem({ item }) {
                         {item.description}
                     </p>
                     <p className='text-secondary text-xs mt-1'>
-                        Debut: {days}j {hours}h {minutes}m {seconds}s
+                        {text} {days}j {hours}h {minutes}m {seconds}s
                     </p>
                 </div>
                 {/* Footer */}
