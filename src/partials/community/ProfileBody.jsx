@@ -160,11 +160,11 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                                 {influencer.minPrice && influencer.maxPrice ? ' • ' : ''}
 
                                 {influencer.minPrice && influencer.maxPrice && (
-                                <div className='text-center text-secondary'>
-                                    <div className='text-sm'>
-                                        Tarif : {influencer.minPrice}€ - {influencer.maxPrice}€
+                                    <div className='text-center text-secondary'>
+                                        <div className='text-sm'>
+                                            Tarif : {influencer.minPrice}€ - {influencer.maxPrice}€
+                                        </div>
                                     </div>
-                                </div>
                                 )}
                             </div>
                             {influencer.category && (
@@ -213,7 +213,23 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                                                 className='text-sm font-medium whitespace-nowrap text-pink-500 ml-2'
                                                 href={influencer.twitter}
                                             >
-                                                <Twitter />
+                                                <svg
+                                                    className='h-5 w-5'
+                                                    width='24px'
+                                                    height='24px'
+                                                    viewBox='0 0 24 24'
+                                                    strokeWidth='1.5'
+                                                    fill='none'
+                                                    xmlns='http://www.w3.org/2000/svg'
+                                                    color='#ec489a'
+                                                >
+                                                    <path
+                                                        d='M16.8198 20.7684L3.75317 3.96836C3.44664 3.57425 3.72749 3 4.22678 3H6.70655C6.8917 3 7.06649 3.08548 7.18016 3.23164L20.2468 20.0316C20.5534 20.4258 20.2725 21 19.7732 21H17.2935C17.1083 21 16.9335 20.9145 16.8198 20.7684Z'
+                                                        stroke='#ec489a'
+                                                        strokeWidth='1.5'
+                                                    ></path>
+                                                    <path d='M20 3L4 21' stroke='#ec489a' strokeWidth='1.5' strokeLinecap='round'></path>
+                                                </svg>
                                             </a>
                                         )}
                                         {influencer.facebook && (

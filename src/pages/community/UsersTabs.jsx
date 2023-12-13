@@ -129,11 +129,10 @@ function UsersTabs() {
                                                 {/* Image + name */}
 
                                                 <header className='relative'>
-                                                    
                                                     <button
                                                         className='absolute right-0 top-0 hover:text-pink-500 z-60'
                                                         onClick={(e) => {
-                                                            false
+                                                            false;
                                                         }}
                                                     >
                                                         <div className=' text-slate-100 bg-slate-900 bg-opacity-60 rounded-full'>
@@ -211,7 +210,28 @@ function UsersTabs() {
                                                                 className='text-sm font-medium whitespace-nowrap text-pink-500 ml-2'
                                                                 href={item.twitter}
                                                             >
-                                                                <Twitter />
+                                                                <svg
+                                                                    className='h-5 w-5'
+                                                                    width='24px'
+                                                                    height='24px'
+                                                                    viewBox='0 0 24 24'
+                                                                    strokeWidth='1.5'
+                                                                    fill='none'
+                                                                    xmlns='http://www.w3.org/2000/svg'
+                                                                    color='#ec489a'
+                                                                >
+                                                                    <path
+                                                                        d='M16.8198 20.7684L3.75317 3.96836C3.44664 3.57425 3.72749 3 4.22678 3H6.70655C6.8917 3 7.06649 3.08548 7.18016 3.23164L20.2468 20.0316C20.5534 20.4258 20.2725 21 19.7732 21H17.2935C17.1083 21 16.9335 20.9145 16.8198 20.7684Z'
+                                                                        stroke='#ec489a'
+                                                                        strokeWidth='1.5'
+                                                                    ></path>
+                                                                    <path
+                                                                        d='M20 3L4 21'
+                                                                        stroke='#ec489a'
+                                                                        strokeWidth='1.5'
+                                                                        strokeLinecap='round'
+                                                                    ></path>
+                                                                </svg>
                                                             </a>
                                                         )}
                                                         {item.facebook && (
@@ -228,11 +248,13 @@ function UsersTabs() {
                                                 <div className='text-center text-secondary mt-4'>
                                                     <div className='text-sm'>{item.influBio}</div>
                                                 </div>
-                                                  {item.minPrice && item.maxPrice && (
+                                                {item.minPrice && item.maxPrice && (
                                                     <div className='text-center text-secondary mt-4'>
-                                                        <div className='text-sm'>Tarif : {item.minPrice}€ - {item.maxPrice}€</div>
+                                                        <div className='text-sm'>
+                                                            Tarif : {item.minPrice}€ - {item.maxPrice}€
+                                                        </div>
                                                     </div>
-                                                  )}
+                                                )}
                                             </div>
                                         </div>
                                     </div>
