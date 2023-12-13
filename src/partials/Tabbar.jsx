@@ -28,7 +28,12 @@ export const SlidingTabBar = () => {
             id: 'happyhours',
             name: 'Deals',
         },
-        user.type === 'business' || user.type === 'influencer' &&
+        user.type === 'business' &&
+        {
+            id: 'dashboard',
+            name: 'Dashboard',
+        },
+        user.type === 'influencer' &&
         {
             id: 'dashboard',
             name: 'Dashboard',
