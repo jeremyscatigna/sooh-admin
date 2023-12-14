@@ -17,7 +17,7 @@ function MessagesHeader() {
     const authenticatedUser = useAtomValue(currentUser);
 
     return (
-        <div className='fixed top-0 bg-card w-full'>
+        <div className='z-40 fixed top-0 bg-card w-full'>
             <div className='flex items-center justify-between bg-card px-4 sm:px-6 md:px-5 h-16'>
                 {/* People */}
                 <div className='flex items-center'>

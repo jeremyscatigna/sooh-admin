@@ -42,7 +42,7 @@ function MessagesFooter() {
         setOpenCreateOfferModal(false);
     };
     return (
-        <div className='fixed w-full bg-card bottom-0'>
+        <div className='z-40 fixed w-full bg-card bottom-0'>
             <ModalBasic title='Créer une offre' modalOpen={openCreateOfferModal}>
                 <div className='px-5 pt-4 pb-1 space-y-4'>
                     <div>

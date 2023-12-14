@@ -26,7 +26,7 @@ function MessagesSidebar({ createConversation }) {
     return (
         <div
             id='messages-sidebar'
-            className={`absolute z-20 top-0 bottom-0 w-full h-full md:w-auto md:static md:top-auto md:bottom-auto -mr-px md:translate-x-0 transition-transform duration-200 ease-in-out ${
+            className={`absolute z-50 top-0 bottom-0 w-full h-full md:w-auto md:static md:top-auto md:bottom-auto -mr-px md:translate-x-0 transition-transform duration-200 ease-in-out ${
                 msgSidebarOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
         >

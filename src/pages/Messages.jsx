@@ -137,7 +137,7 @@ function Messages() {
     }, [msgSidebarOpen]); // automatically scroll the chat and make the most recent message visible
 
     return (
-        <div className='flex h-screen overflow-hidden'>
+        <div className='flex h-screen overflow-hidden bg-card'>
             {/* Sidebar */}
             {!mobile && <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
@@ -146,7 +146,7 @@ function Messages() {
                 {/*  Site header */}
                 {!mobile && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
-                <main className='h-screen'>
+                <main className='h-screen bg-card'>
                     <div className='flex h-full'>
                         {/* Messages sidebar */}
                         <MessagesSidebar
