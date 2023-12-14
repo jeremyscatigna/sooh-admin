@@ -6,6 +6,7 @@ import { currentUser } from '../../pages/Signup';
 import { collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { db } from '../../main';
 import ModalBasic from '../../components/ModalBasic';
+import { ArrowRight } from 'iconoir-react';
 
 function MessagesFooter() {
     const [inputValue, setInputValue] = React.useState('');
@@ -120,17 +121,14 @@ function MessagesFooter() {
             <div className='flex items-center justify-between bg-card px-4 sm:px-6 md:px-5 h-16'>
                 {/* Plus button */}
                 <button
-                    className='shrink-0 text-hover hover:text-slate-500 mr-3'
+                    className='text-xs font-bold text-white px-2 py-2 mr-2 rounded-full bg-gradient-to-r from-fuchsia-600 to-pink-600'
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         setOpenCreateOfferModal(true);
                     }}
                 >
-                    <span className='sr-only'>Add</span>
-                    <svg className='w-6 h-6 fill-current' viewBox='0 0 24 24'>
-                        <path d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.98 5.38 18.62.02 12 0zm6 13h-5v5h-2v-5H6v-2h5V6h2v5h5v2z' />
-                    </svg>
+                    Faire une offre
                 </button>
                 {/* Message input */}
                 <div className='grow flex'>
@@ -164,7 +162,7 @@ function MessagesFooter() {
                         }}
                         className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded-full whitespace-nowrap'
                     >
-                        Send -&gt;
+                        <ArrowRight className='w-4 h-4 fill-white' />
                     </button>
                 </div>
             </div>
