@@ -4,7 +4,7 @@ import User01 from '../../images/user-40-11.jpg';
 import User02 from '../../images/user-40-12.jpg';
 import ChatImage from '../../images/chat-image.jpg';
 import { useAtomValue } from 'jotai';
-import { selectedConversationMessagesAtom } from '../../pages/Messages';
+import { msgSidebarOpenAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
 import Avvvatars from 'avvvatars-react';
 import { currentUser } from '../../pages/Signup';
 import dayjs from 'dayjs';
@@ -12,17 +12,18 @@ import { CheckCircle, ShieldCross } from 'iconoir-react';
 
 function MessagesBody() {
     const selectedConversationMessages = useAtomValue(selectedConversationMessagesAtom);
+    const msgSidebarOpen = useAtomValue(msgSidebarOpenAtom);
     const user = useAtomValue(currentUser);
 
     useEffect(() => {
+        if (msgSidebarOpen === true) return;
         window.scroll({
             top: document.body.offsetHeight,
             left: 0,
             behavior: 'smooth',
         });
-    }, []);
+    }, [msgSidebarOpen]);
 
-    
     return (
         <div className='z-30 flex flex-col px-4 sm:px-6 md:px-5 py-6'>
             <div className='flex flex-col items-center justify-center h-full p-4 mt-8'>
