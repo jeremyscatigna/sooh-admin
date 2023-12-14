@@ -1,33 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
-import User01 from '../../images/user-40-11.jpg';
-import User02 from '../../images/user-40-12.jpg';
-import ChatImage from '../../images/chat-image.jpg';
 import { useAtomValue } from 'jotai';
-import { msgSidebarOpenAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
+import { selectedConversationMessagesAtom } from '../../pages/Messages';
 import Avvvatars from 'avvvatars-react';
 import { currentUser } from '../../pages/Signup';
 import dayjs from 'dayjs';
 import { CheckCircle, ShieldCross } from 'iconoir-react';
 
 function MessagesBody() {
-    const ref = useRef(null);
     const selectedConversationMessages = useAtomValue(selectedConversationMessagesAtom);
-    const msgSidebarOpen = useAtomValue(msgSidebarOpenAtom);
     const user = useAtomValue(currentUser);
-
-    useEffect(() => {
-        if (msgSidebarOpen === true) return;
-        window.scroll({
-            top: document.body.offsetHeight,
-            left: 0,
-            behavior: 'smooth',
-        });
-
-        if (ref && ref.current && msgSidebarOpen === false) {
-            ref.current.scrollTop = ref.current.scrollHeight + 96;
-        }
-    }, [msgSidebarOpen, ref]);
 
     return (
         <div className='z-30 flex flex-col px-4 sm:px-6 md:px-5 py-6'>
@@ -77,7 +59,7 @@ function MessagesBody() {
 
             {selectedConversationMessages &&
                 selectedConversationMessages.length > 0 &&
-                selectedConversationMessages.map((message, index) => (
+                selectedConversationMessages.map((message) => (
                     <div className='flex items-start mb-8 last:mb-24' key={message.uid}>
                         {message.senderAvatar ? (
                             <img className='rounded-full mr-4 w-10 h-10' src={message.senderAvatar} width='40' height='40' alt='User 01' />
@@ -85,7 +67,7 @@ function MessagesBody() {
                             <Avvvatars value={`${message.senderFirstName} ${message.senderLastName}`} />
                         )}
 
-                        <div ref={ref} className='ml-4'>
+                        <div className='ml-4'>
                             {!message.type || message.type === 'text' ? (
                                 <>
                                     <div
