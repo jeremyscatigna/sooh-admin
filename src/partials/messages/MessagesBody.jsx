@@ -25,7 +25,7 @@ function MessagesBody() {
         });
 
         if (ref && ref.current && msgSidebarOpen === false) {
-            ref.current.scrollTop = ref.current.scrollHeight;
+            ref.current.scrollTop = ref.current.scrollHeight + 96;
         }
     }, [msgSidebarOpen, ref]);
 
