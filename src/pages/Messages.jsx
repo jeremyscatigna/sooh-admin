@@ -141,14 +141,12 @@ function Messages() {
             {!mobile && <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
             {/* Content area */}
-            <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden' ref={contentArea}>
+            <div className='flex flex-col flex-1 overflow-y-auto overflow-x-hidden h-screen' ref={contentArea}>
                 {/*  Site header */}
                 {!mobile && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
 
-                <main>
-                    
-
-                    <div className='relative flex'>
+                <main className='h-screen'>
+                    <div className='flex h-full'>
                         {/* Messages sidebar */}
                         <MessagesSidebar
                             createConversation={createConversation}
@@ -157,17 +155,16 @@ function Messages() {
                         />
 
                         {/* Messages body */}
-                        <div
-                            className={`grow flex bg-card flex-col md:translate-x-0 transition-transform duration-300 ease-in-out ${
-                                msgSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
-                            }`}
-                        >
+                        <div className={`grow flex bg-card flex-col md:translate-x-0 transition-transform duration-300 ease-in-out`}>
                             {selectedConversation && selectedConversation.uid ? (
-                                <>
-                                    <MessagesHeader msgSidebarOpen={msgSidebarOpen} setMsgSidebarOpen={setMsgSidebarOpen} />
+                                <div className='h-full flex flex-col flex-1'>
+                                    {!msgSidebarOpen && (
+                                        <MessagesHeader msgSidebarOpen={msgSidebarOpen} setMsgSidebarOpen={setMsgSidebarOpen} />
+                                    )}
+
                                     <MessagesBody />
                                     <MessagesFooter />
-                                </>
+                                </div>
                             ) : (
                                 <>
                                     <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
