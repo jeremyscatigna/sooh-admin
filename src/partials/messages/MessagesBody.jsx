@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import User01 from '../../images/user-40-11.jpg';
 import User02 from '../../images/user-40-12.jpg';
@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import { CheckCircle, ShieldCross } from 'iconoir-react';
 
 function MessagesBody() {
-    const ref = React.useRef<HTMLDivElement>(null);
+    const ref = useRef(null);
     const selectedConversationMessages = useAtomValue(selectedConversationMessagesAtom);
     const msgSidebarOpen = useAtomValue(msgSidebarOpenAtom);
     const user = useAtomValue(currentUser);
