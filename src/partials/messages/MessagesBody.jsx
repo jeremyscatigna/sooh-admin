@@ -8,6 +8,7 @@ import { selectedConversationMessagesAtom } from '../../pages/Messages';
 import Avvvatars from 'avvvatars-react';
 import { currentUser } from '../../pages/Signup';
 import dayjs from 'dayjs';
+import { CheckCircle, ShieldCross } from 'iconoir-react';
 
 function MessagesBody() {
     const selectedConversationMessages = useAtomValue(selectedConversationMessagesAtom);
@@ -71,22 +72,54 @@ function MessagesBody() {
                         )}
 
                         <div className='ml-4'>
-                            <div
-                                className={`text-sm ${
-                                    message.senderFirstName === user.firstName
-                                        ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary'
-                                        : 'bg-white text-slate-800'
-                                } p-3 rounded-xl rounded-tl-none shadow-md mb-1`}
-                            >
-                                {message.text}
-                            </div>
-                            <div className='flex items-center justify-between'>
-                                {message.timestamp && (
-                                    <div className='text-xs text-slate-500 font-medium'>
-                                        Il y a {dayjs(message.timestamp).fromNow(true)}
+                            {!message.type || message.type === 'text' ? (
+                                <>
+                                    <div
+                                        className={`text-sm ${
+                                            message.senderFirstName === user.firstName
+                                                ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary'
+                                                : 'bg-white text-slate-800'
+                                        } p-3 rounded-xl rounded-tl-none shadow-md mb-1`}
+                                    >
+                                        {message.text}
                                     </div>
-                                )}
-                            </div>
+                                    <div className='flex items-center justify-between'>
+                                        {message.timestamp && (
+                                            <div className='text-xs text-slate-500 font-medium'>
+                                                Il y a {dayjs(message.timestamp).fromNow(true)}
+                                            </div>
+                                        )}
+                                    </div>
+                                </>
+                            ) : (
+                                <div className='border rounded-xl border-pink-500 p-4'>
+                                    <div className='flex flex-col items-start justify-center'>
+                                        <div className='text-sm font-medium text-primary'>Prix: {message.price}€</div>
+                                        <div className='text-sm font-medium text-primary'>Details: {message.details}</div>
+
+                                        <div className='flex items-center justify-between w-full mt-4'>
+                                            <button
+                                                className='flex flex-row items-center justify-center'
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                }}
+                                            >
+                                                <CheckCircle className='w-6 h-6 fill-green mr-2 text-green-500' />
+                                                Accepter
+                                            </button>
+                                            <button
+                                                className='flex flex-row items-center justify-center'
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                }}
+                                            >
+                                                <ShieldCross className='w-6 h-6 fill-red mr-2 text-red-600' />
+                                                Refuser
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}
