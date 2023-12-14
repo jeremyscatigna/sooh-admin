@@ -14,7 +14,7 @@ function MessagesBody() {
     const selectedConversationMessages = useAtomValue(selectedConversationMessagesAtom);
     const user = useAtomValue(currentUser);
     return (
-        <div className='flex flex-col flex-grow px-4 sm:px-6 md:px-5 py-6 h-full'>
+        <div className='flex flex-col px-4 sm:px-6 md:px-5 py-6 h-full'>
             {selectedConversationMessages && selectedConversationMessages.length === 0 && (
                 <div className='flex flex-col items-center justify-center h-full p-4'>
                     <ol className='flex flex-col items-start justify-start text-sm text-slate-300 relative border-s border-gray-200'>
