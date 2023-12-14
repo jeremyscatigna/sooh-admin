@@ -18,14 +18,6 @@ function MessagesFooter() {
 
     const user = useAtomValue(currentUser);
 
-    useEffect(() => {
-        window.scroll({
-            top: document.body.offsetHeight,
-            left: 0,
-            behavior: 'smooth',
-        });
-    }, []);
-
     const handleUpdate = async (e, message) => {
         e.preventDefault();
 
