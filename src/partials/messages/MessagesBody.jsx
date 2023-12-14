@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import { CheckCircle, ShieldCross } from 'iconoir-react';
 
 function MessagesBody() {
+    const ref = React.useRef<HTMLDivElement>(null);
     const selectedConversationMessages = useAtomValue(selectedConversationMessagesAtom);
     const msgSidebarOpen = useAtomValue(msgSidebarOpenAtom);
     const user = useAtomValue(currentUser);
@@ -22,7 +23,12 @@ function MessagesBody() {
             left: 0,
             behavior: 'smooth',
         });
-    }, [msgSidebarOpen]);
+
+        if (ref.current) {
+            const offsetBottom = ref.current.offsetTop + ref.current.offsetHeight;
+            window.scrollTo({ top: offsetBottom });
+          }
+    }, [msgSidebarOpen, ref]);
 
     return (
         <div className='z-30 flex flex-col px-4 sm:px-6 md:px-5 py-6'>
@@ -80,7 +86,7 @@ function MessagesBody() {
                             <Avvvatars value={`${message.senderFirstName} ${message.senderLastName}`} />
                         )}
 
-                        <div className='ml-4'>
+                        <div ref={ref} className='ml-4'>
                             {!message.type || message.type === 'text' ? (
                                 <>
                                     <div
