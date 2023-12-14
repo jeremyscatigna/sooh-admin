@@ -24,7 +24,7 @@ function MessagesBody() {
             behavior: 'smooth',
         });
 
-        if (ref.current) {
+        if (ref.current && ref.current.offsetTop && ref.current.offsetHeight && msgSidebarOpen === false) {
             const offsetBottom = ref.current.offsetTop + ref.current.offsetHeight;
             window.scrollTo({ top: offsetBottom });
           }
