@@ -1,5 +1,5 @@
 import { useAtom, useAtomValue } from 'jotai';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { openCreateOfferModalAtom, selectedConversationAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
 import { v4 as uuidv4 } from 'uuid';
 import { currentUser } from '../../pages/Signup';
@@ -17,6 +17,10 @@ function MessagesFooter() {
     const [offerDetails, setOfferDetails] = React.useState('');
 
     const user = useAtomValue(currentUser);
+
+    useEffect(() => {
+        window.scroll({ bottom: 0, left: 0,  behavior: 'smooth' });
+    }, [])
 
     const handleUpdate = async (e, message) => {
         e.preventDefault();
@@ -40,6 +44,7 @@ function MessagesFooter() {
         });
 
         setOpenCreateOfferModal(false);
+        window.scroll({ bottom: 0, left: 0,  behavior: 'smooth' });
     };
     return (
         <div className='z-40 fixed w-full bg-card bottom-0'>
