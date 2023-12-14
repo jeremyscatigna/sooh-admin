@@ -24,10 +24,9 @@ function MessagesBody() {
             behavior: 'smooth',
         });
 
-        if (ref.current && ref.current.offsetTop && ref.current.offsetHeight && msgSidebarOpen === false) {
-            const offsetBottom = ref.current.offsetTop + ref.current.offsetHeight;
-            window.scrollTo({ top: offsetBottom });
-          }
+        if (ref && ref.current && msgSidebarOpen === false) {
+            ref.current.scrollTop = ref.current.scrollHeight;
+        }
     }, [msgSidebarOpen, ref]);
 
     return (
