@@ -20,6 +20,7 @@ export const usersAtom = atom([]);
 export const searchAtom = atom('');
 export const selectedConversationMessagesAtom = atom([]);
 export const openCreateOfferModalAtom = atom(false);
+export const msgSidebarOpenAtom = atom(true);
 
 const getLocaleDateTime = () => {
     let d = new Date();
@@ -32,7 +33,7 @@ function Messages() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [msgSidebarOpen, setMsgSidebarOpen] = useState(true);
+    const [msgSidebarOpen, setMsgSidebarOpen] = useState(msgSidebarOpenAtom);
     const [selectedConversation, setSelectedConversation] = useAtom(selectedConversationAtom);
     const [users, setUsers] = useAtom(usersAtom);
     const [conversations, setConversations] = useAtom(conversationsAtom);
@@ -150,17 +151,15 @@ function Messages() {
                         {/* Messages sidebar */}
                         <MessagesSidebar
                             createConversation={createConversation}
-                            msgSidebarOpen={msgSidebarOpen}
-                            setMsgSidebarOpen={setMsgSidebarOpen}
                         />
 
                         {/* Messages body */}
                         <div className={`grow flex bg-card flex-col md:translate-x-0 transition-transform duration-300 ease-in-out`}>
                             {selectedConversation && selectedConversation.uid ? (
                                 <div className='h-full flex flex-col flex-1'>
-                                    {!msgSidebarOpen && (
-                                        <MessagesHeader msgSidebarOpen={msgSidebarOpen} setMsgSidebarOpen={setMsgSidebarOpen} />
-                                    )}
+                                    
+                                        <MessagesHeader />
+                                   
 
                                     <MessagesBody />
                                     <MessagesFooter />

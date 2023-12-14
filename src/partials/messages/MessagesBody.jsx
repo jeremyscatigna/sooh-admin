@@ -16,8 +16,8 @@ function MessagesBody() {
     return (
         <div className='flex flex-col px-4 sm:px-6 md:px-5 py-6 h-full'>
             {selectedConversationMessages && selectedConversationMessages.length === 0 && (
-                <div className='flex flex-col items-center justify-center h-full p-4'>
-                    <ol className='flex flex-col items-start justify-start text-sm text-slate-300 relative border-s border-gray-200'>
+                <div className='flex flex-col items-center justify-center h-full p-4 mt-8'>
+                    <ol className='flex flex-col items-start justify-start text-xs text-slate-300 relative border-s border-gray-200'>
                         <li className='mb-10 ms-6'>
                             <span className='absolute flex items-center justify-center w-6 h-6 rounded-full -start-3 ring-8 ring-pink-900 bg-pink-500'>
                                 <div className='font-bold'>1</div>
@@ -64,7 +64,7 @@ function MessagesBody() {
             {selectedConversationMessages &&
                 selectedConversationMessages.length > 0 &&
                 selectedConversationMessages.map((message, index) => (
-                    <div className='flex items-start mb-4 last:mb-0' key={message.uid}>
+                    <div className='flex items-start mb-8 last:mb-0 mt-12' key={message.uid}>
                         {message.senderAvatar ? (
                             <img className='rounded-full mr-4 w-10 h-10' src={message.senderAvatar} width='40' height='40' alt='User 01' />
                         ) : (

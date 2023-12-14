@@ -31,7 +31,7 @@ import TransactionDetails from './pages/finance/TransactionDetails';
 import JobListing from './pages/job/JobListing';
 import JobPost from './pages/job/JobPost';
 import CompanyProfile from './pages/job/CompanyProfile';
-import Messages from './pages/Messages';
+import Messages, { msgSidebarOpenAtom } from './pages/Messages';
 import TasksKanban from './pages/tasks/TasksKanban';
 import TasksList from './pages/tasks/TasksList';
 import Inbox from './pages/Inbox';
@@ -72,11 +72,13 @@ import IconsPage from './pages/component/IconsPage';
 import ProtectedRoute from './utils/ProtectedRoute';
 import { SlidingTabBar } from './partials/Tabbar';
 import CreateHappyHour from './pages/community/CreateHappyHour';
+import { useAtomValue } from 'jotai';
 
 function App() {
     const location = useLocation();
     const { pathname } = location;
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
+    const msgSidebarOpen = useAtomValue(msgSidebarOpenAtom);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -172,7 +174,7 @@ function App() {
                 <Route path='/component/icons' element={<IconsPage />} />
                 <Route path='*' element={<PageNotFound />} />
             </Routes>
-            {mobile && !pathname.includes('signin') && !pathname.includes('signup') && !pathname.includes('onboarding') && <SlidingTabBar />}
+            {mobile && !pathname.includes('signin') && !pathname.includes('signup') && !pathname.includes('onboarding') && msgSidebarOpen === true && <SlidingTabBar />}
         </>
     );
 }

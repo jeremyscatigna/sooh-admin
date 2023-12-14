@@ -1,22 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DirectMessages from './DirectMessages';
 import { Plus } from 'iconoir-react';
 import Avvvatars from 'avvvatars-react';
 import { useAtom, useAtomValue } from 'jotai';
-import { searchAtom, usersAtom } from '../../pages/Messages';
+import { msgSidebarOpenAtom, searchAtom, usersAtom } from '../../pages/Messages';
 
-function MessagesSidebar({ msgSidebarOpen, setMsgSidebarOpen, createConversation }) {
+function MessagesSidebar({ createConversation }) {
   const [search, setSearch] = useAtom(searchAtom);
   const users = useAtomValue(usersAtom);
+  const [msgSidebarOpen, setMsgSidebarOpen] = useAtom(msgSidebarOpenAtom);
+
+  const [mobile, setMobile] = useState(window.innerWidth <= 500);
+
+    const handleWindowSizeChange = () => {
+        setMobile(window.innerWidth <= 500);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        };
+    }, []);
 
     return (
         <div
             id='messages-sidebar'
-            className={`absolute z-20 top-0 bottom-0 w-full md:w-auto md:static md:top-auto md:bottom-auto -mr-px md:translate-x-0 transition-transform duration-200 ease-in-out ${
+            className={`absolute z-20 top-0 bottom-0 w-full h-full md:w-auto md:static md:top-auto md:bottom-auto -mr-px md:translate-x-0 transition-transform duration-200 ease-in-out ${
                 msgSidebarOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
         >
-            <div className='sticky top-0 bg-background overflow-x-hidden overflow-y-auto no-scrollbar shrink-0 md:w-72 xl:w-80 h-[calc(100vh-64px)]'>
+            <div className={`sticky top-0 bg-background overflow-x-hidden overflow-y-auto no-scrollbar shrink-0 md:w-72 xl:w-80 ${mobile && 'h-screen'}  h-[calc(100vh-64px)]`}>
                 {/* #Marketing group */}
                 <div>
                     {/* Group body */}

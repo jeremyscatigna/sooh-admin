@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import Avvvatars from 'avvvatars-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { conversationsAtom, selectedConversationAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
+import { conversationsAtom, msgSidebarOpenAtom, selectedConversationAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
 import { useSearchParams } from 'react-router-dom';
 import { Trash } from 'iconoir-react';
 import ModalBlank from '../../components/ModalBlank';
@@ -10,8 +10,9 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../main';
 import { currentUser } from '../../pages/Signup';
 
-function DirectMessages({ setMsgSidebarOpen }) {
+function DirectMessages() {
     const [searchParams, setSearchParams] = useSearchParams();
+    const [msgSidebarOpen, setMsgSidebarOpen] = useAtom(msgSidebarOpenAtom);
     const [conversations, setConversations] = useAtom(conversationsAtom);
     const [selectedConversation, setSelectedConversation] = useAtom(selectedConversationAtom);
     const setSelectedConversationMessages = useSetAtom(selectedConversationMessagesAtom);

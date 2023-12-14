@@ -5,18 +5,19 @@ import User02 from '../../images/user-32-07.jpg';
 import { Plus } from 'iconoir-react';
 import ModalBasic from '../../components/ModalBasic';
 import DirectMessages from './DirectMessages';
-import { useAtomValue } from 'jotai';
-import { selectedConversationAtom } from '../../pages/Messages';
+import { useAtom, useAtomValue } from 'jotai';
+import { msgSidebarOpenAtom, selectedConversationAtom } from '../../pages/Messages';
 import Avvvatars from 'avvvatars-react';
 import { currentUser } from '../../pages/Signup';
 
-function MessagesHeader({ msgSidebarOpen, setMsgSidebarOpen }) {
+function MessagesHeader() {
     const [basicModalOpen, setBasicModalOpen] = React.useState(false);
+    const [msgSidebarOpen, setMsgSidebarOpen] = useAtom(msgSidebarOpenAtom);
     const selectedConversation = useAtomValue(selectedConversationAtom);
     const authenticatedUser = useAtomValue(currentUser);
 
     return (
-        <div className='sticky top-0'>
+        <div className='fixed top-0 bg-card w-full'>
             <div className='flex items-center justify-between bg-card px-4 sm:px-6 md:px-5 h-16'>
                 {/* People */}
                 <div className='flex items-center'>
