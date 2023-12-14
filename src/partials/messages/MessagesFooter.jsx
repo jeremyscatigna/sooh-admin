@@ -19,8 +19,12 @@ function MessagesFooter() {
     const user = useAtomValue(currentUser);
 
     useEffect(() => {
-        window.scroll({ bottom: 0, left: 0,  behavior: 'smooth' });
-    }, [])
+        window.scroll({
+            top: document.body.offsetHeight,
+            left: 0,
+            behavior: 'smooth',
+        });
+    }, []);
 
     const handleUpdate = async (e, message) => {
         e.preventDefault();
@@ -44,7 +48,11 @@ function MessagesFooter() {
         });
 
         setOpenCreateOfferModal(false);
-        window.scroll({ bottom: 0, left: 0,  behavior: 'smooth' });
+        window.scroll({
+            top: document.body.offsetHeight,
+            left: 0,
+            behavior: 'smooth',
+        });
     };
     return (
         <div className='z-40 fixed w-full bg-card bottom-0'>
@@ -62,8 +70,8 @@ function MessagesFooter() {
                             onChange={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                setPrice(e.target.value)
-                                }}
+                                setPrice(e.target.value);
+                            }}
                             placeholder='Propse un prix pour cette offre'
                         />
                     </div>
@@ -80,7 +88,7 @@ function MessagesFooter() {
                             onChange={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                setOfferDetails(e.target.value)
+                                setOfferDetails(e.target.value);
                             }}
                             placeholder='Ajoutez autant de détails que possible pour faciliter la collaboration'
                         />
