@@ -142,6 +142,7 @@ function Meetups() {
             const data = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
             if (user.type === 'business') {
                 setMyHappyHours(filterMyHappyHours(data));
+                console.log(filterMyHappyHours(data))
             }
             const filteredData = filterDataWhereEndTimeIsBeforeNow(data);
             setNow(getDataFromTodayToNextTwoWeeks(filteredData));
