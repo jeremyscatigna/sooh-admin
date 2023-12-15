@@ -281,14 +281,12 @@ function MeetupItem({ item, isMyHappyHour }) {
                             <Link to={`/happyhours/${item.uid}`}>
                                 <div className='flex items-center space-x-2 hover:text-green-400'>
                                     <Edit className='w-5 h-5' />
-                                    <span className='text-sm font-medium text-primary'>Modifier</span>
                                 </div>
                             </Link>
 
                             <Link to={`/happyhours/${item.uid}`}>
                                 <div className='flex items-center space-x-2 hover:text-red-500'>
                                     <Trash className='w-5 h-5' />
-                                    <span className='text-sm font-medium text-primary'>Supprimer</span>
                                 </div>
                             </Link>
                         </div>
