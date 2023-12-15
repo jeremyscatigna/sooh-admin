@@ -92,7 +92,7 @@ function UsersTabs() {
         if (selectedCategory && selectedCategory !== item.category) return false;
         if (selectedCity && selectedCity !== item.city) return false;
         if (selectedFollowers && selectedFollowers !== item.followers) return false;
-        if(selectedPrice && !item.maxPrice) return false;
+        if (selectedPrice && !item.maxPrice) return false;
         if (item.maxPrice) {
             if (selectedPrice && Number(selectedPrice) > Number(item.maxPrice.replace(/\D/g, ''))) return false;
         }
@@ -116,83 +116,84 @@ function UsersTabs() {
                             {/* Right: Actions */}
                             <div className='grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2'>
                                 {/* Search form */}
+                                <div className='flex flex-wrap -m-1'>
+                                    <form className='m-1'>
+                                        <label htmlFor='feed-search-desktop' className='sr-only'>
+                                            Search
+                                        </label>
+                                        <input
+                                            id='feed-search-desktop'
+                                            className='form-input bg-hover text-secondary border-none rounded-full w-full pl-3 focus:border-slate-300'
+                                            type='search'
+                                            placeholder='Rechercher…'
+                                            value={searchText}
+                                            onChange={handleSearchChange}
+                                        />
+                                    </form>
 
-                                <form className='relative'>
-                                    <label htmlFor='feed-search-desktop' className='sr-only'>
-                                        Search
-                                    </label>
-                                    <input
-                                        id='feed-search-desktop'
-                                        className='form-input bg-hover text-secondary border-none rounded-full w-full pl-3 focus:border-slate-300'
-                                        type='search'
-                                        placeholder='Rechercher…'
-                                        value={searchText}
-                                        onChange={handleSearchChange}
-                                    />
-                                </form>
-
-                                <select
-                                    className='form-select pr-0 rounded-full border-none bg-hover text-secondary mb-5'
-                                    value={selectedCategory}
-                                    onChange={handleCategoryChange}
-                                >
-                                    <option value=''>Categories</option>
-                                    {categories.map((category) => (
-                                        <option key={category} value={category}>
-                                            {category}
-                                        </option>
-                                    ))}
-                                </select>
-
-                                {getCityFromData(data).length >= 1 && (
                                     <select
-                                        className='form-select pr-6 rounded-full border-none bg-hover text-secondary mb-5'
-                                        value={selectedCity}
-                                        onChange={(e) => setSelectedCity(e.target.value)}
+                                        className='form-select m-1 pr-0 rounded-full border-none bg-hover text-secondary mb-5'
+                                        value={selectedCategory}
+                                        onChange={handleCategoryChange}
                                     >
-                                        <option value=''>Villes</option>
-                                        {getCityFromData(data).map((city) => (
-                                            <option key={city} value={city}>
-                                                {city}
+                                        <option value=''>Categories</option>
+                                        {categories.map((category) => (
+                                            <option key={category} value={category}>
+                                                {category}
                                             </option>
                                         ))}
                                     </select>
-                                )}
 
-                                {getFollowersFromData(data).length >= 1 && (
+                                    {getCityFromData(data).length >= 1 && (
+                                        <select
+                                            className='form-select m-1 pr-6 rounded-full border-none bg-hover text-secondary mb-5'
+                                            value={selectedCity}
+                                            onChange={(e) => setSelectedCity(e.target.value)}
+                                        >
+                                            <option value=''>Villes</option>
+                                            {getCityFromData(data).map((city) => (
+                                                <option key={city} value={city}>
+                                                    {city}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    )}
+
+                                    {getFollowersFromData(data).length >= 1 && (
+                                        <select
+                                            className='form-select m-1 pr-8 rounded-full border-none bg-hover text-secondary mb-5'
+                                            value={selectedFollowers}
+                                            onChange={(e) => setSelectedFollowers(e.target.value)}
+                                        >
+                                            <option value=''>Followers</option>
+                                            {getFollowersFromData(data).map((city) => (
+                                                <option key={city} value={city}>
+                                                    {city}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    )}
+
                                     <select
-                                        className='form-select pr-8 rounded-full border-none bg-hover text-secondary mb-5'
-                                        value={selectedFollowers}
-                                        onChange={(e) => setSelectedFollowers(e.target.value)}
+                                        className='form-select m-1 pr-8 rounded-full border-none bg-hover text-secondary mb-5'
+                                        value={selectedPrice}
+                                        onChange={(e) => setSelectedPrice(e.target.value)}
                                     >
-                                        <option value=''>Followers</option>
-                                        {getFollowersFromData(data).map((city) => (
-                                            <option key={city} value={city}>
-                                                {city}
-                                            </option>
-                                        ))}
+                                        <option value=''>Prix max</option>
+                                        <option value='50'>50€</option>
+                                        <option value='100'>100€</option>
+                                        <option value='200'>200€</option>
+                                        <option value='300'>300€</option>
+                                        <option value='400'>400€</option>
+                                        <option value='500'>500€</option>
+                                        <option value='600'>600€</option>
+                                        <option value='700'>700€</option>
+                                        <option value='800'>800€</option>
+                                        <option value='900'>900€</option>
+                                        <option value='1000'>1000€</option>
+                                        <option value='2000'>1000€+</option>
                                     </select>
-                                )}
-
-                                <select
-                                    className='form-select pr-8 rounded-full border-none bg-hover text-secondary mb-5'
-                                    value={selectedPrice}
-                                    onChange={(e) => setSelectedPrice(e.target.value)}
-                                >
-                                    <option value=''>Prix max</option>
-                                    <option value='50'>50€</option>
-                                    <option value='100'>100€</option>
-                                    <option value='200'>200€</option>
-                                    <option value='300'>300€</option>
-                                    <option value='400'>400€</option>
-                                    <option value='500'>500€</option>
-                                    <option value='600'>600€</option>
-                                    <option value='700'>700€</option>
-                                    <option value='800'>800€</option>
-                                    <option value='900'>900€</option>
-                                    <option value='1000'>1000€</option>
-                                    <option value='2000'>1000€+</option>
-                                </select>
+                                </div>
                             </div>
                         </div>
 
