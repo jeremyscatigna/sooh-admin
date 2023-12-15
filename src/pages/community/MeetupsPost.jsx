@@ -17,6 +17,7 @@ import { currentUser } from '../Signup';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import { Check, MapsArrowDiagonal, Safari } from 'iconoir-react';
+import DashboardCard01 from '../../partials/dashboard/DashboardCard01';
 
 const doIFavoriteThis = (item, user) => {
     if (item.favorites) {
@@ -264,6 +265,71 @@ function MeetupsPost() {
                                     </div>
                                     {/* Right side */}
                                 </div>
+
+                                {user.type === 'business' && happyHour.userId === connectedUser.uid && (
+                                    <div className='mb-6 grid grid-cols-8 gap-4'>
+                                        <div className='flex flex-col justify-center items-center col-span-full sm:col-span-6 xl:col-span-4 bg-card shadow-lg rounded-xl'>
+                                            <div className='px-5 pt-5'>
+                                                <header className='flex justify-between items-center space-x-2'>
+                                                <h2 className='text-lg font-semibold text-primary'>Nombre de click</h2>
+                                                <div className='text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full'>
+                                                        +49%
+                                                    </div>
+                                                </header>
+                                                <div className='flex flex-col items-center justify center'>
+                                                    
+                                                    <div className='text-8xl font-bold text-primary mr-2'>36</div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div className='flex flex-col justify-center items-center col-span-full sm:col-span-6 xl:col-span-4 bg-card shadow-lg rounded-xl'>
+                                            <div className='px-5 pt-5'>
+                                                <header className='flex justify-between items-center space-x-2'>
+                                                <h2 className='text-lg font-semibold text-primary'>Nombre de participants</h2>
+                                                <div className='text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full'>
+                                                        +32%
+                                                    </div>
+                                                </header>
+                                                <div className='flex flex-col items-center justify center'>
+                                                    
+                                                    <div className='text-8xl font-bold text-primary mr-2'>114</div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div className='flex flex-col justify-center items-center col-span-full sm:col-span-6 xl:col-span-4 bg-card shadow-lg rounded-xl'>
+                                            <div className='px-5 pt-5'>
+                                                <header className='flex justify-between items-center space-x-2'>
+                                                <h2 className='text-lg font-semibold text-primary'>Nombre de like</h2>
+                                                <div className='text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full'>
+                                                        +18%
+                                                    </div>
+                                                </header>
+                                                <div className='flex flex-col items-center justify center'>
+                                                    
+                                                    <div className='text-8xl font-bold text-primary mr-2'>57</div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div className='flex flex-col justify-center items-center col-span-full sm:col-span-6 xl:col-span-4 bg-card shadow-lg rounded-xl'>
+                                            <div className='px-5 pt-5'>
+                                                <header className='flex justify-between items-center space-x-2'>
+                                                <h2 className='text-lg font-semibold text-primary'>Nombre de favoris</h2>
+                                                <div className='text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full'>
+                                                        +65%
+                                                    </div>
+                                                </header>
+                                                <div className='flex flex-col items-center justify center'>
+                                                    
+                                                    <div className='text-8xl font-bold text-primary mr-2'>86</div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                )}
 
                                 {/* Image */}
                                 <figure className='mb-6'>

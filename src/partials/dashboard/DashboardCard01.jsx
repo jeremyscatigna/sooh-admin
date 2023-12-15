@@ -78,7 +78,7 @@ function DashboardCard01() {
             </li>
           </EditMenu>
         </header>
-        <h2 className="text-lg font-semibold text-primary mb-2">Sooh</h2>
+        <h2 className="text-lg font-semibold text-primary mb-2">Click</h2>
         <div className="text-xs font-semibold text-secondary uppercase mb-1">Happy Hours</div>
         <div className="flex items-start">
           <div className="text-3xl font-bold text-primary mr-2">$24,780</div>
