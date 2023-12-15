@@ -124,11 +124,10 @@ function Meetups() {
         };
     }, []);
 
-    const filterMyHappyHours = (data) => {
-        return data.filter((item) => item.userId === user.uid);
-    };
-
     useEffect(() => {
+        const filterMyHappyHours = (data) => {
+            return data.filter((item) => item.userId === user.uid);
+        };
         const fetchData = async () => {
             const res = await getDocs(
                 query(
@@ -142,14 +141,14 @@ function Meetups() {
             const data = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
             if (user.type === 'business') {
                 setMyHappyHours(filterMyHappyHours(data));
-                console.log(filterMyHappyHours(data))
+                console.log(filterMyHappyHours(data));
             }
             const filteredData = filterDataWhereEndTimeIsBeforeNow(data);
             setNow(getDataFromTodayToNextTwoWeeks(filteredData));
             setToCome(getDataStartingNextTwoWeeks(filteredData));
         };
         fetchData();
-    }, []);
+    }, [filterDataWhereEndTimeIsBeforeNow, user.type, user.uid]);
 
     const getCityFromData = (data) => {
         const cities = data.map((item) => item.city);
