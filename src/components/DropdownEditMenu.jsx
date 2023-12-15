@@ -39,7 +39,11 @@ function DropdownEditMenu({
         ref={trigger}
         className={`text-primary hover:white rounded-full transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${dropdownOpen ? 'text-white' : 'text-primary'}`}
         aria-haspopup="true"
-        onClick={() => setDropdownOpen(!dropdownOpen)}
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          setDropdownOpen(!dropdownOpen)
+          }}
         aria-expanded={dropdownOpen}
       >
         <span className="sr-only">Menu</span>

@@ -7,18 +7,19 @@ import RelativeTime from 'dayjs/plugin/relativeTime';
 import MeetupsThumb01 from '../../images/meetups-thumb-01.jpg';
 import useTimer from '../../components/Timer';
 import { getCategoriesShadowColor } from '../../utils/categories';
-import { MapsArrowDiagonal, Safari } from 'iconoir-react';
+import { Edit, MapsArrowDiagonal, Safari, Trash } from 'iconoir-react';
 import { collection, doc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { db } from '../../main';
 import { useAtomValue } from 'jotai';
 import { v4 as uuidv4 } from 'uuid';
 import { currentUser } from '../../pages/Signup';
 import Avvvatars from 'avvvatars-react';
+import DropdownEditMenu from '../../components/DropdownEditMenu';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
 
-function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCategory }) {
+function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCategory, isMyHappyHours, myHappyHours }) {
     const user = useAtomValue(currentUser);
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -73,25 +74,37 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCatego
     // Component rendering
     return (
         <div className={`flex flex-col items-start mb-6 ${mobile && 'mb-24'} space-y-6 w-full`}>
-            {filteredNow.length > 0 && (
+            {isMyHappyHours === true ? (
                 <div className='w-full'>
-                    <h2 className='text-2xl font-bold text-primary pb-6'>En ce moment</h2>
                     <div className={`grid xl:grid-cols-2 gap-6`}>
-                        {filteredNow.map((item, i) => (
-                            <MeetupItem item={item} key={`${item.uid}+${i}`} />
+                        {myHappyHours.map((item, i) => (
+                            <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={true} />
                         ))}
                     </div>
                 </div>
-            )}
-            {filteredToCome.length > 0 && (
-                <div className='w-full pt-6'>
-                    <h2 className='text-2xl font-bold text-primary pb-6'>Prochainement</h2>
-                    <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-24'}`}>
-                        {filteredToCome.map((item, i) => (
-                            <MeetupItem item={item} key={`${item.uid}+${i}`} />
-                        ))}
-                    </div>
-                </div>
+            ) : (
+                <>
+                    {filteredNow.length > 0 && (
+                        <div className='w-full'>
+                            <h2 className='text-2xl font-bold text-primary pb-6'>En ce moment</h2>
+                            <div className={`grid xl:grid-cols-2 gap-6`}>
+                                {filteredNow.map((item, i) => (
+                                    <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={false} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    {filteredToCome.length > 0 && (
+                        <div className='w-full pt-6'>
+                            <h2 className='text-2xl font-bold text-primary pb-6'>Prochainement</h2>
+                            <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-24'}`}>
+                                {filteredToCome.map((item, i) => (
+                                    <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={false} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </>
             )}
         </div>
     );
@@ -108,7 +121,7 @@ const removeFirstPartOfUrl = (url) => {
     return url.replace('https://', '');
 };
 
-function MeetupItem({ item }) {
+function MeetupItem({ item, isMyHappyHour }) {
     const user = useAtomValue(currentUser);
     const { days, hours, minutes, seconds, text } = useTimer(item.date, item.endTime);
     const [like, setLike] = useState(item.likes ? doILikeThisHH(item, user) : false);
@@ -169,29 +182,36 @@ function MeetupItem({ item }) {
 
     const getHoursFromDateTime = (date) => {
         return dayjs(date).format('HH:mm');
-    }
+    };
 
     const getDayFromDateTime = (date) => {
         return dayjs(date).format('dddd');
-    }
+    };
 
     const displayDateOrRecurency = (happyHour) => {
         if (happyHour.recurency === 'Daily') {
-            if(happyHour.endTime) {
+            if (happyHour.endTime) {
                 return 'Tous les jours de ' + getHoursFromDateTime(happyHour.date) + ' a ' + happyHour.endTime;
             }
             return 'Tous les jours a ' + getHoursFromDateTime(happyHour.date);
         }
 
         if (happyHour.recurency === 'Weekly') {
-            if(happyHour.endTime) {
-                return 'Tous les ' + getDayFromDateTime(happyHour.date) + ' de ' + getHoursFromDateTime(happyHour.date) + ' a ' + happyHour.endTime;
+            if (happyHour.endTime) {
+                return (
+                    'Tous les ' +
+                    getDayFromDateTime(happyHour.date) +
+                    ' de ' +
+                    getHoursFromDateTime(happyHour.date) +
+                    ' a ' +
+                    happyHour.endTime
+                );
             }
             return 'Tous les ' + getDayFromDateTime(happyHour.date) + ' a ' + getHoursFromDateTime(happyHour.date);
         }
 
         return dayjs(happyHour.date).format('LLL');
-    }
+    };
 
     return (
         <article
@@ -225,9 +245,7 @@ function MeetupItem({ item }) {
                     <Link className='inline-flex' to={`/happyhours/${item.uid}`}>
                         <h3 className='text-sm font-bold text-primary'>{item.name}</h3>
                     </Link>
-                    <p className='text-secondary text-xs flex flex row mt-1'>
-                        {item.description}
-                    </p>
+                    <p className='text-secondary text-xs flex row mt-1'>{item.description}</p>
                     <p className='text-secondary text-xs mt-1'>
                         {text} {days}j {hours}h {minutes}m {seconds}s
                     </p>
@@ -257,19 +275,38 @@ function MeetupItem({ item }) {
                         {attendees.length > 3 && <div className='text-xs font-medium text-secondary italic'>+{attendees.length - 3}</div>}
                     </div>
                     {/* Like button */}
-                    <button
-                        onClick={(e) => {
-                            setLike(!like);
-                            handleLikeUpdate(e);
-                        }}
-                    >
-                        <div className='text-slate-100 bg-slate-900 bg-opacity-60 rounded-full'>
-                            <span className='sr-only'>Like</span>
-                            <svg className={`h-8 w-8`} fill={like ? 'red' : 'white'} viewBox='0 0 32 32'>
-                                <path d='M22.682 11.318A4.485 4.485 0 0019.5 10a4.377 4.377 0 00-3.5 1.707A4.383 4.383 0 0012.5 10a4.5 4.5 0 00-3.182 7.682L16 24l6.682-6.318a4.5 4.5 0 000-6.364zm-1.4 4.933L16 21.247l-5.285-5A2.5 2.5 0 0112.5 12c1.437 0 2.312.681 3.5 2.625C17.187 12.681 18.062 12 19.5 12a2.5 2.5 0 011.785 4.251h-.003z' />
-                            </svg>
+
+                    {isMyHappyHour === true ? (
+                        <div className='flex space-x-2'>
+                            <Link to={`/happyhours/${item.uid}`}>
+                                <div className='flex items-center space-x-2 hover:text-green-400'>
+                                    <Edit className='w-5 h-5' />
+                                    <span className='text-sm font-medium text-primary'>Modifier</span>
+                                </div>
+                            </Link>
+
+                            <Link to={`/happyhours/${item.uid}`}>
+                                <div className='flex items-center space-x-2 hover:text-red-500'>
+                                    <Trash className='w-5 h-5' />
+                                    <span className='text-sm font-medium text-primary'>Supprimer</span>
+                                </div>
+                            </Link>
                         </div>
-                    </button>
+                    ) : (
+                        <button
+                            onClick={(e) => {
+                                setLike(!like);
+                                handleLikeUpdate(e);
+                            }}
+                        >
+                            <div className='text-slate-100 bg-slate-900 bg-opacity-60 rounded-full'>
+                                <span className='sr-only'>Like</span>
+                                <svg className={`h-8 w-8`} fill={like ? 'red' : 'white'} viewBox='0 0 32 32'>
+                                    <path d='M22.682 11.318A4.485 4.485 0 0019.5 10a4.377 4.377 0 00-3.5 1.707A4.383 4.383 0 0012.5 10a4.5 4.5 0 00-3.182 7.682L16 24l6.682-6.318a4.5 4.5 0 000-6.364zm-1.4 4.933L16 21.247l-5.285-5A2.5 2.5 0 0112.5 12c1.437 0 2.312.681 3.5 2.625C17.187 12.681 18.062 12 19.5 12a2.5 2.5 0 011.785 4.251h-.003z' />
+                                </svg>
+                            </div>
+                        </button>
+                    )}
                 </div>
             </div>
         </article>

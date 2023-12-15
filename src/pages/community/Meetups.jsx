@@ -58,6 +58,8 @@ function Meetups() {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
 
+    const [myHappyHours, setMyHappyHours] = useState([]);
+
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
     };
@@ -122,6 +124,10 @@ function Meetups() {
         };
     }, []);
 
+    const filterMyHappyHours = (data) => {
+        return data.filter((item) => item.userId === user.uid);
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             const res = await getDocs(
@@ -134,6 +140,9 @@ function Meetups() {
             );
             setData(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
             const data = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            if (user.type === 'business') {
+                setMyHappyHours(filterMyHappyHours(data));
+            }
             const filteredData = filterDataWhereEndTimeIsBeforeNow(data);
             setNow(getDataFromTodayToNextTwoWeeks(filteredData));
             setToCome(getDataStartingNextTwoWeeks(filteredData));
@@ -226,6 +235,26 @@ function Meetups() {
                             </select>
                         )}
 
+                        {user.type === 'business' && (
+                            <>
+                                <div className='flex items-center justify-between mb-5'>
+                                    <h2 className='text-2xl font-bold text-primary'>Mes Happy Hours</h2>
+                                    <span className='text-sm font-medium text-primary'>{myHappyHours.length} Happy Hours</span>
+                                </div>
+
+                                <MeetupsPosts
+                                    now={now}
+                                    toCome={toCome}
+                                    data={myHappyHours}
+                                    filtering={filtering}
+                                    searchText={searchText}
+                                    selectedCategory={selectedCategory}
+                                    isMyHappyHours={true}
+                                    myHappyHours={myHappyHours}
+                                />
+                            </>
+                        )}
+
                         {/* Content */}
                         <MeetupsPosts
                             now={now}
@@ -234,6 +263,7 @@ function Meetups() {
                             filtering={filtering}
                             searchText={searchText}
                             selectedCategory={selectedCategory}
+                            isMyHappyHours={false}
                         />
                     </div>
                 </main>
