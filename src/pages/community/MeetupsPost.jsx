@@ -130,7 +130,7 @@ function MeetupsPost() {
 
     const removeFirstPartOfUrl = (url) => {
         if (url) {
-            return url.replace('https://', '');
+            return url.toLowerCase().replace('https://', '');
         }
 
         return url;

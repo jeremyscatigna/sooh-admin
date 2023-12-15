@@ -10,6 +10,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../main';
 import { atom, useSetAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
+import { EyeAlt, EyeClose } from 'iconoir-react';
 
 export const userIdAtom = atom(undefined);
 export const currentUserDocumentIdAtom = atom(undefined);
@@ -26,6 +27,7 @@ function Signup() {
     const [lastName, setLastName] = React.useState('');
     const [error, setError] = React.useState('');
     const [loading, setLoading] = React.useState(false);
+    const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
     const setUserId = useSetAtom(userIdAtom);
     const setCurrentUserDocumentId = useSetAtom(currentUserDocumentIdAtom);
@@ -138,17 +140,32 @@ function Signup() {
                     </select>
                   </div> */}
                                     <div>
-                                        <input
-                                            id='password'
-                                            className='form-input bg-hover rounded-full border-none text-secondary placeholder-secondary w-full'
-                                            type='password'
-                                            placeholder='Mot de passe'
-                                            autoComplete='on'
-                                            onChange={(e) => setPassword(e.target.value)}
-                                        />
-                                        {password.length < 6 && (
-                                            <p className='text-xs text-pink-500 mt-2'>Le mot de passe dois avoir au moins 6 characteres</p>
-                                        )}
+                                        <label htmlFor='email' className='relative text-gray-400 focus-within:text-gray-600 block'>
+                                            {isPasswordVisible ? (
+                                                <EyeAlt
+                                                    onClick={() => setIsPasswordVisible(false)}
+                                                    className='w-5 h-5 absolute top-2 right-4'
+                                                />
+                                            ) : (
+                                                <EyeClose
+                                                    onClick={() => setIsPasswordVisible(true)}
+                                                    className='w-5 h-5 absolute top-2  right-4'
+                                                />
+                                            )}
+                                            <input
+                                                id='password'
+                                                className='form-input bg-hover rounded-full border-none text-secondary placeholder-secondary w-full'
+                                                type={isPasswordVisible ? 'text' : 'password'}
+                                                placeholder='Mot de passe'
+                                                autoComplete='on'
+                                                onChange={(e) => setPassword(e.target.value)}
+                                            />
+                                            {password.length < 6 && (
+                                                <p className='text-xs text-pink-500 mt-2'>
+                                                    Le mot de passe dois avoir au moins 6 characteres
+                                                </p>
+                                            )}
+                                        </label>
                                     </div>
                                 </div>
                                 <div className='flex items-center justify-between mt-6'>

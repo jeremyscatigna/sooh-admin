@@ -5,7 +5,7 @@ import Header from '../../partials/Header';
 import SearchForm from '../../partials/actions/SearchForm';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../main';
-import { getCategoriesShadowColor } from '../../utils/categories';
+import { categories, getCategoriesShadowColor } from '../../utils/categories';
 import { Link } from 'react-router-dom';
 import Avvvatars from 'avvvatars-react';
 import { Facebook, Instagram, Search, TikTok, Twitter, YouTube } from 'iconoir-react';
@@ -14,6 +14,10 @@ function UsersTabs() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [data, setData] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
+    const [selectedFollowers, setSelectedFollowers] = useState('');
+    const [selectedPrice, setSelectedPrice] = useState('');
 
     const [searchText, setSearchText] = useState('');
 
@@ -66,9 +70,32 @@ function UsersTabs() {
         setSearchText(event.target.value.toLowerCase());
     };
 
+    const handleCategoryChange = (event) => {
+        setSelectedCategory(event.target.value);
+    };
+
+    const getCityFromData = (data) => {
+        const cities = data.map((item) => item.city);
+        const filteredCities = cities.filter((city) => city && city.trim() !== ''); // Filter out null, undefined, and empty strings
+        return [...new Set(filteredCities)]; // Remove duplicates
+    };
+
+    const getFollowersFromData = (data) => {
+        const followers = data.map((item) => item.followers);
+        const filteredFollowers = followers.filter((followers) => followers && followers.trim() !== ''); // Filter out null, undefined, and empty strings
+        return [...new Set(filteredFollowers)]; // Remove duplicates
+    };
+
     const filteredData = data.filter((item) => {
         // Assuming 'firstName' and 'lastName' are the fields you want to search.
         // Modify as per your data structure.
+        if (selectedCategory && selectedCategory !== item.category) return false;
+        if (selectedCity && selectedCity !== item.city) return false;
+        if (selectedFollowers && selectedFollowers !== item.followers) return false;
+        if(selectedPrice && !item.maxPrice) return false;
+        if (item.maxPrice) {
+            if (selectedPrice && Number(selectedPrice) > Number(item.maxPrice.replace(/\D/g, ''))) return false;
+        }
         return item.firstName.toLowerCase().includes(searchText) || item.lastName.toLowerCase().includes(searchText);
     });
 
@@ -96,16 +123,76 @@ function UsersTabs() {
                                     </label>
                                     <input
                                         id='feed-search-desktop'
-                                        className='form-input bg-hover text-secondary border-none rounded-full w-full pl-9 focus:border-slate-300'
+                                        className='form-input bg-hover text-secondary border-none rounded-full w-full pl-3 focus:border-slate-300'
                                         type='search'
                                         placeholder='Rechercher…'
                                         value={searchText}
                                         onChange={handleSearchChange}
                                     />
-                                    <button className='absolute inset-0 right-auto group' type='submit' aria-label='Search'>
-                                        <Search className='w-4 h-4 shrink-0 text-secondary group-hover:text-slate-500 ml-3 mr-2' />
-                                    </button>
                                 </form>
+
+                                <select
+                                    className='form-select pr-0 rounded-full border-none bg-hover text-secondary mb-5'
+                                    value={selectedCategory}
+                                    onChange={handleCategoryChange}
+                                >
+                                    <option value=''>Categories</option>
+                                    {categories.map((category) => (
+                                        <option key={category} value={category}>
+                                            {category}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                {getCityFromData(data).length >= 1 && (
+                                    <select
+                                        className='form-select pr-6 rounded-full border-none bg-hover text-secondary mb-5'
+                                        value={selectedCity}
+                                        onChange={(e) => setSelectedCity(e.target.value)}
+                                    >
+                                        <option value=''>Villes</option>
+                                        {getCityFromData(data).map((city) => (
+                                            <option key={city} value={city}>
+                                                {city}
+                                            </option>
+                                        ))}
+                                    </select>
+                                )}
+
+                                {getFollowersFromData(data).length >= 1 && (
+                                    <select
+                                        className='form-select pr-8 rounded-full border-none bg-hover text-secondary mb-5'
+                                        value={selectedFollowers}
+                                        onChange={(e) => setSelectedFollowers(e.target.value)}
+                                    >
+                                        <option value=''>Followers</option>
+                                        {getFollowersFromData(data).map((city) => (
+                                            <option key={city} value={city}>
+                                                {city}
+                                            </option>
+                                        ))}
+                                    </select>
+                                )}
+
+                                <select
+                                    className='form-select pr-8 rounded-full border-none bg-hover text-secondary mb-5'
+                                    value={selectedPrice}
+                                    onChange={(e) => setSelectedPrice(e.target.value)}
+                                >
+                                    <option value=''>Prix max</option>
+                                    <option value='50'>50€</option>
+                                    <option value='100'>100€</option>
+                                    <option value='200'>200€</option>
+                                    <option value='300'>300€</option>
+                                    <option value='400'>400€</option>
+                                    <option value='500'>500€</option>
+                                    <option value='600'>600€</option>
+                                    <option value='700'>700€</option>
+                                    <option value='800'>800€</option>
+                                    <option value='900'>900€</option>
+                                    <option value='1000'>1000€</option>
+                                    <option value='2000'>1000€+</option>
+                                </select>
                             </div>
                         </div>
 
