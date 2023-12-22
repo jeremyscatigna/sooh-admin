@@ -101,15 +101,7 @@ function Meetups() {
         return itemDate.isSame(today, 'day');
     };
 
-    const filterDataWhereEndTimeIsBeforeNow = (data) => {
-        const now = dayjs();
-        return data.filter((item) => {
-            if (!item.endTime) return true;
-            if (!isToday(item.date)) return true;
-            const itemDate = dayjs(replaceGetLocalDateTimeTimeByEndTime(item.date, item.endTime));
-            return itemDate.isAfter(now);
-        });
-    };
+    
 
     const getLocaleDateTimeAtBeginningOfDay = () => {
         let d = new Date();
@@ -126,7 +118,20 @@ function Meetups() {
 
     useEffect(() => {
         const filterMyHappyHours = (data) => {
-            return data.filter((item) => item.userId === user.uid);
+            if (data.endTime) {
+                return data.filter((item) => item.userId === user.uid).filter((item) => isToday(item.date) && dayjs().format('HH:mm') > item.endTime);
+            }
+            return data.filter((item) => item.userId === user.uid).filter((item) => item.date >= getLocaleDateTime());
+        };
+        const filterDataWhereEndTimeIsBeforeNow = (data) => {
+            const now = dayjs();
+            return data.filter((item) => {
+                if (!item.endTime) return true;
+                if (!isToday(item.date)) return true;
+                if (isToday(item.date) && dayjs(item.date).format('HH:mm') < item.endTime && dayjs().format('HH:mm') > item.endTime) return false;
+                const itemDate = dayjs(replaceGetLocalDateTimeTimeByEndTime(item.date, item.endTime));
+                return itemDate.isAfter(now);
+            });
         };
         const fetchData = async () => {
             const res = await getDocs(
@@ -141,14 +146,13 @@ function Meetups() {
             const data = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
             if (user.type === 'business') {
                 setMyHappyHours(filterMyHappyHours(data));
-                console.log(filterMyHappyHours(data));
             }
             const filteredData = filterDataWhereEndTimeIsBeforeNow(data);
             setNow(getDataFromTodayToNextTwoWeeks(filteredData));
             setToCome(getDataStartingNextTwoWeeks(filteredData));
         };
         fetchData();
-    }, [filterDataWhereEndTimeIsBeforeNow, user.type, user.uid]);
+    }, [user.type, user.uid]);
 
     const getCityFromData = (data) => {
         const cities = data.map((item) => item.city);

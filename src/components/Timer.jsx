@@ -39,12 +39,7 @@ export default function useTimer(deadline, interval = SECOND, endTime) {
             setEndTimeState(endTime);
         }
 
-        console.log('deadlineState', deadlineState);
-        console.log('endTimeState', endTime);
-        console.log('deadlineState - getLocaleDateTime()', deadlineState - getLocaleDateTime());
-
         const deadlineHours = getHoursFromDateTime(deadlineState);
-
 
         if (deadlineHours < endTime && dayjs(deadlineState).isBefore(dayjs(getLocaleDateTime()))) {
             setDeadlineState(replaceDeadlineTimeWithEndTime(deadlineState, endTimeState));
