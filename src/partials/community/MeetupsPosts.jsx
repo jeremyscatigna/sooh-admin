@@ -123,7 +123,7 @@ const removeFirstPartOfUrl = (url) => {
 
 function MeetupItem({ item, isMyHappyHour }) {
     const user = useAtomValue(currentUser);
-    const { days, hours, minutes, seconds, text } = useTimer(item.date, item.endTime);
+    const { days, hours, minutes, seconds, text } = useTimer(item.date, 1000,item.endTime);
     const [like, setLike] = useState(item.likes ? doILikeThisHH(item, user) : false);
     const [city, setCity] = useState('');
     const [attendees, setAttendees] = useState([]);

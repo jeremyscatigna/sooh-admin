@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 
 const SECOND = 1000;
@@ -17,24 +18,50 @@ function replaceDeadlineTimeWithEndTime(deadline, endTime) {
     return deadlineDate;
 }
 
+const getLocaleDateTime = () => {
+    let d = new Date();
+    const dateTimeLocalValue = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, -5);
+    return dateTimeLocalValue;
+};
+
+const getHoursFromDateTime = (date) => {
+    return dayjs(date).format('HH:mm');
+};
+
 export default function useTimer(deadline, interval = SECOND, endTime) {
     const [timespan, setTimespan] = useState(new Date(deadline) - Date.now());
-    let text = 'Debut:'
+    const [text, setText] = useState('Debut:');
+    const [endTimeState, setEndTimeState] = useState(endTime);
+    const [deadlineState, setDeadlineState] = useState(deadline);
 
-    if (endTime && (new Date(deadline) - Date.now() <= 0)) {
-        deadline = replaceDeadlineTimeWithEndTime(deadline, endTime);
-        text = 'Fin:'
-    }
+    useEffect(() => {
+        if (endTime) {
+            setEndTimeState(endTime);
+        }
+
+        console.log('deadlineState', deadlineState);
+        console.log('endTimeState', endTime);
+        console.log('deadlineState - getLocaleDateTime()', deadlineState - getLocaleDateTime());
+
+        const deadlineHours = getHoursFromDateTime(deadlineState);
+
+
+        if (deadlineHours < endTime && dayjs(deadlineState).isBefore(dayjs(getLocaleDateTime()))) {
+            setDeadlineState(replaceDeadlineTimeWithEndTime(deadlineState, endTimeState));
+            setText('Fin:')
+        }
+    }, [endTimeState, deadlineState, endTime, deadline]);
+
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            setTimespan(new Date(deadline) - Date.now());
+            setTimespan(new Date(deadlineState) - Date.now());
         }, interval);
 
         return () => {
             clearInterval(intervalId);
         };
-    }, [deadline, interval]);
+    }, [deadlineState, interval]);
 
     return {
         days: Math.floor(timespan / DAY),
