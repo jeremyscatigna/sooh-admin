@@ -128,13 +128,25 @@ const getTodayDateWithEndTime = (endTime) => {
     return todayWithEndTime;
 }
 
+const getTodayDateByEndOfDay = () => {
+    const today = new Date();
+    const todayDate = today.toISOString().slice(0, 10);
+    const todayWithEndTime = todayDate + 'T23:59:59';
+    return todayWithEndTime;
+}
+
 function MeetupItem({ item, isMyHappyHour }) {
     const user = useAtomValue(currentUser);
     if (item.date && dayjs(item.date).isBefore(dayjs()) && getTodayDateWithEndTime(item.endTime) < dayjs().toISOString()) {
         // return date + 1 day
         item.date = dayjs(item.date).add(1, 'day');
     }
-    
+
+    if (item.date && dayjs(item.date).isBefore(dayjs()) && !item.endTime) {
+        // return today at end of day
+        item.date = getTodayDateByEndOfDay();
+    }
+
     const { days, hours, minutes, seconds, text } = useTimer(item.date, 1000, item.endTime);
     const [like, setLike] = useState(item.likes ? doILikeThisHH(item, user) : false);
     const [city, setCity] = useState('');
