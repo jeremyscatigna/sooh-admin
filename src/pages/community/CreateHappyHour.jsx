@@ -100,7 +100,11 @@ function CreateHappyHour() {
 
     const handleCreate = async () => {
         setLoading(true);
-        console;
+        if (name === '' || description === '' || location === '' || endTime === '' || imgUrl === '') {
+            alert('Veuillez remplir tous les champs');
+            setLoading(false);
+            return;
+        }
         const toAdd = {
             uid: uuidv4(),
             name,
