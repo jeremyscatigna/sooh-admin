@@ -234,6 +234,10 @@ function MeetupItem({ item, isMyHappyHour }) {
             return 'Tous les ' + getDayFromDateTime(happyHour.date) + ' a ' + getHoursFromDateTime(happyHour.date);
         }
 
+        if (happyHour.endTime) {
+            return dayjs(happyHour.date).format('LLL') + ' a ' + happyHour.endTime;
+        }
+
         return dayjs(happyHour.date).format('LLL');
     };
 

@@ -220,8 +220,12 @@ function CreateHappyHour() {
                                                 name='meeting-time'
                                                 className='form-input rounded-xl border-none bg-hover text-secondary font-medium w-60'
                                                 value={endTime}
-                                                min={getLocaleDateTime()}
+                                                min={getHoursFromDateTime(selectedDates)}
                                                 onChange={(e) => {
+                                                    if (e.target.value < getHoursFromDateTime(selectedDates)) {
+                                                        alert('L\'heure de fin doit être supérieur à l\'heure de début');
+                                                        return;
+                                                    }
                                                     setEndTime(e.target.value);
                                                 }}
                                             />
