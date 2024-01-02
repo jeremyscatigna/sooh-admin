@@ -121,7 +121,7 @@ function Meetups() {
             if (data.endTime) {
                 return data.filter((item) => item.userId === user.uid).filter((item) => isToday(item.date) && dayjs().format('HH:mm') > item.endTime);
             }
-            return data.filter((item) => item.userId === user.uid).filter((item) => item.date >= getLocaleDateTime());
+            return data.filter((item) => item.userId === user.uid);
         };
         const filterDataWhereEndTimeIsBeforeNow = (data) => {
             const now = dayjs();
