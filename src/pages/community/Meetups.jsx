@@ -118,9 +118,6 @@ function Meetups() {
 
     useEffect(() => {
         const filterMyHappyHours = (data) => {
-            if (data.endTime) {
-                return data.filter((item) => item.userId === user.uid).filter((item) => isToday(item.date) && dayjs().format('HH:mm') > item.endTime);
-            }
             return data.filter((item) => item.userId === user.uid);
         };
         const filterDataWhereEndTimeIsBeforeNow = (data) => {
