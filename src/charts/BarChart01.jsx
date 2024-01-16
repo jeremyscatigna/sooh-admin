@@ -39,20 +39,8 @@ function BarChart01({
             border: {
               display: false,
             },
-            ticks: {
-              maxTicksLimit: 5,
-              callback: (value) => formatValue(value),
-            },
           },
           x: {
-            type: 'time',
-            time: {
-              parser: 'MM-DD-YYYY',
-              unit: 'month',
-              displayFormats: {
-                month: 'MMM YY',
-              },
-            },
             border: {
               display: false,
             },
@@ -68,7 +56,7 @@ function BarChart01({
           tooltip: {
             callbacks: {
               title: () => false, // Disable tooltip title
-              label: (context) => formatValue(context.parsed.y),
+              label: (context) => context.parsed.y,
             },
           },
         },
@@ -147,13 +135,10 @@ function BarChart01({
     });
     return () => chart.destroy();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [data]);
 
   return (
     <React.Fragment>
-      <div className="px-5 py-3">
-        <ul ref={legend} className="flex flex-wrap"></ul>
-      </div>
       <div className="grow">
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>

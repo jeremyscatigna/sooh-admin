@@ -11,6 +11,19 @@ export const categories = [
     'Autres',
 ];
 
+export const categoriesColors = [
+    '#05FFE8',
+    '#FAFF05',
+    '#FF05DE',
+    '#FFA305',
+    '#FFFFFF',
+    '#00FF30',
+    '#A100F7',
+    '#FB0000',
+    '#0415F8',
+    '#9F5C04',
+]
+
 export const getCateroriesColor = (category) => {
     switch (category) {
         case 'Bars / Restaurants':

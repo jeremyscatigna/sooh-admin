@@ -7,7 +7,7 @@ import EditMenu from '../../components/DropdownEditMenu';
 // Import utilities
 import { tailwindConfig, hexToRGB } from '../../utils/Utils';
 
-function DashboardCard01() {
+function DashboardCard01({ daily }) {
 
   const chartData = {
     labels: [
@@ -78,17 +78,11 @@ function DashboardCard01() {
             </li>
           </EditMenu>
         </header>
-        <h2 className="text-lg font-semibold text-primary mb-2">Click</h2>
-        <div className="text-xs font-semibold text-secondary uppercase mb-1">Happy Hours</div>
-        <div className="flex items-start">
-          <div className="text-3xl font-bold text-primary mr-2">$24,780</div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full">+49%</div>
+        <h2 className="text-lg font-semibold text-primary mb-2">Happy Hours</h2>
+        <div className="text-xs font-semibold text-secondary uppercase mb-1">Daily</div>
+        <div className="flex items-center justify-center pb-12">
+          <div className="text-8xl font-bold text-primary mr-2">{daily}</div>
         </div>
-      </div>
-      {/* Chart built with Chart.js 3 */}
-      <div className="grow">
-        {/* Change the height attribute to adjust the chart height */}
-        <LineChart data={chartData} width={389} height={128} />
       </div>
     </div>
   );
