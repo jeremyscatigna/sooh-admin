@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import OnboardingImage from '../images/onboarding-image.jpg';
 import OnboardingDecoration from '../images/auth-decoration.png';
 import { useAtomValue } from 'jotai';
-import { currentUserDocumentIdAtom, userIdAtom } from './Signup';
+import { userIdAtom } from './Signup';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../main';
 import { userTypeAtom } from './Onboarding01';
@@ -12,6 +12,7 @@ import { categories } from '../utils/categories';
 
 function Onboarding02() {
     const [companyName, setCompanyName] = React.useState('');
+    const [siren, setSiren] = React.useState('');
     const [city, setCity] = React.useState('');
     const [postalCode, setPostalCode] = React.useState('');
     const [street, setStreet] = React.useState('');
@@ -64,6 +65,7 @@ function Onboarding02() {
                     postalCode,
                     street,
                     country,
+                    siren,
                 });
 
                 navigate('/onboarding-04');
@@ -177,6 +179,16 @@ function Onboarding02() {
                                                     type='text'
                                                     value={companyName}
                                                     onChange={(e) => setCompanyName(e.target.value)}
+                                                />
+                                            </div>
+                                            <div>
+                                                <input
+                                                    id='siren'
+                                                    className='form-input rounded-full border-none bg-hover placeholder-secondary text-secondary w-full'
+                                                    placeholder="SIREN"
+                                                    type='text'
+                                                    value={siren}
+                                                    onChange={(e) => setSiren(e.target.value)}
                                                 />
                                             </div>
                                             {/* City and Postal Code */}
