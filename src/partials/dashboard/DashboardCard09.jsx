@@ -20,7 +20,7 @@ function DashboardCard09({ revenueByCategory }) {
           data: [
             ...revenueByCategory,
           ],
-          backgroundColor: [tailwindConfig().theme.colors.blue[500], tailwindConfig().theme.colors.green[500], tailwindConfig().theme.colors.purple[500]],
+          backgroundColor: [...categoriesColors],
           hoverBackgroundColor: tailwindConfig().theme.colors.blue[500],
           barPercentage: 0.66,
           categoryPercentage: 0.66,
