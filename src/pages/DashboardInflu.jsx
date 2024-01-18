@@ -122,6 +122,15 @@ function DashboardInflu() {
                                                     </h3>
                                                 </Link>
                                                 <p className='text-secondary text-xs flex row mt-1'>{item.text}</p>
+                                                <div className='flex space-x-2 mt-2'>
+                                                    
+                                                    <span className='text-xs font-semibold text-secondary mb-1'>
+                                                        {item.likes ? item.likes.length : "0"} Likes
+                                                    </span>
+                                                    <span className='text-xs font-semibold text-secondary mb-1'>
+                                                        {item.comments ? item.comments.length : "0"} Comments
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </article>
