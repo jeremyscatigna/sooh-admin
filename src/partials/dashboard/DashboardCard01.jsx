@@ -11,7 +11,7 @@ function DashboardCard01({ daily }) {
         <div className='flex flex-col items-start justify-center'>
 
         <h2 className="text-sm font-semibold text-primary">Happy Hours</h2>
-        <div className="text-xs font-semibold text-secondary mb-1">Dailyt</div>
+        <div className="text-xs font-semibold text-secondary mb-1">Daily</div>
         </div>
         <div className="flex items-center justify-center pb-4">
           <div className="text-5xl font-bold text-primary mr-2 mt-4">{daily}</div>
