@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Icon from '../../images/icon-03.svg';
 import EditMenu from '../../components/DropdownEditMenu';
 
-function DashboardCard03({ unique }) {
+function DashboardCardClick({ clicks }) {
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-card shadow-lg rounded-xl">
       <div className="px-5 pt-5">
@@ -24,13 +24,13 @@ function DashboardCard03({ unique }) {
           </EditMenu>
         </header>
         <h2 className="text-lg font-semibold text-primary mb-2">Happy Hours</h2>
-        <div className="text-xs font-semibold text-secondary uppercase mb-1">One Shot</div>
+        <div className="text-xs font-semibold text-secondary uppercase mb-1">Nombre de clicks</div>
         <div className="flex items-center justify-center">
-          <div className="text-8xl font-bold text-primary mr-2">{unique}</div>
+          <div className="text-8xl font-bold text-primary mr-2">{clicks}</div>
         </div>
       </div>
     </div>
   );
 }
 
-export default DashboardCard03;
+export default DashboardCardClick;

@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Icon from '../../images/icon-03.svg';
+import Icon from '../../images/icon-01.svg';
 import EditMenu from '../../components/DropdownEditMenu';
 
-function DashboardCard03({ unique }) {
+function DashboardCardHappyHours({ happyHours }) {
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-card shadow-lg rounded-xl">
       <div className="px-5 pt-5">
         <header className="flex justify-between items-start mb-2">
           {/* Icon */}
-          <img src={Icon} width="32" height="32" alt="Icon 03" />
+          <img src={Icon} width="32" height="32" alt="Icon 01" />
           {/* Menu button */}
           <EditMenu align="right" className="relative inline-flex">
             <li>
@@ -24,13 +24,13 @@ function DashboardCard03({ unique }) {
           </EditMenu>
         </header>
         <h2 className="text-lg font-semibold text-primary mb-2">Happy Hours</h2>
-        <div className="text-xs font-semibold text-secondary uppercase mb-1">One Shot</div>
-        <div className="flex items-center justify-center">
-          <div className="text-8xl font-bold text-primary mr-2">{unique}</div>
+        <div className="text-xs font-semibold text-secondary uppercase mb-1">Nombre d&apos;Happy hours</div>
+        <div className="flex items-center justify-center pb-12">
+          <div className="text-8xl font-bold text-primary mr-2">{happyHours}</div>
         </div>
       </div>
     </div>
   );
 }
 
-export default DashboardCard03;
+export default DashboardCardHappyHours;

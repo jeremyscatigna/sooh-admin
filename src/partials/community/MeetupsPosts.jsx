@@ -135,7 +135,7 @@ const getTodayDateByEndOfDay = () => {
     return todayWithEndTime;
 }
 
-function MeetupItem({ item, isMyHappyHour }) {
+export function MeetupItem({ item, isMyHappyHour }) {
     const user = useAtomValue(currentUser);
     if (item.date && dayjs(item.date).isBefore(dayjs()) && getTodayDateWithEndTime(item.endTime) < dayjs().toISOString()) {
         // return date + 1 day
