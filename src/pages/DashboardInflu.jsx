@@ -2,96 +2,46 @@ import React, { useEffect, useState } from 'react';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
-import WelcomeBanner from '../partials/dashboard/WelcomeBanner';
-import DashboardAvatars from '../partials/dashboard/DashboardAvatars';
-import FilterButton from '../components/DropdownFilter';
-import Datepicker from '../components/Datepicker';
-import DashboardCard01 from '../partials/dashboard/DashboardCard01';
-import DashboardCard02 from '../partials/dashboard/DashboardCard02';
-import DashboardCard03 from '../partials/dashboard/DashboardCard03';
-import DashboardCard04 from '../partials/dashboard/DashboardCard04';
-import DashboardCard05 from '../partials/dashboard/DashboardCard05';
-import DashboardCard06 from '../partials/dashboard/DashboardCard06';
-import DashboardCard07 from '../partials/dashboard/DashboardCard07';
-import DashboardCard08 from '../partials/dashboard/DashboardCard08';
-import DashboardCard09 from '../partials/dashboard/DashboardCard09';
-import DashboardCard10 from '../partials/dashboard/DashboardCard10';
-import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import { useAtomValue } from 'jotai';
-import { userTypeAtom } from './Onboarding01';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../main';
-import { categories } from '../utils/categories';
+import { currentUser } from './Signup';
+import DashboardCardPost from '../partials/dashboard/DashboardCardPost';
+import DashboardCardLikes from '../partials/dashboard/DashboardCardLikes';
+import DashboardCardComments from '../partials/dashboard/DashboardCardComments';
+import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 function DashboardInflu() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
-    const [happyHoursData, setHappyHoursData] = useState([]);
-    const [happyHoursByRecurency, setHappyHoursByRecurency] = useState([]);
-    const [happyHoursByCategory, setHappyHoursByCategory] = useState([]);
-    const [usersData, setUsersData] = useState([]);
-    const [usersByType, setUsersByType] = useState([]);
-    const [happyHoursRevenueByCategory, setHappyHoursRevenueByCategory] = useState([]);
+    const [usersPosts, setUsersPosts] = useState([]);
 
-    const user = useAtomValue(userTypeAtom);
-
-    const priceDaily = 32.99;
-    const priceWeekly = 15.99;
-    const priceUnique = 9.99;
+    const user = useAtomValue(currentUser);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
     };
 
-    const matchCategoryRevenueNumberOrZero = () => {
-        const matched = [];
-        categories.map((category) => {
-            matched.push(happyHoursRevenueByCategory[category] || 0);
+    const getNumberOfLikes = (usersPosts) => {
+        let likes = 0;
+        usersPosts.map((post) => {
+            if (!post.likes) {
+                return;
+            }
+            likes += post.likes.length;
         });
-        return matched;
-    }
-
-    const getDailyRevenue = (happyHoursByRecurency) => {
-        return happyHoursByRecurency['Daily'] * priceDaily;
-    }
-
-    const getWeeklyRevenue = (happyHoursByRecurency) => {
-        return happyHoursByRecurency['Weekly'] * priceWeekly;
-    }
-
-    const getUniqueRevenue = (happyHoursByRecurency) => {
-        return happyHoursByRecurency['Unique'] * priceUnique;
-    }
-
-    const getDailyHappyHours = (happyHoursByRecurency) => {
-        return happyHoursByRecurency['Daily'] || 0;
+        return likes;
     };
 
-    const getWeeklyHappyHours = (happyHoursByRecurency) => {
-        return happyHoursByRecurency['Weekly'] || 0;
-    };
-
-    const getUniqueHappyHours = (happyHoursByRecurency) => {
-        return happyHoursByRecurency['Unique'] || 0;
-    };
-
-    const getCategoriesNumber = (happyHoursByCategory) => {
-        const matched = [];
-        categories.map((category) => {
-            matched.push(happyHoursByCategory[category] || 0);
+    const getNumberOfComments = (usersPosts) => {
+        let comments = 0;
+        usersPosts.map((post) => {
+            if (post.comments) {
+                comments += post.comments.length;
+            }
         });
-        return matched;
-    };
-
-    const getUsersByTypeNumber = (usersByType) => {
-        const matched = [];
-        const types = ['user', 'business', 'influencer'];
-        types.map((category) => {
-            matched.push(usersByType[category] || 0);
-        });
-
-        console.log(matched);
-        return matched;
+        return comments;
     };
 
     useEffect(() => {
@@ -102,90 +52,13 @@ function DashboardInflu() {
     }, []);
 
     useEffect(() => {
-        const getHappyHoursByRecurency = (happyHours) => {
-            const happyHoursByRecurency = happyHours.reduce((acc, happyHour) => {
-                if (acc[happyHour.recurency]) {
-                    acc[happyHour.recurency] += 1;
-                } else {
-                    acc[happyHour.recurency] = 1;
-                }
-                return acc;
-            }, {});
-
-            console.log(happyHoursByRecurency);
-            setHappyHoursByRecurency(happyHoursByRecurency);
-        };
-
-        const getHappyHoursByCategory = (happyHours) => {
-            const happyHoursByCategory = happyHours.reduce((acc, happyHour) => {
-                if (acc[happyHour.category]) {
-                    acc[happyHour.category] += 1;
-                } else {
-                    acc[happyHour.category] = 1;
-                }
-                return acc;
-            }, {});
-
-            console.log(happyHoursByCategory);
-            setHappyHoursByCategory(happyHoursByCategory);
-        };
-
-        const getRevenueByCategory = (happyHours) => {
-            const happyHoursByCategory = happyHours.reduce((acc, happyHour) => {
-                if (acc[happyHour.category]) {
-                    if(happyHour.recurency === 'Daily') {
-                        acc[happyHour.category] += priceDaily;
-                    } else if(happyHour.recurency === 'Weekly') {
-                        acc[happyHour.category] += priceWeekly;
-                    } else if(happyHour.recurency === 'Unique') {
-                        acc[happyHour.category] += priceUnique;
-                    }
-                } else {
-                    if(happyHour.recurency === 'Daily') {
-                        acc[happyHour.category] = priceDaily;
-                    } else if(happyHour.recurency === 'Weekly') {
-                        acc[happyHour.category] = priceWeekly;
-                    } else if(happyHour.recurency === 'Unique') {
-                        acc[happyHour.category] = priceUnique;
-                    }
-                }
-                return acc;
-            }, {});
-
-            console.log(happyHoursByCategory);
-            setHappyHoursRevenueByCategory(happyHoursByCategory);
-        }
-
-        const getUsersByType = (users) => {
-            const usersByType = users.reduce((acc, user) => {
-                if (acc[user.type]) {
-                    acc[user.type] += 1;
-                } else {
-                    acc[user.type] = 1;
-                }
-                return acc;
-            }, {});
-
-            console.log(usersByType);
-            setUsersByType(usersByType);
-        };
-
         const fetchData = async () => {
-            const res = await getDocs(query(collection(db, 'happyhours')));
+            const resPosts = await getDocs(query(collection(db, 'posts'), where('userId', '==', user.uid)));
 
-            const resUser = await getDocs(query(collection(db, 'users')));
-
-            setHappyHoursData(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-            setUsersData(resUser.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-
-            getHappyHoursByRecurency(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-            getHappyHoursByCategory(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-
-            getUsersByType(resUser.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-            getRevenueByCategory(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+            setUsersPosts(resPosts.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
         };
         fetchData();
-    }, []);
+    }, [user.uid]);
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -202,18 +75,58 @@ function DashboardInflu() {
                         {/* Cards */}
                         <div className='grid grid-cols-12 gap-6'>
                             {/* Line chart (Acme Plus) */}
-                            <DashboardCard01 daily={getDailyHappyHours(happyHoursByRecurency)} />
+                            <DashboardCardPost posts={usersPosts.length || 0} />
                             {/* Line chart (Acme Advanced) */}
-                            <DashboardCard02 weekly={getWeeklyHappyHours(happyHoursByRecurency)} />
+                            <DashboardCardLikes likes={getNumberOfLikes(usersPosts)} />
                             {/* Line chart (Acme Professional) */}
-                            <DashboardCard03 unique={getUniqueHappyHours(happyHoursByRecurency)} />
-                            {/* Bar chart (Direct vs Indirect) */}
-                            <DashboardCard04 happyHoursByCategory={getCategoriesNumber(happyHoursByCategory)} />
-                            {/* Line chart (Real Time Value) */}
-                            <DashboardCard05 userByType={getUsersByTypeNumber(usersByType)} />
-                            <DashboardCard08 revenueByRecurency={[getDailyRevenue(happyHoursByRecurency), getWeeklyRevenue(happyHoursByRecurency), getUniqueRevenue(happyHoursByRecurency)]} />
-                            {/* Stacked bar chart (Sales VS Refunds) */}
-                            <DashboardCard09 revenueByCategory={matchCategoryRevenueNumberOrZero()} />
+                            <DashboardCardComments comments={getNumberOfComments(usersPosts)} />
+                        </div>
+
+                        <div className='w-full mt-8'>
+                            <div className='flex items-center justify-between mb-5'>
+                                <h2 className='text-2xl font-bold text-primary'>Mes Posts</h2>
+                                <span className='text-sm font-medium text-primary'>{usersPosts.length} Posts</span>
+                            </div>
+                            <div className={`grid grid-cols-2 gap-6`}>
+                                {usersPosts.map((item, i) => (
+                                    <article
+                                        className={`flex bg-card ${
+                                            window.innerWidth <= 500 && 'h-38'
+                                        } shadow-lg rounded-lg overflow-hidden`}
+                                        key={item.uid}
+                                    >
+                                        {item.imageUrl && (
+                                            <div className='relative block w-32 sm:w-56 xl:sidebar-expanded:w-40 2xl:sidebar-expanded:w-56 shrink-0'>
+                                                <video
+                                                    className='absolute object-cover object-center w-full h-full'
+                                                    width='590'
+                                                    height='332'
+                                                    poster={item.imageUrl}
+                                                    src={item.imageUrl}
+                                                    muted
+                                                    autoPlay
+                                                    playsInline
+                                                    loop
+                                                ></video>
+                                            </div>
+                                        )}
+                                        {/* Content */}
+                                        <div className='grow p-5 flex flex-col'>
+                                            <div className='grow mb-2'>
+                                                <div className='text-xs font-semibold text-pink-500 uppercase mb-2'>
+                                                    Il y a {dayjs(item.date).fromNow(true)}
+                                                </div>
+                                                <Link className='inline-flex' to={`/happyhours/${item.uid}`}>
+                                                    <h3 className='text-sm font-bold text-primary'>
+                                                        {item.userFirstName} {item.userLastName}
+                                                    </h3>
+                                                </Link>
+                                                <p className='text-secondary text-xs flex row mt-1'>{item.text}</p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </main>
