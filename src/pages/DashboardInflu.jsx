@@ -87,7 +87,7 @@ function DashboardInflu() {
                                 <h2 className='text-2xl font-bold text-primary'>Mes Posts</h2>
                                 <span className='text-sm font-medium text-primary'>{usersPosts.length} Posts</span>
                             </div>
-                            <div className={`grid grid-cols-2 gap-6`}>
+                            <div className={`grid xl:grid-cols-2 gap-6`}>
                                 {usersPosts.map((item, i) => (
                                     <article
                                         className={`flex bg-card ${
