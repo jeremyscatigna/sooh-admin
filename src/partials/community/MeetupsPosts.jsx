@@ -7,7 +7,7 @@ import RelativeTime from 'dayjs/plugin/relativeTime';
 import MeetupsThumb01 from '../../images/meetups-thumb-01.jpg';
 import useTimer from '../../components/Timer';
 import { getCategoriesShadowColor } from '../../utils/categories';
-import { Edit, MapsArrowDiagonal, Safari, Trash } from 'iconoir-react';
+import { Edit, MapsArrowDiagonal, Safari, Timer, Trash } from 'iconoir-react';
 import { collection, doc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { db } from '../../main';
 import { useAtomValue } from 'jotai';
@@ -277,10 +277,10 @@ export function MeetupItem({ item, isMyHappyHour }) {
 
                     <p className='text-secondary text-xs mt-1'>
                         {days < 0 || hours < 0 || minutes < 0 || seconds < 0 ? (
-                            <>
-                                <Safari className='w-4 h-4 mr-1' />
-                                <span className='text-secondary text-xs'>Finis pour aujourd&apos;hui</span>
-                            </>
+                            <div className='flex'>
+                                <Timer className='w-4 h-4 mr-1' />
+                                <span className='text-secondary text-xs'>Finis pour Aujourd&apos;hui</span>
+                            </div>
                         ) : (
                             <>
                                 {text} {days}j {hours}h {minutes}m {seconds}s
