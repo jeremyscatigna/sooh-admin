@@ -126,14 +126,14 @@ const getTodayDateWithEndTime = (endTime) => {
     const todayDate = today.toISOString().slice(0, 10);
     const todayWithEndTime = todayDate + 'T' + endTime;
     return todayWithEndTime;
-}
+};
 
 const getTodayDateByEndOfDay = () => {
     const today = new Date();
     const todayDate = today.toISOString().slice(0, 10);
     const todayWithEndTime = todayDate + 'T23:59:59';
     return todayWithEndTime;
-}
+};
 
 export function MeetupItem({ item, isMyHappyHour }) {
     const user = useAtomValue(currentUser);
@@ -276,7 +276,16 @@ export function MeetupItem({ item, isMyHappyHour }) {
                     <p className='text-secondary text-xs flex row mt-1'>{item.description}</p>
 
                     <p className='text-secondary text-xs mt-1'>
-                        {text} {days}j {hours}h {minutes}m {seconds}s
+                        {days < 0 || hours < 0 || minutes < 0 || seconds < 0 ? (
+                            <>
+                                <Safari className='w-4 h-4 mr-1' />
+                                <span className='text-secondary text-xs'>Finis pour aujourd&apos;hui</span>
+                            </>
+                        ) : (
+                            <>
+                                {text} {days}j {hours}h {minutes}m {seconds}s
+                            </>
+                        )}
                     </p>
                 </div>
                 {/* Footer */}
