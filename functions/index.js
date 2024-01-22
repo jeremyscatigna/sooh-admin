@@ -68,16 +68,21 @@ exports.recreateDailyHH = onSchedule("every day 00:00", async (event) => {
 });
 
 exports.recreateWeeklyHH = onSchedule("every day 00:00", async (event) => {
-  // Fetch all user details.
   const happyHours = await admin.firestore().collection("happyhours").get();
   const happyHoursData = happyHours.docs
       .map((doc) => ({id: doc.id, ...doc.data()}));
 
+  console.log(happyHoursData);
+
   const happyHoursDataToRecreate = happyHoursData
       .filter((happyHour) => {
-        return happyHour.recurency === "Weekly" &&
-        dayjs(happyHour.date).day() === 0;
+        return (
+          happyHour.recurency === "Weekly" &&
+          dayjs(happyHour.date).day() === 0
+        );
       });
+
+  console.log(happyHoursDataToRecreate);
 
   const happyHoursToRecreate = happyHoursDataToRecreate.map((happyHour) => {
     const newHappyHour = {...happyHour};
@@ -87,8 +92,11 @@ exports.recreateWeeklyHH = onSchedule("every day 00:00", async (event) => {
           .toISOString())
           .slice(0, -5);
     newHappyHour.date = dateTimeLocalValue;
+
     return newHappyHour;
   });
+
+  console.log(happyHoursToRecreate);
 
   const happyHoursToRecreatePromises = happyHoursToRecreate.map((happyHour) =>
     admin.firestore()
