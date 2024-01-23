@@ -124,7 +124,7 @@ function Meetups() {
             const now = dayjs();
             return data.filter((item) => {
                 if (!item.endTime) return true;
-                if (isToday(item.date) && dayjs(item.date).format('HH:mm') < item.endTime && dayjs().format('HH:mm') > item.endTime) return false;
+                // if (isToday(item.date) && dayjs(item.date).format('HH:mm') < item.endTime && dayjs().format('HH:mm') > item.endTime) return false;
                 const itemDate = dayjs(replaceGetLocalDateTimeTimeByEndTime(item.date, item.endTime));
                 return itemDate.isAfter(now);
             });
