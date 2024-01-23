@@ -276,7 +276,7 @@ export function MeetupItem({ item, isMyHappyHour }) {
                     <p className='text-secondary text-xs flex row mt-1'>{item.description}</p>
 
                     <p className='text-secondary text-xs mt-1'>
-                        {days < 0 || hours < 0 || minutes < 0 || seconds < 0 ? (
+                        {days < 0 || hours < 0 || minutes < 0 || seconds < 0 || (item.recurency === 'Daily' && dayjs(item.date).isAfter(dayjs())) ? (
                             <div className='flex'>
                                 <Timer className='w-4 h-4 mr-1' />
                                 <span className='text-secondary text-xs'>Finis pour Aujourd&apos;hui</span>
