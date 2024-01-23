@@ -26,6 +26,7 @@ function Feed() {
     const [imgUrl, setImgUrl] = useState(null);
     const [progresspercent, setProgresspercent] = useState(0);
     const [fileLoading, setFileLoading] = useState(false);
+    const [fileType, setFileType] = useState('image');
 
     const [loading, setLoading] = useState(false);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -81,6 +82,12 @@ function Feed() {
         if (!file) return;
         const storageRef = ref(storage, `posts/${uuidv4()}`);
         console.log(storageRef);
+        const isVideo = file.type === 'video/mp4' || file.type === 'video/quicktime'
+        if (isVideo) {
+            setFileType('video')
+        } else {
+            setFileType('image')
+        }
         const uploadTask = uploadBytesResumable(storageRef, file);
 
         uploadTask.on(
@@ -109,6 +116,7 @@ function Feed() {
             uid: uuidv4(),
             text: postText,
             imageUrl: imgUrl,
+            fileType: fileType,
             userId: currentUserAuth.uid,
             userFirstName: user.firstName,
             userLastName: user.lastName,

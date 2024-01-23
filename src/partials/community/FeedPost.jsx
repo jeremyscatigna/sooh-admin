@@ -180,17 +180,21 @@ function FeedPost({ item }) {
                 <p>{item.text}</p>
                 {item.imageUrl && (
                     <div className='relative flex items-center justify-center !my-4'>
-                        <video
-                            className='block w-full'
-                            width='590'
-                            height='332'
-                            poster={item.imageUrl}
-                            src={item.imageUrl}
-                            autoPlay
-                            playsInline
-                            loop
-                            controls
-                        ></video>
+                        {item.fileType && item.fileType === 'image' ? (
+                            <img className='block w-full' src={item.imageUrl} width='590' height='332' alt='Post' />
+                        ) : (
+                            <video
+                                className='block w-full'
+                                width='590'
+                                height='332'
+                                poster={item.imageUrl}
+                                src={item.imageUrl}
+                                autoPlay
+                                playsInline
+                                loop
+                                controls
+                            ></video>
+                        )}
                     </div>
                 )}
             </div>
