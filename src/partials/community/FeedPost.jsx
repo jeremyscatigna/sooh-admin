@@ -186,7 +186,6 @@ function FeedPost({ item }) {
                             height='332'
                             poster={item.imageUrl}
                             src={item.imageUrl}
-                            muted
                             autoPlay
                             playsInline
                             loop
