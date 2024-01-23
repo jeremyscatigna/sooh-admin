@@ -189,6 +189,7 @@ function FeedPost({ item }) {
                             autoPlay
                             playsInline
                             loop
+                            controls
                         ></video>
                     </div>
                 )}
