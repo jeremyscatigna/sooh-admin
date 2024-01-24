@@ -8,7 +8,7 @@ import MeetupsThumb01 from '../../images/meetups-thumb-01.jpg';
 import useTimer from '../../components/Timer';
 import { getCategoriesShadowColor } from '../../utils/categories';
 import { Edit, MapsArrowDiagonal, Safari, Timer, Trash } from 'iconoir-react';
-import { collection, doc, getDocs, query, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { db } from '../../main';
 import { useAtomValue } from 'jotai';
 import { v4 as uuidv4 } from 'uuid';
@@ -34,6 +34,15 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCatego
             window.removeEventListener('resize', handleWindowSizeChange);
         };
     }, []);
+
+    const handleDelete = async (item) => {
+        const convcollref = doc(db, 'happyhours', item.id);
+        await deleteDoc(convcollref);
+
+        data = data.filter((happyHour) => happyHour.id !== item.id);
+        now = now.filter((happyHour) => happyHour.id !== item.id);
+        toCome = toCome.filter((happyHour) => happyHour.id !== item.id);
+    };
 
     // Filter function
     const filterMeetups = (item) => {
@@ -78,7 +87,7 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCatego
                 <div className='w-full'>
                     <div className={`grid xl:grid-cols-2 gap-6`}>
                         {myHappyHours.map((item, i) => (
-                            <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={true} />
+                            <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={true} handleDelete={handleDelete} />
                         ))}
                     </div>
                 </div>
@@ -135,9 +144,14 @@ const getTodayDateByEndOfDay = () => {
     return todayWithEndTime;
 };
 
-export function MeetupItem({ item, isMyHappyHour }) {
+export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
     const user = useAtomValue(currentUser);
-    if (item.date && dayjs(item.date).isBefore(dayjs()) && getTodayDateWithEndTime(item.endTime) < dayjs().toISOString() && item.recurency === 'Daily') {
+    if (
+        item.date &&
+        dayjs(item.date).isBefore(dayjs()) &&
+        getTodayDateWithEndTime(item.endTime) < dayjs().toISOString() &&
+        item.recurency === 'Daily'
+    ) {
         // return date + 1 day
         item.date = dayjs(item.date).add(1, 'day');
     }
@@ -276,7 +290,11 @@ export function MeetupItem({ item, isMyHappyHour }) {
                     <p className='text-secondary text-xs flex row mt-1'>{item.description}</p>
 
                     <p className='text-secondary text-xs mt-1'>
-                        {days < 0 || hours < 0 || minutes < 0 || seconds < 0 || (item.recurency === 'Daily' && dayjs(getTodayDateWithEndTime(item.endTime)).isBefore(dayjs())) ? (
+                        {days < 0 ||
+                        hours < 0 ||
+                        minutes < 0 ||
+                        seconds < 0 ||
+                        (item.recurency === 'Daily' && dayjs(getTodayDateWithEndTime(item.endTime)).isBefore(dayjs())) ? (
                             <div className='flex'>
                                 <Timer className='w-4 h-4 mr-1' />
                                 <span className='text-secondary text-xs'>Finis pour Aujourd&apos;hui</span>
@@ -316,17 +334,21 @@ export function MeetupItem({ item, isMyHappyHour }) {
 
                     {isMyHappyHour === true ? (
                         <div className='flex space-x-2'>
-                            <Link to={`/happyhours/${item.uid}`}>
+                            <Link to={`/happyhours/update/${item.uid}`}>
                                 <div className='flex items-center space-x-2 hover:text-green-400'>
                                     <Edit className='w-5 h-5' />
                                 </div>
                             </Link>
 
-                            <Link to={`/happyhours/${item.uid}`}>
-                                <div className='flex items-center space-x-2 hover:text-red-500'>
-                                    <Trash className='w-5 h-5' />
-                                </div>
-                            </Link>
+                            <div
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleDelete(item);
+                                }}
+                                className='flex items-center space-x-2 hover:text-red-500'
+                            >
+                                <Trash className='w-5 h-5' />
+                            </div>
                         </div>
                     ) : (
                         <button

@@ -73,6 +73,7 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import { SlidingTabBar } from './partials/Tabbar';
 import CreateHappyHour from './pages/community/CreateHappyHour';
 import { useAtomValue } from 'jotai';
+import UpdateHappyHour from './pages/community/UpdateHappyHour';
 
 function App() {
     const location = useLocation();
@@ -114,6 +115,7 @@ function App() {
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/happyhours' element={<Meetups />} />
                 <Route path='/happyhours/new' element={<CreateHappyHour />} />
+                <Route path='/happyhours/update/:id' element={<UpdateHappyHour />} />
                 <Route path='/happyhours/:id' element={<MeetupsPost />} />
                 <Route path='/community/meetups-post' element={<MeetupsPost />} />
                 <Route path='/dashboard/analytics' element={<Analytics />} />
