@@ -19,6 +19,7 @@ function Profile() {
     const [loading, setLoading] = React.useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [details, setDetails] = useState('');
     const [description, setDescription] = useState('');
@@ -67,6 +68,7 @@ function Profile() {
             setUser(data[0]);
             setFirstName(data[0].firstName);
             setLastName(data[0].lastName);
+            setUsername(data[0].username);
             setEmail(data[0].email);
             setDetails(data[0].details || '');
             setDescription(data[0].description || '');
@@ -166,6 +168,7 @@ function Profile() {
         let updatedUser = {
             firstName,
             lastName,
+            username,
             email,
             details,
             description,
@@ -266,6 +269,19 @@ function Profile() {
                                     value={lastName}
                                     onChange={(e) => setLastName(e.target.value)}
                                     placeholder='Ajoute ton nom'
+                                />
+                            </div>
+                            <div>
+                                <label className='block text-sm text-primary font-medium mb-1' htmlFor='placeholder'>
+                                    Nom d&apos;utilisateur
+                                </label>
+                                <input
+                                    id='placeholder'
+                                    className='form-input rounded-full border-none bg-hover text-secondary placeholder-secondary w-full'
+                                    type='text'
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    placeholder='Ajoute ton nom d&apos;utilisateur'
                                 />
                             </div>
                             <div>

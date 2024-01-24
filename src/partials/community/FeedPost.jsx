@@ -150,7 +150,7 @@ function FeedPost({ item }) {
                     <div>
                         <div className='leading-tight'>
                             <Link className='text-sm font-semibold text-primary' to={`profile/${item.userId}`}>
-                                {item.userFirstName} {item.userLastName}
+                                {item.username && item.username !== '' ? item.username : item.userFirstName + ' ' + item.userLastName}
                             </Link>
                         </div>
                         <div className='text-xs text-secondary'>Il y a {dayjs(item.date).fromNow(true)}</div>

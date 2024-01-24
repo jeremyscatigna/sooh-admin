@@ -25,6 +25,7 @@ function Signup() {
     const [password, setPassword] = React.useState('');
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
+    const [username, setUsername] = React.useState('');
     const [error, setError] = React.useState('');
     const [loading, setLoading] = React.useState(false);
     const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
@@ -51,6 +52,7 @@ function Signup() {
                     firstName,
                     lastName,
                     email,
+                    username,
                     avatar: '',
                     type: '',
                     details: '',
@@ -62,6 +64,7 @@ function Signup() {
                     firstName,
                     lastName,
                     email,
+                    username,
                     avatar: '',
                     type: '',
                     details: '',
@@ -130,6 +133,15 @@ function Signup() {
                                             type='text'
                                             placeholder='Nom'
                                             onChange={(e) => setLastName(e.target.value)}
+                                        />
+                                    </div>
+                                    <div>
+                                        <input
+                                            id='username'
+                                            className='form-input bg-hover rounded-full border-none text-secondary placeholder-secondary w-full'
+                                            type='text'
+                                            placeholder='Nom d&apos;utilisateur'
+                                            onChange={(e) => setUsername(e.target.value)}
                                         />
                                     </div>
                                     {/* <div>

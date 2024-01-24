@@ -14,7 +14,7 @@ import { useAtomValue } from 'jotai';
 import { v4 as uuidv4 } from 'uuid';
 import { currentUser } from '../../pages/Signup';
 import Avvvatars from 'avvvatars-react';
-import DropdownEditMenu from '../../components/DropdownEditMenu';
+import ModalBlank from '../../components/ModalBlank';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
@@ -165,6 +165,7 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
     const [like, setLike] = useState(item.likes ? doILikeThisHH(item, user) : false);
     const [city, setCity] = useState('');
     const [attendees, setAttendees] = useState([]);
+    const [dangerModalOpen, setDangerModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -262,6 +263,31 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
             } rounded-lg overflow-hidden`}
             key={item.uid}
         >
+            <ModalBlank id='basic-modal' className='bg-card rounded-xl' modalOpen={dangerModalOpen} setModalOpen={setDangerModalOpen}>
+                <div className='p-5 flex flex-col space-y-4 justify-center items-center bg-card rounded-xl'>
+                    {/* Icon */}
+                    <div className='w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-rose-100'>
+                        <svg className='w-4 h-4 shrink-0 fill-current text-rose-500' viewBox='0 0 16 16'>
+                            <path d='M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z' />
+                        </svg>
+                    </div>
+
+                    <div className='text-lg font-semibold text-primary text-center'>Supprimer cet Happy Hour ?</div>
+
+                    {/* Modal footer */}
+
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleDelete(item);
+                            setDangerModalOpen(false);
+                        }}
+                        className='btn-sm rounded-xl bg-rose-500 hover:bg-rose-600 text-white'
+                    >
+                        Supprimer
+                    </button>
+                </div>
+            </ModalBlank>
             {/* Image */}
             <Link
                 className='relative block w-32 sm:w-56 xl:sidebar-expanded:w-40 2xl:sidebar-expanded:w-56 shrink-0'
@@ -343,7 +369,7 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
                             <div
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    handleDelete(item);
+                                    setDangerModalOpen(true);
                                 }}
                                 className='flex items-center space-x-2 hover:text-red-500'
                             >

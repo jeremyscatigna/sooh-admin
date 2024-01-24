@@ -136,7 +136,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                     {/* Name */}
                     <div className='inline-flex items-start mb-2'>
                         <h1 className='text-2xl text-primary font-bold'>
-                            {user.firstName} {user.lastName}
+                            {user.username && user.username !== '' ? user.username : user.firstName + ' ' + user.lastName}
                         </h1>
                     </div>
                     {/* Bio */}
