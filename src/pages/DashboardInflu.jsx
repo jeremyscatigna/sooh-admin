@@ -118,7 +118,7 @@ function DashboardInflu() {
                                                 </div>
                                                 <Link className='inline-flex' to={`/happyhours/${item.uid}`}>
                                                     <h3 className='text-sm font-bold text-primary'>
-                                                        {item.userFirstName} {item.userLastName}
+                                                        {item.username && item.username !== '' ? item.username : item.userFirstName + ' ' + item.userLastName}
                                                     </h3>
                                                 </Link>
                                                 <p className='text-secondary text-xs flex row mt-1'>{item.text}</p>

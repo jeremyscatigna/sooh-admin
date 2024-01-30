@@ -29,11 +29,11 @@ function DirectMessages() {
         const conversationRef = doc(db, 'users', user.uid, 'conversations', conversationId);
         updateDoc(conversationRef, {
             deleted: true,
-        })
+        });
         const conversationWithoutDeleted = conversations.filter((conv) => conv.id !== conversationId);
         setConversations(conversationWithoutDeleted);
         setDangerModalOpen(false);
-    }
+    };
 
     // close on click outside
     useEffect(() => {
@@ -71,10 +71,14 @@ function DirectMessages() {
 
                     {/* Modal footer */}
 
-                    <button onClick={() => {
-                        deleteConversation(selectedConversation.id);
-                    }} 
-                    className='btn-sm rounded-xl bg-rose-500 hover:bg-rose-600 text-white'>Supprimer</button>
+                    <button
+                        onClick={() => {
+                            deleteConversation(selectedConversation.id);
+                        }}
+                        className='btn-sm rounded-xl bg-rose-500 hover:bg-rose-600 text-white'
+                    >
+                        Supprimer
+                    </button>
                 </div>
             </ModalBlank>
 
@@ -112,7 +116,9 @@ function DirectMessages() {
 
                                     <div className='truncate ml-2'>
                                         <span className='text-sm font-medium text-primary'>
-                                            {conversation.userFirstName} {conversation.userLastName}
+                                            {conversation.username && conversation.username !== ''
+                                                ? conversation.username
+                                                : conversation.userFirstName + ' ' + conversation.userLastName}
                                         </span>
                                     </div>
                                 </div>

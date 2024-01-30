@@ -53,7 +53,9 @@ function DropdownProfile({ align }) {
                 )}
 
                 <div className='flex items-center truncate'>
-                    <span className='truncate ml-2 text-sm font-medium group-hover:text-pink-500'>{user.firstName} {user.lastName}</span>
+                    <span className='truncate ml-2 text-sm font-medium group-hover:text-pink-500'>
+                        {user.username && user.username !== '' ? user.username : user.firstName + ' ' + user.lastName}
+                    </span>
                     <svg className='w-3 h-3 shrink-0 ml-1 fill-current text-slate-400' viewBox='0 0 12 12'>
                         <path d='M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z' />
                     </svg>

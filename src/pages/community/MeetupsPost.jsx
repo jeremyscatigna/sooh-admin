@@ -259,7 +259,9 @@ function MeetupsPost() {
                                         <div className='text-sm whitespace-nowrap'>
                                             Hébergé par{' '}
                                             <a className='font-semibold text-pink-500' href='#0'>
-                                                {user.firstName} {user.lastName}
+                                                {user.username && user.username !== ''
+                                                    ? user.username
+                                                    : user.firstName + ' ' + user.lastName}
                                             </a>
                                         </div>
                                     </div>
@@ -284,7 +286,9 @@ function MeetupsPost() {
                                                     <h2 className='text-lg font-semibold text-primary'>Nombre de participants</h2>
                                                 </header>
                                                 <div className='flex flex-col items-center justify center'>
-                                                    <div className='text-8xl font-bold text-primary mr-2'>{attendees ? attendees.length : 0}</div>
+                                                    <div className='text-8xl font-bold text-primary mr-2'>
+                                                        {attendees ? attendees.length : 0}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -294,7 +298,9 @@ function MeetupsPost() {
                                                     <h2 className='text-lg font-semibold text-primary'>Nombre de like</h2>
                                                 </header>
                                                 <div className='flex flex-col items-center justify center'>
-                                                    <div className='text-8xl font-bold text-primary mr-2'>{happyHour.likes ? happyHour.likes.length : 0}</div>
+                                                    <div className='text-8xl font-bold text-primary mr-2'>
+                                                        {happyHour.likes ? happyHour.likes.length : 0}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -304,7 +310,9 @@ function MeetupsPost() {
                                                     <h2 className='text-lg font-semibold text-primary'>Nombre de favoris</h2>
                                                 </header>
                                                 <div className='flex flex-col items-center justify center'>
-                                                    <div className='text-8xl font-bold text-primary mr-2'>{happyHour.favorites ? happyHour.favorites.length : 0}</div>
+                                                    <div className='text-8xl font-bold text-primary mr-2'>
+                                                        {happyHour.favorites ? happyHour.favorites.length : 0}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -389,7 +397,7 @@ function MeetupsPost() {
                                                             </div>
                                                             <div className='truncate'>
                                                                 <span className='text-sm font-medium text-primary'>
-                                                                    {attendee.firstName} {attendee.lastName}
+                                                                    {attendee.firstName + ' ' + attendee.lastName}
                                                                 </span>
                                                             </div>
                                                         </div>

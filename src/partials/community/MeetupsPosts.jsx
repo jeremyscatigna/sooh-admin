@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { currentUser } from '../../pages/Signup';
 import Avvvatars from 'avvvatars-react';
 import ModalBlank from '../../components/ModalBlank';
+import ModalBasic from '../../components/ModalBasic';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
@@ -257,12 +258,7 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
     };
 
     return (
-        <article
-            className={`flex bg-card ${window.innerWidth <= 500 && 'h-38'} shadow-lg ${
-                item.category && getCategoriesShadowColor(item.category)
-            } rounded-lg overflow-hidden`}
-            key={item.uid}
-        >
+        <>
             <ModalBlank id='basic-modal' className='bg-card rounded-xl' modalOpen={dangerModalOpen} setModalOpen={setDangerModalOpen}>
                 <div className='p-5 flex flex-col space-y-4 justify-center items-center bg-card rounded-xl'>
                     {/* Icon */}
@@ -288,112 +284,122 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
                     </button>
                 </div>
             </ModalBlank>
-            {/* Image */}
-            <Link
-                className='relative block w-32 sm:w-56 xl:sidebar-expanded:w-40 2xl:sidebar-expanded:w-56 shrink-0'
-                to={`/happyhours/${item.uid}`}
+            <article
+                className={`flex bg-card ${window.innerWidth <= 500 && 'h-38'} shadow-lg ${
+                    item.category && getCategoriesShadowColor(item.category)
+                } rounded-lg overflow-hidden`}
+                key={item.uid}
             >
-                <img
-                    className='absolute object-cover object-center w-full h-full'
-                    src={item.imageUrl || MeetupsThumb01}
-                    width='220'
-                    height='236'
-                    alt='Meetup 01'
-                />
-                {item.deal && (
-                    <div className='absolute bottom-2 left-2 px-3 py-1 text-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded-full '>
-                        -{item.deal}
-                    </div>
-                )}
-            </Link>
-            {/* Content */}
-            <div className='grow p-5 flex flex-col'>
-                <div className='grow mb-2'>
-                    <div className='text-xs font-semibold text-pink-500 uppercase mb-2'>{displayDateOrRecurency(item)}</div>
-                    <Link className='inline-flex' to={`/happyhours/${item.uid}`}>
-                        <h3 className='text-sm font-bold text-primary'>{item.name}</h3>
-                    </Link>
-                    <p className='text-secondary text-xs flex row mt-1'>{item.description}</p>
+                {/* Image */}
+                <Link
+                    className='relative block w-32 sm:w-56 xl:sidebar-expanded:w-40 2xl:sidebar-expanded:w-56 shrink-0'
+                    to={`/happyhours/${item.uid}`}
+                >
+                    <img
+                        className='absolute object-cover object-center w-full h-full'
+                        src={item.imageUrl || MeetupsThumb01}
+                        width='220'
+                        height='236'
+                        alt='Meetup 01'
+                    />
+                    {item.deal && (
+                        <div className='absolute bottom-2 left-2 px-3 py-1 text-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded-full '>
+                            -{item.deal}
+                        </div>
+                    )}
+                </Link>
+                {/* Content */}
+                <div className='grow p-5 flex flex-col'>
+                    <div className='grow mb-2'>
+                        <div className='text-xs font-semibold text-pink-500 uppercase mb-2'>{displayDateOrRecurency(item)}</div>
+                        <Link className='inline-flex' to={`/happyhours/${item.uid}`}>
+                            <h3 className='text-sm font-bold text-primary'>{item.name}</h3>
+                        </Link>
+                        <p className='text-secondary text-xs flex row mt-1'>{item.description}</p>
 
-                    <p className='text-secondary text-xs mt-1'>
-                        {days < 0 ||
-                        hours < 0 ||
-                        minutes < 0 ||
-                        seconds < 0 ||
-                        (item.recurency === 'Daily' && dayjs(getTodayDateWithEndTime(item.endTime)).isBefore(dayjs())) ? (
-                            <div className='flex'>
-                                <Timer className='w-4 h-4 mr-1' />
-                                <span className='text-secondary text-xs'>Finis pour Aujourd&apos;hui</span>
+                        <p className='text-secondary text-xs mt-1'>
+                            {days < 0 ||
+                            hours < 0 ||
+                            minutes < 0 ||
+                            seconds < 0 ||
+                            (item.recurency === 'Daily' && dayjs(getTodayDateWithEndTime(item.endTime)).isBefore(dayjs())) ? (
+                                <div className='flex'>
+                                    <Timer className='w-4 h-4 mr-1' />
+                                    <span className='text-secondary text-xs'>Finis pour Aujourd&apos;hui</span>
+                                </div>
+                            ) : (
+                                <>
+                                    {text} {days}j {hours}h {minutes}m {seconds}s
+                                </>
+                            )}
+                        </p>
+                    </div>
+                    {/* Footer */}
+                    <div className='flex justify-between items-center mt-3'>
+                        {/* Avatars */}
+                        <div className='flex items-center space-x-2'>
+                            <div className='flex -space-x-3 -ml-0.5'>
+                                {attendees
+                                    .slice(0, 3)
+                                    .map((attendee) =>
+                                        attendee.avatar ? (
+                                            <img
+                                                key={attendee.uid}
+                                                className='rounded-full border-2 border-white box-content'
+                                                src={attendee.avatar}
+                                                width='28'
+                                                height='28'
+                                                alt='User 01'
+                                            />
+                                        ) : (
+                                            <Avvvatars key={attendee.uid} value={`${attendee.firstName} ${attendee.lastName}`} />
+                                        ),
+                                    )}
+                            </div>
+                            {attendees.length > 3 && (
+                                <div className='text-xs font-medium text-secondary italic'>+{attendees.length - 3}</div>
+                            )}
+                        </div>
+                        {/* Like button */}
+
+                        {isMyHappyHour === true ? (
+                            <div className='flex space-x-2'>
+                                <Link to={`/happyhours/update/${item.uid}`}>
+                                    <div className='flex items-center space-x-2 hover:text-green-400'>
+                                        <Edit className='w-5 h-5' />
+                                    </div>
+                                </Link>
+
+                                <div
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setDangerModalOpen(true);
+                                    }}
+                                    className='flex items-center space-x-2 hover:text-red-500 cursor-pointer'
+                                >
+                                    <Trash className='w-5 h-5' />
+                                </div>
                             </div>
                         ) : (
-                            <>
-                                {text} {days}j {hours}h {minutes}m {seconds}s
-                            </>
-                        )}
-                    </p>
-                </div>
-                {/* Footer */}
-                <div className='flex justify-between items-center mt-3'>
-                    {/* Avatars */}
-                    <div className='flex items-center space-x-2'>
-                        <div className='flex -space-x-3 -ml-0.5'>
-                            {attendees
-                                .slice(0, 3)
-                                .map((attendee) =>
-                                    attendee.avatar ? (
-                                        <img
-                                            key={attendee.uid}
-                                            className='rounded-full border-2 border-white box-content'
-                                            src={attendee.avatar}
-                                            width='28'
-                                            height='28'
-                                            alt='User 01'
-                                        />
-                                    ) : (
-                                        <Avvvatars key={attendee.uid} value={`${attendee.firstName} ${attendee.lastName}`} />
-                                    ),
-                                )}
-                        </div>
-                        {attendees.length > 3 && <div className='text-xs font-medium text-secondary italic'>+{attendees.length - 3}</div>}
-                    </div>
-                    {/* Like button */}
-
-                    {isMyHappyHour === true ? (
-                        <div className='flex space-x-2'>
-                            <Link to={`/happyhours/update/${item.uid}`}>
-                                <div className='flex items-center space-x-2 hover:text-green-400'>
-                                    <Edit className='w-5 h-5' />
-                                </div>
-                            </Link>
-
-                            <div
+                            <button
                                 onClick={(e) => {
-                                    e.preventDefault();
-                                    setDangerModalOpen(true);
+                                    setLike(!like);
+                                    handleLikeUpdate(e);
                                 }}
-                                className='flex items-center space-x-2 hover:text-red-500'
                             >
-                                <Trash className='w-5 h-5' />
-                            </div>
-                        </div>
-                    ) : (
-                        <button
-                            onClick={(e) => {
-                                setLike(!like);
-                                handleLikeUpdate(e);
-                            }}
-                        >
-                            <div className='text-slate-100 bg-slate-900 bg-opacity-60 rounded-full'>
-                                <span className='sr-only'>Like</span>
-                                <svg className={`h-8 w-8`} fill={like ? 'red' : 'white'} viewBox='0 0 32 32'>
-                                    <path d='M22.682 11.318A4.485 4.485 0 0019.5 10a4.377 4.377 0 00-3.5 1.707A4.383 4.383 0 0012.5 10a4.5 4.5 0 00-3.182 7.682L16 24l6.682-6.318a4.5 4.5 0 000-6.364zm-1.4 4.933L16 21.247l-5.285-5A2.5 2.5 0 0112.5 12c1.437 0 2.312.681 3.5 2.625C17.187 12.681 18.062 12 19.5 12a2.5 2.5 0 011.785 4.251h-.003z' />
-                                </svg>
-                            </div>
-                        </button>
-                    )}
+                                <div className='text-slate-100 bg-slate-900 bg-opacity-60 rounded-full'>
+                                    <span className='sr-only'>Like</span>
+                                    <svg className={`h-8 w-8`} fill={like ? 'red' : 'white'} viewBox='0 0 32 32'>
+                                        <path d='M22.682 11.318A4.485 4.485 0 0019.5 10a4.377 4.377 0 00-3.5 1.707A4.383 4.383 0 0012.5 10a4.5 4.5 0 00-3.182 7.682L16 24l6.682-6.318a4.5 4.5 0 000-6.364zm-1.4 4.933L16 21.247l-5.285-5A2.5 2.5 0 0112.5 12c1.437 0 2.312.681 3.5 2.625C17.187 12.681 18.062 12 19.5 12a2.5 2.5 0 011.785 4.251h-.003z' />
+                                    </svg>
+                                </div>
+                            </button>
+                        )}
+                    </div>
                 </div>
-            </div>
-        </article>
+            </article>
+        </>
     );
 }
 

@@ -256,7 +256,7 @@ function UsersTabs() {
                                                             to={`/profile/${item.uid}`}
                                                         >
                                                             <h2 className='text-xl leading-snug justify-center font-semibold'>
-                                                                {item.firstName + ' ' + item.lastName}
+                                                                {item.username && item.username !== '' ? item.username : item.firstName + ' ' + item.lastName}
                                                             </h2>
                                                         </Link>
                                                     </div>

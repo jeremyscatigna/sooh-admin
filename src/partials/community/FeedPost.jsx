@@ -79,6 +79,7 @@ function FeedPost({ item }) {
             userId: user.uid,
             userFirstName: user.firstName,
             userLastName: user.lastName,
+            username: user.username,
             userAvatar: user.avatar,
             timestamp: getLocaleDateTime(),
         };
@@ -251,7 +252,7 @@ function FeedPost({ item }) {
                                     <div>
                                         <div className='text-xs text-white'>
                                             <a className='font-semibold text-white' href='#0'>
-                                                {comment.userFirstName} {comment.userLastName}
+                                                {comment.username ? comment.username : comment.userFirstName + " " + comment.userLastName}
                                             </a>{' '}
                                             <span className='text-secondary'>Il y a {dayjs(comment.timestamp).fromNow(true)}</span>
                                         </div>
@@ -321,7 +322,7 @@ function FeedPost({ item }) {
                                             <div>
                                                 <div className='text-xs text-white'>
                                                     <a className='font-semibold text-white' href='#0'>
-                                                        {filteredUser.firstName} {filteredUser.lastName}
+                                                        {filteredUser.username ? filteredUser.username : filteredUser.firstName + " " + filteredUser.lastName}
                                                     </a>
                                                 </div>
                                             </div>

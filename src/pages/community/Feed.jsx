@@ -82,11 +82,11 @@ function Feed() {
         if (!file) return;
         const storageRef = ref(storage, `posts/${uuidv4()}`);
         console.log(storageRef);
-        const isVideo = file.type === 'video/mp4' || file.type === 'video/quicktime'
+        const isVideo = file.type === 'video/mp4' || file.type === 'video/quicktime';
         if (isVideo) {
-            setFileType('video')
+            setFileType('video');
         } else {
-            setFileType('image')
+            setFileType('image');
         }
         const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -272,7 +272,8 @@ function Feed() {
 
                                                     <div className='grow'>
                                                         <label htmlFor='status-input' className='sr-only'>
-                                                            Quoi de neuf, {user.firstName}?
+                                                            Quoi de neuf,{' '}
+                                                            {user.username && user.username !== '' ? user.username : user.firstName}?
                                                         </label>
                                                         <input
                                                             id='status-input'

@@ -6,11 +6,11 @@ import { useAtom, useAtomValue } from 'jotai';
 import { msgSidebarOpenAtom, searchAtom, usersAtom } from '../../pages/Messages';
 
 function MessagesSidebar({ createConversation }) {
-  const [search, setSearch] = useAtom(searchAtom);
-  const users = useAtomValue(usersAtom);
-  const [msgSidebarOpen, setMsgSidebarOpen] = useAtom(msgSidebarOpenAtom);
+    const [search, setSearch] = useAtom(searchAtom);
+    const users = useAtomValue(usersAtom);
+    const [msgSidebarOpen, setMsgSidebarOpen] = useAtom(msgSidebarOpenAtom);
 
-  const [mobile, setMobile] = useState(window.innerWidth <= 500);
+    const [mobile, setMobile] = useState(window.innerWidth <= 500);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -30,7 +30,11 @@ function MessagesSidebar({ createConversation }) {
                 msgSidebarOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
         >
-            <div className={`sticky top-0 bg-background overflow-x-hidden overflow-y-auto no-scrollbar shrink-0 md:w-72 xl:w-80 ${mobile && 'h-screen'}  h-[calc(100vh-64px)]`}>
+            <div
+                className={`sticky top-0 bg-background overflow-x-hidden overflow-y-auto no-scrollbar shrink-0 md:w-72 xl:w-80 ${
+                    mobile && 'h-screen'
+                }  h-[calc(100vh-64px)]`}
+            >
                 {/* #Marketing group */}
                 <div>
                     {/* Group body */}
@@ -74,7 +78,7 @@ function MessagesSidebar({ createConversation }) {
                                             }
                                         })
                                         .map((user) => (
-                                            <li className='-mx-2'>
+                                            <li key={user.uid} className='-mx-2'>
                                                 <button
                                                     className='flex items-center justify-between w-full p-2 rounded-xl hover:bg-hover focus:outline-none focus:bg-gradient-to-r from-fuchsia-600 to-pink-600 transition duration-150 ease-in-out'
                                                     onClick={() => createConversation(user)}
@@ -94,7 +98,9 @@ function MessagesSidebar({ createConversation }) {
 
                                                         <div className='truncate'>
                                                             <span className='text-sm font-medium text-primary'>
-                                                                {user.firstName} {user.lastName}
+                                                                {user.username && user.username !== ''
+                                                                    ? user.username
+                                                                    : user.firstName + ' ' + user.lastName}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -105,10 +111,7 @@ function MessagesSidebar({ createConversation }) {
                             </div>
                         )}
                         {/* Direct messages */}
-                        <DirectMessages
-                            msgSidebarOpen={msgSidebarOpen}
-                            setMsgSidebarOpen={setMsgSidebarOpen}
-                        />
+                        <DirectMessages msgSidebarOpen={msgSidebarOpen} setMsgSidebarOpen={setMsgSidebarOpen} />
                     </div>
                 </div>
             </div>

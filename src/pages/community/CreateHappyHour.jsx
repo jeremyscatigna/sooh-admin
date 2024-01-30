@@ -227,7 +227,7 @@ function CreateHappyHour() {
                                                 min={getHoursFromDateTime(selectedDates)}
                                                 onChange={(e) => {
                                                     if (e.target.value < getHoursFromDateTime(selectedDates)) {
-                                                        alert('L\'heure de fin doit être supérieur à l\'heure de début');
+                                                        alert("L'heure de fin doit être supérieur à l'heure de début");
                                                         return;
                                                     }
                                                     setEndTime(e.target.value);
@@ -491,7 +491,9 @@ function CreateHappyHour() {
                                                 <div className='text-sm whitespace-nowrap'>
                                                     Hébergé par{' '}
                                                     <a className='font-semibold text-pink-500' href='#0'>
-                                                        {connectedUser.firstName} {connectedUser.lastName}
+                                                        {connectedUser.username && connectedUser.username !== ''
+                                                            ? connectedUser.username
+                                                            : connectedUser.firstName + ' ' + connectedUser.lastName}
                                                     </a>
                                                 </div>
                                             </div>
