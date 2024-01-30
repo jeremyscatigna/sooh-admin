@@ -64,7 +64,7 @@ function MessagesFooter() {
                                 e.stopPropagation();
                                 setPrice(e.target.value);
                             }}
-                            placeholder='Propse un prix pour cette offre'
+                            placeholder='Propose un prix pour cette offre'
                         />
                     </div>
                     <div>

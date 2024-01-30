@@ -333,7 +333,7 @@ function MeetupsPost() {
                                 {/* Post content */}
                                 <div>
                                     <h2 className='text-xl leading-snug text-primary font-bold mb-2'>Détails</h2>
-                                    <p className='mb-6'>{happyHour.details}</p>
+                                    <p className='mb-6 whitespace-pre-line'>{happyHour.details}</p>
                                 </div>
                             </div>
 
