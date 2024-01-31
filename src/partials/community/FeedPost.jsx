@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import dayjs from 'dayjs';
@@ -37,6 +37,24 @@ function FeedPost({ item }) {
     const [users, setUsers] = React.useState([]);
     const [isUserListVisible, setIsUserListVisible] = React.useState(false);
     const [userListFilter, setUserListFilter] = React.useState('');
+
+    const videoRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.muted = false;
+                } else {
+                    entry.target.muted = true;
+                }
+            });
+        })
+
+        if (videoRef.current) {
+            observer.observe(videoRef.current);
+        }
+    }, [])
 
     const fetchUser = async () => {
         const res = await getDocs(collection(db, 'users'));
@@ -130,6 +148,7 @@ function FeedPost({ item }) {
         window.open(facebookShareUrl, 'facebook-share-dialog', 'width=800,height=600');
     };
 
+
     return (
         <div key={item.uid} className='bg-card shadow-md rounded-xl p-5'>
             {/* Header */}
@@ -185,12 +204,14 @@ function FeedPost({ item }) {
                             <img className='block w-full' src={item.imageUrl} width='590' height='332' alt='Post' />
                         ) : (
                             <video
+                                ref={videoRef}
                                 className='block w-full'
                                 width='590'
                                 height='332'
                                 poster={item.imageUrl}
                                 src={item.imageUrl}
                                 autoPlay
+                                muted
                                 playsInline
                                 loop
                                 controls
