@@ -94,7 +94,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     {/* Pages group */}
                     <div>
                         <ul className='mt-3'>
-                            <li className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${pathname === '/' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'}`}>
+                            <li
+                                className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${
+                                    pathname === '/' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'
+                                }`}
+                            >
                                 <NavLink
                                     end
                                     to='/'
@@ -119,7 +123,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                 </NavLink>
                             </li>
                             {user.type === 'business' && (
-                                <li className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${pathname === '/influencers' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'}`}>
+                                <li
+                                    className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${
+                                        pathname === '/influencers' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'
+                                    }`}
+                                >
                                     <NavLink
                                         end
                                         to='/influencers'
@@ -143,7 +151,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                     </NavLink>
                                 </li>
                             )}
-                            <li className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${pathname === '/happyhours' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'}`}>
+                            <li
+                                className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${
+                                    pathname === '/happyhours' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'
+                                }`}
+                            >
                                 <NavLink
                                     end
                                     to='/happyhours'
@@ -166,33 +178,41 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                     </div>
                                 </NavLink>
                             </li>
-                            {user.type === 'business' || user.type === "influencer" && (
-                                <li className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${pathname === '/dashboard' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'}`}>
-                                    <NavLink
-                                        end
-                                        to='/dashboard'
-                                        className={`block text-slate-200 truncate transition duration-150 ${
-                                            pathname === '/dashboard' ? 'hover:text-slate-200' : 'hover:text-white'
-                                        }`}
-                                    >
-                                        <div className='flex items-center justify-between'>
-                                            <div className='grow flex items-center'>
-                                                <DashboardSpeed
-                                                    className={`shrink-0 h-6 w-6 ${
-                                                        pathname === '/dashboard' ? 'text-primary' : 'text-secondary'
-                                                    }`}
-                                                    viewBox='0 0 24 24'
-                                                />
-                                                <span className='text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200'>
-                                                    Dashboard
-                                                </span>
-                                            </div>
+
+                            <li
+                                className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${
+                                    pathname === '/dashboard' && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'
+                                }`}
+                            >
+                                <NavLink
+                                    end
+                                    to='/dashboard'
+                                    className={`block text-slate-200 truncate transition duration-150 ${
+                                        pathname === '/dashboard' ? 'hover:text-slate-200' : 'hover:text-white'
+                                    }`}
+                                >
+                                    <div className='flex items-center justify-between'>
+                                        <div className='grow flex items-center'>
+                                            <DashboardSpeed
+                                                className={`shrink-0 h-6 w-6 ${
+                                                    pathname === '/dashboard' ? 'text-primary' : 'text-secondary'
+                                                }`}
+                                                viewBox='0 0 24 24'
+                                            />
+                                            <span className='text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200'>
+                                                Dashboard
+                                            </span>
                                         </div>
-                                    </NavLink>
-                                </li>
-                            )}
+                                    </div>
+                                </NavLink>
+                            </li>
+
                             {/* Messages */}
-                            <li className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${pathname.includes('messages') && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'}`}>
+                            <li
+                                className={`px-3 py-2 rounded-xl mb-0.5 last:mb-0 ${
+                                    pathname.includes('messages') && 'bg-gradient-to-r from-fuchsia-600 to-pink-600'
+                                }`}
+                            >
                                 <NavLink
                                     end
                                     to='/messages'
