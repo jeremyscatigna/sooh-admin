@@ -12,8 +12,8 @@ function MessagesBody() {
     const user = useAtomValue(currentUser);
 
     return (
-        <div className='z-30 flex flex-col px-4 sm:px-6 md:px-5 py-6'>
-            <div className='flex flex-col items-center justify-center h-full p-4 mt-8'>
+        <div className='z-30 flex flex-col px-4 sm:px-6 md:px-5 py-6 overflow-y-scroll h-full'>
+            <div className='flex flex-col items-center justify-start h-full p-4 mt-8'>
                 <ol className='flex flex-col items-start justify-start text-xs text-slate-300 relative border-s border-gray-200'>
                     <li className='mb-10 ms-6'>
                         <span className='absolute flex items-center justify-center w-6 h-6 rounded-full -start-3 ring-8 ring-pink-900 bg-pink-500'>
@@ -88,33 +88,40 @@ function MessagesBody() {
                                     </div>
                                 </>
                             ) : (
-                                <div className='border rounded-xl border-pink-500 p-4'>
-                                    <div className='flex flex-col items-start justify-center'>
-                                        <div className='text-sm font-medium text-primary'>Prix: {message.price}€</div>
-                                        <div className='text-sm font-medium text-primary'>Details: {message.details}</div>
+                                <>
+                                    {message.type === 'offer' && (
+                                        <div className='border rounded-xl border-pink-500 p-4'>
+                                            <div className='flex flex-col items-start justify-center'>
+                                                <div className='text-sm font-medium text-primary'>Prix: {message.price}€</div>
+                                                <div className='text-sm font-medium text-primary'>Details: {message.details}</div>
 
-                                        <div className='flex items-center justify-between w-full mt-4'>
-                                            <button
-                                                className='flex flex-row items-center justify-center'
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                }}
-                                            >
-                                                <CheckCircle className='w-6 h-6 fill-green mr-2 text-green-500' />
-                                                Accepter
-                                            </button>
-                                            <button
-                                                className='flex flex-row items-center justify-center'
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                }}
-                                            >
-                                                <ShieldCross className='w-6 h-6 fill-red mr-2 text-red-600' />
-                                                Refuser
-                                            </button>
+                                                <div className='flex items-center justify-between w-full mt-4'>
+                                                    <button
+                                                        className='flex flex-row items-center justify-center'
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                        }}
+                                                    >
+                                                        <CheckCircle className='w-6 h-6 fill-green mr-2 text-green-500' />
+                                                        Accepter
+                                                    </button>
+                                                    <button
+                                                        className='flex flex-row items-center justify-center'
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                        }}
+                                                    >
+                                                        <ShieldCross className='w-6 h-6 fill-red mr-2 text-red-600' />
+                                                        Refuser
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    )}
+                                    {message.type === 'image' && <img className='rounded-xl h-64 w-38' src={message.imgUrl} alt='Image' />}
+
+                                    {message.type === 'video' && <video className='rounded-xl' src={message.videoUrl} controls />}
+                                </>
                             )}
                         </div>
                     </div>

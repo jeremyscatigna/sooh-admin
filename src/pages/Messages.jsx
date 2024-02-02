@@ -20,6 +20,7 @@ export const usersAtom = atom([]);
 export const searchAtom = atom('');
 export const selectedConversationMessagesAtom = atom([]);
 export const openCreateOfferModalAtom = atom(false);
+export const openSendMediaModalAtom = atom(false);
 export const msgSidebarOpenAtom = atom(true);
 
 const getLocaleDateTime = () => {
@@ -39,6 +40,7 @@ function Messages() {
     const [conversations, setConversations] = useAtom(conversationsAtom);
     const [selectedConversationMessages, setSelectedConversationMessages] = useAtom(selectedConversationMessagesAtom);
     const [openCreateOfferModal, setOpenCreateOfferModal] = useAtom(openCreateOfferModalAtom);
+    const [openSendMediaModal, setOpenSendMediaModal] = useAtom(openSendMediaModalAtom);
 
     const authenticatedUser = useAtomValue(currentUser);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -123,9 +125,11 @@ function Messages() {
                     messages: [],
                     timestamp: getLocaleDateTime(),
                 };
+                setSelectedConversation(newConversation);
+                setConversations([...conversations, newConversation]);
+                searchParams.set('conversation', newConversation.uid);
                 await addDoc(collection(db, `users/${authenticatedUser.uid}/conversations`), { ...newConversation });
                 await addDoc(collection(db, `users/${user.uid}/conversations`), { ...newUserConversation });
-                setSelectedConversation(newConversation);
             }
         } catch (err) {
             console.log(err);

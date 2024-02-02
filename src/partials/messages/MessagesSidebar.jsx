@@ -81,7 +81,11 @@ function MessagesSidebar({ createConversation }) {
                                             <li key={user.uid} className='-mx-2'>
                                                 <button
                                                     className='flex items-center justify-between w-full p-2 rounded-xl hover:bg-hover focus:outline-none focus:bg-gradient-to-r from-fuchsia-600 to-pink-600 transition duration-150 ease-in-out'
-                                                    onClick={() => createConversation(user)}
+                                                    onClick={() => {
+                                                        createConversation(user);
+                                                        setMsgSidebarOpen(false);
+                                                        setSearch('');
+                                                    }}
                                                 >
                                                     <div className='flex items-center truncate space-x-2'>
                                                         {user.avatar ? (
