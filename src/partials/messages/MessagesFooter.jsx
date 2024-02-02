@@ -1,22 +1,67 @@
 import { useAtom, useAtomValue } from 'jotai';
-import React, { useEffect } from 'react';
-import { openCreateOfferModalAtom, selectedConversationAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
+import React, { useEffect, useRef } from 'react';
+import { openCreateOfferModalAtom, openSendMediaModalAtom, selectedConversationAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
 import { v4 as uuidv4 } from 'uuid';
 import { currentUser } from '../../pages/Signup';
 import { collection, doc, getDocs, updateDoc } from 'firebase/firestore';
-import { db } from '../../main';
+import { db, storage } from '../../main';
 import ModalBasic from '../../components/ModalBasic';
-import { ArrowRight } from 'iconoir-react';
+import { ArrowRight, MediaImage } from 'iconoir-react';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
 function MessagesFooter() {
     const [inputValue, setInputValue] = React.useState('');
     const [selectedConversationMessages, setSelectedConversationMessages] = useAtom(selectedConversationMessagesAtom);
     const selectedConversation = useAtomValue(selectedConversationAtom);
     const [openCreateOfferModal, setOpenCreateOfferModal] = useAtom(openCreateOfferModalAtom);
+    const [openSendMediaModal, setOpenSendMediaModal] = useAtom(openSendMediaModalAtom);
     const [price, setPrice] = React.useState('');
     const [offerDetails, setOfferDetails] = React.useState('');
 
+    const [fileLoading, setFileLoading] = React.useState(false);
+    const [progresspercent, setProgresspercent] = React.useState(0);
+    const [imgUrl, setImgUrl] = React.useState('');
+    const [fileType, setFileType] = React.useState('');
+
+    const inputRef = useRef(null);
+
     const user = useAtomValue(currentUser);
+
+    const handleUpload = (e) => {
+        e.preventDefault();
+        setFileLoading(true);
+        const file = e.target.files[0];
+        console.log(file);
+        if (!file) return;
+        const storageRef = ref(storage, `messages/${uuidv4()}`);
+        console.log(storageRef);
+        const isVideo = file.type === 'video/mp4' || file.type === 'video/quicktime';
+        if (isVideo) {
+            setFileType('video');
+        } else {
+            setFileType('image');
+        }
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                setProgresspercent(progress);
+            },
+            (error) => {
+                setFileLoading(false);
+                alert(error);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log('File available at', downloadURL);
+                    setFileLoading(false);
+                    setImgUrl(downloadURL);
+                });
+            },
+        );
+    };
 
     const handleUpdate = async (e, message) => {
         e.preventDefault();
@@ -40,6 +85,7 @@ function MessagesFooter() {
         });
 
         setOpenCreateOfferModal(false);
+        setOpenSendMediaModal(false);
         window.scroll({
             top: document.body.offsetHeight,
             left: 0,
@@ -47,8 +93,8 @@ function MessagesFooter() {
         });
     };
     return (
-        <div className='z-40 fixed w-full bg-card bottom-0'>
-            <ModalBasic title='Créer une offre' modalOpen={openCreateOfferModal}>
+        <div className='z-40 sticky w-full bg-card bottom-0'>
+            <ModalBasic title='Créer une offre' modalOpen={openCreateOfferModal} setModalOpen={() => setOpenCreateOfferModal(!openCreateOfferModal)}>
                 <div className='px-5 pt-4 pb-1 space-y-4'>
                     <div>
                         <label className='block text-sm text-primary font-medium mb-1' htmlFor='placeholder'>
@@ -123,6 +169,65 @@ function MessagesFooter() {
                     </div>
                 </div>
             </ModalBasic>
+            <ModalBasic title='Envoyer un media' modalOpen={openSendMediaModal} setModalOpen={() => setOpenSendMediaModal(!openSendMediaModal)}>
+                <div className='px-5 pt-4 pb-1 space-y-4'>
+                    <div className='grow flex space-x-5'>
+                        <button
+                            className='inline-flex items-center text-sm font-medium text-secondary hover:text-slate-700'
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                inputRef.current.click();
+                            }}
+                        >
+                            {!imgUrl ? (
+                                <MediaImage className='w-5 h-5 bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded mr-2' />
+                            ) : (
+                                <div className='pr-3'>
+                                    <img src={imgUrl} alt='uploaded file' className='w-10 h-10' />
+                                </div>
+                            )}
+
+                            <span>{fileLoading ? 'Loading' : ' Ajouter un média'}</span>
+                        </button>
+                        <input ref={inputRef} type='file' id='file' className='hidden' onChange={handleUpload} />
+                    </div>
+                    
+                    <div className='px-5 py-4 mb-24'>
+                        <div className='flex flex-wrap justify-end space-x-2'>
+                            <button
+                                className='btn-sm border-primary hover:border-primary text-primary'
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpenSendMediaModal(false);
+                                }}
+                            >
+                                Fermer
+                            </button>
+                            <button
+                                className='btn-sm rounded-full bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
+                                onClick={(e) => {
+                                    e.stopPropagation();
+
+                                    const message = {
+                                        id: uuidv4(),
+                                        text: offerDetails,
+                                        senderFirstName: user.firstName,
+                                        senderLastName: user.lastName,
+                                        senderAvatar: user.avatar,
+                                        type: fileType,
+                                        imgUrl: imgUrl,
+                                    };
+
+                                    setSelectedConversationMessages([...selectedConversationMessages, message]);
+                                    handleUpdate(e, message);
+                                }}
+                            >
+                                Envoyer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ModalBasic>
             <div className='flex items-center justify-between bg-card px-4 sm:px-6 md:px-5 h-16'>
                 {/* Plus button */}
                 <button
@@ -134,6 +239,16 @@ function MessagesFooter() {
                     }}
                 >
                     Faire une offre
+                </button>
+                <button
+                    className='text-xs font-bold text-white px-2 py-2 mr-2 rounded-full bg-gradient-to-r from-fuchsia-600 to-pink-600'
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setOpenSendMediaModal(true);
+                    }}
+                >
+                    <MediaImage className='w-5 h-5 bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded' />
                 </button>
                 {/* Message input */}
                 <div className='grow flex'>

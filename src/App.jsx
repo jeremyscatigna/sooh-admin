@@ -74,6 +74,9 @@ import { SlidingTabBar } from './partials/Tabbar';
 import CreateHappyHour from './pages/community/CreateHappyHour';
 import { useAtomValue } from 'jotai';
 import UpdateHappyHour from './pages/community/UpdateHappyHour';
+import ChatPage from './pages/Chat';
+
+import 'stream-chat-react/dist/css/v2/index.css';
 
 function App() {
     const location = useLocation();
@@ -117,6 +120,7 @@ function App() {
                 <Route path='/happyhours/new' element={<CreateHappyHour />} />
                 <Route path='/happyhours/update/:id' element={<UpdateHappyHour />} />
                 <Route path='/happyhours/:id' element={<MeetupsPost />} />
+                <Route path='/chat' element={<ChatPage />} />
                 <Route path='/community/meetups-post' element={<MeetupsPost />} />
                 <Route path='/dashboard/analytics' element={<Analytics />} />
                 <Route path='/dashboard/fintech' element={<Fintech />} />

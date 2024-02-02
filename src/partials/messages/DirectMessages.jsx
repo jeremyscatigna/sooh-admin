@@ -25,6 +25,10 @@ function DirectMessages() {
     const trigger = useRef(null);
     const dropdown = useRef(null);
 
+    useEffect(() => {
+        setSelectedConversation(conversations.find((conv) => conv.uid === searchParams.get('conversation')));
+    }, [conversations, selectedConversation, searchParams, setSelectedConversation]);
+
     const deleteConversation = async (conversationId) => {
         const conversationRef = doc(db, 'users', user.uid, 'conversations', conversationId);
         updateDoc(conversationRef, {
