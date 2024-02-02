@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { useAtomValue } from 'jotai';
 import { selectedConversationMessagesAtom } from '../../pages/Messages';
@@ -11,9 +11,15 @@ function MessagesBody() {
     const selectedConversationMessages = useAtomValue(selectedConversationMessagesAtom);
     const user = useAtomValue(currentUser);
 
+    const contentArea = useRef(null);
+
+    useEffect(() => {
+        contentArea.current.scrollTop = 99999999;
+    }, []);
+
     return (
-        <div className='z-30 flex flex-col px-4 sm:px-6 md:px-5 py-6 overflow-y-scroll h-full'>
-            <div className='flex flex-col items-center justify-start h-full p-4 mt-8'>
+        <div className='z-30 flex flex-col px-4 sm:px-6 md:px-5 py-6 overflow-y-scroll h-full' ref={contentArea}>
+            <div className='flex flex-col items-center justify-start h-full p-4 mt-24'>
                 <ol className='flex flex-col items-start justify-start text-xs text-slate-300 relative border-s border-gray-200'>
                     <li className='mb-10 ms-6'>
                         <span className='absolute flex items-center justify-center w-6 h-6 rounded-full -start-3 ring-8 ring-pink-900 bg-pink-500'>
