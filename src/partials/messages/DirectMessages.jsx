@@ -36,6 +36,7 @@ function DirectMessages() {
         });
         const conversationWithoutDeleted = conversations.filter((conv) => conv.id !== conversationId);
         setConversations(conversationWithoutDeleted);
+        setSelectedConversation(null);
         setDangerModalOpen(false);
     };
 
