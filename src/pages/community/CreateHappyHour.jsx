@@ -361,7 +361,7 @@ function CreateHappyHour() {
                                                             onChange={(e) => setLocation(e.target.value)}
                                                             placeholder={
                                                                 type === 'online'
-                                                                    ? 'Ajouter le site web ou aura lieu votre Happy Hour'
+                                                                    ? 'https://example.com'
                                                                     : "Ajoutez l'adresses de la boutique"
                                                             }
                                                         />
