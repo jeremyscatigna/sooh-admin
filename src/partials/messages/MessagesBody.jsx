@@ -82,7 +82,20 @@ function MessagesBody() {
                                     )}
                                     {message.type === 'image' && <img className='rounded-xl h-64 w-38' src={message.imgUrl} alt='Image' />}
 
-                                    {message.type === 'video' && <video className='rounded-xl' src={message.videoUrl} controls />}
+                                    {message.type === 'video' && (
+                                        <video
+                                            className='rounded-xl h-72 w-48'
+                                            width='590'
+                                            height='332'
+                                            poster={message.imgUrl}
+                                            src={message.imgUrl}
+                                            autoPlay
+                                            muted
+                                            playsInline
+                                            loop
+                                            controls
+                                        ></video>
+                                    )}
                                 </>
                             )}
                         </div>
