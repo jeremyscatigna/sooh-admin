@@ -299,7 +299,7 @@ function Onboarding02() {
 
                                     <div className='mb-4'>
                                         <label className='block text-sm font-medium mb-1' htmlFor='company-name'>
-                                            Prix collabaration Minimum <span className='text-rose-500'>*</span>
+                                            Prix collaboration Minimum <span className='text-rose-500'>*</span>
                                         </label>
                                         <input
                                             id='company-name'
@@ -313,7 +313,7 @@ function Onboarding02() {
 
                                     <div className='mb-4'>
                                         <label className='block text-sm font-medium mb-1' htmlFor='company-name'>
-                                            Prix collabaration Maximum <span className='text-rose-500'>*</span>
+                                            Prix collaboration Maximum <span className='text-rose-500'>*</span>
                                         </label>
                                         <input
                                             id='company-name'
