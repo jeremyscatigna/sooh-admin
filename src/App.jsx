@@ -77,6 +77,7 @@ import UpdateHappyHour from './pages/community/UpdateHappyHour';
 import ChatPage from './pages/Chat';
 
 import 'stream-chat-react/dist/css/v2/index.css';
+import SinglePost from './pages/community/SinglePost';
 
 function App() {
     const location = useLocation();
@@ -116,6 +117,7 @@ function App() {
                 <Route path='/influencers' element={<UsersTabs />} />
                 <Route path='/profile/:id' element={<Profile />} />
                 <Route path='/dashboard' element={<Dashboard />} />
+                <Route path='/posts/:id' element={<SinglePost />} />
                 <Route path='/happyhours' element={<Meetups />} />
                 <Route path='/happyhours/new' element={<CreateHappyHour />} />
                 <Route path='/happyhours/update/:id' element={<UpdateHappyHour />} />
