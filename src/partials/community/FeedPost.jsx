@@ -11,6 +11,7 @@ import { currentUser } from '../../pages/Signup';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../main';
 import Avvvatars from 'avvvatars-react';
+import { RWebShare } from 'react-web-share';
 
 const getLocaleDateTime = () => {
     let d = new Date();
@@ -49,12 +50,12 @@ function FeedPost({ item }) {
                     entry.target.muted = true;
                 }
             });
-        })
+        });
 
         if (videoRef.current) {
             observer.observe(videoRef.current);
         }
-    }, [])
+    }, []);
 
     const fetchUser = async () => {
         const res = await getDocs(collection(db, 'users'));
@@ -148,7 +149,6 @@ function FeedPost({ item }) {
         // Open a new window for the Facebook share dialog
         window.open(facebookShareUrl, 'facebook-share-dialog', 'width=800,height=600');
     };
-
 
     return (
         <div key={item.uid} className='bg-card shadow-md rounded-xl p-5'>
@@ -248,11 +248,20 @@ function FeedPost({ item }) {
                     </svg>
                     <div className='text-sm text-secondary'>{(item.comments && item.comments.length) || 0}</div>
                 </button>
-                <button className='flex items-center text-secondary' onClick={handleShare}>
-                    {/* Replace with an appropriate share icon */}
+                <RWebShare
+                    data={{
+                        text: item.text,
+                        url: `https://sooh.app/posts/${item.uid}`,
+                        title: 'Sooh App',
+                    }}
+                    onClick={() => console.log('shared successfully!')}
+                >
+                    <button className='flex items-center text-secondary'>
+                        {/* Replace with an appropriate share icon */}
 
-                    <ShareIos className='w-5 h-4 shrink-0 font-bold' strokeWidth={3} />
-                </button>
+                        <ShareIos className='w-5 h-4 shrink-0 font-bold' strokeWidth={3} />
+                    </button>
+                </RWebShare>
             </footer>
             {seeComments && (
                 <div className='mt-5 mb-5 pt-3'>
@@ -274,7 +283,7 @@ function FeedPost({ item }) {
                                     <div>
                                         <div className='text-xs text-white'>
                                             <a className='font-semibold text-white' href='#0'>
-                                                {comment.username ? comment.username : comment.userFirstName + " " + comment.userLastName}
+                                                {comment.username ? comment.username : comment.userFirstName + ' ' + comment.userLastName}
                                             </a>{' '}
                                             <span className='text-secondary'>Il y a {dayjs(comment.timestamp).fromNow(true)}</span>
                                         </div>
@@ -344,7 +353,9 @@ function FeedPost({ item }) {
                                             <div>
                                                 <div className='text-xs text-white'>
                                                     <a className='font-semibold text-white' href='#0'>
-                                                        {filteredUser.username ? filteredUser.username : filteredUser.firstName + " " + filteredUser.lastName}
+                                                        {filteredUser.username
+                                                            ? filteredUser.username
+                                                            : filteredUser.firstName + ' ' + filteredUser.lastName}
                                                     </a>
                                                 </div>
                                             </div>
