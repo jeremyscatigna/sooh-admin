@@ -6,7 +6,7 @@ import { conversationsAtom, msgSidebarOpenAtom, selectedConversationAtom, select
 import { useSearchParams } from 'react-router-dom';
 import { Trash } from 'iconoir-react';
 import ModalBlank from '../../components/ModalBlank';
-import { doc, updateDoc } from 'firebase/firestore';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../main';
 import { currentUser } from '../../pages/Signup';
 
@@ -16,6 +16,7 @@ function DirectMessages() {
     const [conversations, setConversations] = useAtom(conversationsAtom);
     const [selectedConversation, setSelectedConversation] = useAtom(selectedConversationAtom);
     const setSelectedConversationMessages = useSetAtom(selectedConversationMessagesAtom);
+    const [conversationToDelete, setConversationToDelete] = useState(null);
     const [dangerModalOpen, setDangerModalOpen] = useState(false);
 
     const user = useAtomValue(currentUser);
@@ -31,9 +32,7 @@ function DirectMessages() {
 
     const deleteConversation = async (conversationId) => {
         const conversationRef = doc(db, 'users', user.uid, 'conversations', conversationId);
-        updateDoc(conversationRef, {
-            deleted: true,
-        });
+        deleteDoc(conversationRef);
         const conversationWithoutDeleted = conversations.filter((conv) => conv.id !== conversationId);
         setConversations(conversationWithoutDeleted);
         setSelectedConversation(null);
@@ -78,7 +77,7 @@ function DirectMessages() {
 
                     <button
                         onClick={() => {
-                            deleteConversation(selectedConversation.id);
+                            deleteConversation(conversationToDelete);
                         }}
                         className='btn-sm rounded-xl bg-rose-500 hover:bg-rose-600 text-white'
                     >
@@ -131,6 +130,7 @@ function DirectMessages() {
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         e.preventDefault();
+                                        setConversationToDelete(conversation.id);
                                         setDangerModalOpen(true);
                                     }}
                                 >

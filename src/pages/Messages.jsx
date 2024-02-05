@@ -60,11 +60,10 @@ function Messages() {
         const fetchConversations = async () => {
             const res = await getDocs(collection(db, `users/${authenticatedUser.uid}/conversations`));
 
-            const conversationsWithoutDeleted = res.docs
+            const conversations = res.docs
                 .map((doc) => ({ id: doc.id, ...doc.data() }))
-                .filter((conversation) => !conversation.deleted);
 
-            setConversations(conversationsWithoutDeleted);
+            setConversations(conversations);
             console.log(res.docs.map((doc) => doc.data()));
         };
 
@@ -99,7 +98,7 @@ function Messages() {
         console.log(authenticatedUser);
         try {
             const res = await getDocs(collection(db, `users/${authenticatedUser.uid}/conversations`));
-            const conversations = res.docs.map((doc) => doc.data());
+            const conversations = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
             const conversation = conversations.find((conversation) => conversation.userId === user.uid);
             if (conversation) {
                 setSelectedConversation(conversation);
