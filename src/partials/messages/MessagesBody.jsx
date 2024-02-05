@@ -22,7 +22,7 @@ function MessagesBody() {
             {selectedConversationMessages &&
                 selectedConversationMessages.length > 0 &&
                 selectedConversationMessages.map((message) => (
-                    <div className='flex items-start mb-8 last:mb-24' key={message.uid}>
+                    <div className='flex items-start mb-8 last:mb-24 first:mt-24' key={message.uid}>
                         {message.senderAvatar ? (
                             <img className='rounded-full mr-4 w-10 h-10' src={message.senderAvatar} width='40' height='40' alt='User 01' />
                         ) : (

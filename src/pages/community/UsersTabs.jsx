@@ -6,11 +6,16 @@ import SearchForm from '../../partials/actions/SearchForm';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../main';
 import { categories, getCategoriesShadowColor } from '../../utils/categories';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Avvvatars from 'avvvatars-react';
 import { Facebook, Instagram, Search, TikTok, Twitter, YouTube } from 'iconoir-react';
+import { useAtom, useAtomValue } from 'jotai';
+import { currentUser } from '../Signup';
+import { conversationsAtom } from '../Messages';
 
 function UsersTabs() {
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [data, setData] = useState([]);
@@ -20,6 +25,9 @@ function UsersTabs() {
     const [selectedPrice, setSelectedPrice] = useState('');
 
     const [searchText, setSearchText] = useState('');
+
+    const authenticatedUser = useAtomValue(currentUser);
+    const [conversations, setConversations] = useAtom(conversationsAtom);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -85,6 +93,35 @@ function UsersTabs() {
         const filteredFollowers = followers.filter((followers) => followers && followers.trim() !== ''); // Filter out null, undefined, and empty strings
         return [...new Set(filteredFollowers)]; // Remove duplicates
     };
+
+    useEffect(() => {
+        const fetchConversations = async () => {
+            const res = await getDocs(collection(db, `users/${authenticatedUser.uid}/conversations`));
+
+            const conversations = res.docs
+                .map((doc) => ({ id: doc.id, ...doc.data() }))
+
+            setConversations(conversations);
+        };
+
+        if (conversations === undefined || conversations.length === 0) {
+            fetchConversations();
+        }
+    }, [conversations]);
+
+
+    const goToConversationOrMessages = (userId) => {
+        let link
+        const conversation = conversations.find((conv) => conv.userId === userId);
+        console.log(conversation);
+        if (conversation) {
+            link = `/messages?conversation=${conversation.uid}`;
+            searchParams.set('conversation', conversation.uid);
+        } else {
+            link = `/messages`;
+        }
+        return link;
+    }
 
     const filteredData = data.filter((item) => {
         // Assuming 'firstName' and 'lastName' are the fields you want to search.
@@ -230,7 +267,7 @@ function UsersTabs() {
                                                             </svg>
                                                         </div>
                                                     </button>
-                                                    <Link className='absolute left-2 top-2 hover:text-pink-500 z-60' to='/messages'>
+                                                    <Link className='absolute left-2 top-2 hover:text-pink-500 z-60' to={goToConversationOrMessages(item.uid)}>
                                                         <svg className='w-4 h-4 fill-current shrink-0' viewBox='0 0 16 16'>
                                                             <path d='M8 0C3.6 0 0 3.1 0 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7zm4 10.8v2.3L8.9 12H8c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8z' />
                                                         </svg>
