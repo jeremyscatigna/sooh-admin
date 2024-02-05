@@ -340,7 +340,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                     <div className='space-y-5 mb-8 xl:mb-0'>
                         {/* About Me */}
                         <div className={`${mobile && ' flex flex-col items-center justify-center'}`}>
-                            <h2 className='text-primary font-semibold mb-2'>À propos de moi</h2>
+                            <h2 className='text-primary font-semibold mb-2'>À propos</h2>
                             <div className='text-sm space-y-2'>
                                 <p>{user.description || 'Ajoute une description pour te presenter au monde'}</p>
                             </div>
