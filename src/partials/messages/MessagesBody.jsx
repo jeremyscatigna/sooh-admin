@@ -19,50 +19,6 @@ function MessagesBody() {
 
     return (
         <div className='z-30 flex flex-col px-4 sm:px-6 md:px-5 py-6 overflow-y-scroll h-full' ref={contentArea}>
-            <div className='flex flex-col items-center justify-start h-full p-4 mt-24'>
-                <ol className='flex flex-col items-start justify-start text-xs text-slate-300 relative border-s border-gray-200'>
-                    <li className='mb-10 ms-6'>
-                        <span className='absolute flex items-center justify-center w-6 h-6 rounded-full -start-3 ring-8 ring-pink-900 bg-pink-500'>
-                            <div className='font-bold'>1</div>
-                        </span>
-                        Échangez sur les termes de votre collaboration. Définissez le type de contenu souhaité, et le mode de diffusion du
-                        contenu
-                    </li>
-                    <li className='mb-10 ms-6'>
-                        <span className='absolute flex items-center justify-center w-6 h-6 rounded-full -start-3 ring-8 ring-pink-900 bg-pink-500'>
-                            <div className='font-bold'>2</div>
-                        </span>
-                        Faites une offre de prix pour le contenu souhaité
-                    </li>
-                    <li className='mb-10 ms-6'>
-                        <span className='absolute flex items-center justify-center w-6 h-6 rounded-full -start-3 ring-8 ring-pink-900 bg-pink-500'>
-                            <div className='font-bold'>3</div>
-                        </span>
-                        A acceptation de l&apos;offre, un prépaiement en faveur du créateur de contenu est enregistré
-                    </li>
-                    <li className='mb-10 ms-6'>
-                        <span className='absolute flex items-center justify-center w-6 h-6 rounded-full -start-3 ring-8 ring-pink-900 bg-pink-500'>
-                            <div className='font-bold'>4</div>
-                        </span>
-                        Lorsque le contenu est prêt, partagez le sur cette messagerie avant diffusion. (Tant que ce contenu ne sera pas
-                        validé par le professionnel, il ne sera ni telechargeable, ni partageable)
-                    </li>
-                    <li className='mb-10 ms-6'>
-                        <span className='absolute flex items-center justify-center w-6 h-6 rounded-full -start-3 ring-8 ring-pink-900 bg-pink-500'>
-                            <div className='font-bold'>5</div>
-                        </span>
-                        Lorsque le professionnel valide ce contenu, le paiement est définitivement validé en faveur du créateur de contenu.
-                    </li>
-                    <li className='mb-10 ms-6'>
-                        <span className='absolute flex items-center justify-center w-6 h-6 rounded-full -start-3 ring-8 ring-pink-900 bg-pink-500'>
-                            <div className='font-bold'>6</div>
-                        </span>
-                        Ces échanges par messages ont valeur de contrat. Veillez à les conserver si besoin. (Loi 2023-451 du 9 juin 2023
-                        visant à encadrer l&apos;influence)
-                    </li>
-                </ol>
-            </div>
-
             {selectedConversationMessages &&
                 selectedConversationMessages.length > 0 &&
                 selectedConversationMessages.map((message) => (
