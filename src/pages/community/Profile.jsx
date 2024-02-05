@@ -207,9 +207,34 @@ function Profile() {
             });
         }
 
+        setUser({
+            ...user,
+            firstName,
+            lastName,
+            username,
+            email,
+            details,
+            description,
+            location,
+            avatar: imgUrl || '',
+        })
+
         await updateDoc(userColRef, {
             ...updatedUser,
         });
+
+        if (user.type === 'influencer') {
+            await updateDoc(doc(db, 'users', user.id), {
+                avatar: imgUrl || '',
+                firstName,
+                lastName,
+                username,
+                email,
+                details,
+                description,
+                location,
+            });
+        }
 
         setLoading(false);
         setBasicModalOpen(false);
@@ -281,7 +306,7 @@ function Profile() {
                                     type='text'
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
-                                    placeholder='Ajoute ton nom d&apos;utilisateur'
+                                    placeholder="Ajoute ton nom d'utilisateur"
                                 />
                             </div>
                             <div>
