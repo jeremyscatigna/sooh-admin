@@ -14,6 +14,7 @@ import { Heart, ShareIos } from 'iconoir-react';
 
 function SinglePost() {
     const { id } = useParams();
+    console.log(id);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [post, setPost] = useState([]);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -48,14 +49,8 @@ function SinglePost() {
 
     return (
         <div className='flex h-screen overflow-hidden'>
-            {/* Sidebar */}
-            {!mobile && <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
-
             {/* Content area */}
             <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
-                {/*  Site header */}
-                {!mobile && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
-
                 <main>
                     <div className={`px-4 sm:px-6 lg:px-8 py-8 w-full ${mobile && 'mb-24'}`}>
                         {/* Page content */}

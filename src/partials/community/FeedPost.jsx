@@ -141,6 +141,7 @@ function FeedPost({ item }) {
 
     const handleShare = async () => {
         const postUrl = `https://sooh.app/posts/${item.uid}`; // Adjust the URL to point to your post detail page
+        console.log(postUrl);
         // Facebook share URL
         const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`;
 
