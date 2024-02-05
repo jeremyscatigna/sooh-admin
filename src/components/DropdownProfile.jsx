@@ -79,22 +79,13 @@ function DropdownProfile({ align }) {
                         <li>
                             <Link
                                 className='font-medium text-sm text-primary hover:text-secondary flex items-center py-1 px-3'
-                                to='/settings/account'
-                                onClick={() => setDropdownOpen(!dropdownOpen)}
-                            >
-                                Settings
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                className='font-medium text-sm text-primary hover:text-secondary flex items-center py-1 px-3'
                                 to='/signin'
                                 onClick={() => {
                                     setDropdownOpen(!dropdownOpen);
                                     signOut();
                                 }}
                             >
-                                Sign Out
+                                Se déconnecter
                             </Link>
                         </li>
                     </ul>

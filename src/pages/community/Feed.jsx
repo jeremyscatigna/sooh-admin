@@ -175,12 +175,6 @@ function Feed() {
                                             <Link className='flex items-center justify-center p-2 rounded-full bg-card' to={`/messages`}>
                                                 <Message className='w-4 h-4 shrink-0 text-primary' />
                                             </Link>
-                                            <Link
-                                                className='flex items-center justify-center p-2 rounded-full bg-card'
-                                                to={`/settings/account`}
-                                            >
-                                                <Settings className='w-4 h-4 shrink-0 text-primary' />
-                                            </Link>
                                         </div>
                                     </header>
                                 )}
