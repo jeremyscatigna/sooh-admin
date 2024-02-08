@@ -81,7 +81,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                         <div className='inline-flex -ml-1 -mt-1 mb-4 sm:mb-0'>
                             {user.avatar ? (
                                 <img
-                                    className='rounded-full border-4 border-white w-32 h-32 object-fit shrink-0'
+                                    className='rounded-full max-w-32 max-h-32 w-32 h-32 object-cover shadow-lg border-4 border-white'
                                     src={user.avatar}
                                     width='128'
                                     height='128'

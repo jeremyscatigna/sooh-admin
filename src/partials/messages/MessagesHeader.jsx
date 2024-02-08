@@ -34,11 +34,11 @@ function MessagesHeader() {
                         </svg>
                     </button>
                     {/* People list */}
-                    <div className='flex -space-x-3 -ml-px'>
-                        <a className='block' href='#0'>
+                    <div className='flex -space-x-3 -ml-px relative'>
+                        <a className='z-30' href='#0'>
                             {authenticatedUser.avatar ? (
                                 <img
-                                    className='rounded-full border-2 border-white box-content'
+                                    className='rounded-full max-w-10 max-h-10 w-10 h-10 object-cover shadow-lg border-4 border-white z-30'
                                     src={authenticatedUser.avatar}
                                     width='32'
                                     height='32'
@@ -48,10 +48,10 @@ function MessagesHeader() {
                                 <Avvvatars value={`${authenticatedUser.firstName} ${authenticatedUser.lastName}`} />
                             )}
                         </a>
-                        <a className='block' href='#0'>
+                        <a className='z-40' href='#0'>
                             {selectedConversation.userAvatar ? (
                                 <img
-                                    className='rounded-full border-2 border-white box-content'
+                                    className='bg-black rounded-full max-w-10 max-h-10 w-10 h-10 object-cover shadow-lg border-4 border-white z-40'
                                     src={selectedConversation.userAvatar}
                                     width='32'
                                     height='32'

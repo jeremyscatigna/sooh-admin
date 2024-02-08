@@ -24,7 +24,7 @@ function MessagesBody() {
                 selectedConversationMessages.map((message) => (
                     <div className='flex items-start mb-8 last:mb-24 first:mt-24' key={message.uid}>
                         {message.senderAvatar ? (
-                            <img className='rounded-full mr-4 w-10 h-10' src={message.senderAvatar} width='40' height='40' alt='User 01' />
+                            <img className='rounded-full max-w-10 max-h-10 w-10 h-10 object-cover shadow-lg border-4 border-white' src={message.senderAvatar} width='40' height='40' alt='User 01' />
                         ) : (
                             <Avvvatars value={`${message.senderFirstName} ${message.senderLastName}`} />
                         )}

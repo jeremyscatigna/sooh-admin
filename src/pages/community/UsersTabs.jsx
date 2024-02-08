@@ -276,7 +276,7 @@ function UsersTabs() {
                                                         <Link className='relative inline-flex items-start' to={`/profile/${item.uid}`}>
                                                             {item.avatar !== '' ? (
                                                                 <img
-                                                                    className='rounded-full'
+                                                                    className='rounded-full max-w-32 max-h-32 w-32 h-32 object-cover shadow-lg border-4 border-white'
                                                                     src={item.avatar}
                                                                     width='128'
                                                                     height='128'
