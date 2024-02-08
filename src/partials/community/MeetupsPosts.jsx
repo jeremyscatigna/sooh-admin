@@ -147,20 +147,20 @@ const getTodayDateByEndOfDay = () => {
 
 export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
     const user = useAtomValue(currentUser);
-    if (
-        item.date &&
-        dayjs(item.date).isBefore(dayjs()) &&
-        getTodayDateWithEndTime(item.endTime) < dayjs().toISOString() &&
-        item.recurency === 'Daily'
-    ) {
-        // return date + 1 day
-        item.date = dayjs(item.date).add(1, 'day');
-    }
+    // if (
+    //     item.date &&
+    //     dayjs(item.date).isBefore(dayjs()) &&
+    //     getTodayDateWithEndTime(item.endTime) < dayjs().toISOString() &&
+    //     item.recurency === 'Daily'
+    // ) {
+    //     // return date + 1 day
+    //     item.date = dayjs(item.date).add(1, 'day');
+    // }
 
-    if (item.date && dayjs(item.date).isBefore(dayjs()) && !item.endTime) {
-        // return today at end of day
-        item.date = getTodayDateByEndOfDay();
-    }
+    // if (item.date && dayjs(item.date).isBefore(dayjs()) && !item.endTime) {
+    //     // return today at end of day
+    //     item.date = getTodayDateByEndOfDay();
+    // }
 
     const { days, hours, minutes, seconds, text } = useTimer(item.date, 1000, item.endTime);
     const [like, setLike] = useState(item.likes ? doILikeThisHH(item, user) : false);
@@ -345,7 +345,7 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
                                         attendee.avatar ? (
                                             <img
                                                 key={attendee.uid}
-                                                className='rounded-full border-2 border-white box-content'
+                                                className='rounded-full max-w-[34px] max-h-[34px] w-[34px] h-[34px] object-cover shadow-lg border-2 border-white bg-black'
                                                 src={attendee.avatar}
                                                 width='28'
                                                 height='28'
