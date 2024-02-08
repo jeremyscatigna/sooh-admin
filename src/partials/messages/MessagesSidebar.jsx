@@ -71,8 +71,7 @@ function MessagesSidebar({ createConversation }) {
                                     {users
                                         .filter((user) => {
                                             if (
-                                                user.firstName.toLowerCase().includes(search.toLowerCase()) ||
-                                                user.lastName.toLowerCase().includes(search.toLowerCase())
+                                                user.username.toLowerCase().includes(search.toLowerCase())
                                             ) {
                                                 return user;
                                             }

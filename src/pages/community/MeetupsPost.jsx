@@ -397,7 +397,7 @@ function MeetupsPost() {
                                                             </div>
                                                             <div className='truncate'>
                                                                 <span className='text-sm font-medium text-primary'>
-                                                                    {attendee.firstName + ' ' + attendee.lastName}
+                                                                    {attendee.username ? attendee.username : attendee.firstName + ' ' + attendee.lastName}
                                                                 </span>
                                                             </div>
                                                         </div>

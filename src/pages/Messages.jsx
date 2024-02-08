@@ -110,6 +110,7 @@ function Messages() {
                     userFirstName: user.firstName,
                     userLastName: user.lastName,
                     userAvatar: user.avatar,
+                    username: user.username,
                     messages: [],
                     timestamp: getLocaleDateTime(),
                 };
@@ -121,6 +122,7 @@ function Messages() {
                     userFirstName: authenticatedUser.firstName,
                     userLastName: authenticatedUser.lastName,
                     userAvatar: authenticatedUser.avatar,
+                    username: authenticatedUser.username,
                     messages: [],
                     timestamp: getLocaleDateTime(),
                 };
