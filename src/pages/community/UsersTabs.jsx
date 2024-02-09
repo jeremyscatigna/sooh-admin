@@ -254,7 +254,7 @@ function UsersTabs() {
                                                 {/* Image + name */}
 
                                                 <header className='relative'>
-                                                    <button
+                                                    {/* <button
                                                         className='absolute right-0 top-0 hover:text-pink-500 z-60'
                                                         onClick={(e) => {
                                                             false;
@@ -266,7 +266,7 @@ function UsersTabs() {
                                                                 <path d='M22.682 11.318A4.485 4.485 0 0019.5 10a4.377 4.377 0 00-3.5 1.707A4.383 4.383 0 0012.5 10a4.5 4.5 0 00-3.182 7.682L16 24l6.682-6.318a4.5 4.5 0 000-6.364zm-1.4 4.933L16 21.247l-5.285-5A2.5 2.5 0 0112.5 12c1.437 0 2.312.681 3.5 2.625C17.187 12.681 18.062 12 19.5 12a2.5 2.5 0 011.785 4.251h-.003z' />
                                                             </svg>
                                                         </div>
-                                                    </button>
+                                                    </button> */}
                                                     <Link className='absolute left-2 top-2 hover:text-pink-500 z-60' to={goToConversationOrMessages(item.uid)}>
                                                         <svg className='w-4 h-4 fill-current shrink-0' viewBox='0 0 16 16'>
                                                             <path d='M8 0C3.6 0 0 3.1 0 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7zm4 10.8v2.3L8.9 12H8c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8z' />
