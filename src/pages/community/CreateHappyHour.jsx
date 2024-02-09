@@ -109,7 +109,7 @@ function CreateHappyHour() {
             uid: uuidv4(),
             name,
             description,
-            location,
+            location: location + ' ' + city,
             city,
             details,
             recurency,
