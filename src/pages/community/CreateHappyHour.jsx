@@ -416,9 +416,9 @@ function CreateHappyHour() {
                                                 value={recurency}
                                                 onChange={(e) => setRecurency(e.target.value)}
                                             >
-                                                <option value='Unique'>Unique</option>
+                                                <option value='Unique'>Un jour, un créneau horaire</option>
                                                 <option value='Daily'>Tout les jours</option>
-                                                <option value='Weekly'>Toute les semaines</option>
+                                                <option value='Weekly'>Une fois par semaine</option>
                                             </select>
                                         </div>
 
