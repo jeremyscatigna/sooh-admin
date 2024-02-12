@@ -255,6 +255,7 @@ function Meetups() {
                                     filtering={filtering}
                                     searchText={searchText}
                                     selectedCategory={selectedCategory}
+                                    selectedCity={selectedCity}
                                     isMyHappyHours={true}
                                     myHappyHours={myHappyHours}
                                 />
@@ -269,6 +270,7 @@ function Meetups() {
                             filtering={filtering}
                             searchText={searchText}
                             selectedCategory={selectedCategory}
+                            selectedCity={selectedCity}
                             isMyHappyHours={false}
                         />
                     </div>

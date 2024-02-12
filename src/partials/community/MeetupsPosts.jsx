@@ -20,7 +20,7 @@ import ModalBasic from '../../components/ModalBasic';
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
 
-function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCategory, isMyHappyHours, myHappyHours }) {
+function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCategory, selectedCity, isMyHappyHours, myHappyHours }) {
     const user = useAtomValue(currentUser);
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -48,6 +48,7 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCatego
     // Filter function
     const filterMeetups = (item) => {
         if (selectedCategory && item.category !== selectedCategory) return false;
+        if (selectedCity && item.city !== selectedCity) return false;
 
         switch (filtering) {
             case 'online':
@@ -80,8 +81,8 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCatego
     };
 
     // Memoized filtered data for 'now' and 'toCome'
-    const filteredNow = useMemo(() => applyFilters(now), [now, filtering, searchText, selectedCategory]);
-    const filteredToCome = useMemo(() => applyFilters(toCome), [toCome, filtering, searchText, selectedCategory]);
+    const filteredNow = useMemo(() => applyFilters(now), [now, filtering, searchText, selectedCategory, selectedCity]);
+    const filteredToCome = useMemo(() => applyFilters(toCome), [toCome, filtering, searchText, selectedCategory, selectedCity]);
 
     // Component rendering
     return (
