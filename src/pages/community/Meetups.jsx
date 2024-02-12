@@ -29,7 +29,11 @@ const filters = [
     },
     {
         id: 'instore',
-        name: 'En boutique',
+        name: 'Sur place',
+    },
+    {
+        id: 'home',
+        name: 'A domicile'
     },
     {
         id: 'thisweek',

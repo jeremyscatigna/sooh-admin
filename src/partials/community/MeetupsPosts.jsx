@@ -54,6 +54,8 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCatego
                 return item.type === 'online';
             case 'instore':
                 return item.type === 'instore';
+            case 'home':
+                return item.type === 'home'
             case 'thisweek':
                 return item.date && dayjs(item.date).isBefore(dayjs().add(7, 'day'));
             case 'thismonth':
