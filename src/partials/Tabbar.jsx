@@ -81,7 +81,7 @@ export const SlidingTabBar = () => {
         },
         {
             id: 'happyhours',
-            name: 'Happy Hours',
+            name: 'Deals',
             icon: (
                 <svg
                     width='24px'
