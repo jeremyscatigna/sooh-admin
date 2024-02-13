@@ -184,7 +184,7 @@ export const SlidingTabBar = () => {
 
     return (
         <div className='fixed z-50 bottom-2 w-full px-2'>
-            <div className='flew-row justify-center relative mx-auto flex h-12 rounded-3xl border border-black/40 bg-background px-2 backdrop-blur-sm'>
+            <div className='flew-row justify-center w-full relative mx-auto flex h-12 rounded-3xl border border-black/40 bg-background backdrop-blur-sm'>
                 <span
                     className='absolute bottom-0 top-0 -z-10 flex overflow-hidden rounded-3xl transition-all duration-300'
                     style={{ left: tabUnderlineLeft, width: tabUnderlineWidth }}
@@ -201,7 +201,7 @@ export const SlidingTabBar = () => {
                             ref={(el) => (tabsRef.current[index] = el)}
                             className={`${
                                 isActive ? `` : `hover:text-neutral-300`
-                            } my-auto cursor-pointer select-none rounded-full px-4 text-center font-light text-white text-xs justify-center flex items-center flex-col`}
+                            } my-auto cursor-pointer select-none rounded-full px-5 text-center font-light text-white text-xs justify-center flex items-center flex-col`}
                             onClick={() => setActiveTabIndex(index)}
                         >
                             {/* <Home className='h-4 w-4' /> */}
