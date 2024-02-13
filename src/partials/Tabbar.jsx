@@ -81,7 +81,7 @@ export const SlidingTabBar = () => {
         },
         {
             id: 'happyhours',
-            name: 'Deals',
+            name: 'Happy Hours',
             icon: (
                 <svg
                     width='24px'
@@ -183,10 +183,10 @@ export const SlidingTabBar = () => {
     }, [activeTabIndex]);
 
     return (
-        <div className='fixed z-50 bottom-2 left-1/2 -translate-x-1/2'>
+        <div className='fixed z-50 bottom-2 w-full px-6'>
             <div className='flew-row relative mx-auto flex h-12 rounded-3xl border border-black/40 bg-background px-2 backdrop-blur-sm'>
                 <span
-                    className='absolute bottom-0 top-0 -z-10 flex overflow-hidden rounded-3xl py-2 transition-all duration-300'
+                    className='absolute bottom-0 top-0 -z-10 flex overflow-hidden rounded-3xl transition-all duration-300'
                     style={{ left: tabUnderlineLeft, width: tabUnderlineWidth }}
                 >
                     <span className='h-full w-full rounded-3xl bg-gradient-to-r from-fuchsia-600 to-pink-600' />
@@ -206,6 +206,7 @@ export const SlidingTabBar = () => {
                         >
                             {/* <Home className='h-4 w-4' /> */}
                             {tab.icon}
+                            {tab.name}
                         </Link>
                     );
                 })}
