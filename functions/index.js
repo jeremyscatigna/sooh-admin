@@ -74,11 +74,14 @@ exports.recreateWeeklyHH = onSchedule("every day 00:00", async (event) => {
 
   console.log(happyHoursData);
 
+  const today = dayjs().startOf("day");
+
   const happyHoursDataToRecreate = happyHoursData
       .filter((happyHour) => {
+        const happyHourEndDate = dayjs(happyHour.date);
         return (
           happyHour.recurency === "Weekly" &&
-          dayjs(happyHour.date).day() === 0
+            happyHourEndDate.isSame(today, "day")
         );
       });
 
