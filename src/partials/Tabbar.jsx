@@ -183,7 +183,7 @@ export const SlidingTabBar = () => {
     }, [activeTabIndex]);
 
     return (
-        <div className='fixed z-50 bottom-2 w-full px-2'>
+        <div className='fixed z-50 bottom-2 w-full px-4'>
             <div className='flew-row justify-center w-full relative mx-auto flex h-12 rounded-3xl border border-black/40 bg-background backdrop-blur-sm'>
                 <span
                     className='absolute bottom-0 top-0 -z-10 flex overflow-hidden rounded-3xl transition-all duration-300'
