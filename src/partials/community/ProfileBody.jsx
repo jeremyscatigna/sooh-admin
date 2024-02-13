@@ -339,8 +339,8 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                     {/* Main content */}
                     <div className='space-y-5 mb-8 xl:mb-0'>
                         {/* About Me */}
-                        <div className={`${mobile && ' flex flex-col items-center justify-center'}`}>
-                            <h2 className='text-primary font-semibold mb-2'>À propos</h2>
+                        <div className={`${mobile && 'flex flex-col items-center justify-center w-full'}`}>
+                            <h3 className='text-primary font-semibold mb-2'>À propos</h3>
                             <div className='text-sm space-y-2'>
                                 <p>{user.description || 'Ajoute une description pour te presenter au monde'}</p>
                             </div>
@@ -415,7 +415,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
 
                         {/* Work History */}
                         <div className={`${mobile && ' flex flex-col items-center justify-center'}`}>
-                            <h2 className='text-primary font-semibold mb-2'>Posts</h2>
+                            <h3 className='text-primary font-semibold mb-2'>Posts</h3>
 
                             <div className={`grid ${mobile ? 'grid-cols-1' : 'grid-cols-4'} gap-4`}>
                                 {posts.map((item, i) => (
