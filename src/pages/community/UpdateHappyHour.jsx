@@ -379,7 +379,8 @@ function UpdateHappyHour() {
                                                     onChange={(e) => setType(e.target.value)}
                                                 >
                                                     <option value='online'>En ligne</option>
-                                                    <option value='instore'>En boutique</option>
+                                                    <option value='instore'>Sur place</option>
+                                                    <option value='home'>A domicile</option>
                                                 </select>
                                             </div>
 
