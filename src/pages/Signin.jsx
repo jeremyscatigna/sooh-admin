@@ -62,16 +62,18 @@ function Signin() {
                     <div className='min-h-[100dvh] h-full flex flex-col after:flex-1'>
                         {/* Header */}
                         <div className='flex-1'>
-                            <div className='flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8'>
-                                {/* Logo */}
-                                <Link className='block' to='/'>
-                                    <img className='h-12 w-auto' src={logo} alt='Logo' />
-                                </Link>
-                            </div>
+                            <div className='flex items-center justify-between px-4 sm:px-6 lg:px-8'>{/* Logo */}</div>
                         </div>
 
                         <div className='max-w-sm mx-auto w-full px-4 py-8'>
-                            <h1 className='text-3xl text-primary font-bold mb-6'>Content de te revoir!</h1>
+                            <div className='w-full justify-center items-center'>
+                                <Link className='w-full flex items-center justify-center' to='/'>
+                                    <img className='h-24 w-auto' src={logo} alt='Logo' />
+                                </Link>
+                                <h1 className='text-3xl text-primary font-bold mb-2 text-center'>Connectez</h1>
+                                <h1 className='text-3xl text-primary font-bold mb-2 text-center'>Boostez</h1>
+                                <h1 className='text-3xl text-primary font-bold mb-6 text-center'>Vivez</h1>
+                            </div>
                             {/* Form */}
                             <form>
                                 <div className='space-y-4'>
