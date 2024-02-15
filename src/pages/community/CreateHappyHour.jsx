@@ -98,6 +98,12 @@ function CreateHappyHour() {
         );
     };
 
+    const getDatePlusSevenDays = (date) => {
+        const d = new Date(date);
+        d.setDate(d.getDate() + 7);
+        return d.toISOString().slice(0, -5);
+    };
+
     const handleCreate = async () => {
         setLoading(true);
         if (name === '' || description === '' || location === '' || endTime === '' || imgUrl === '') {
@@ -105,6 +111,7 @@ function CreateHappyHour() {
             setLoading(false);
             return;
         }
+
         const toAdd = {
             uid: uuidv4(),
             name,
@@ -141,7 +148,49 @@ function CreateHappyHour() {
             console.log(e);
             setLoading(false);
 
-            navigate('/happyhours');
+            if (recurency !== 'Weekly') {
+                navigate('/happyhours');
+            }
+        }
+
+        if (recurency === 'Weekly') {
+            const toAdd = {
+                uid: uuidv4(),
+                name,
+                description,
+                location: location + ' ' + city,
+                city,
+                details,
+                recurency,
+                type,
+                deal,
+                closedDays,
+                favorites: [],
+                likes: [],
+                imageUrl: imgUrl,
+                userId: connectedUser.uid,
+                category,
+                date: getDatePlusSevenDays(selectedDates),
+                endDate: addEndDate ? endDate : null,
+                endTime,
+            };
+
+            try {
+                await addDoc(collection(db, 'happyhours'), {
+                    ...toAdd,
+                });
+                await addDoc(collection(db, `happyhours/${toAdd.uid}/participants`), {
+                    ...connectedUser,
+                });
+
+                setLoading(false);
+                navigate(`/happyhours`);
+            } catch (e) {
+                console.log(e);
+                setLoading(false);
+
+                navigate('/happyhours');
+            }
         }
     };
 
@@ -234,7 +283,7 @@ function CreateHappyHour() {
                                                 }}
                                             />
                                         </div>
-                                        
+
                                         <header className='mb-4'>
                                             {/* Title */}
                                             {validateName ? (
@@ -360,11 +409,7 @@ function CreateHappyHour() {
                                                             type='text'
                                                             value={location}
                                                             onChange={(e) => setLocation(e.target.value)}
-                                                            placeholder={
-                                                                type === 'online'
-                                                                    ? 'https://example.com'
-                                                                    : "Ajoutez l'adresses"
-                                                            }
+                                                            placeholder={type === 'online' ? 'https://example.com' : "Ajoutez l'adresses"}
                                                         />
 
                                                         <>
