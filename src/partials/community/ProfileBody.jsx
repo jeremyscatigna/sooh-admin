@@ -3,20 +3,25 @@ import React, { useEffect, useState } from 'react';
 import Avvvatars from 'avvvatars-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { currentUser } from '../../pages/Signup';
-import { Edit, Facebook, Instagram, TikTok, Twitter, YouTube } from 'iconoir-react';
+import { Edit, Facebook, Instagram, TikTok, Trash, Twitter, YouTube } from 'iconoir-react';
 import { signOut } from 'firebase/auth';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { db } from '../../main';
 import { selectedConversationAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
+import ModalBlank from '../../components/ModalBlank';
 
 function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalOpen, user, posts, influencer }) {
-    const connectedUser = useAtomValue(currentUser);
+    // const connectedUser = useAtomValue(currentUser);
+    const connectedUser = JSON.parse(localStorage.getItem('user'));
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [conversations, setConversations] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const [selectedConversation, setSelectedConversation] = useAtom(selectedConversationAtom);
     const setSelectedConversationMessages = useSetAtom(selectedConversationMessagesAtom);
+    const [dangerModalOpen, setDangerModalOpen] = useState(false);
+    const [toDeletePost, setToDeletePost] = useState({});
+
     const navigate = useNavigate();
 
     const handleWindowSizeChange = () => {
@@ -55,6 +60,14 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
         }
     };
 
+    const handleDelete = async () => {
+        const item = toDeletePost;
+        const convcollref = doc(db, 'posts', item.id);
+        await deleteDoc(convcollref);
+
+        posts = posts.filter((post) => post.id !== item.id);
+    };
+
     console.log(influencer);
 
     return (
@@ -63,6 +76,31 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                 profileSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
             }`}
         >
+            <ModalBlank id='basic-modal' className='bg-card rounded-xl' modalOpen={dangerModalOpen} setModalOpen={setDangerModalOpen}>
+                <div className='p-5 flex flex-col space-y-4 justify-center items-center bg-card rounded-xl'>
+                    {/* Icon */}
+                    <div className='w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-rose-100'>
+                        <svg className='w-4 h-4 shrink-0 fill-current text-rose-500' viewBox='0 0 16 16'>
+                            <path d='M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z' />
+                        </svg>
+                    </div>
+
+                    <div className='text-lg font-semibold text-primary text-center'>Supprimer ce Post ?</div>
+
+                    {/* Modal footer */}
+
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleDelete();
+                            setDangerModalOpen(false);
+                        }}
+                        className='btn-sm rounded-xl bg-rose-500 hover:bg-rose-600 text-white'
+                    >
+                        Supprimer
+                    </button>
+                </div>
+            </ModalBlank>
             {/* Content */}
             <div className='relative px-4 sm:px-6 pb-8'>
                 <Link
@@ -420,6 +458,16 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                             <div className={`grid ${mobile ? 'grid-cols-1' : 'grid-cols-4'} gap-4`}>
                                 {posts.map((item, i) => (
                                     <div key={item.uid} className='bg-card shadow-md rounded-xl p-5'>
+                                        <div
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                setDangerModalOpen(true);
+                                            }}
+                                            className='flex items-center space-x-2 hover:text-red-500 cursor-pointer'
+                                        >
+                                            <Trash className='w-5 h-5' />
+                                        </div>
                                         <div
                                             className={`flex flex-col ${
                                                 !mobile && 'items-center justify-center'

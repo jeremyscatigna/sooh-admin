@@ -25,7 +25,7 @@ function Signin() {
     const setUserId = useSetAtom(userIdAtom);
     const setUserName = useSetAtom(userNameAtom);
     const setUserType = useSetAtom(userTypeAtom);
-    const setCurrentUser = useSetAtom(currentUser);
+    // const setCurrentUser = useSetAtom(currentUser);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,6 +33,7 @@ function Signin() {
         setLoading(true);
         try {
             const res = await signInWithEmailAndPassword(auth, email, password);
+            console.log(res)
             const user = res.user;
 
             setUserId(user.uid);
@@ -40,7 +41,8 @@ function Signin() {
 
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
-                setCurrentUser(doc.data());
+                // setCurrentUser(doc.data());
+                localStorage.setItem("user", JSON.stringify(doc.data()));
                 setUserType(doc.data().type);
                 setUserName(doc.data().name);
                 setLoading(false);

@@ -15,7 +15,9 @@ function Onboarding01() {
     const [type, setType] = React.useState("business");
     const currentUserDocumentId = useAtomValue(currentUserDocumentIdAtom);
     const setCurrentType = useSetAtom(userTypeAtom);
-    const [user, setCurrentUser] = useAtom(currentUser);
+    // const [user, setCurrentUser] = useAtom(currentUser);
+
+    const user = JSON.parse(localStorage.getItem('user'));
 
     const onTypeChange = (e) => {
         setType(e.target.value);
@@ -29,7 +31,8 @@ function Onboarding01() {
             type: type,
         });
 
-        setCurrentUser({...user, type: type})
+        // setCurrentUser({...user, type: type})
+        localStorage.setItem("user", JSON.stringify({...user, type: type}));
         setCurrentType(type);
         if(type === "business" || type === "influencer") {
           navigate("/onboarding-02");

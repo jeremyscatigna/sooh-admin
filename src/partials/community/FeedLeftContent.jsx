@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { currentUser } from '../../pages/Signup';
 
 function FeedLeftContent() {
-  const user = useAtomValue(currentUser);
+  // const user = useAtomValue(currentUser);
+  const user = JSON.parse(localStorage.getItem('user'));
 
   return (
     <div className="w-full md:w-60 mb-8 md:mb-0">

@@ -2,14 +2,21 @@ import { Dashboard, Group, Home, Shop } from 'iconoir-react';
 import { useAtomValue } from 'jotai';
 import React, { useEffect, useRef, useState } from 'react';
 import { currentUser } from '../pages/Signup';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, redirect, useLocation } from 'react-router-dom';
 
 export const SlidingTabBar = () => {
     const tabsRef = useRef([]);
     const [activeTabIndex, setActiveTabIndex] = useState(null);
     const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
     const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
-    const user = useAtomValue(currentUser);
+    // const user = useAtomValue(currentUser);
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    useEffect(() => {
+        if (!user) {
+            redirect('/signin');
+        }
+    }, [user]);
 
     const location = useLocation();
     const { pathname } = location;

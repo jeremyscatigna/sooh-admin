@@ -34,7 +34,8 @@ function DashboardPro() {
     const [usersByType, setUsersByType] = useState([]);
     const [happyHoursRevenueByCategory, setHappyHoursRevenueByCategory] = useState([]);
 
-    const user = useAtomValue(currentUser);
+    // const user = useAtomValue(currentUser);
+    const user = JSON.parse(localStorage.getItem('user'));
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);

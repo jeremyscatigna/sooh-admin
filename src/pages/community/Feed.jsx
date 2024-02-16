@@ -47,7 +47,8 @@ function Feed() {
 
     const inputRef = useRef(null);
 
-    const user = useAtomValue(currentUser);
+    // const user = useAtomValue(currentUser);
+    const user = JSON.parse(localStorage.getItem('user'));
     const currentUserAuth = auth.currentUser;
 
     useEffect(() => {

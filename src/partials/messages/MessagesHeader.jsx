@@ -14,7 +14,8 @@ function MessagesHeader() {
     const [basicModalOpen, setBasicModalOpen] = React.useState(false);
     const [msgSidebarOpen, setMsgSidebarOpen] = useAtom(msgSidebarOpenAtom);
     const selectedConversation = useAtomValue(selectedConversationAtom);
-    const authenticatedUser = useAtomValue(currentUser);
+    // const authenticatedUser = useAtomValue(currentUser);
+    const authenticatedUser = JSON.parse(localStorage.getItem('user'));
 
     return (
         <div className='z-40 fixed top-0 bg-card w-full'>

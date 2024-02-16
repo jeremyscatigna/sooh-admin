@@ -28,7 +28,8 @@ const doIFavoriteThis = (item, user) => {
 
 function MeetupsPost() {
     const { id } = useParams();
-    const connectedUser = useAtomValue(currentUser);
+    // const connectedUser = useAtomValue(currentUser);
+    const connectedUser = JSON.parse(localStorage.getItem('user'));
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [happyHour, setHappyHour] = useState([]);
     const [user, setUser] = useState({});

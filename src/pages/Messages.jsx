@@ -42,7 +42,8 @@ function Messages() {
     const [openCreateOfferModal, setOpenCreateOfferModal] = useAtom(openCreateOfferModalAtom);
     const [openSendMediaModal, setOpenSendMediaModal] = useAtom(openSendMediaModalAtom);
 
-    const authenticatedUser = useAtomValue(currentUser);
+    // const authenticatedUser = useAtomValue(currentUser);
+    const authenticatedUser = JSON.parse(localStorage.getItem('user'));
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
 
     const handleWindowSizeChange = () => {
