@@ -88,57 +88,57 @@ function App() {
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const msgSidebarOpen = useAtomValue(msgSidebarOpenAtom);
 
-    useEffect(() => {
-        console.log('Initializing HomePage');
+    // useEffect(() => {
+    //     console.log('Initializing HomePage');
     
-        // Request permission to use push notifications
-        const requestPermissions = async () => {
-          const result = await PushNotifications.requestPermissions();
-          if (result.receive === 'granted') {
-            // Register with Apple / Google to receive push via APNS/FCM
-            PushNotifications.register();
-          } else {
-            // Show some error
-            console.error('Push notification permission was denied');
-          }
-        };
+    //     // Request permission to use push notifications
+    //     const requestPermissions = async () => {
+    //       const result = await PushNotifications.requestPermissions();
+    //       if (result.receive === 'granted') {
+    //         // Register with Apple / Google to receive push via APNS/FCM
+    //         PushNotifications.register();
+    //       } else {
+    //         // Show some error
+    //         console.error('Push notification permission was denied');
+    //       }
+    //     };
     
-        requestPermissions();
+    //     requestPermissions();
     
-        // On success, we should be able to receive notifications
-        const onRegistration = (token) => {
-          alert('Push registration success, token: ' + token.value);
-        };
+    //     // On success, we should be able to receive notifications
+    //     const onRegistration = (token) => {
+    //       alert('Push registration success, token: ' + token.value);
+    //     };
     
-        // Some issue with our setup and push will not work
-        const onRegistrationError = (error) => {
-          alert('Error on registration: ' + JSON.stringify(error));
-        };
+    //     // Some issue with our setup and push will not work
+    //     const onRegistrationError = (error) => {
+    //       alert('Error on registration: ' + JSON.stringify(error));
+    //     };
     
-        // Show us the notification payload if the app is open on our device
-        const onPushReceived = (notification) => {
-          alert('Push received: ' + JSON.stringify(notification));
-        };
+    //     // Show us the notification payload if the app is open on our device
+    //     const onPushReceived = (notification) => {
+    //       alert('Push received: ' + JSON.stringify(notification));
+    //     };
     
-        // Method called when tapping on a notification
-        const onPushActionPerformed = (notification) => {
-          alert('Push action performed: ' + JSON.stringify(notification));
-        };
+    //     // Method called when tapping on a notification
+    //     const onPushActionPerformed = (notification) => {
+    //       alert('Push action performed: ' + JSON.stringify(notification));
+    //     };
     
-        // Add listeners
-        PushNotifications.addListener('registration', onRegistration);
-        PushNotifications.addListener('registrationError', onRegistrationError);
-        PushNotifications.addListener('pushNotificationReceived', onPushReceived);
-        PushNotifications.addListener('pushNotificationActionPerformed', onPushActionPerformed);
+    //     // Add listeners
+    //     PushNotifications.addListener('registration', onRegistration);
+    //     PushNotifications.addListener('registrationError', onRegistrationError);
+    //     PushNotifications.addListener('pushNotificationReceived', onPushReceived);
+    //     PushNotifications.addListener('pushNotificationActionPerformed', onPushActionPerformed);
     
-        // Clean up listeners
-        return () => {
-          PushNotifications.removeListener('registration', onRegistration);
-          PushNotifications.removeListener('registrationError', onRegistrationError);
-          PushNotifications.removeListener('pushNotificationReceived', onPushReceived);
-          PushNotifications.removeListener('pushNotificationActionPerformed', onPushActionPerformed);
-        };
-      }, []);
+    //     // Clean up listeners
+    //     return () => {
+    //       PushNotifications.removeListener('registration', onRegistration);
+    //       PushNotifications.removeListener('registrationError', onRegistrationError);
+    //       PushNotifications.removeListener('pushNotificationReceived', onPushReceived);
+    //       PushNotifications.removeListener('pushNotificationActionPerformed', onPushActionPerformed);
+    //     };
+    //   }, []);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
