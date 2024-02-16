@@ -458,7 +458,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                             <div className={`grid ${mobile ? 'grid-cols-1' : 'grid-cols-4'} gap-4`}>
                                 {posts.map((item, i) => (
                                     <div key={item.uid} className='bg-card shadow-md rounded-xl p-5'>
-                                        {item.userId === connectedUser.uid && (
+                                        
                                             <div
                                                 onClick={(e) => {
                                                     e.preventDefault();
@@ -469,7 +469,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                                             >
                                                 <Trash className='w-5 h-5' />
                                             </div>
-                                        )}
+                                        
                                         <div
                                             className={`flex flex-col ${
                                                 !mobile && 'items-center justify-center'
