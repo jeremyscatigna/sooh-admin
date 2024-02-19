@@ -107,7 +107,7 @@ function App() {
     
         // On success, we should be able to receive notifications
         const onRegistration = (token) => {
-          alert('Push registration success, token: ' + token.value);
+          // alert('Push registration success, token: ' + token.value);
         };
     
         // Some issue with our setup and push will not work
