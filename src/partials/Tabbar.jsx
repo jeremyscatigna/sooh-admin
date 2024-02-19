@@ -9,14 +9,7 @@ export const SlidingTabBar = () => {
     const [activeTabIndex, setActiveTabIndex] = useState(null);
     const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
     const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
-    const user = useAtomValue(currentUser);
     // const user = JSON.parse(localStorage.getItem('user'));
-
-    useEffect(() => {
-        if (!user) {
-            redirect('/signin');
-        }
-    }, [user]);
 
     const location = useLocation();
     const { pathname } = location;
