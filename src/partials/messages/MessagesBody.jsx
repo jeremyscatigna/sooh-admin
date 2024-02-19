@@ -9,8 +9,8 @@ import { CheckCircle, ShieldCross } from 'iconoir-react';
 
 function MessagesBody() {
     const selectedConversationMessages = useAtomValue(selectedConversationMessagesAtom);
-    // const user = useAtomValue(currentUser);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = useAtomValue(currentUser);
+    // const user = JSON.parse(localStorage.getItem('user'));
 
     const contentArea = useRef(null);
 

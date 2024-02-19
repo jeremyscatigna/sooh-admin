@@ -59,18 +59,7 @@ function Signup() {
                     description: '',
                 });
 
-                // setCurrentUser({
-                //     uid: user.uid,
-                //     firstName,
-                //     lastName,
-                //     email,
-                //     username,
-                //     avatar: '',
-                //     type: '',
-                //     details: '',
-                //     description: '',
-                // });
-                localStorage.setItem("user", JSON.stringify({
+                setCurrentUser({
                     uid: user.uid,
                     firstName,
                     lastName,
@@ -80,8 +69,19 @@ function Signup() {
                     type: '',
                     details: '',
                     description: '',
-                }));
-                localStorage.setItem("currentUserDocumentId", document.id);
+                });
+                // localStorage.setItem("user", JSON.stringify({
+                //     uid: user.uid,
+                //     firstName,
+                //     lastName,
+                //     email,
+                //     username,
+                //     avatar: '',
+                //     type: '',
+                //     details: '',
+                //     description: '',
+                // }));
+                // localStorage.setItem("currentUserDocumentId", document.id);
                 setCurrentUserDocumentId(document.id);
 
                 navigate('/onboarding-01');

@@ -21,8 +21,8 @@ dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
 
 function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCategory, selectedCity, isMyHappyHours, myHappyHours }) {
-    // const user = useAtomValue(currentUser);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = useAtomValue(currentUser);
+    // const user = JSON.parse(localStorage.getItem('user'));
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
 

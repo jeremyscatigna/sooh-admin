@@ -26,8 +26,8 @@ function UsersTabs() {
 
     const [searchText, setSearchText] = useState('');
 
-    // const authenticatedUser = useAtomValue(currentUser);
-    const authenticatedUser = JSON.parse(localStorage.getItem('user'));
+    const authenticatedUser = useAtomValue(currentUser);
+    // const authenticatedUser = JSON.parse(localStorage.getItem('user'));
     const [conversations, setConversations] = useAtom(conversationsAtom);
 
     const handleWindowSizeChange = () => {

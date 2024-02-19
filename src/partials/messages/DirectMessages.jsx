@@ -19,8 +19,8 @@ function DirectMessages() {
     const [conversationToDelete, setConversationToDelete] = useState(null);
     const [dangerModalOpen, setDangerModalOpen] = useState(false);
 
-    // const user = useAtomValue(currentUser);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = useAtomValue(currentUser);
+    // const user = JSON.parse(localStorage.getItem('user'));
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 

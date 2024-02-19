@@ -12,8 +12,8 @@ import { selectedConversationAtom, selectedConversationMessagesAtom } from '../.
 import ModalBlank from '../../components/ModalBlank';
 
 function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalOpen, user, posts, influencer }) {
-    // const connectedUser = useAtomValue(currentUser);
-    const connectedUser = JSON.parse(localStorage.getItem('user'));
+    const connectedUser = useAtomValue(currentUser);
+    // const connectedUser = JSON.parse(localStorage.getItem('user'));
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [conversations, setConversations] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();

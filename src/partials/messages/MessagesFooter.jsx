@@ -25,8 +25,8 @@ function MessagesFooter() {
 
     const inputRef = useRef(null);
 
-    // const user = useAtomValue(currentUser);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = useAtomValue(currentUser);
+    // const user = JSON.parse(localStorage.getItem('user'));
 
     const handleUpload = (e) => {
         e.preventDefault();

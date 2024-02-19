@@ -31,8 +31,8 @@ function UpdateHappyHour() {
     const navigate = useNavigate();
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    // const connectedUser = useAtomValue(currentUser);
-    const connectedUser = JSON.parse(localStorage.getItem('user'));
+    const connectedUser = useAtomValue(currentUser);
+    // const connectedUser = JSON.parse(localStorage.getItem('user'));
 
     const [imgUrl, setImgUrl] = useState(null);
     const [progresspercent, setProgresspercent] = useState(0);

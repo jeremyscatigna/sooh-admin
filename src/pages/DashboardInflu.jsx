@@ -17,8 +17,8 @@ function DashboardInflu() {
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [usersPosts, setUsersPosts] = useState([]);
 
-    // const user = useAtomValue(currentUser);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = useAtomValue(currentUser);
+    // const user = JSON.parse(localStorage.getItem('user'));
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);

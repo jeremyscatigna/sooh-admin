@@ -30,8 +30,8 @@ function CreateHappyHour() {
     const navigate = useNavigate();
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    // const connectedUser = useAtomValue(currentUser);
-    const connectedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+    const connectedUser = useAtomValue(currentUser);
+    // const connectedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
 
     const [imgUrl, setImgUrl] = useState(null);
     const [progresspercent, setProgresspercent] = useState(0);
@@ -101,7 +101,7 @@ function CreateHappyHour() {
 
     const getDatePlusSevenDays = (date) => {
         const d = new Date(date);
-        d.setDate(d.getDate() - d.getTimezoneOffset() * 60000 + 7);
+        d.setDate(d.getDate() + 7);
         return d.toISOString().slice(0, -5);
     };
 

@@ -34,8 +34,8 @@ function DashboardAdmin() {
     const [usersByType, setUsersByType] = useState([]);
     const [happyHoursRevenueByCategory, setHappyHoursRevenueByCategory] = useState([]);
 
-    // const user = useAtomValue(currentUser);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = useAtomValue(currentUser);
+    // const user = JSON.parse(localStorage.getItem('user'));
 
     const priceDaily = 32.99;
     const priceWeekly = 15.99;
