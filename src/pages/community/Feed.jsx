@@ -274,7 +274,7 @@ function Feed() {
                                                             id='status-input'
                                                             className='form-input w-full bg-hover text-secondary border-none rounded-full placeholder-secondary'
                                                             type='text'
-                                                            placeholder={`Que se passe-t-il, ${user.firstName}?`}
+                                                            placeholder={`Quoi de neuf, ${user.firstName}?`}
                                                             value={postText}
                                                             onChange={(e) => setPostText(e.target.value)}
                                                         />

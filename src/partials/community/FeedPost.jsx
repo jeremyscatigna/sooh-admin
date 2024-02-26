@@ -30,8 +30,8 @@ function FeedPost({ item }) {
     dayjs.extend(LocalizedFormat);
     dayjs.extend(RelativeTime);
 
-    // const user = useAtomValue(currentUser);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = useAtomValue(currentUser);
+    // const user = JSON.parse(localStorage.getItem('user'));
 
     const [like, setLike] = React.useState(item.likes ? doILikeThisPost(item, user) : false);
     const [comment, setComment] = React.useState('');

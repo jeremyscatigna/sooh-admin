@@ -57,8 +57,8 @@ function Meetups() {
     const [now, setNow] = useState([]);
     const [toCome, setToCome] = useState([]);
 
-    // const user = useAtomValue(userType);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = useAtomValue(userType);
+    // const user = JSON.parse(localStorage.getItem('user'));
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
