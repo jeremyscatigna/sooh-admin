@@ -463,6 +463,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     e.stopPropagation();
+                                                    setToDeletePost(item);
                                                     setDangerModalOpen(true);
                                                 }}
                                                 className='flex items-center space-x-2 hover:text-red-500 cursor-pointer'
