@@ -94,6 +94,24 @@ function Messages() {
         fetchUser();
     }, []);
 
+    useEffect(() => {
+        // refetch the conversation messages when a new message is added to the conversation
+        if (selectedConversation && selectedConversation.uid) {
+            const q = query(
+                collection(db, `users/${authenticatedUser.uid}/conversations`),
+                where('uid', '==', selectedConversation.uid)
+            );
+            const unsubscribe = onSnapshot(q, (snapshot) => {
+                const messages = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+                setSelectedConversationMessages(messages[0].messages || []);
+            });
+
+            return () => {
+                unsubscribe();
+            };
+        }
+    }, [selectedConversationMessages, selectedConversation, authenticatedUser, setSelectedConversationMessages]);
+
     const createConversation = async (user) => {
         console.log(user);
         console.log(authenticatedUser);

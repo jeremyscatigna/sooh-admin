@@ -216,7 +216,7 @@ function MeetupsPost() {
                                     <p>{happyHour.description}</p>
 
                                     <p className='text-secondary text-xs flex row mt-1'>
-                                        {happyHour.type === 'instore' ? (
+                                        {happyHour.type === 'instore' || happyHour.type === 'home' ? (
                                             <>
                                                 <MapsArrowDiagonal className='h-4 w-4 mr-1' />
                                                 <a

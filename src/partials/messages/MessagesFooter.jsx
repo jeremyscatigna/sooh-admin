@@ -268,6 +268,7 @@ function MessagesFooter() {
                             };
 
                             setSelectedConversationMessages([...selectedConversationMessages, message]);
+                            console.log(message)
                             handleUpdate(e, message);
                         }}
                         className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded-full whitespace-nowrap'

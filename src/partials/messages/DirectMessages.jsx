@@ -15,7 +15,7 @@ function DirectMessages() {
     const [msgSidebarOpen, setMsgSidebarOpen] = useAtom(msgSidebarOpenAtom);
     const [conversations, setConversations] = useAtom(conversationsAtom);
     const [selectedConversation, setSelectedConversation] = useAtom(selectedConversationAtom);
-    const setSelectedConversationMessages = useSetAtom(selectedConversationMessagesAtom);
+    const [selectedConversationMessages ,setSelectedConversationMessages] = useAtom(selectedConversationMessagesAtom);
     const [conversationToDelete, setConversationToDelete] = useState(null);
     const [dangerModalOpen, setDangerModalOpen] = useState(false);
 
@@ -100,6 +100,13 @@ function DirectMessages() {
                                 } transition duration-150 ease-in-out`}
                                 onClick={() => {
                                     console.log(conversation);
+                                    if (selectedConversationMessages.length !== conversation.messages.length) {
+                                        // force re-fetch messages
+                                        updateDoc(doc(db, 'users', user.uid, 'conversations', conversation.id), {
+                                            lastRead: Date.now(),
+                                        });
+                                    }
+
                                     setSelectedConversation(conversation);
                                     setSearchParams({ conversation: conversation.uid });
                                     setSelectedConversationMessages(conversation.messages);
