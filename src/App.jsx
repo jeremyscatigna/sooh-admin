@@ -125,7 +125,7 @@ function App() {
         };
 
         FCM.subscribeTo({ topic: 'allUsers' })
-            .then((r) => alert(`subscribed to topic ${r.topic}`))
+            .then((r) => console.log('Successfully subscribed to topic:', r))
             .catch((err) => console.log(err));
 
         // Add listeners
