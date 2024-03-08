@@ -75,12 +75,11 @@ import CreateHappyHour from './pages/community/CreateHappyHour';
 import { useAtomValue } from 'jotai';
 import UpdateHappyHour from './pages/community/UpdateHappyHour';
 import ChatPage from './pages/Chat';
+import { FCM } from '@capacitor-community/fcm';
 
 import 'stream-chat-react/dist/css/v2/index.css';
 import SinglePost from './pages/community/SinglePost';
-import {
-    PushNotifications,
-  } from '@capacitor/push-notifications';
+import { PushNotifications } from '@capacitor/push-notifications';
 
 function App() {
     const location = useLocation();
@@ -90,55 +89,59 @@ function App() {
 
     useEffect(() => {
         console.log('Initializing HomePage');
-    
+
         // Request permission to use push notifications
         const requestPermissions = async () => {
-          const result = await PushNotifications.requestPermissions();
-          if (result.receive === 'granted') {
-            // Register with Apple / Google to receive push via APNS/FCM
-            PushNotifications.register();
-          } else {
-            // Show some error
-            console.error('Push notification permission was denied');
-          }
+            const result = await PushNotifications.requestPermissions();
+            if (result.receive === 'granted') {
+                // Register with Apple / Google to receive push via APNS/FCM
+                PushNotifications.register();
+            } else {
+                // Show some error
+                console.error('Push notification permission was denied');
+            }
         };
-    
+
         requestPermissions();
-    
+
         // On success, we should be able to receive notifications
         const onRegistration = (token) => {
-          // alert('Push registration success, token: ' + token.value);
+            // alert('Push registration success, token: ' + token.value);
         };
-    
+
         // Some issue with our setup and push will not work
         const onRegistrationError = (error) => {
-          alert('Error on registration: ' + JSON.stringify(error));
+            alert('Error on registration: ' + JSON.stringify(error));
         };
-    
+
         // Show us the notification payload if the app is open on our device
         const onPushReceived = (notification) => {
-          alert('Push received: ' + JSON.stringify(notification));
+            alert(JSON.stringify(notification));
         };
-    
+
         // Method called when tapping on a notification
         const onPushActionPerformed = (notification) => {
-          alert('Push action performed: ' + JSON.stringify(notification));
+            alert('Push action performed: ' + JSON.stringify(notification));
         };
-    
+
+        FCM.subscribeTo({ topic: 'allUsers' })
+            .then((r) => alert(`subscribed to topic ${r.topic}`))
+            .catch((err) => console.log(err));
+
         // Add listeners
         PushNotifications.addListener('registration', onRegistration);
         PushNotifications.addListener('registrationError', onRegistrationError);
         PushNotifications.addListener('pushNotificationReceived', onPushReceived);
         PushNotifications.addListener('pushNotificationActionPerformed', onPushActionPerformed);
-    
+
         // Clean up listeners
         return () => {
-          PushNotifications.removeListener('registration', onRegistration);
-          PushNotifications.removeListener('registrationError', onRegistrationError);
-          PushNotifications.removeListener('pushNotificationReceived', onPushReceived);
-          PushNotifications.removeListener('pushNotificationActionPerformed', onPushActionPerformed);
+            PushNotifications.removeListener('registration', onRegistration);
+            PushNotifications.removeListener('registrationError', onRegistrationError);
+            PushNotifications.removeListener('pushNotificationReceived', onPushReceived);
+            PushNotifications.removeListener('pushNotificationActionPerformed', onPushActionPerformed);
         };
-      }, []);
+    }, []);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -237,7 +240,11 @@ function App() {
                 <Route path='/component/icons' element={<IconsPage />} />
                 <Route path='*' element={<PageNotFound />} />
             </Routes>
-            {mobile && !pathname.includes('signin') && !pathname.includes('signup') && !pathname.includes('onboarding') && msgSidebarOpen === true && <SlidingTabBar />}
+            {mobile &&
+                !pathname.includes('signin') &&
+                !pathname.includes('signup') &&
+                !pathname.includes('onboarding') &&
+                msgSidebarOpen === true && <SlidingTabBar />}
         </>
     );
 }

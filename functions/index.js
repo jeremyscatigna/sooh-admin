@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /**
  * Import function triggers from their respective submodules:
  *
@@ -12,14 +13,34 @@ const {onSchedule} = require("firebase-functions/v2/scheduler");
 const {logger} = require("firebase-functions");
 const dayjs = require("dayjs");
 
-// The Firebase Admin SDK to delete inactive users.
 const admin = require("firebase-admin");
 admin.initializeApp();
 
 // The es6-promise-pool to limit the concurrency of promises.
 const PromisePool = require("es6-promise-pool");
+const {onDocumentCreated} = require("firebase-functions/v2/firestore");
 // Maximum concurrent account deletions.
 const MAX_CONCURRENT = 3;
+
+exports.sendPushNotification = onDocumentCreated("/happyhours/{happyhoursId}", async (event) => {
+  // Grab the current value of what was written to Firestore.
+  const original = event.data.data().original;
+
+  const payload = {
+    notification: {
+      title: original.name,
+      body: original.description,
+    },
+  };
+
+  // You must return a Promise when performing
+  // asynchronous tasks inside a function
+  // such as writing to Firestore.
+  // Setting an 'uppercase' field in Firestore document returns a Promise.
+  // Send a message to all devices subscribed to the `allUsers` topic
+  const response = await admin.messaging().sendToTopic("allUsers", payload);
+  console.log("Sent notification", response);
+});
 
 // Run once a day at midnight, to clean up the users
 // Manually run the task here https://console.cloud.google.com/cloudscheduler
