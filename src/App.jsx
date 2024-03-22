@@ -121,7 +121,7 @@ function App() {
 
         // Method called when tapping on a notification
         const onPushActionPerformed = (notification) => {
-            alert('Push action performed: ' + JSON.stringify(notification));
+            console.log('Push action performed: ' + JSON.stringify(notification));
         };
 
         FCM.subscribeTo({ topic: 'allUsers' })

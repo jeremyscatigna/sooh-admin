@@ -1,4 +1,4 @@
-package com.sooh.sooh;
+package com.sooh.app;
 
 import com.getcapacitor.BridgeActivity;
 
