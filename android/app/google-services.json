@@ -7,9 +7,38 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:798737708331:android:1127e6725f04cc90aa016e",
+        "mobilesdk_app_id": "1:798737708331:android:7d3c2976f82637b3aa016e",
         "android_client_info": {
           "package_name": "com.sooh.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798737708331-01htb9hdigei6o2hsnnrdb209gtc9h5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv5AV8o0CK3nsQMrOTscENyqN5qDP7ojM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798737708331-01htb9hdigei6o2hsnnrdb209gtc9h5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798737708331:android:1127e6725f04cc90aa016e",
+        "android_client_info": {
+          "package_name": "com.sooh.sooh"
         }
       },
       "oauth_client": [

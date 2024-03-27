@@ -88,7 +88,7 @@ exports.recreateDailyHH = onSchedule("every day 00:00", async (event) => {
   logger.log("Done");
 });
 
-exports.recreateWeeklyHH = onSchedule("every day 00:00", async (event) => {
+exports.recreateWeeklyHH = onSchedule("every day 23:59", async (event) => {
   const happyHours = await admin.firestore().collection("happyhours").get();
   const happyHoursData = happyHours.docs
       .map((doc) => ({id: doc.id, ...doc.data()}));
