@@ -35,6 +35,23 @@ function Signup() {
     const setUserName = useSetAtom(userNameAtom);
     const setCurrentUser = useSetAtom(currentUser);
 
+    const signUpErrorHandling = (error) => {
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                setError('Un compte existe déjà avec cette adresse e-mail.');
+                break;
+            case 'auth/invalid-email':
+                setError('Adresse e-mail invalide.');
+                break;
+            case 'auth/weak-password':
+                setError('Le mot de passe est trop faible.');
+                break;
+            default:
+                setError("Une erreur s'est produite. Veuillez réessayer.");
+                break;
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -87,11 +104,12 @@ function Signup() {
                 navigate('/onboarding-01');
             } catch (err) {
                 console.log(err);
-                setError(err.message);
+                signUpErrorHandling(err);
+                setLoading(false);
             }
             setLoading(false);
         } catch (err) {
-            setError(err.message);
+            signUpErrorHandling(err);
             console.log(error);
         }
     };
@@ -152,7 +170,7 @@ function Signup() {
                                             id='username'
                                             className='form-input bg-hover rounded-full border-none text-secondary placeholder-secondary w-full'
                                             type='text'
-                                            placeholder='Nom d&apos;utilisateur'
+                                            placeholder="Nom d'utilisateur"
                                             onChange={(e) => setUsername(e.target.value)}
                                         />
                                     </div>
@@ -191,11 +209,13 @@ function Signup() {
                                             )}
                                         </label>
                                     </div>
+
+                                    {error && <p className='text-xs text-pink-500'>{error}</p>}
                                 </div>
                                 <div className='flex items-center justify-between mt-6'>
                                     <button
                                         disabled={isDisabled}
-                                        className={`btn ${
+                                        className={`btn mt-2 ${
                                             isDisabled
                                                 ? 'bg-card text-secondary'
                                                 : 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'

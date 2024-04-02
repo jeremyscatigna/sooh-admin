@@ -27,13 +27,30 @@ function Signin() {
     const setUserType = useSetAtom(userTypeAtom);
     const setCurrentUser = useSetAtom(currentUser);
 
+    const signInErrorHandling = (error) => {
+        switch (error.code) {
+            case 'auth/user-not-found':
+                setError('Aucun utilisateur trouvé avec cette adresse e-mail.');
+                break;
+            case 'auth/invalid-login-credentials':
+                setError('Email ou Mot de passe incorrect.');
+                break;
+            case 'auth/too-many-requests':
+                setError('Trop de tentatives de connexion infructueuses. Veuillez réessayer plus tard.');
+                break;
+            default:
+                setError("Une erreur s'est produite. Veuillez réessayer.");
+                break;
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setLoading(true);
         try {
             const res = await signInWithEmailAndPassword(auth, email, password);
-            console.log(res)
+            console.log(res);
             const user = res.user;
 
             setUserId(user.uid);
@@ -49,7 +66,8 @@ function Signin() {
                 navigate('/');
             });
         } catch (err) {
-            setError(err.message);
+            console.error(err);
+            signInErrorHandling(err);
             setLoading(false);
         }
     };
@@ -112,6 +130,8 @@ function Signin() {
                                             />
                                         </label>
                                     </div>
+
+                                    {error && <p className='text-xs text-pink-500'>{error}</p>}
                                 </div>
                                 <div className='flex items-center justify-between mt-6'>
                                     <div className='mr-1'>
