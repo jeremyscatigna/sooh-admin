@@ -153,46 +153,6 @@ function CreateHappyHour() {
                 navigate('/happyhours');
             }
         }
-
-        if (recurency === 'Weekly') {
-            const toAdd = {
-                uid: uuidv4(),
-                name,
-                description,
-                location: location + ' ' + city,
-                city,
-                details,
-                recurency,
-                type,
-                deal,
-                closedDays,
-                favorites: [],
-                likes: [],
-                imageUrl: imgUrl,
-                userId: connectedUser.uid,
-                category,
-                date: getDatePlusSevenDays(selectedDates),
-                endDate: addEndDate ? endDate : null,
-                endTime,
-            };
-
-            try {
-                await addDoc(collection(db, 'happyhours'), {
-                    ...toAdd,
-                });
-                await addDoc(collection(db, `happyhours/${toAdd.uid}/participants`), {
-                    ...connectedUser,
-                });
-
-                setLoading(false);
-                navigate(`/happyhours`);
-            } catch (e) {
-                console.log(e);
-                setLoading(false);
-
-                navigate('/happyhours');
-            }
-        }
     };
 
     const getHoursFromDateTime = (date) => {
