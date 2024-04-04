@@ -32,7 +32,6 @@ const getLocaleDateTime = () => {
 function Messages() {
     const contentArea = useRef(null);
     const [searchParams, setSearchParams] = useSearchParams();
-
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [msgSidebarOpen, setMsgSidebarOpen] = useState(msgSidebarOpenAtom);
     const [selectedConversation, setSelectedConversation] = useAtom(selectedConversationAtom);
@@ -61,8 +60,7 @@ function Messages() {
         const fetchConversations = async () => {
             const res = await getDocs(collection(db, `users/${authenticatedUser.uid}/conversations`));
 
-            const conversations = res.docs
-                .map((doc) => ({ id: doc.id, ...doc.data() }))
+            const conversations = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
             setConversations(conversations);
             console.log(res.docs.map((doc) => doc.data()));
@@ -81,7 +79,7 @@ function Messages() {
                 setSelectedConversationMessages(conv.messages || []);
             }
         }
-    }, [searchParams.get('conversation'), conversations]);
+    }, [conversations, searchParams, setSelectedConversation, setSelectedConversationMessages]);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -97,10 +95,7 @@ function Messages() {
     useEffect(() => {
         // refetch the conversation messages when a new message is added to the conversation
         if (selectedConversation && selectedConversation.uid) {
-            const q = query(
-                collection(db, `users/${authenticatedUser.uid}/conversations`),
-                where('uid', '==', selectedConversation.uid)
-            );
+            const q = query(collection(db, `users/${authenticatedUser.uid}/conversations`), where('uid', '==', selectedConversation.uid));
             const unsubscribe = onSnapshot(q, (snapshot) => {
                 const messages = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
                 setSelectedConversationMessages(messages[0].messages || []);
@@ -173,17 +168,13 @@ function Messages() {
                 <main className='h-screen bg-card'>
                     <div className='flex h-full'>
                         {/* Messages sidebar */}
-                        <MessagesSidebar
-                            createConversation={createConversation}
-                        />
+                        <MessagesSidebar createConversation={createConversation} />
 
                         {/* Messages body */}
                         <div className={`grow flex bg-card flex-col md:translate-x-0 transition-transform duration-300 ease-in-out`}>
                             {selectedConversation && selectedConversation.uid ? (
                                 <div className='h-full flex flex-col flex-1'>
-                                    
-                                        <MessagesHeader />
-                                   
+                                    <MessagesHeader />
 
                                     <MessagesBody />
                                     <MessagesFooter />
