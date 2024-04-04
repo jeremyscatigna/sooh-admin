@@ -1,6 +1,11 @@
 import { useAtom, useAtomValue } from 'jotai';
 import React, { useEffect, useRef } from 'react';
-import { openCreateOfferModalAtom, openSendMediaModalAtom, selectedConversationAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
+import {
+    openCreateOfferModalAtom,
+    openSendMediaModalAtom,
+    selectedConversationAtom,
+    selectedConversationMessagesAtom,
+} from '../../pages/Messages';
 import { v4 as uuidv4 } from 'uuid';
 import { currentUser } from '../../pages/Signup';
 import { collection, doc, getDocs, updateDoc } from 'firebase/firestore';
@@ -95,7 +100,11 @@ function MessagesFooter() {
     };
     return (
         <div className='z-40 sticky w-full bg-card bottom-0'>
-            <ModalBasic title='Créer une offre' modalOpen={openCreateOfferModal} setModalOpen={() => setOpenCreateOfferModal(!openCreateOfferModal)}>
+            <ModalBasic
+                title='Créer une offre'
+                modalOpen={openCreateOfferModal}
+                setModalOpen={() => setOpenCreateOfferModal(!openCreateOfferModal)}
+            >
                 <div className='px-5 pt-4 pb-1 space-y-4'>
                     <div>
                         <label className='block text-sm text-primary font-medium mb-1' htmlFor='placeholder'>
@@ -170,7 +179,11 @@ function MessagesFooter() {
                     </div>
                 </div>
             </ModalBasic>
-            <ModalBasic title='Envoyer un media' modalOpen={openSendMediaModal} setModalOpen={() => setOpenSendMediaModal(!openSendMediaModal)}>
+            <ModalBasic
+                title='Envoyer un media'
+                modalOpen={openSendMediaModal}
+                setModalOpen={() => setOpenSendMediaModal(!openSendMediaModal)}
+            >
                 <div className='px-5 pt-4 pb-1 space-y-4'>
                     <div className='grow flex space-x-5'>
                         <button
@@ -192,7 +205,7 @@ function MessagesFooter() {
                         </button>
                         <input ref={inputRef} type='file' id='file' className='hidden' onChange={handleUpload} />
                     </div>
-                    
+
                     <div className='px-5 py-4 mb-24'>
                         <div className='flex flex-wrap justify-end space-x-2'>
                             <button
@@ -268,7 +281,7 @@ function MessagesFooter() {
                             };
 
                             setSelectedConversationMessages([...selectedConversationMessages, message]);
-                            console.log(message)
+                            console.log(message);
                             handleUpdate(e, message);
                         }}
                         className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded-full whitespace-nowrap'

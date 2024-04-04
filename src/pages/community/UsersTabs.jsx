@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
 import SearchForm from '../../partials/actions/SearchForm';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../main';
 import { categories, getCategoriesShadowColor } from '../../utils/categories';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -11,6 +11,7 @@ import Avvvatars from 'avvvatars-react';
 import { Facebook, Instagram, Search, TikTok, Twitter, YouTube } from 'iconoir-react';
 import { useAtom, useAtomValue } from 'jotai';
 import { currentUser } from '../Signup';
+import { v4 as uuidv4 } from 'uuid';
 import { conversationsAtom } from '../Messages';
 
 function UsersTabs() {
@@ -99,8 +100,7 @@ function UsersTabs() {
         const fetchConversations = async () => {
             const res = await getDocs(collection(db, `users/${authenticatedUser.uid}/conversations`));
 
-            const conversations = res.docs
-                .map((doc) => ({ id: doc.id, ...doc.data() }))
+            const conversations = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
             setConversations(conversations);
         };
@@ -110,19 +110,67 @@ function UsersTabs() {
         }
     }, [conversations]);
 
+    const getLocaleDateTime = () => {
+        let d = new Date();
+        const dateTimeLocalValue = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, -5);
+        return dateTimeLocalValue;
+    };
 
-    const goToConversationOrMessages = (userId) => {
-        let link
-        const conversation = conversations.find((conv) => conv.userId === userId);
-        console.log(conversation);
+    const createConversation = async (user) => {
+        console.log(user);
+        console.log(authenticatedUser);
+        let id = '';
+        try {
+            const newConversation = {
+                uid: uuidv4(),
+                userId: user.uid,
+                toUserId: authenticatedUser.uid,
+                userFirstName: user.firstName,
+                userLastName: user.lastName,
+                userAvatar: user.avatar,
+                username: user.username,
+                messages: [],
+                timestamp: getLocaleDateTime(),
+            };
+
+            const newUserConversation = {
+                uid: newConversation.uid,
+                userId: authenticatedUser.uid,
+                toUserId: user.uid,
+                userFirstName: authenticatedUser.firstName,
+                userLastName: authenticatedUser.lastName,
+                userAvatar: authenticatedUser.avatar,
+                username: authenticatedUser.username,
+                messages: [],
+                timestamp: getLocaleDateTime(),
+            };
+            setConversations([...conversations, newConversation]);
+
+            id = newConversation.uid;
+            await addDoc(collection(db, `users/${authenticatedUser.uid}/conversations`), { ...newConversation });
+            await addDoc(collection(db, `users/${user.uid}/conversations`), { ...newUserConversation });
+        } catch (err) {
+            console.log(err);
+        }
+
+        return id;
+    };
+
+    const goToConversationOrMessages = async (user) => {
+        let link;
+        const conversation = conversations.find((conv) => conv.userId === user.uid);
+
         if (conversation) {
             link = `/messages?conversation=${conversation.uid}`;
             searchParams.set('conversation', conversation.uid);
         } else {
-            link = `/messages`;
+            const id = await createConversation(user);
+            link = `/messages?conversation=${id}`;
+            searchParams.set('conversation', id);
         }
+
         return link;
-    }
+    };
 
     const filteredData = data.filter((item) => {
         // Assuming 'firstName' and 'lastName' are the fields you want to search.
@@ -268,7 +316,13 @@ function UsersTabs() {
                                                             </svg>
                                                         </div>
                                                     </button> */}
-                                                    <Link className='absolute left-2 top-2 hover:text-pink-500 z-60' to={goToConversationOrMessages(item.uid)}>
+                                                    <Link
+                                                        className='absolute left-2 top-2 hover:text-pink-500 z-60'
+                                                        onClick={async () => {
+                                                            const link = await goToConversationOrMessages(item);
+                                                            window.location.href = link;
+                                                        }}
+                                                    >
                                                         <svg className='w-4 h-4 fill-current shrink-0' viewBox='0 0 16 16'>
                                                             <path d='M8 0C3.6 0 0 3.1 0 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7zm4 10.8v2.3L8.9 12H8c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8z' />
                                                         </svg>
@@ -294,7 +348,9 @@ function UsersTabs() {
                                                             to={`/profile/${item.uid}`}
                                                         >
                                                             <h2 className='text-xl leading-snug justify-center font-semibold'>
-                                                                {item.username && item.username !== '' ? item.username : item.firstName + ' ' + item.lastName}
+                                                                {item.username && item.username !== ''
+                                                                    ? item.username
+                                                                    : item.firstName + ' ' + item.lastName}
                                                             </h2>
                                                         </Link>
                                                     </div>
