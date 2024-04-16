@@ -12,12 +12,6 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { categories } from '../../utils/categories';
 
-const getLocaleDateTime = () => {
-    let d = new Date();
-    const dateTimeLocalValue = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, -5);
-    return dateTimeLocalValue;
-};
-
 const filters = [
     {
         id: 'all',
@@ -58,7 +52,6 @@ function Meetups() {
     const [toCome, setToCome] = useState([]);
 
     const user = useAtomValue(userType);
-    // const user = JSON.parse(localStorage.getItem('user'));
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
@@ -90,24 +83,6 @@ function Meetups() {
         });
     };
 
-    const replaceGetLocalDateTimeTimeByEndTime = (date, endTime) => {
-        if (!endTime) return date;
-        const dateArray = date.split('T');
-        const timeArray = endTime.split(':');
-        const newDate = new Date(dateArray[0]);
-        newDate.setHours(timeArray[0]);
-        newDate.setMinutes(timeArray[1]);
-        return newDate.toISOString().slice(0, -5);
-    };
-
-    const isToday = (date) => {
-        const today = dayjs();
-        const itemDate = dayjs(date);
-        return itemDate.isSame(today, 'day');
-    };
-
-    
-
     const getLocaleDateTimeAtBeginningOfDay = () => {
         let d = new Date();
         const dateTimeLocalValue = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, -14);
@@ -126,14 +101,6 @@ function Meetups() {
             return data.filter((item) => item.userId === user.uid);
         };
         const filterDataWhereEndTimeIsBeforeNow = (data) => {
-            const now = dayjs();
-            // return data.filter((item) => {
-            //     if (!item.endTime) return true;
-            //     // if (isToday(item.date) && dayjs(item.date).format('HH:mm') < item.endTime && dayjs().format('HH:mm') > item.endTime) return false;
-            //     const itemDate = dayjs(replaceGetLocalDateTimeTimeByEndTime(item.date, item.endTime));
-            //     return itemDate.isAfter(now);
-            // });
-
             return data
         };
         const fetchData = async () => {

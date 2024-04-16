@@ -1,5 +1,5 @@
 import { useAtom, useAtomValue } from 'jotai';
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import {
     openCreateOfferModalAtom,
     openSendMediaModalAtom,
@@ -31,22 +31,24 @@ function MessagesFooter() {
     const inputRef = useRef(null);
 
     const user = useAtomValue(currentUser);
-    // const user = JSON.parse(localStorage.getItem('user'));
 
     const handleUpload = (e) => {
         e.preventDefault();
         setFileLoading(true);
+
         const file = e.target.files[0];
-        console.log(file);
+
         if (!file) return;
         const storageRef = ref(storage, `messages/${uuidv4()}`);
-        console.log(storageRef);
+        
         const isVideo = file.type === 'video/mp4' || file.type === 'video/quicktime';
+
         if (isVideo) {
             setFileType('video');
         } else {
             setFileType('image');
         }
+
         const uploadTask = uploadBytesResumable(storageRef, file);
 
         uploadTask.on(

@@ -13,7 +13,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import Datepicker from '../../components/Datepicker';
 import Avvvatars from 'avvvatars-react';
-import { Cancel, Check, Edit, EyeAlt, MapsArrowDiagonal, Safari } from 'iconoir-react';
+import { AddCircle, Cancel, Check, CheckCircle, Edit, EyeAlt, MapsArrowDiagonal, Safari } from 'iconoir-react';
 import { categories } from '../../utils/categories';
 import MultiSelectDropdown from '../../components/MultiSelectDropdown';
 import dayjs from 'dayjs';
@@ -25,6 +25,191 @@ const getLocaleDateTime = () => {
 };
 
 const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+
+const optionsObject = [
+    { name: 'Pack photo +3', price: 5.99 },
+    { name: 'Pack photo +10', price: 9.99 },
+    { name: 'Tete de liste', price: 10.99 },
+    { name: 'Pack VIP', price: 32.99 },
+];
+
+function DisplayPricing({ recurency, options, setOptions }) {
+    switch (recurency) {
+        case 'Unique':
+            return (
+                <div className='flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-black dark:text-white'>
+                    <h3 className='text-2xl font-semibold'>Un jour, un créneau horaire</h3>
+
+                    <div className='flex justify-center items-baseline my-8'>
+                        <span className='mr-2 text-5xl font-extrabold'>
+                            {9.99 +
+                                options.reduce((accumulator, currentValue) => {
+                                    return accumulator + currentValue.price;
+                                }, 0)}
+                            €
+                        </span>
+                        <span className='text-gray-500 dark:text-gray-400'>/mois</span>
+                    </div>
+
+                    <h4 className='text-lg font-semibold'>Options</h4>
+
+                    <ul role='list' className='mb-8 space-y-4 text-left'>
+                        {optionsObject.map((option, index) => (
+                            <li key={index} className='flex items-center justify-between'>
+                                <div className='flex items-center space-x-3'>
+                                    <svg
+                                        className='flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400'
+                                        fill='currentColor'
+                                        viewBox='0 0 20 20'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                    >
+                                        <path
+                                            fillRule='evenodd'
+                                            d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+                                            clipRule='evenodd'
+                                        ></path>
+                                    </svg>
+                                    <span>{option.name}</span>
+                                    <span className='text-gray-400'>{option.price}€</span>
+                                </div>
+
+                                <button
+                                    onClick={() => {
+                                        setOptions([...options, option]);
+                                    }}
+                                    className='text-primary-500 dark:text-primary-400'
+                                >
+                                    {options.includes(option) ? <CheckCircle /> : <AddCircle />}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                    <a
+                        href='#'
+                        className='text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900'
+                    >
+                        S&apos;abonner
+                    </a>
+                </div>
+            );
+        case 'Daily':
+            return (
+                <div className='flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-black dark:text-white'>
+                    <h3 className='text-2xl font-semibold'>Tout les jours</h3>
+
+                    <div className='flex justify-center items-baseline my-8'>
+                        <span className='mr-2 text-5xl font-extrabold'>
+                            {9.99 +
+                                options.reduce((accumulator, currentValue) => {
+                                    return accumulator + currentValue.price;
+                                }, 0)}
+                            €
+                        </span>
+                        <span className='text-gray-500 dark:text-gray-400'>/mois</span>
+                    </div>
+
+                    <h4 className='text-lg font-semibold'>Options</h4>
+
+                    <ul role='list' className='mb-8 space-y-4 text-left'>
+                        {optionsObject.map((option, index) => (
+                            <li key={index} className='flex items-center justify-between'>
+                                <div className='flex items-center space-x-3'>
+                                    <svg
+                                        className='flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400'
+                                        fill='currentColor'
+                                        viewBox='0 0 20 20'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                    >
+                                        <path
+                                            fillRule='evenodd'
+                                            d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+                                            clipRule='evenodd'
+                                        ></path>
+                                    </svg>
+                                    <span>{option.name}</span>
+                                    <span className='text-gray-400'>{option.price}€</span>
+                                </div>
+
+                                <button
+                                    onClick={() => {
+                                        setOptions([...options, option]);
+                                    }}
+                                    className='text-primary-500 dark:text-primary-400'
+                                >
+                                    {options.includes(option) ? <CheckCircle /> : <AddCircle />}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                    <a
+                        href='#'
+                        className='text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900'
+                    >
+                        S&apos;abonner
+                    </a>
+                </div>
+            );
+        case 'Weekly':
+            return (
+                <div className='flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-black dark:text-white'>
+                    <h3 className='text-2xl font-semibold'>Une fois par semaine</h3>
+
+                    <div className='flex justify-center items-baseline my-8'>
+                        <span className='mr-2 text-5xl font-extrabold'>
+                            {9.99 +
+                                options.reduce((accumulator, currentValue) => {
+                                    return accumulator + currentValue.price;
+                                }, 0)}
+                            €
+                        </span>
+                        <span className='text-gray-500 dark:text-gray-400'>/mois</span>
+                    </div>
+
+                    <h4 className='text-lg font-semibold'>Options</h4>
+
+                    <ul role='list' className='mb-8 space-y-4 text-left'>
+                        {optionsObject.map((option, index) => (
+                            <li key={index} className='flex items-center justify-between'>
+                                <div className='flex items-center space-x-3'>
+                                    <svg
+                                        className='flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400'
+                                        fill='currentColor'
+                                        viewBox='0 0 20 20'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                    >
+                                        <path
+                                            fillRule='evenodd'
+                                            d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+                                            clipRule='evenodd'
+                                        ></path>
+                                    </svg>
+                                    <span>{option.name}</span>
+                                    <span className='text-gray-400'>{option.price}€</span>
+                                </div>
+
+                                <button
+                                    onClick={() => {
+                                        setOptions([...options, option]);
+                                    }}
+                                    className='text-primary-500 dark:text-primary-400'
+                                >
+                                    {options.includes(option) ? <CheckCircle /> : <AddCircle />}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                    <a
+                        href='#'
+                        className='text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900'
+                    >
+                        S&apos;abonner
+                    </a>
+                </div>
+            );
+        default:
+            return null;
+    }
+}
 
 function CreateHappyHour() {
     const navigate = useNavigate();
@@ -60,6 +245,8 @@ function CreateHappyHour() {
     const [previsualisation, setPrevisualisation] = useState(false);
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
+
+    const [options, setOptions] = useState([]);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -134,7 +321,6 @@ function CreateHappyHour() {
             endTime,
         };
 
-        console.log(toAdd);
         try {
             await addDoc(collection(db, 'happyhours'), {
                 ...toAdd,
@@ -628,6 +814,10 @@ function CreateHappyHour() {
                                         </div>
                                     </>
                                 )}
+
+                                <div className='my-12'>
+                                    <DisplayPricing recurency={recurency} options={options} setOptions={setOptions} />
+                                </div>
 
                                 <div className='space-x-4'>
                                     <button
