@@ -123,6 +123,7 @@ function DisplayPricing({ recurency, options, setOptions }) {
                             ).toFixed(2)}
                             €
                         </span>
+                        <span className="text-gray-500 dark:text-gray-400">/mois</span>
                     </div>
 
                     <h4 className='text-lg font-semibold mb-4'>Options</h4>
@@ -190,6 +191,7 @@ function DisplayPricing({ recurency, options, setOptions }) {
                             ).toFixed(2)}
                             €
                         </span>
+                        <span className="text-gray-500 dark:text-gray-400">/mois</span>
                     </div>
 
                     <h4 className='text-lg font-semibold mb-4'>Options</h4>
