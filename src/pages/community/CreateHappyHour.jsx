@@ -13,7 +13,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import Datepicker from '../../components/Datepicker';
 import Avvvatars from 'avvvatars-react';
-import { AddCircle, Cancel, Check, CheckCircle, Edit, EyeAlt, MapsArrowDiagonal, Safari } from 'iconoir-react';
+import { AddCircle, Cancel, Check, CheckCircle, Edit, EyeAlt, MapsArrowDiagonal, MinusCircle, Safari } from 'iconoir-react';
 import { categories } from '../../utils/categories';
 import MultiSelectDropdown from '../../components/MultiSelectDropdown';
 import dayjs from 'dayjs';
@@ -27,13 +27,19 @@ const getLocaleDateTime = () => {
 const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
 const optionsObject = [
-    { name: 'Pack photo +3', price: 5.99 },
-    { name: 'Pack photo +10', price: 9.99 },
-    { name: 'Tete de liste', price: 10.99 },
-    { name: 'Pack VIP', price: 32.99 },
+    { name: 'Pack photo +3', description: "Ajoutez jusqu'à 3 photos supplémentaires à votre vente", price: 5.99 },
+    { name: 'Pack photo +10', description: "Ajoutez jusqu'à 10 photos supplémentaires à votre vente", price: 9.99 },
+    { name: 'Tete de liste', description: 'Apparaissez en tête de liste de votre catégorie pour plus de visibilité', price: 10.99 },
+    {
+        name: 'Pack VIP',
+        description:
+            "Apparaissez en tête de liste, toutes catégories confondues et ajoutez jusqu'à 10 photos supplémentaires à votre vente",
+        price: 32.99,
+    },
 ];
 
 function DisplayPricing({ recurency, options, setOptions }) {
+    const [price, setPrice] = useState(9.99);
     switch (recurency) {
         case 'Unique':
             return (
@@ -42,16 +48,17 @@ function DisplayPricing({ recurency, options, setOptions }) {
 
                     <div className='flex justify-center items-baseline my-8'>
                         <span className='mr-2 text-5xl font-extrabold'>
-                            {9.99 +
-                                options.reduce((accumulator, currentValue) => {
-                                    return accumulator + currentValue.price;
-                                }, 0)}
+                            {Number(
+                                9.99 +
+                                    options.reduce((accumulator, currentValue) => {
+                                        return accumulator + currentValue.price;
+                                    }, 0),
+                            ).toFixed(2)}
                             €
                         </span>
-                        <span className='text-gray-500 dark:text-gray-400'>/mois</span>
                     </div>
 
-                    <h4 className='text-lg font-semibold'>Options</h4>
+                    <h4 className='text-lg font-semibold mb-4'>Options</h4>
 
                     <ul role='list' className='mb-8 space-y-4 text-left'>
                         {optionsObject.map((option, index) => (
@@ -69,17 +76,26 @@ function DisplayPricing({ recurency, options, setOptions }) {
                                             clipRule='evenodd'
                                         ></path>
                                     </svg>
-                                    <span>{option.name}</span>
-                                    <span className='text-gray-400'>{option.price}€</span>
+                                    <div className='flex flex-col space-y-1 pr-4'>
+                                        <div className='flex space-x-3'>
+                                            <span>{option.name}</span>
+                                            <span className='text-gray-400'>{option.price}€</span>
+                                        </div>
+                                        <span className='text-gray-400 text-xs'>{option.description}</span>
+                                    </div>
                                 </div>
 
                                 <button
                                     onClick={() => {
-                                        setOptions([...options, option]);
+                                        if (options.includes(option)) {
+                                            setOptions(options.filter((opt) => opt !== option));
+                                        } else {
+                                            setOptions([...options, option]);
+                                        }
                                     }}
                                     className='text-primary-500 dark:text-primary-400'
                                 >
-                                    {options.includes(option) ? <CheckCircle /> : <AddCircle />}
+                                    {options.includes(option) ? <MinusCircle /> : <AddCircle />}
                                 </button>
                             </li>
                         ))}
@@ -95,20 +111,21 @@ function DisplayPricing({ recurency, options, setOptions }) {
         case 'Daily':
             return (
                 <div className='flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-black dark:text-white'>
-                    <h3 className='text-2xl font-semibold'>Tout les jours</h3>
+                    <h3 className='text-2xl font-semibold'>Tous les jours</h3>
 
                     <div className='flex justify-center items-baseline my-8'>
                         <span className='mr-2 text-5xl font-extrabold'>
-                            {9.99 +
-                                options.reduce((accumulator, currentValue) => {
-                                    return accumulator + currentValue.price;
-                                }, 0)}
+                            {Number(
+                                32.99 +
+                                    options.reduce((accumulator, currentValue) => {
+                                        return accumulator + currentValue.price;
+                                    }, 0),
+                            ).toFixed(2)}
                             €
                         </span>
-                        <span className='text-gray-500 dark:text-gray-400'>/mois</span>
                     </div>
 
-                    <h4 className='text-lg font-semibold'>Options</h4>
+                    <h4 className='text-lg font-semibold mb-4'>Options</h4>
 
                     <ul role='list' className='mb-8 space-y-4 text-left'>
                         {optionsObject.map((option, index) => (
@@ -126,17 +143,26 @@ function DisplayPricing({ recurency, options, setOptions }) {
                                             clipRule='evenodd'
                                         ></path>
                                     </svg>
-                                    <span>{option.name}</span>
-                                    <span className='text-gray-400'>{option.price}€</span>
+                                    <div className='flex flex-col space-y-1 pr-4'>
+                                        <div className='flex space-x-3'>
+                                            <span>{option.name}</span>
+                                            <span className='text-gray-400'>{option.price}€</span>
+                                        </div>
+                                        <span className='text-gray-400 text-xs'>{option.description}</span>
+                                    </div>
                                 </div>
 
                                 <button
                                     onClick={() => {
-                                        setOptions([...options, option]);
+                                        if (options.includes(option)) {
+                                            setOptions(options.filter((opt) => opt !== option));
+                                        } else {
+                                            setOptions([...options, option]);
+                                        }
                                     }}
                                     className='text-primary-500 dark:text-primary-400'
                                 >
-                                    {options.includes(option) ? <CheckCircle /> : <AddCircle />}
+                                    {options.includes(option) ? <MinusCircle /> : <AddCircle />}
                                 </button>
                             </li>
                         ))}
@@ -156,16 +182,17 @@ function DisplayPricing({ recurency, options, setOptions }) {
 
                     <div className='flex justify-center items-baseline my-8'>
                         <span className='mr-2 text-5xl font-extrabold'>
-                            {9.99 +
-                                options.reduce((accumulator, currentValue) => {
-                                    return accumulator + currentValue.price;
-                                }, 0)}
+                            {Number(
+                                15.99 +
+                                    options.reduce((accumulator, currentValue) => {
+                                        return accumulator + currentValue.price;
+                                    }, 0),
+                            ).toFixed(2)}
                             €
                         </span>
-                        <span className='text-gray-500 dark:text-gray-400'>/mois</span>
                     </div>
 
-                    <h4 className='text-lg font-semibold'>Options</h4>
+                    <h4 className='text-lg font-semibold mb-4'>Options</h4>
 
                     <ul role='list' className='mb-8 space-y-4 text-left'>
                         {optionsObject.map((option, index) => (
@@ -183,17 +210,26 @@ function DisplayPricing({ recurency, options, setOptions }) {
                                             clipRule='evenodd'
                                         ></path>
                                     </svg>
-                                    <span>{option.name}</span>
-                                    <span className='text-gray-400'>{option.price}€</span>
+                                    <div className='flex flex-col space-y-1 pr-4'>
+                                        <div className='flex space-x-3'>
+                                            <span>{option.name}</span>
+                                            <span className='text-gray-400'>{option.price}€</span>
+                                        </div>
+                                        <span className='text-gray-400 text-xs'>{option.description}</span>
+                                    </div>
                                 </div>
 
                                 <button
                                     onClick={() => {
-                                        setOptions([...options, option]);
+                                        if (options.includes(option)) {
+                                            setOptions(options.filter((opt) => opt !== option));
+                                        } else {
+                                            setOptions([...options, option]);
+                                        }
                                     }}
                                     className='text-primary-500 dark:text-primary-400'
                                 >
-                                    {options.includes(option) ? <CheckCircle /> : <AddCircle />}
+                                    {options.includes(option) ? <MinusCircle /> : <AddCircle />}
                                 </button>
                             </li>
                         ))}
