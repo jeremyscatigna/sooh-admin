@@ -18,6 +18,9 @@ import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import { Check, MapsArrowDiagonal, Safari } from 'iconoir-react';
 import DashboardCard01 from '../../partials/dashboard/DashboardCard01';
+import ImageGallery from "react-image-gallery";
+// import stylesheet if you're not already using CSS @import
+import "react-image-gallery/styles/css/image-gallery.css";
 
 const doIFavoriteThis = (item, user) => {
     if (item.favorites) {
@@ -172,6 +175,21 @@ function MeetupsPost() {
     };
 
     const isUserAttending = attendees.some((attendee) => attendee.uid === connectedUser.uid);
+
+    const images = [
+        {
+          original: "https://picsum.photos/id/1018/1000/600/",
+          thumbnail: "https://picsum.photos/id/1018/250/150/",
+        },
+        {
+          original: "https://picsum.photos/id/1015/1000/600/",
+          thumbnail: "https://picsum.photos/id/1015/250/150/",
+        },
+        {
+          original: "https://picsum.photos/id/1019/1000/600/",
+          thumbnail: "https://picsum.photos/id/1019/250/150/",
+        },
+      ];
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -331,8 +349,10 @@ function MeetupsPost() {
                                     />
                                 </figure>
 
+                                <ImageGallery items={images} />
+
                                 {/* Post content */}
-                                <div>
+                                <div className='mt-6'>
                                     <h2 className='text-xl leading-snug text-primary font-bold mb-2'>Détails</h2>
                                     <p className='mb-6 whitespace-pre-line'>{happyHour.details}</p>
                                 </div>
@@ -398,7 +418,9 @@ function MeetupsPost() {
                                                             </div>
                                                             <div className='truncate'>
                                                                 <span className='text-sm font-medium text-primary'>
-                                                                    {attendee.username ? attendee.username : attendee.firstName + ' ' + attendee.lastName}
+                                                                    {attendee.username
+                                                                        ? attendee.username
+                                                                        : attendee.firstName + ' ' + attendee.lastName}
                                                                 </span>
                                                             </div>
                                                         </div>

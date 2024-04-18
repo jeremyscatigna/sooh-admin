@@ -40,6 +40,21 @@ const optionsObject = [
 
 function DisplayPricing({ recurency, options, setOptions }) {
     const [price, setPrice] = useState(9.99);
+    const filterOutOptions = () => {
+        if (options.some((option) => option.name === 'Pack photo +3')) {
+            return optionsObject.filter((option) => option.name !== 'Pack photo +10');
+        } else if (options.some((option) => option.name === 'Pack photo +10')) {
+            return optionsObject.filter((option) => option.name !== 'Pack photo +3');
+        } else if (options.some((option) => option.name === 'Pack VIP')) {
+            return optionsObject.filter(
+                (option) => option.name !== 'Tete de liste' && option.name !== 'Pack photo +3' && option.name !== 'Pack photo +10',
+            );
+        } else if (options.some((option) => option.name === 'Tete de liste')) {
+            return optionsObject.filter((option) => option.name !== 'Pack VIP');
+        } else {
+            return optionsObject;
+        }
+    };
     switch (recurency) {
         case 'Unique':
             return (
@@ -61,7 +76,7 @@ function DisplayPricing({ recurency, options, setOptions }) {
                     <h4 className='text-lg font-semibold mb-4'>Options</h4>
 
                     <ul role='list' className='mb-8 space-y-4 text-left'>
-                        {optionsObject.map((option, index) => (
+                        {filterOutOptions().map((option, index) => (
                             <li key={index} className='flex items-center justify-between'>
                                 <div className='flex items-center space-x-3'>
                                     <svg
@@ -123,7 +138,7 @@ function DisplayPricing({ recurency, options, setOptions }) {
                             ).toFixed(2)}
                             €
                         </span>
-                        <span className="text-gray-500 dark:text-gray-400">/mois</span>
+                        <span className='text-gray-500 dark:text-gray-400'>/mois</span>
                     </div>
 
                     <h4 className='text-lg font-semibold mb-4'>Options</h4>
@@ -191,7 +206,7 @@ function DisplayPricing({ recurency, options, setOptions }) {
                             ).toFixed(2)}
                             €
                         </span>
-                        <span className="text-gray-500 dark:text-gray-400">/mois</span>
+                        <span className='text-gray-500 dark:text-gray-400'>/mois</span>
                     </div>
 
                     <h4 className='text-lg font-semibold mb-4'>Options</h4>
@@ -257,6 +272,7 @@ function CreateHappyHour() {
     // const connectedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
 
     const [imgUrl, setImgUrl] = useState(null);
+    const [optionImgUrls, setOptionImgUrls] = useState([]);
     const [progresspercent, setProgresspercent] = useState(0);
     const [fileLoading, setFileLoading] = useState(false);
 
@@ -324,6 +340,52 @@ function CreateHappyHour() {
         );
     };
 
+    const handleUploadPhotos = async (e) => {
+        e.preventDefault();
+        setFileLoading(true);
+        const files = e.target[0]?.files; // Get the files from the input
+        let urls = []; // To store the URLs after uploading
+
+        if (options.some((option) => option.name === 'Pack photo +3')) {
+            if (files.length > 3) {
+                alert('Vous ne pouvez pas télécharger plus de 3 photos');
+                return;
+            }
+        }
+
+        if (options.some((option) => option.name === 'Pack photo +10')) {
+            if (files.length > 10) {
+                alert('Vous ne pouvez pas télécharger plus de 10 photos');
+                return;
+            }
+        }
+
+        for (const file of files) {
+            const storageRef = ref(storage, `happyhours/photos/${uuidv4()}`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on(
+                'state_changed',
+                (snapshot) => {
+                    const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    setProgresspercent(progress);
+                },
+                (error) => {
+                    setFileLoading(false);
+                    alert(error);
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        setFileLoading(false);
+                        urls.push(downloadURL);
+                    });
+                },
+            );
+        }
+
+        setOptionImgUrls(urls);
+        // Here, you might want to do something with the URLs, like displaying them or adding them to a state.
+    };
+
     const getDatePlusSevenDays = (date) => {
         const d = new Date(date);
         d.setDate(d.getDate() + 7);
@@ -357,6 +419,10 @@ function CreateHappyHour() {
             date: selectedDates,
             endDate: addEndDate ? endDate : null,
             endTime,
+            options,
+            optionImgUrls,
+            vip: options.some((option) => option.name === 'Pack VIP'),
+            top: options.some((option) => option.name === 'Tete de liste'),
         };
 
         try {
@@ -856,6 +922,22 @@ function CreateHappyHour() {
                                 <div className='my-12'>
                                     <DisplayPricing recurency={recurency} options={options} setOptions={setOptions} />
                                 </div>
+
+                                {options.some((option) => option.name === 'Pack photo +3' || option.name === 'Pack photo +10') && (
+                                    <form onSubmit={handleUploadPhotos} className='flex flex-row justify-between items-center my-8'>
+                                        <input
+                                            className='block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100'
+                                            type='file'
+                                            multiple={true}
+                                        />
+                                        <button
+                                            className='btn py-3 bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white'
+                                            type='submit'
+                                        >
+                                            {fileLoading ? 'Chargement...' : 'Télécharger'}
+                                        </button>
+                                    </form>
+                                )}
 
                                 <div className='space-x-4'>
                                     <button

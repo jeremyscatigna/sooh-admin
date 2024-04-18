@@ -50,6 +50,7 @@ function Meetups() {
     const [data, setData] = useState([]);
     const [now, setNow] = useState([]);
     const [toCome, setToCome] = useState([]);
+    const [vip, setVip] = useState([]);
 
     const user = useAtomValue(userType);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -100,9 +101,15 @@ function Meetups() {
         const filterMyHappyHours = (data) => {
             return data.filter((item) => item.userId === user.uid);
         };
+        const filterVIP = (data) => {
+            return data.filter((item) => item.vip && item.vip === true);
+        }
         const filterDataWhereEndTimeIsBeforeNow = (data) => {
-            return data
+            return data.filter((item) => {
+                return !item.vip || item.vip === false
+            });
         };
+
         const fetchData = async () => {
             const res = await getDocs(
                 query(
@@ -117,9 +124,11 @@ function Meetups() {
             if (user.type === 'business') {
                 setMyHappyHours(filterMyHappyHours(data));
             }
+
             const filteredData = filterDataWhereEndTimeIsBeforeNow(data);
             setNow(getDataFromTodayToNextTwoWeeks(filteredData));
             setToCome(getDataStartingNextTwoWeeks(filteredData));
+            setVip(filterVIP(data));
         };
         fetchData();
     }, [user.type, user.uid]);
@@ -217,6 +226,7 @@ function Meetups() {
                                 </div>
 
                                 <MeetupsPosts
+                                    vip={vip}
                                     now={now}
                                     toCome={toCome}
                                     data={myHappyHours}
@@ -232,6 +242,7 @@ function Meetups() {
 
                         {/* Content */}
                         <MeetupsPosts
+                            vip={vip}
                             now={now}
                             toCome={toCome}
                             data={data}

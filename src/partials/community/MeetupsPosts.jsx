@@ -20,7 +20,7 @@ import ModalBasic from '../../components/ModalBasic';
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
 
-function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCategory, selectedCity, isMyHappyHours, myHappyHours }) {
+function MeetupsPosts({ data, now, toCome, vip, filtering, searchText, selectedCategory, selectedCity, isMyHappyHours, myHappyHours }) {
     const user = useAtomValue(currentUser);
     // const user = JSON.parse(localStorage.getItem('user'));
 
@@ -84,6 +84,7 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCatego
     // Memoized filtered data for 'now' and 'toCome'
     const filteredNow = useMemo(() => applyFilters(now), [now, filtering, searchText, selectedCategory, selectedCity]);
     const filteredToCome = useMemo(() => applyFilters(toCome), [toCome, filtering, searchText, selectedCategory, selectedCity]);
+    const filteredVIP = useMemo(() => applyFilters(vip), [vip, filtering, searchText, selectedCategory, selectedCity]);
 
     // Component rendering
     return (
@@ -98,6 +99,16 @@ function MeetupsPosts({ data, now, toCome, filtering, searchText, selectedCatego
                 </div>
             ) : (
                 <>
+                    {filteredVIP.length > 0 && (
+                        <div className='w-full'>
+                            <h2 className='text-2xl font-bold text-primary pb-6'>VIP</h2>
+                            <div className={`grid xl:grid-cols-2 gap-6`}>
+                                {filteredVIP.map((item, i) => (
+                                    <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={false} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
                     {filteredNow.length > 0 && (
                         <div className='w-full'>
                             <h2 className='text-2xl font-bold text-primary pb-6'>En ce moment</h2>
