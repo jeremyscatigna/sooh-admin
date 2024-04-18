@@ -353,7 +353,7 @@ function CreateHappyHour() {
             }
         }
 
-        if (options.some((option) => option.name === 'Pack photo +10')) {
+        if (options.some((option) => option.name === 'Pack photo +10' || option.name === 'Pack VIP')) {
             if (files.length > 10) {
                 alert('Vous ne pouvez pas télécharger plus de 10 photos');
                 return;
@@ -923,7 +923,7 @@ function CreateHappyHour() {
                                     <DisplayPricing recurency={recurency} options={options} setOptions={setOptions} />
                                 </div>
 
-                                {options.some((option) => option.name === 'Pack photo +3' || option.name === 'Pack photo +10') && (
+                                {options.some((option) => option.name === 'Pack photo +3' || option.name === 'Pack photo +10' || option.name === 'Pack VIP') && (
                                     <form onSubmit={handleUploadPhotos} className='flex flex-row justify-between items-center my-8'>
                                         <input
                                             className='block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100'
