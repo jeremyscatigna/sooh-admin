@@ -176,12 +176,12 @@ function MeetupsPost() {
 
     const isUserAttending = attendees.some((attendee) => attendee.uid === connectedUser.uid);
 
-    const images = happyHour.optionImgUrls.map((url) => {
+    const images = happyHour.optionImgUrls ? happyHour.optionImgUrls.map((url) => {
         return {
             original: url,
             thumbnail: url,
         };
-    });
+    }) : [];
 
     return (
         <div className='flex h-screen overflow-hidden'>
