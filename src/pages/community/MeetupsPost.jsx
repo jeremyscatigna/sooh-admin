@@ -18,9 +18,9 @@ import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import { Check, MapsArrowDiagonal, Safari } from 'iconoir-react';
 import DashboardCard01 from '../../partials/dashboard/DashboardCard01';
-import ImageGallery from "react-image-gallery";
+import ImageGallery from 'react-image-gallery';
 // import stylesheet if you're not already using CSS @import
-import "react-image-gallery/styles/css/image-gallery.css";
+import 'react-image-gallery/styles/css/image-gallery.css';
 
 const doIFavoriteThis = (item, user) => {
     if (item.favorites) {
@@ -176,20 +176,12 @@ function MeetupsPost() {
 
     const isUserAttending = attendees.some((attendee) => attendee.uid === connectedUser.uid);
 
-    const images = [
-        {
-          original: "https://picsum.photos/id/1018/1000/600/",
-          thumbnail: "https://picsum.photos/id/1018/250/150/",
-        },
-        {
-          original: "https://picsum.photos/id/1015/1000/600/",
-          thumbnail: "https://picsum.photos/id/1015/250/150/",
-        },
-        {
-          original: "https://picsum.photos/id/1019/1000/600/",
-          thumbnail: "https://picsum.photos/id/1019/250/150/",
-        },
-      ];
+    const images = happyHour.optionImgUrls.map((url) => {
+        return {
+            original: url,
+            thumbnail: url,
+        };
+    });
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -338,18 +330,34 @@ function MeetupsPost() {
                                     </div>
                                 )}
 
-                                {/* Image */}
-                                <figure className='mb-6'>
-                                    <img
-                                        className='w-full rounded-sm'
-                                        src={happyHour.imageUrl || MeetupImage}
-                                        width='640'
-                                        height='360'
-                                        alt='Meetup'
-                                    />
-                                </figure>
-
-                                <ImageGallery items={images} />
+                                {happyHour.options &&
+                                happyHour.options.some(
+                                    (option) =>
+                                        option.name === 'Pack photo +3' || option.name === 'Pack photo +10' || option.name === 'Pack VIP',
+                                ) ? (
+                                    <>
+                                        <figure className='mb-6'>
+                                            <img
+                                                className='w-full rounded-sm'
+                                                src={happyHour.imageUrl || MeetupImage}
+                                                width='640'
+                                                height='360'
+                                                alt='Meetup'
+                                            />
+                                        </figure>
+                                        <ImageGallery items={images} />
+                                    </>
+                                ) : (
+                                    <figure className='mb-6'>
+                                        <img
+                                            className='w-full rounded-sm'
+                                            src={happyHour.imageUrl || MeetupImage}
+                                            width='640'
+                                            height='360'
+                                            alt='Meetup'
+                                        />
+                                    </figure>
+                                )}
 
                                 {/* Post content */}
                                 <div className='mt-6'>

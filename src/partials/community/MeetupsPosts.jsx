@@ -7,7 +7,7 @@ import RelativeTime from 'dayjs/plugin/relativeTime';
 import MeetupsThumb01 from '../../images/meetups-thumb-01.jpg';
 import useTimer from '../../components/Timer';
 import { getCategoriesShadowColor } from '../../utils/categories';
-import { Edit, MapsArrowDiagonal, Safari, Timer, Trash } from 'iconoir-react';
+import { Edit, MapsArrowDiagonal, Safari, Timer, Trash, VerifiedBadge } from 'iconoir-react';
 import { collection, deleteDoc, doc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { db } from '../../main';
 import { useAtomValue } from 'jotai';
@@ -57,7 +57,7 @@ function MeetupsPosts({ data, now, toCome, vip, filtering, searchText, selectedC
             case 'instore':
                 return item.type === 'instore';
             case 'home':
-                return item.type === 'home'
+                return item.type === 'home';
             case 'thisweek':
                 return item.date && dayjs(item.date).isBefore(dayjs().add(7, 'day'));
             case 'thismonth':
@@ -93,7 +93,13 @@ function MeetupsPosts({ data, now, toCome, vip, filtering, searchText, selectedC
                 <div className='w-full'>
                     <div className={`grid xl:grid-cols-2 gap-6`}>
                         {myHappyHours.map((item, i) => (
-                            <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={true} handleDelete={handleDelete} />
+                            <MeetupItem
+                                item={item}
+                                key={`${item.uid}+${i}`}
+                                isMyHappyHour={true}
+                                handleDelete={handleDelete}
+                                isVIP={false}
+                            />
                         ))}
                     </div>
                 </div>
@@ -104,7 +110,7 @@ function MeetupsPosts({ data, now, toCome, vip, filtering, searchText, selectedC
                             <h2 className='text-2xl font-bold text-primary pb-6'>VIP</h2>
                             <div className={`grid xl:grid-cols-2 gap-6`}>
                                 {filteredVIP.map((item, i) => (
-                                    <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={false} />
+                                    <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={false} isVIP={true} />
                                 ))}
                             </div>
                         </div>
@@ -114,7 +120,7 @@ function MeetupsPosts({ data, now, toCome, vip, filtering, searchText, selectedC
                             <h2 className='text-2xl font-bold text-primary pb-6'>En ce moment</h2>
                             <div className={`grid xl:grid-cols-2 gap-6`}>
                                 {filteredNow.map((item, i) => (
-                                    <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={false} />
+                                    <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={false} isVIP={false} />
                                 ))}
                             </div>
                         </div>
@@ -124,7 +130,7 @@ function MeetupsPosts({ data, now, toCome, vip, filtering, searchText, selectedC
                             <h2 className='text-2xl font-bold text-primary pb-6'>Prochainement</h2>
                             <div className={`grid xl:grid-cols-2 gap-6 ${mobile && 'mb-24'}`}>
                                 {filteredToCome.map((item, i) => (
-                                    <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={false} />
+                                    <MeetupItem item={item} key={`${item.uid}+${i}`} isMyHappyHour={false} isVIP={false} />
                                 ))}
                             </div>
                         </div>
@@ -160,22 +166,8 @@ const getTodayDateByEndOfDay = () => {
     return todayWithEndTime;
 };
 
-export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
+export function MeetupItem({ item, isMyHappyHour, handleDelete, isVIP }) {
     const user = useAtomValue(currentUser);
-    // if (
-    //     item.date &&
-    //     dayjs(item.date).isBefore(dayjs()) &&
-    //     getTodayDateWithEndTime(item.endTime) < dayjs().toISOString() &&
-    //     item.recurency === 'Daily'
-    // ) {
-    //     // return date + 1 day
-    //     item.date = dayjs(item.date).add(1, 'day');
-    // }
-
-    // if (item.date && dayjs(item.date).isBefore(dayjs()) && !item.endTime) {
-    //     // return today at end of day
-    //     item.date = getTodayDateByEndOfDay();
-    // }
 
     const { days, hours, minutes, seconds, text } = useTimer(item.date, 1000, item.endTime);
     const [like, setLike] = useState(item.likes ? doILikeThisHH(item, user) : false);
@@ -302,7 +294,7 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
             <article
                 className={`flex bg-card ${window.innerWidth <= 500 && 'h-38'} shadow-lg ${
                     item.category && getCategoriesShadowColor(item.category)
-                } rounded-lg overflow-hidden`}
+                } rounded-lg overflow-hidden ${isVIP && 'border-l-8 border-yellow-500'}`}
                 key={item.uid}
             >
                 {/* Image */}
@@ -323,8 +315,9 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
                         </div>
                     )}
                 </Link>
+
                 {/* Content */}
-                <div className='grow p-5 flex flex-col'>
+                <div className='relative grow p-5 flex flex-col'>
                     <div className='grow mb-2'>
                         <div className='text-xs font-semibold text-pink-500 uppercase mb-2'>{displayDateOrRecurency(item)}</div>
                         <Link className='inline-flex' to={`/happyhours/${item.uid}`}>
@@ -349,6 +342,13 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete }) {
                             )}
                         </p>
                     </div>
+
+                    {isVIP && (
+                        <div className='absolute right-6 top-4'>
+                            <VerifiedBadge className='w-6 h-6 text-yellow-500' />
+                        </div>
+                    )}
+
                     {/* Footer */}
                     <div className='flex justify-between items-center mt-3'>
                         {/* Avatars */}
