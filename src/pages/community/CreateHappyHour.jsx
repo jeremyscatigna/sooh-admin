@@ -923,20 +923,28 @@ function CreateHappyHour() {
                                     <DisplayPricing recurency={recurency} options={options} setOptions={setOptions} />
                                 </div>
 
-                                {options.some((option) => option.name === 'Pack photo +3' || option.name === 'Pack photo +10' || option.name === 'Pack VIP') && (
-                                    <form onSubmit={handleUploadPhotos} className='flex flex-row justify-between items-center my-8'>
-                                        <input
-                                            className='block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100'
-                                            type='file'
-                                            multiple={true}
-                                        />
-                                        <button
-                                            className='btn py-3 bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white'
-                                            type='submit'
-                                        >
-                                            {fileLoading ? 'Chargement...' : 'Télécharger'}
-                                        </button>
-                                    </form>
+                                {options.some(
+                                    (option) =>
+                                        option.name === 'Pack photo +3' || option.name === 'Pack photo +10' || option.name === 'Pack VIP',
+                                ) && (
+                                    <div className='my-8'>
+                                        <p className='text-sm font-medium text-white mb-2'>
+                                            Ajoutez les photos liées à vos options
+                                        </p>
+                                        <form onSubmit={handleUploadPhotos} className='flex flex-row justify-between items-center'>
+                                            <input
+                                                className='block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100'
+                                                type='file'
+                                                multiple={true}
+                                            />
+                                            <button
+                                                className='btn py-3 bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white'
+                                                type='submit'
+                                            >
+                                                {fileLoading ? 'Chargement...' : 'Télécharger'}
+                                            </button>
+                                        </form>
+                                    </div>
                                 )}
 
                                 <div className='space-x-4'>

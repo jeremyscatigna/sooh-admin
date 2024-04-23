@@ -20,7 +20,19 @@ import ModalBasic from '../../components/ModalBasic';
 dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
 
-function MeetupsPosts({ data, now, toCome, vip, filtering, searchText, selectedCategory, selectedCity, isMyHappyHours, myHappyHours }) {
+function MeetupsPosts({
+    data,
+    now,
+    toCome,
+    vip,
+    top,
+    filtering,
+    searchText,
+    selectedCategory,
+    selectedCity,
+    isMyHappyHours,
+    myHappyHours,
+}) {
     const user = useAtomValue(currentUser);
     // const user = JSON.parse(localStorage.getItem('user'));
 
@@ -81,10 +93,15 @@ function MeetupsPosts({ data, now, toCome, vip, filtering, searchText, selectedC
         return data.filter((item) => filterMeetups(item) && searchFilter(item));
     };
 
+    const addTopToNow = (now, top) => {
+        return [...top, ...now];
+    }
+
     // Memoized filtered data for 'now' and 'toCome'
-    const filteredNow = useMemo(() => applyFilters(now), [now, filtering, searchText, selectedCategory, selectedCity]);
+    const filteredNow = useMemo(() => applyFilters(addTopToNow(now, top)), [addTopToNow(now, top), filtering, searchText, selectedCategory, selectedCity]);
     const filteredToCome = useMemo(() => applyFilters(toCome), [toCome, filtering, searchText, selectedCategory, selectedCity]);
     const filteredVIP = useMemo(() => applyFilters(vip), [vip, filtering, searchText, selectedCategory, selectedCity]);
+
 
     // Component rendering
     return (
@@ -294,7 +311,7 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete, isVIP }) {
             <article
                 className={`flex bg-card ${window.innerWidth <= 500 && 'h-38'} shadow-lg ${
                     item.category && getCategoriesShadowColor(item.category)
-                } rounded-lg overflow-hidden ${isVIP && 'border-l-8 border-yellow-500'}`}
+                } rounded-lg overflow-hidden ${isVIP && 'border border-yellow-600'}`}
                 key={item.uid}
             >
                 {/* Image */}
@@ -342,12 +359,6 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete, isVIP }) {
                             )}
                         </p>
                     </div>
-
-                    {isVIP && (
-                        <div className='absolute right-6 top-4'>
-                            <VerifiedBadge className='w-6 h-6 text-yellow-500' />
-                        </div>
-                    )}
 
                     {/* Footer */}
                     <div className='flex justify-between items-center mt-3'>

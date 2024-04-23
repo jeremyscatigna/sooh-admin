@@ -176,12 +176,14 @@ function MeetupsPost() {
 
     const isUserAttending = attendees.some((attendee) => attendee.uid === connectedUser.uid);
 
-    const images = happyHour.optionImgUrls ? happyHour.optionImgUrls.map((url) => {
-        return {
-            original: url,
-            thumbnail: url,
-        };
-    }) : [];
+    const images = happyHour.optionImgUrls
+        ? happyHour.optionImgUrls.map((url) => {
+              return {
+                  original: url,
+                  thumbnail: url,
+              };
+          })
+        : [];
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -345,7 +347,9 @@ function MeetupsPost() {
                                                 alt='Meetup'
                                             />
                                         </figure>
-                                        <ImageGallery items={images} />
+                                        <div className='px-4'>
+                                            <ImageGallery items={images} />
+                                        </div>
                                     </>
                                 ) : (
                                     <figure className='mb-6'>

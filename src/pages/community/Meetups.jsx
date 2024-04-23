@@ -51,6 +51,7 @@ function Meetups() {
     const [now, setNow] = useState([]);
     const [toCome, setToCome] = useState([]);
     const [vip, setVip] = useState([]);
+    const [top, setTop] = useState([]);
 
     const user = useAtomValue(userType);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -104,9 +105,12 @@ function Meetups() {
         const filterVIP = (data) => {
             return data.filter((item) => item.vip && item.vip === true);
         }
+        const filterTopOfList = (data) => {
+            return data.filter((item) => item.top && item.top === true);
+        }
         const filterDataWhereEndTimeIsBeforeNow = (data) => {
             return data.filter((item) => {
-                return !item.vip || item.vip === false
+                return !item.vip || item.vip === false || !item.top || item.top === false;
             });
         };
 
@@ -129,6 +133,7 @@ function Meetups() {
             setNow(getDataFromTodayToNextTwoWeeks(filteredData));
             setToCome(getDataStartingNextTwoWeeks(filteredData));
             setVip(filterVIP(data));
+            setTop(filterTopOfList(data));
         };
         fetchData();
     }, [user.type, user.uid]);
@@ -227,6 +232,7 @@ function Meetups() {
 
                                 <MeetupsPosts
                                     vip={vip}
+                                    top={top}
                                     now={now}
                                     toCome={toCome}
                                     data={myHappyHours}
@@ -243,6 +249,7 @@ function Meetups() {
                         {/* Content */}
                         <MeetupsPosts
                             vip={vip}
+                            top={top}
                             now={now}
                             toCome={toCome}
                             data={data}
