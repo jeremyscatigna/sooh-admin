@@ -297,25 +297,8 @@ function UsersTabs() {
                                         } rounded-xl`}
                                     >
                                         <div className='flex flex-col h-full'>
-                                            {/* Card top */}
                                             <div className='grow p-5'>
-                                                {/* Menu button */}
-                                                {/* Image + name */}
-
                                                 <header className='relative'>
-                                                    {/* <button
-                                                        className='absolute right-0 top-0 hover:text-pink-500 z-60'
-                                                        onClick={(e) => {
-                                                            false;
-                                                        }}
-                                                    >
-                                                        <div className=' text-slate-100 bg-slate-900 bg-opacity-60 rounded-full'>
-                                                            <span className='sr-only'>Like</span>
-                                                            <svg className={`h-8 w-8`} fill={'white'} viewBox='0 0 32 32'>
-                                                                <path d='M22.682 11.318A4.485 4.485 0 0019.5 10a4.377 4.377 0 00-3.5 1.707A4.383 4.383 0 0012.5 10a4.5 4.5 0 00-3.182 7.682L16 24l6.682-6.318a4.5 4.5 0 000-6.364zm-1.4 4.933L16 21.247l-5.285-5A2.5 2.5 0 0112.5 12c1.437 0 2.312.681 3.5 2.625C17.187 12.681 18.062 12 19.5 12a2.5 2.5 0 011.785 4.251h-.003z' />
-                                                            </svg>
-                                                        </div>
-                                                    </button> */}
                                                     <Link
                                                         className='absolute left-2 top-2 hover:text-pink-500 z-60'
                                                         onClick={async () => {
@@ -426,7 +409,6 @@ function UsersTabs() {
                                                         )}
                                                     </div>
                                                 </header>
-                                                {/* Bio */}
                                                 <div className='text-center text-secondary mt-4'>
                                                     <div className='text-sm'>{item.influBio}</div>
                                                 </div>

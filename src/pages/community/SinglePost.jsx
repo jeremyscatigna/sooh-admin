@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import Sidebar from '../../partials/Sidebar';
-import Header from '../../partials/Header';
-
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../../main';
 import Avvvatars from 'avvvatars-react';
@@ -14,8 +11,7 @@ import { Heart, ShareIos } from 'iconoir-react';
 
 function SinglePost() {
     const { id } = useParams();
-    console.log(id);
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+    
     const [post, setPost] = useState([]);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
 

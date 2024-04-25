@@ -327,7 +327,7 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete, isVIP }) {
                         alt='Meetup 01'
                     />
                     {item.deal && (
-                        <div className='absolute bottom-2 left-2 px-3 py-1 text-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 text-primary rounded-full '>
+                        <div className={`absolute bottom-2 left-2 px-3 py-1 text-sm ${isVIP ? 'bg-gradient-to-b from-yellow-200 via-yellow-500 to-yellow-700' : 'bg-gradient-to-r from-fuchsia-600 to-pink-600'} text-primary rounded-full`}>
                             -{item.deal}
                         </div>
                     )}
@@ -336,7 +336,7 @@ export function MeetupItem({ item, isMyHappyHour, handleDelete, isVIP }) {
                 {/* Content */}
                 <div className='relative grow p-5 flex flex-col'>
                     <div className='grow mb-2'>
-                        <div className='text-xs font-semibold text-pink-500 uppercase mb-2'>{displayDateOrRecurency(item)}</div>
+                        <div className={`text-xs font-semibold ${isVIP ? 'bg-clip-text text-transparent bg-gradient-to-b from-yellow-200 via-yellow-500 to-yellow-700' : 'text-pink-500'} uppercase mb-2`}>{displayDateOrRecurency(item)}</div>
                         <Link className='inline-flex' to={`/happyhours/${item.uid}`}>
                             <h3 className={`text-sm font-bold ${isVIP ? 'bg-clip-text text-transparent bg-gradient-to-b from-yellow-200 via-yellow-500 to-yellow-700' : 'text-primary'}`}>{item.name}</h3>
                         </Link>

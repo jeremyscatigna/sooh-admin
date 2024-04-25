@@ -5,10 +5,6 @@ import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
 
 import MeetupImage from '../../images/meetup-image.jpg';
-import MeetupThumb from '../../images/meetups-thumb-02.jpg';
-import Avatar02 from '../../images/avatar-02.jpg';
-import Avatar03 from '../../images/avatar-03.jpg';
-import Avatar04 from '../../images/avatar-04.jpg';
 import { addDoc, collection, doc, getDocs, onSnapshot, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '../../main';
 import Avvvatars from 'avvvatars-react';
@@ -17,9 +13,7 @@ import { currentUser } from '../Signup';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import { Check, MapsArrowDiagonal, Safari } from 'iconoir-react';
-import DashboardCard01 from '../../partials/dashboard/DashboardCard01';
 import ImageGallery from 'react-image-gallery';
-// import stylesheet if you're not already using CSS @import
 import 'react-image-gallery/styles/css/image-gallery.css';
 
 const doIFavoriteThis = (item, user) => {
@@ -32,7 +26,6 @@ const doIFavoriteThis = (item, user) => {
 function MeetupsPost() {
     const { id } = useParams();
     const connectedUser = useAtomValue(currentUser);
-    // const connectedUser = JSON.parse(localStorage.getItem('user'));
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [happyHour, setHappyHour] = useState([]);
     const [user, setUser] = useState({});
