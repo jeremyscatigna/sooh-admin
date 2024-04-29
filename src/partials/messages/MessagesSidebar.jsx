@@ -3,17 +3,36 @@ import DirectMessages from './DirectMessages';
 import { Plus } from 'iconoir-react';
 import Avvvatars from 'avvvatars-react';
 import { useAtom, useAtomValue } from 'jotai';
-import { msgSidebarOpenAtom, searchAtom, usersAtom } from '../../pages/Messages';
+import { conversationsAtom, msgSidebarOpenAtom, searchAtom, usersAtom } from '../../pages/Messages';
+import { useSearchParams } from 'react-router-dom';
 
 function MessagesSidebar({ createConversation }) {
     const [search, setSearch] = useAtom(searchAtom);
+    const [searchParams, setSearchParams] = useSearchParams();
     const users = useAtomValue(usersAtom);
     const [msgSidebarOpen, setMsgSidebarOpen] = useAtom(msgSidebarOpenAtom);
+    const [conversations, setConversations] = useAtom(conversationsAtom);
 
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
+    };
+
+    const goToConversationOrMessages = async (user) => {
+        let link;
+        const conversation = conversations.find((conv) => conv.userId === user.uid);
+
+        if (conversation) {
+            link = `/messages?conversation=${conversation.uid}`;
+            searchParams.set('conversation', conversation.uid);
+        } else {
+            const id = await createConversation(user);
+            link = `/messages?conversation=${id}`;
+            searchParams.set('conversation', id);
+        }
+
+        return link;
     };
 
     useEffect(() => {
@@ -70,9 +89,7 @@ function MessagesSidebar({ createConversation }) {
                                 <ul className='mb-6'>
                                     {users
                                         .filter((user) => {
-                                            if (
-                                                user.username.toLowerCase().includes(search.toLowerCase())
-                                            ) {
+                                            if (user.username.toLowerCase().includes(search.toLowerCase())) {
                                                 return user;
                                             }
                                         })
@@ -80,8 +97,10 @@ function MessagesSidebar({ createConversation }) {
                                             <li key={user.uid} className='-mx-2'>
                                                 <button
                                                     className='flex items-center justify-between w-full p-2 rounded-xl hover:bg-hover focus:outline-none focus:bg-gradient-to-r from-fuchsia-600 to-pink-600 transition duration-150 ease-in-out'
-                                                    onClick={() => {
-                                                        createConversation(user);
+                                                    onClick={async () => {
+                                                       const link = await goToConversationOrMessages(user);
+                                                        window.location.href = link;
+                                                        
                                                         setMsgSidebarOpen(false);
                                                         setSearch('');
                                                     }}

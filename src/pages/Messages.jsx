@@ -110,6 +110,7 @@ function Messages() {
     const createConversation = async (user) => {
         console.log(user);
         console.log(authenticatedUser);
+        let id = ''
         try {
             const res = await getDocs(collection(db, `users/${authenticatedUser.uid}/conversations`));
             const conversations = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -140,6 +141,8 @@ function Messages() {
                     messages: [],
                     timestamp: getLocaleDateTime(),
                 };
+
+                id = newConversation.uid;
                 setSelectedConversation(newConversation);
                 setConversations([...conversations, newConversation]);
                 searchParams.set('conversation', newConversation.uid);
@@ -149,6 +152,8 @@ function Messages() {
         } catch (err) {
             console.log(err);
         }
+
+        return id;
     };
 
     useEffect(() => {
