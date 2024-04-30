@@ -100,7 +100,6 @@ function MessagesSidebar({ createConversation }) {
                                                     onClick={async () => {
                                                        const link = await goToConversationOrMessages(user);
                                                         window.location.href = link;
-                                                        
                                                         setMsgSidebarOpen(false);
                                                         setSearch('');
                                                     }}

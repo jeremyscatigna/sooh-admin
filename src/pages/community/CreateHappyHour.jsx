@@ -17,6 +17,7 @@ import { AddCircle, Cancel, Check, CheckCircle, Edit, EyeAlt, MapsArrowDiagonal,
 import { categories } from '../../utils/categories';
 import MultiSelectDropdown from '../../components/MultiSelectDropdown';
 import dayjs from 'dayjs';
+import { set } from 'firebase/database';
 
 const getLocaleDateTime = () => {
     let d = new Date();
@@ -38,8 +39,107 @@ const optionsObject = [
     },
 ];
 
-function DisplayPricing({ recurency, options, setOptions }) {
+function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSubscribed }) {
     const [price, setPrice] = useState(9.99);
+
+    const getPrice = () => {
+        let price = 0;
+        switch (recurency) {
+            case 'Unique':
+                if (options.some((option) => option.name === 'Pack photo +3')) {
+                    price = 15.98;
+                } else if (options.some((option) => option.name === 'Pack photo +10')) {
+                    price = 19.98;
+                } else if (options.some((option) => option.name === 'Pack VIP')) {
+                    price = 32.99;
+                } else if (options.some((option) => option.name === 'Tete de liste')) {
+                    price = 19.99;
+                } else {
+                    price = 9.99;
+                }
+                break;
+            case 'Daily':
+                if (options.some((option) => option.name === 'Pack photo +3')) {
+                    price = 38.98;
+                } else if (options.some((option) => option.name === 'Pack photo +10')) {
+                    price = 42.98;
+                } else if (options.some((option) => option.name === 'Pack VIP')) {
+                    price = 131.99;
+                } else if (options.some((option) => option.name === 'Tete de liste')) {
+                    price = 65.99;
+                } else {
+                    price = 32.99;
+                }
+                break;
+            case 'Weekly':
+                if (options.some((option) => option.name === 'Pack photo +3')) {
+                    price = 21.98;
+                } else if (options.some((option) => option.name === 'Pack photo +10')) {
+                    price = 25.98;
+                } else if (options.some((option) => option.name === 'Pack VIP')) {
+                    price = 66.99;
+                } else if (options.some((option) => option.name === 'Tete de liste')) {
+                    price = 32.99;
+                } else {
+                    price = 15.99;
+                }
+                break;
+            default:
+                break;
+        }
+
+        return price;
+    };
+
+    const getStripeProductLink = () => {
+        let link = '';
+        switch (recurency) {
+            case 'Unique':
+                if (options.some((option) => option.name === 'Pack photo +3')) {
+                    link = 'https://buy.stripe.com/aEU8Am8sW6JSblucMW';
+                } else if (options.some((option) => option.name === 'Pack photo +10')) {
+                    link = 'https://buy.stripe.com/eVa9EqdNg4BK0GQbIR';
+                } else if (options.some((option) => option.name === 'Pack VIP')) {
+                    link = 'https://buy.stripe.com/14keYKbF84BK75efYY';
+                } else if (options.some((option) => option.name === 'Tete de liste')) {
+                    link = 'https://buy.stripe.com/00gcQC4cG1py3T2eUV';
+                } else {
+                    link = 'https://buy.stripe.com/14k4k624y0ludtCcMO';
+                }
+                break;
+            case 'Daily':
+                if (options.some((option) => option.name === 'Pack photo +3')) {
+                    link = 'https://buy.stripe.com/aEUaIu6kOb0861a3cq';
+                } else if (options.some((option) => option.name === 'Pack photo +10')) {
+                    link = 'https://buy.stripe.com/bIY7wieRk4BKblu8wJ';
+                } else if (options.some((option) => option.name === 'Pack VIP')) {
+                    link = 'https://buy.stripe.com/dR6bMy24yc4c75ecMR';
+                } else if (options.some((option) => option.name === 'Tete de liste')) {
+                    link = 'https://buy.stripe.com/bIY6se38C8S01KU14b';
+                } else {
+                    link = 'https://buy.stripe.com/6oE6seaB45FOdtCaEH';
+                }
+                break;
+            case 'Weekly':
+                if (options.some((option) => option.name === 'Pack photo +3')) {
+                    link = 'https://buy.stripe.com/7sIcQC24y6JS75eaEQ';
+                } else if (options.some((option) => option.name === 'Pack photo +10')) {
+                    link = 'https://buy.stripe.com/9AQ03Q38C0lufBK00b';
+                } else if (options.some((option) => option.name === 'Pack VIP')) {
+                    link = 'https://buy.stripe.com/14k8Am7oS8S03T2dQW';
+                } else if (options.some((option) => option.name === 'Tete de liste')) {
+                    link = 'https://buy.stripe.com/3cs2bYdNgd8gcpyaEM';
+                } else {
+                    link = 'https://buy.stripe.com/dR6bMyeRkd8g3T2eUY';
+                }
+                break;
+            default:
+                break;
+        }
+
+        return link;
+    };
+
     const filterOutOptions = () => {
         if (options.some((option) => option.name === 'Pack photo +3')) {
             return optionsObject.filter((option) => option.name !== 'Pack photo +10');
@@ -62,15 +162,7 @@ function DisplayPricing({ recurency, options, setOptions }) {
                     <h3 className='text-2xl font-semibold'>Un jour, un créneau horaire</h3>
 
                     <div className='flex justify-center items-baseline my-8'>
-                        <span className='mr-2 text-5xl font-extrabold'>
-                            {Number(
-                                9.99 +
-                                    options.reduce((accumulator, currentValue) => {
-                                        return accumulator + currentValue.price;
-                                    }, 0),
-                            ).toFixed(2)}
-                            €
-                        </span>
+                        <span className='mr-2 text-5xl font-extrabold'>{Number(getPrice()).toFixed(2)}€</span>
                     </div>
 
                     <h4 className='text-lg font-semibold mb-4'>Options</h4>
@@ -116,10 +208,22 @@ function DisplayPricing({ recurency, options, setOptions }) {
                         ))}
                     </ul>
                     <a
-                        href='#'
+                        href={getStripeProductLink()}
+                        target='_blank'
+                        rel='noreferrer noopener'
                         className='text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900'
+                        onClick={() => {
+                            console.log(options);
+                            setIsSubscribed(true);
+                        }}
                     >
-                        S&apos;abonner
+                        {isSubscribed ? (
+                            <div className='w-full flex items-center justify-center'>
+                                <CheckCircle />
+                            </div>
+                        ) : (
+                            "S'abonner"
+                        )}
                     </a>
                 </div>
             );
@@ -129,22 +233,14 @@ function DisplayPricing({ recurency, options, setOptions }) {
                     <h3 className='text-2xl font-semibold'>Tous les jours</h3>
 
                     <div className='flex justify-center items-baseline my-8'>
-                        <span className='mr-2 text-5xl font-extrabold'>
-                            {Number(
-                                32.99 +
-                                    options.reduce((accumulator, currentValue) => {
-                                        return accumulator + currentValue.price;
-                                    }, 0),
-                            ).toFixed(2)}
-                            €
-                        </span>
+                        <span className='mr-2 text-5xl font-extrabold'>{Number(getPrice()).toFixed(2)}€</span>
                         <span className='text-gray-500 dark:text-gray-400'>/mois</span>
                     </div>
 
                     <h4 className='text-lg font-semibold mb-4'>Options</h4>
 
                     <ul role='list' className='mb-8 space-y-4 text-left'>
-                        {optionsObject.map((option, index) => (
+                        {filterOutOptions().map((option, index) => (
                             <li key={index} className='flex items-center justify-between'>
                                 <div className='flex items-center space-x-3'>
                                     <svg
@@ -184,10 +280,22 @@ function DisplayPricing({ recurency, options, setOptions }) {
                         ))}
                     </ul>
                     <a
-                        href='#'
+                        href={getStripeProductLink()}
+                        target='_blank'
+                        rel='noreferrer noopener'
                         className='text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900'
+                        onClick={() => {
+                            console.log(options);
+                            setIsSubscribed(true);
+                        }}
                     >
-                        S&apos;abonner
+                        {isSubscribed ? (
+                            <div className='w-full flex items-center justify-center'>
+                                <CheckCircle />
+                            </div>
+                        ) : (
+                            "S'abonner"
+                        )}
                     </a>
                 </div>
             );
@@ -197,22 +305,14 @@ function DisplayPricing({ recurency, options, setOptions }) {
                     <h3 className='text-2xl font-semibold'>Une fois par semaine</h3>
 
                     <div className='flex justify-center items-baseline my-8'>
-                        <span className='mr-2 text-5xl font-extrabold'>
-                            {Number(
-                                15.99 +
-                                    options.reduce((accumulator, currentValue) => {
-                                        return accumulator + currentValue.price;
-                                    }, 0),
-                            ).toFixed(2)}
-                            €
-                        </span>
+                        <span className='mr-2 text-5xl font-extrabold'>{Number(getPrice()).toFixed(2)}€</span>
                         <span className='text-gray-500 dark:text-gray-400'>/mois</span>
                     </div>
 
                     <h4 className='text-lg font-semibold mb-4'>Options</h4>
 
                     <ul role='list' className='mb-8 space-y-4 text-left'>
-                        {optionsObject.map((option, index) => (
+                        {filterOutOptions().map((option, index) => (
                             <li key={index} className='flex items-center justify-between'>
                                 <div className='flex items-center space-x-3'>
                                     <svg
@@ -252,10 +352,22 @@ function DisplayPricing({ recurency, options, setOptions }) {
                         ))}
                     </ul>
                     <a
-                        href='#'
+                        href={getStripeProductLink()}
+                        target='_blank'
+                        rel='noreferrer noopener'
                         className='text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900'
+                        onClick={() => {
+                            console.log(options);
+                            setIsSubscribed(true);
+                        }}
                     >
-                        S&apos;abonner
+                        {isSubscribed ? (
+                            <div className='w-full flex items-center justify-center'>
+                                <CheckCircle />
+                            </div>
+                        ) : (
+                            "S'abonner"
+                        )}
                     </a>
                 </div>
             );
@@ -301,6 +413,7 @@ function CreateHappyHour() {
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
 
     const [options, setOptions] = useState([]);
+    const [isSubscribed, setIsSubscribed] = useState(false);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -920,7 +1033,13 @@ function CreateHappyHour() {
                                 )}
 
                                 <div className='my-12'>
-                                    <DisplayPricing recurency={recurency} options={options} setOptions={setOptions} />
+                                    <DisplayPricing
+                                        recurency={recurency}
+                                        options={options}
+                                        setOptions={setOptions}
+                                        isSubscribed={isSubscribed}
+                                        setIsSubscribed={setIsSubscribed}
+                                    />
                                 </div>
 
                                 {options.some(
@@ -928,9 +1047,7 @@ function CreateHappyHour() {
                                         option.name === 'Pack photo +3' || option.name === 'Pack photo +10' || option.name === 'Pack VIP',
                                 ) && (
                                     <div className='my-8'>
-                                        <p className='text-sm font-medium text-white mb-2'>
-                                            Ajoutez les photos liées à vos options
-                                        </p>
+                                        <p className='text-sm font-medium text-white mb-2'>Ajoutez les photos liées à vos options</p>
                                         <form onSubmit={handleUploadPhotos} className='flex flex-row justify-between items-center'>
                                             <input
                                                 className='block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100'
@@ -964,6 +1081,7 @@ function CreateHappyHour() {
                                             e.stopPropagation();
                                             handleCreate();
                                         }}
+                                        disabled={!isSubscribed}
                                     >
                                         <Check className='mr-2' />
                                         {loading ? 'Chargement...' : 'Créer'}
