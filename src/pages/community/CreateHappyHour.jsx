@@ -51,9 +51,13 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     price = 19.98;
                 } else if (options.some((option) => option.name === 'Pack VIP')) {
-                    price = 32.99;
+                    price = 49.96;
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
-                    price = 19.99;
+                    price = 29.98;
+                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
+                    price = 35.96;
+                } else if (options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
+                    price = 39.96;
                 } else {
                     price = 9.99;
                 }
@@ -64,9 +68,13 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     price = 42.98;
                 } else if (options.some((option) => option.name === 'Pack VIP')) {
-                    price = 131.99;
+                    price = 164.96;
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
-                    price = 65.99;
+                    price = 98.98;
+                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
+                    price = 104.96;
+                } else if (options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
+                    price = 108.96;
                 } else {
                     price = 32.99;
                 }
@@ -77,9 +85,13 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     price = 25.98;
                 } else if (options.some((option) => option.name === 'Pack VIP')) {
-                    price = 66.99;
+                    price = 79.96;
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
-                    price = 32.99;
+                    price = 47.98;
+                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
+                    price = 53.96;
+                } else if (options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
+                    price = 57.96;
                 } else {
                     price = 15.99;
                 }
@@ -100,9 +112,13 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     link = 'https://buy.stripe.com/eVa9EqdNg4BK0GQbIR';
                 } else if (options.some((option) => option.name === 'Pack VIP')) {
-                    link = 'https://buy.stripe.com/14keYKbF84BK75efYY';
+                    link = 'https://buy.stripe.com/14k6se7oSfgofBK7sJ';
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
-                    link = 'https://buy.stripe.com/00gcQC4cG1py3T2eUV';
+                    link = 'https://buy.stripe.com/aEU2bY5gKd8g9dm3cC';
+                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
+                    link = 'https://buy.stripe.com/14k5oagZseck75e5kH';
+                } else if(options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
+                    link = 'https://buy.stripe.com/6oEbMybF8gksblu6oK';
                 } else {
                     link = 'https://buy.stripe.com/14k4k624y0ludtCcMO';
                 }
@@ -113,9 +129,13 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     link = 'https://buy.stripe.com/bIY7wieRk4BKblu8wJ';
                 } else if (options.some((option) => option.name === 'Pack VIP')) {
-                    link = 'https://buy.stripe.com/dR6bMy24yc4c75ecMR';
+                    link = 'https://buy.stripe.com/dR6g2ObF82tC3T200f';
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
-                    link = 'https://buy.stripe.com/bIY6se38C8S01KU14b';
+                    link = 'https://buy.stripe.com/4gwg2ObF8b080GQ6oM';
+                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
+                    link = 'https://buy.stripe.com/bIY4k6bF8gksdtCeVd';
+                } else if(options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
+                    link = 'https://buy.stripe.com/aEU7wifVo1py9dmdR8';
                 } else {
                     link = 'https://buy.stripe.com/6oE6seaB45FOdtCaEH';
                 }
@@ -126,9 +146,13 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     link = 'https://buy.stripe.com/9AQ03Q38C0lufBK00b';
                 } else if (options.some((option) => option.name === 'Pack VIP')) {
-                    link = 'https://buy.stripe.com/14k8Am7oS8S03T2dQW';
+                    link = 'https://buy.stripe.com/9AQcQC38C0lu9dm14k';
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
-                    link = 'https://buy.stripe.com/3cs2bYdNgd8gcpyaEM';
+                    link = 'https://buy.stripe.com/28o2bY6kO4BKexGaF3';
+                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
+                    link = 'https://buy.stripe.com/dR6bMyfVoeckcpy3cx';
+                } else if(options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
+                    link = 'https://buy.stripe.com/4gwaIugZseckfBKfZi';
                 } else {
                     link = 'https://buy.stripe.com/dR6bMyeRkd8g3T2eUY';
                 }
@@ -186,7 +210,7 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                                     <div className='flex flex-col space-y-1 pr-4'>
                                         <div className='flex space-x-3'>
                                             <span>{option.name}</span>
-                                            <span className='text-gray-400'>{option.price}€</span>
+                                            {/* <span className='text-gray-400'>{option.price}€</span> */}
                                         </div>
                                         <span className='text-gray-400 text-xs'>{option.description}</span>
                                     </div>
@@ -258,7 +282,7 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                                     <div className='flex flex-col space-y-1 pr-4'>
                                         <div className='flex space-x-3'>
                                             <span>{option.name}</span>
-                                            <span className='text-gray-400'>{option.price}€</span>
+                                            {/* <span className='text-gray-400'>{option.price}€</span> */}
                                         </div>
                                         <span className='text-gray-400 text-xs'>{option.description}</span>
                                     </div>
@@ -330,7 +354,7 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                                     <div className='flex flex-col space-y-1 pr-4'>
                                         <div className='flex space-x-3'>
                                             <span>{option.name}</span>
-                                            <span className='text-gray-400'>{option.price}€</span>
+                                            {/* <span className='text-gray-400'>{option.price}€</span> */}
                                         </div>
                                         <span className='text-gray-400 text-xs'>{option.description}</span>
                                     </div>
