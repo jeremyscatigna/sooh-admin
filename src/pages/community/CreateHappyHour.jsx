@@ -46,7 +46,17 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
         let price = 0;
         switch (recurency) {
             case 'Unique':
-                if (options.some((option) => option.name === 'Pack photo +3')) {
+                if (
+                    options.some((option) => option.name === 'Pack photo +3') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    price = 35.96;
+                } else if (
+                    options.some((option) => option.name === 'Pack photo +10') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    price = 39.96;
+                } else if (options.some((option) => option.name === 'Pack photo +3')) {
                     price = 15.98;
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     price = 19.98;
@@ -54,16 +64,23 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                     price = 49.96;
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
                     price = 29.98;
-                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
-                    price = 35.96;
-                } else if (options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
-                    price = 39.96;
                 } else {
                     price = 9.99;
                 }
                 break;
+
             case 'Daily':
-                if (options.some((option) => option.name === 'Pack photo +3')) {
+                if (
+                    options.some((option) => option.name === 'Pack photo +3') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    price = 104.96;
+                } else if (
+                    options.some((option) => option.name === 'Pack photo +10') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    price = 108.96;
+                } else if (options.some((option) => option.name === 'Pack photo +3')) {
                     price = 38.98;
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     price = 42.98;
@@ -71,16 +88,23 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                     price = 164.96;
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
                     price = 98.98;
-                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
-                    price = 104.96;
-                } else if (options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
-                    price = 108.96;
                 } else {
                     price = 32.99;
                 }
                 break;
+
             case 'Weekly':
-                if (options.some((option) => option.name === 'Pack photo +3')) {
+                if (
+                    options.some((option) => option.name === 'Pack photo +3') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    price = 53.96;
+                } else if (
+                    options.some((option) => option.name === 'Pack photo +10') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    price = 57.96;
+                } else if (options.some((option) => option.name === 'Pack photo +3')) {
                     price = 21.98;
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     price = 25.98;
@@ -88,14 +112,11 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                     price = 79.96;
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
                     price = 47.98;
-                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
-                    price = 53.96;
-                } else if (options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
-                    price = 57.96;
                 } else {
                     price = 15.99;
                 }
                 break;
+
             default:
                 break;
         }
@@ -107,7 +128,17 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
         let link = '';
         switch (recurency) {
             case 'Unique':
-                if (options.some((option) => option.name === 'Pack photo +3')) {
+                if (
+                    options.some((option) => option.name === 'Pack photo +3') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    link = 'https://buy.stripe.com/14k5oagZseck75e5kH';
+                } else if (
+                    options.some((option) => option.name === 'Pack photo +10') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    link = 'https://buy.stripe.com/6oEbMybF8gksblu6oK';
+                } else if (options.some((option) => option.name === 'Pack photo +3')) {
                     link = 'https://buy.stripe.com/aEU8Am8sW6JSblucMW';
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     link = 'https://buy.stripe.com/eVa9EqdNg4BK0GQbIR';
@@ -115,16 +146,23 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                     link = 'https://buy.stripe.com/14k6se7oSfgofBK7sJ';
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
                     link = 'https://buy.stripe.com/aEU2bY5gKd8g9dm3cC';
-                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
-                    link = 'https://buy.stripe.com/14k5oagZseck75e5kH';
-                } else if(options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
-                    link = 'https://buy.stripe.com/6oEbMybF8gksblu6oK';
                 } else {
                     link = 'https://buy.stripe.com/14k4k624y0ludtCcMO';
                 }
                 break;
+
             case 'Daily':
-                if (options.some((option) => option.name === 'Pack photo +3')) {
+                if (
+                    options.some((option) => option.name === 'Pack photo +3') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    link = 'https://buy.stripe.com/bIY4k6bF8gksdtCeVd';
+                } else if (
+                    options.some((option) => option.name === 'Pack photo +10') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    link = 'https://buy.stripe.com/aEU7wifVo1py9dmdR8';
+                } else if (options.some((option) => option.name === 'Pack photo +3')) {
                     link = 'https://buy.stripe.com/aEUaIu6kOb0861a3cq';
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     link = 'https://buy.stripe.com/bIY7wieRk4BKblu8wJ';
@@ -132,16 +170,23 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                     link = 'https://buy.stripe.com/dR6g2ObF82tC3T200f';
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
                     link = 'https://buy.stripe.com/4gwg2ObF8b080GQ6oM';
-                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
-                    link = 'https://buy.stripe.com/bIY4k6bF8gksdtCeVd';
-                } else if(options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
-                    link = 'https://buy.stripe.com/aEU7wifVo1py9dmdR8';
                 } else {
                     link = 'https://buy.stripe.com/6oE6seaB45FOdtCaEH';
                 }
                 break;
+
             case 'Weekly':
-                if (options.some((option) => option.name === 'Pack photo +3')) {
+                if (
+                    options.some((option) => option.name === 'Pack photo +3') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    link = 'https://buy.stripe.com/dR6bMyfVoeckcpy3cx';
+                } else if (
+                    options.some((option) => option.name === 'Pack photo +10') &&
+                    options.some((option) => option.name === 'Tete de liste')
+                ) {
+                    link = 'https://buy.stripe.com/4gwaIugZseckfBKfZi';
+                } else if (options.some((option) => option.name === 'Pack photo +3')) {
                     link = 'https://buy.stripe.com/7sIcQC24y6JS75eaEQ';
                 } else if (options.some((option) => option.name === 'Pack photo +10')) {
                     link = 'https://buy.stripe.com/9AQ03Q38C0lufBK00b';
@@ -149,14 +194,11 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                     link = 'https://buy.stripe.com/9AQcQC38C0lu9dm14k';
                 } else if (options.some((option) => option.name === 'Tete de liste')) {
                     link = 'https://buy.stripe.com/28o2bY6kO4BKexGaF3';
-                } else if (options.some((option) => option.name === 'Pack photo +3' && option.name === 'Tete de liste')) {
-                    link = 'https://buy.stripe.com/dR6bMyfVoeckcpy3cx';
-                } else if(options.some((option) => option.name === 'Pack photo +10' && option.name === 'Tete de liste')) {
-                    link = 'https://buy.stripe.com/4gwaIugZseckfBKfZi';
                 } else {
                     link = 'https://buy.stripe.com/dR6bMyeRkd8g3T2eUY';
                 }
                 break;
+
             default:
                 break;
         }
