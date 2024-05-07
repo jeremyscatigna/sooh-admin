@@ -349,7 +349,7 @@ function DisplayPricing({ recurency, options, setOptions, isSubscribed, setIsSub
                         href={getStripeProductLink()}
                         target='_blank'
                         rel='noreferrer noopener'
-                        className='text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900'
+                        className='text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white dark:focus:ring-primary-900'
                         onClick={() => {
                             console.log(options);
                             setIsSubscribed(true);
