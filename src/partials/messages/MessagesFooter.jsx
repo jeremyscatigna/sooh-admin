@@ -13,6 +13,7 @@ import { db, storage } from '../../main';
 import ModalBasic from '../../components/ModalBasic';
 import { ArrowRight, MediaImage } from 'iconoir-react';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import axios from 'axios';
 
 function MessagesFooter() {
     const [inputValue, setInputValue] = React.useState('');
@@ -40,7 +41,7 @@ function MessagesFooter() {
 
         if (!file) return;
         const storageRef = ref(storage, `messages/${uuidv4()}`);
-        
+
         const isVideo = file.type === 'video/mp4' || file.type === 'video/quicktime';
 
         if (isVideo) {
@@ -84,21 +85,49 @@ function MessagesFooter() {
 
         const othercollref = doc(db, 'users', selectedConversation.userId, 'conversations', convDocumentId);
 
-        updateDoc(convcollref, {
-            messages: [...selectedConversationMessages, message],
-        });
+        // Text, Image and Video moderation
+        const data = new FormData();
+        data.append('text', message.text);
+        data.append('lang', 'fr');
+        data.append('opt_countries', 'us,gb,fr');
+        data.append('mode', 'rules');
+        data.append('api_user', '1693832545');
+        data.append('api_secret', 'T2dAVmeojUcggBxNEpGLymq9wmVvSeXX');
 
-        updateDoc(othercollref, {
-            messages: [...selectedConversationMessages, message],
-        });
+        let response;
+        try {
+            response = await axios({
+                url: 'https://api.sightengine.com/1.0/text/check.json',
+                method: 'post',
+                data: data,
+            });
+        } catch (e) {
+            if (e.response) console.log(e.response.data);
+            else console.log(e.message);
+        }
 
-        setOpenCreateOfferModal(false);
-        setOpenSendMediaModal(false);
-        window.scroll({
-            top: document.body.offsetHeight,
-            left: 0,
-            behavior: 'smooth',
-        });
+        console.log(response.data);
+        console.log(response.data.profanity.matches.length);
+
+        if (response.data.profanity.matches.length > 0) {
+            alert('Votre message contient des mots inappropriés');
+        } else {
+            updateDoc(convcollref, {
+                messages: [...selectedConversationMessages, message],
+            });
+
+            updateDoc(othercollref, {
+                messages: [...selectedConversationMessages, message],
+            });
+
+            setOpenCreateOfferModal(false);
+            setOpenSendMediaModal(false);
+            window.scroll({
+                top: document.body.offsetHeight,
+                left: 0,
+                behavior: 'smooth',
+            });
+        }
     };
     return (
         <div className='z-40 sticky w-full bg-card bottom-0'>

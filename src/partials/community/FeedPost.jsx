@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../main';
 import Avvvatars from 'avvvatars-react';
 import { RWebShare } from 'react-web-share';
+import axios from 'axios';
 
 const getLocaleDateTime = () => {
     let d = new Date();
@@ -104,17 +105,45 @@ function FeedPost({ item }) {
             timestamp: getLocaleDateTime(),
         };
 
-        const updatedComments = [...post.comments, commentObject];
-        item.comments = updatedComments;
-        setSeeComments(true);
-        const convcollref = doc(db, 'posts', post.id);
+        // Text, Image and Video moderation
+        const data = new FormData();
+        data.append('text', comment);
+        data.append('lang', 'fr');
+        data.append('opt_countries', 'us,gb,fr');
+        data.append('mode', 'rules');
+        data.append('api_user', '1693832545');
+        data.append('api_secret', 'T2dAVmeojUcggBxNEpGLymq9wmVvSeXX');
 
-        // Update the Firestore document with the new comments array
-        updateDoc(convcollref, {
-            comments: updatedComments,
-        });
+        let response;
+        try {
+            response = await axios({
+                url: 'https://api.sightengine.com/1.0/text/check.json',
+                method: 'post',
+                data: data,
+            });
+        } catch (e) {
+            if (e.response) console.log(e.response.data);
+            else console.log(e.message);
+        }
 
-        setComment('');
+        console.log(response.data);
+        console.log(response.data.profanity.matches.length);
+
+        if (response.data.profanity.matches.length > 0) {
+            alert('Votre message contient des mots inappropriés');
+        } else {
+            const updatedComments = [...post.comments, commentObject];
+            item.comments = updatedComments;
+            setSeeComments(true);
+            const convcollref = doc(db, 'posts', post.id);
+
+            // Update the Firestore document with the new comments array
+            updateDoc(convcollref, {
+                comments: updatedComments,
+            });
+
+            setComment('');
+        }
     };
 
     const handleLikeUpdate = async (e, post) => {
