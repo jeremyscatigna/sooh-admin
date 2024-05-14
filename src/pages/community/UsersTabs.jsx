@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
-import SearchForm from '../../partials/actions/SearchForm';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../main';
 import { categories, getCategoriesShadowColor } from '../../utils/categories';
 import { Link, useSearchParams } from 'react-router-dom';
 import Avvvatars from 'avvvatars-react';
-import { Facebook, Instagram, Search, TikTok, Twitter, YouTube } from 'iconoir-react';
+import { Facebook, Instagram, TikTok, YouTube } from 'iconoir-react';
 import { useAtom, useAtomValue } from 'jotai';
 import { currentUser } from '../Signup';
 import { v4 as uuidv4 } from 'uuid';
