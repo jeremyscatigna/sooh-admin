@@ -125,6 +125,7 @@ function Feed() {
             userId: currentUserAuth.uid,
             userFirstName: user.firstName,
             userLastName: user.lastName,
+            userEmail: user.email,
             username: user.username || '',
             userAvatar: user.avatar,
             date: new Date(new Date().setDate(new Date().getDate())).toString(),

@@ -14,6 +14,7 @@ import Avvvatars from 'avvvatars-react';
 import { RWebShare } from 'react-web-share';
 import axios from 'axios';
 import { set } from 'firebase/database';
+import sendEmail from '../../utils/sendEmail';
 
 const getLocaleDateTime = () => {
     let d = new Date();
@@ -33,7 +34,7 @@ const doIHaveSignaledThisPost = (item, user) => {
         return item.signaling.filter((signaling) => signaling.userId === user.uid).length > 0;
     }
     return false;
-}
+};
 
 function FeedPost({ item }) {
     dayjs.extend(LocalizedFormat);
@@ -203,6 +204,14 @@ function FeedPost({ item }) {
         updateDoc(convcollref, {
             ...item,
         });
+
+        sendEmail(
+            user.firstName + ' ' + user.lastName,
+            user.email,
+            `L'utilisateur ${user.firstName} ${user.lastName} a signalé le contenu suivant : ${post.text} poster par ${
+                post.userFirstName
+            } ${post.userLastName}} (${post.userEmail && post.userEmail !== '' ? post.userEmail : 'Email non renseigné'})`,
+        );
     };
 
     const handleShare = async () => {
