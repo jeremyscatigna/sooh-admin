@@ -13,6 +13,7 @@ import { db } from '../../main';
 import Avvvatars from 'avvvatars-react';
 import { RWebShare } from 'react-web-share';
 import axios from 'axios';
+import { set } from 'firebase/database';
 
 const getLocaleDateTime = () => {
     let d = new Date();
@@ -27,6 +28,13 @@ const doILikeThisPost = (item, user) => {
     return false;
 };
 
+const doIHaveSignaledThisPost = (item, user) => {
+    if (item.signaling) {
+        return item.signaling.filter((signaling) => signaling.userId === user.uid).length > 0;
+    }
+    return false;
+}
+
 function FeedPost({ item }) {
     dayjs.extend(LocalizedFormat);
     dayjs.extend(RelativeTime);
@@ -35,6 +43,7 @@ function FeedPost({ item }) {
     // const user = JSON.parse(localStorage.getItem('user'));
 
     const [like, setLike] = React.useState(item.likes ? doILikeThisPost(item, user) : false);
+    const [signaled, setSignaled] = React.useState(item.signaling ? doIHaveSignaledThisPost(item, user) : false);
     const [comment, setComment] = React.useState('');
     const [seeComments, setSeeComments] = React.useState(false);
     const [users, setUsers] = React.useState([]);
@@ -126,9 +135,6 @@ function FeedPost({ item }) {
             else console.log(e.message);
         }
 
-        console.log(response.data);
-        console.log(response.data.profanity.matches.length);
-
         if (response.data.profanity.matches.length > 0) {
             alert('Votre message contient des mots inappropriés');
         } else {
@@ -167,6 +173,35 @@ function FeedPost({ item }) {
         // Update the Firestore document with the new comments array
         updateDoc(convcollref, {
             likes: updatedLikes,
+        });
+    };
+
+    const handleSignalingContent = async (e, post) => {
+        e.preventDefault();
+        const signalingObject = {
+            id: uuidv4(),
+            userId: user.uid,
+        };
+
+        let updatedSignaling = [];
+        if (post.signaling) {
+            if (signaled) {
+                updatedSignaling = post.signaling.filter((signaling) => signaling.userId !== user.uid);
+                item.signaling = updatedSignaling;
+                setSignaled(false);
+            } else {
+                updatedSignaling = [...post.signaling, signalingObject];
+            }
+        } else {
+            updatedSignaling = [signalingObject];
+        }
+
+        item.signaling = updatedSignaling;
+        const convcollref = doc(db, 'posts', post.id);
+
+        // Update the Firestore document with the new comments array
+        updateDoc(convcollref, {
+            ...item,
         });
     };
 
@@ -292,6 +327,36 @@ function FeedPost({ item }) {
                         <ShareIos className='w-5 h-4 shrink-0 font-bold' strokeWidth={3} />
                     </button>
                 </RWebShare>
+
+                <button
+                    className='flex items-center text-secondary hover:text-pink-500'
+                    onClick={(e) => {
+                        setSignaled(!signaled);
+                        handleSignalingContent(e, item);
+                    }}
+                >
+                    <svg
+                        width='24px'
+                        height='24px'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        xmlns='http://www.w3.org/2000/svg'
+                        color={signaled ? '#db2777' : '#ffffff'}
+                        strokeWidth='1.5'
+                    >
+                        <path
+                            d='M20.9405 4.65432L20.0496 14.4543C20.0215 14.7634 19.7624 15 19.4521 15H5L5.95039 4.54568C5.97849 4.23663 6.23761 4 6.54793 4H20.343C20.6958 4 20.9725 4.30295 20.9405 4.65432Z'
+                            fill={signaled ? '#db2777' : '#ffffff'}
+                        ></path>
+                        <path
+                            d='M5 15L5.95039 4.54568C5.97849 4.23663 6.23761 4 6.54793 4H20.343C20.6958 4 20.9725 4.30295 20.9405 4.65432L20.0496 14.4543C20.0215 14.7634 19.7624 15 19.4521 15H5ZM5 15L4.4 21'
+                            stroke={signaled ? '#db2777' : '#ffffff'}
+                            strokeWidth='1.5'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                        ></path>
+                    </svg>
+                </button>
             </footer>
             {seeComments && (
                 <div className='mt-5 mb-5 pt-3'>

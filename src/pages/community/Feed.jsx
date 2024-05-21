@@ -154,10 +154,6 @@ function Feed() {
             else console.log(e.message);
         }
 
-        console.log(response.data);
-        console.log(response.data.profanity.matches.length);
-        console.log(toAdd);
-
         if (response.data.profanity.matches.length > 0) {
             alert('Votre message contient des mots inappropriés');
         } else {
