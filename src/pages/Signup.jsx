@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthImage from '../images/auth-image.jpg';
 import logo from '../images/logo-nobg.png';
 import AuthDecoration from '../images/auth-decoration.png';
-import { useUserAuth } from '../context/UserAuthContext';
 import { addDoc, collection } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../main';
@@ -226,8 +225,8 @@ function Signup() {
                                     </button>
 
                                     <p className='text-xs text-secondary mt-2'>
-                                        En cliquand sur &quot;S&apos;inscrire&quot;, vous acceptez nos conditions d&apos;utilisation et
-                                        notre politique de confidentialité que vous pouvez retrouvé{' '}
+                                        En créant mon compte j&apos;accepte les CGV CGU et déclare avoir pris connaissance de la politique
+                                        de confidentialité{' '}
                                         <a
                                             className='underline'
                                             href='https://www.notion.so/CGV-CGU-fac0db0184d84e178f7d707a5c4025f5?pvs=4'

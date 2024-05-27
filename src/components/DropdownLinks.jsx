@@ -97,6 +97,13 @@ function DropdownLinks({ align }) {
                             >
                                 Politique de confidentialité
                             </Link>
+                            <Link
+                                className='font-medium text-sm text-primary hover:text-secondary flex items-center py-1 px-3'
+                                to='mailto:soohapplication@gmail.com'
+                                onClick={() => {
+                                    setDropdownOpen(!dropdownOpen);
+                                }}
+                            >Contactez nous</Link>
                         </li>
                     </ul>
                 </div>
