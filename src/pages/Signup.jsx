@@ -224,6 +224,17 @@ function Signup() {
                                     >
                                         {loading ? 'Chargement en cours...' : "S'inscrire"}
                                     </button>
+
+                                    <p className='text-xs text-secondary mt-2'>
+                                        En cliquand sur &quot;S&apos;inscrire&quot;, vous acceptez nos conditions d&apos;utilisation et
+                                        notre politique de confidentialité que vous pouvez retrouvé{' '}
+                                        <a
+                                            className='underline'
+                                            href='https://www.notion.so/CGV-CGU-fac0db0184d84e178f7d707a5c4025f5?pvs=4'
+                                        >
+                                            ici
+                                        </a>
+                                    </p>
                                 </div>
                             </form>
                             {/* Footer */}
