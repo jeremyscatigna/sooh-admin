@@ -21,6 +21,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
     const [selectedConversation, setSelectedConversation] = useAtom(selectedConversationAtom);
     const setSelectedConversationMessages = useSetAtom(selectedConversationMessagesAtom);
     const [dangerModalOpen, setDangerModalOpen] = useState(false);
+    const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false);
     const [toDeletePost, setToDeletePost] = useState({});
 
     const navigate = useNavigate();
@@ -102,6 +103,42 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                     </button>
                 </div>
             </ModalBlank>
+
+            <ModalBlank
+                id='basic-modal'
+                className='bg-card rounded-xl'
+                modalOpen={deleteAccountModalOpen}
+                setModalOpen={setDeleteAccountModalOpen}
+            >
+                <div className='p-5 flex flex-col space-y-4 justify-center items-center bg-card rounded-xl'>
+                    {/* Icon */}
+                    <div className='w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-rose-100'>
+                        <svg className='w-4 h-4 shrink-0 fill-current text-rose-500' viewBox='0 0 16 16'>
+                            <path d='M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z' />
+                        </svg>
+                    </div>
+
+                    <div className='text-lg font-semibold text-primary text-center'>Comfirmez vous la suppression de votre compte ?</div>
+
+                    {/* Modal footer */}
+
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            sendEmail(user.firstName + ' ' + user.lastName, user.email, `Demande de suppression de compte: ${user.email}`);
+
+                            setDeleteAccountModalOpen(false);
+
+                            alert(
+                                "Un email a été envoyé à l'Admin pour confirmer la suppression de votre compte qui sera effective dans les 24h",
+                            );
+                        }}
+                        className='btn-sm rounded-xl bg-rose-500 hover:bg-rose-600 text-white'
+                    >
+                        Supprimer
+                    </button>
+                </div>
+            </ModalBlank>
             {/* Content */}
             <div className='relative px-4 sm:px-6 pb-8'>
                 <Link
@@ -159,11 +196,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        sendEmail(user.firstName + ' ' + user.lastName, user.email, 'Demande de suppression de compte');
-
-                                        alert(
-                                            "Un email a été envoyé à l'Admin pour confirmer la suppression de votre compte qui sera effective dans les 24h",
-                                        );
+                                        setDeleteAccountModalOpen(true);
                                     }}
                                     className='btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full p-2 hover:bg-indigo-600 text-white'
                                 >
