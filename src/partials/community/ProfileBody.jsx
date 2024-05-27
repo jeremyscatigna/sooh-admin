@@ -10,6 +10,7 @@ import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { db } from '../../main';
 import { selectedConversationAtom, selectedConversationMessagesAtom } from '../../pages/Messages';
 import ModalBlank from '../../components/ModalBlank';
+import sendEmail from '../../utils/sendEmail';
 
 function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalOpen, user, posts, influencer }) {
     const connectedUser = useAtomValue(currentUser);
@@ -154,6 +155,19 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen, setBasicModalO
                                     className='btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full p-2 hover:bg-indigo-600 text-white'
                                 >
                                     <Edit />
+                                </button>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        sendEmail(user.firstName + ' ' + user.lastName, user.email, 'Demande de suppression de compte');
+
+                                        alert(
+                                            "Un email a été envoyé à l'Admin pour confirmer la suppression de votre compte qui sera effective dans les 24h",
+                                        );
+                                    }}
+                                    className='btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full p-2 hover:bg-indigo-600 text-white'
+                                >
+                                    Supprimer mon compte
                                 </button>
                                 <Link
                                     className='btn-sm bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full p-2 hover:bg-indigo-600 text-white'
