@@ -43,7 +43,7 @@ function Feed() {
     const [searchText, setSearchText] = useState('');
     const [filteredData, setFilteredData] = useState([]);
 
-    const [getDataLoading, setGetDataLoading] = useState(true);
+    const [getDataLoading, setGetDataLoading] = useState(false);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -64,6 +64,7 @@ function Feed() {
 
     useEffect(() => {
         const fetchData = async () => {
+            setGetDataLoading(true);
             const userDoc = await getDocs(query(collection(db, 'users'), where('uid', '==', user.uid)));
             if (userDoc.docs.length > 0 && userDoc.docs[0].exists()) {
                 setBlockedUsers(userDoc.docs[0].data().blockedUsers || []);
