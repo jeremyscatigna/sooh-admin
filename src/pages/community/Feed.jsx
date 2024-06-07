@@ -22,6 +22,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 import DropdownBlock from '../../components/DropdownBlock';
 import { LoaderCircle } from 'lucide-react';
+import { set } from 'firebase/database';
 
 function Feed() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -86,9 +87,12 @@ function Feed() {
                 );
             });
 
-            setData(filteredPosts);
             if (user.uid) {
                 setGetDataLoading(false);
+                setData(filteredPosts);
+            } else {
+                setGetDataLoading(false);
+                setData(posts);
             }
         };
 
