@@ -21,13 +21,14 @@ import DropdownLinks from '../../components/DropdownLinks';
 import axios from 'axios';
 import FormData from 'form-data';
 import DropdownBlock from '../../components/DropdownBlock';
+import { LoaderCircle } from 'lucide-react';
 
 function Feed() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [postText, setPostText] = useState('');
     const [postImage, setPostImage] = useState(null);
     const [data, setData] = useState([]);
-    const [savedUser, setSavedUser] = useState()
+    const [savedUser, setSavedUser] = useState();
 
     const [imgUrl, setImgUrl] = useState(null);
     const [progresspercent, setProgresspercent] = useState(0);
@@ -40,6 +41,8 @@ function Feed() {
     const [apercuModalOpen, setApercuModalOpen] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [filteredData, setFilteredData] = useState([]);
+
+    const [getDataLoading, setGetDataLoading] = useState(true);
 
     const handleWindowSizeChange = () => {
         setMobile(window.innerWidth <= 500);
@@ -75,16 +78,21 @@ function Feed() {
 
             // Filter out posts from blocked users
             const filteredPosts = posts.filter((post) => {
-                return !userDoc.docs[0].data() || !userDoc.docs[0].data().blockedUsers.some((blockedUser) => {
-                    return blockedUser.userId === post.userId;
-                });
-            })
+                return (
+                    !userDoc.docs[0].data() ||
+                    !userDoc.docs[0].data().blockedUsers.some((blockedUser) => {
+                        return blockedUser.userId === post.userId;
+                    })
+                );
+            });
 
             setData(filteredPosts);
+            if (user.uid) {
+                setGetDataLoading(false);
+            }
         };
 
         fetchData();
-        
     }, [user]);
 
     useEffect(() => {
@@ -202,11 +210,11 @@ function Feed() {
         const toBlock = {
             userId: userId,
             username: username,
-        }
-        
+        };
+
         updateDoc(userDocRef, {
             blockedUsers: [...blockedUsers, toBlock],
-        })
+        });
 
         const filteredPosts = data.filter((post) => post.userId !== userId);
         setData(filteredPosts);
@@ -214,14 +222,14 @@ function Feed() {
 
     const unblockUser = async (userId) => {
         const userDocRef = doc(db, 'users', savedUser.id);
-        
+
         updateDoc(userDocRef, {
             blockedUsers: blockedUsers.filter((user) => user.userId !== userId),
-        })
+        });
 
         const filteredPosts = data.filter((post) => post.userId !== userId);
         setData(filteredPosts);
-    }
+    };
 
     return (
         <div className='flex h-screen overflow-hidden'>
@@ -255,7 +263,7 @@ function Feed() {
                                                 <Message className='w-4 h-4 shrink-0 text-primary' />
                                             </Link>
                                             <DropdownLinks />
-                                            
+
                                             <DropdownBlock blockedUsers={blockedUsers} handleUnblockUser={unblockUser} />
                                         </div>
                                     </header>
@@ -412,7 +420,13 @@ function Feed() {
                                             </div>
 
                                             {/* Posts */}
-                                            <FeedPosts posts={filteredData} handleBlockUser={handleBlockUser} />
+                                            {getDataLoading ? (
+                                                <div className='flex justify-center items-center h-full'>
+                                                    <LoaderCircle className='w-10 h-10 text-pink-500 animate-spin' />
+                                                </div>
+                                            ) : (
+                                                <FeedPosts posts={filteredData} handleBlockUser={handleBlockUser} />
+                                            )}
                                         </div>
                                     </div>
                                 </div>
