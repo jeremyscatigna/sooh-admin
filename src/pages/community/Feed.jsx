@@ -65,30 +65,31 @@ function Feed() {
     useEffect(() => {
         const fetchData = async () => {
             setGetDataLoading(true);
-            const userDoc = await getDocs(query(collection(db, 'users'), where('uid', '==', user.uid)));
-            if (userDoc.docs.length > 0 && userDoc.docs[0].exists()) {
-                setBlockedUsers(userDoc.docs[0].data().blockedUsers || []);
-                const data = userDoc.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setSavedUser(data[0]);
-            }
 
             const res = await getDocs(query(collection(db, 'posts'), orderBy('timestamp', 'desc')));
             const posts = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
             // Filter out posts from blocked users
-            const filteredPosts = posts.filter((post) => {
-                return (
-                    !userDoc.docs[0].data() ||
-                    !userDoc.docs[0].data().blockedUsers.some((blockedUser) => {
-                        return blockedUser.userId === post.userId;
-                    })
-                );
-            });
+            if (user) {
+                const userDoc = await getDocs(query(collection(db, 'users'), where('uid', '==', user.uid)));
+                if (userDoc.docs.length > 0 && userDoc.docs[0].exists()) {
+                    setBlockedUsers(userDoc.docs[0].data().blockedUsers || []);
+                    const data = userDoc.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    }));
+                    setSavedUser(data[0]);
+                }
 
-            if (user.uid) {
+                const filteredPosts = posts.filter((post) => {
+                    return (
+                        !userDoc.docs[0].data() ||
+                        !userDoc.docs[0].data().blockedUsers.some((blockedUser) => {
+                            return blockedUser.userId === post.userId;
+                        })
+                    );
+                });
+
                 setGetDataLoading(false);
                 setData(filteredPosts);
             } else {
