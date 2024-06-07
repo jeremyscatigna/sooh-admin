@@ -10,7 +10,7 @@ import { useAtomValue } from 'jotai';
 import { currentUser } from '../Signup';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { auth, db, storage } from '../../main';
-import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, serverTimestamp, updateDoc, where } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import Avvvatars from 'avvvatars-react';
 import { Link } from 'react-router-dom';
@@ -20,17 +20,20 @@ import DropdownLinks from '../../components/DropdownLinks';
 
 import axios from 'axios';
 import FormData from 'form-data';
+import DropdownBlock from '../../components/DropdownBlock';
 
 function Feed() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [postText, setPostText] = useState('');
     const [postImage, setPostImage] = useState(null);
     const [data, setData] = useState([]);
+    const [savedUser, setSavedUser] = useState()
 
     const [imgUrl, setImgUrl] = useState(null);
     const [progresspercent, setProgresspercent] = useState(0);
     const [fileLoading, setFileLoading] = useState(false);
     const [fileType, setFileType] = useState('image');
+    const [blockedUsers, setBlockedUsers] = useState([]);
 
     const [loading, setLoading] = useState(false);
     const [mobile, setMobile] = useState(window.innerWidth <= 500);
@@ -57,14 +60,32 @@ function Feed() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getDocs(query(collection(db, 'posts'), orderBy('timestamp', 'desc')));
+            const userDoc = await getDocs(query(collection(db, 'users'), where('uid', '==', user.uid)));
+            if (userDoc.docs.length > 0 && userDoc.docs[0].exists()) {
+                setBlockedUsers(userDoc.docs[0].data().blockedUsers || []);
+                const data = userDoc.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setSavedUser(data[0]);
+            }
 
-            res.docs.forEach(async () => {
-                setData(res.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-            });
+            const res = await getDocs(query(collection(db, 'posts'), orderBy('timestamp', 'desc')));
+            const posts = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+            // Filter out posts from blocked users
+            const filteredPosts = posts.filter((post) => {
+                return !userDoc.docs[0].data() || !userDoc.docs[0].data().blockedUsers.some((blockedUser) => {
+                    return blockedUser.userId === post.userId;
+                });
+            })
+
+            setData(filteredPosts);
         };
+
         fetchData();
-    }, []);
+        
+    }, [user]);
 
     useEffect(() => {
         if (searchText.trim()) {
@@ -73,6 +94,7 @@ function Feed() {
                 // Assuming you want to search in the text of the post. Adjust accordingly
                 return item.text.toLowerCase().includes(lowercasedFilter);
             });
+
             setFilteredData(filteredItems);
         } else {
             setFilteredData(data);
@@ -174,6 +196,33 @@ function Feed() {
         setLoading(false);
     };
 
+    const handleBlockUser = async (userId, username) => {
+        const userDocRef = doc(db, 'users', savedUser.id);
+
+        const toBlock = {
+            userId: userId,
+            username: username,
+        }
+        
+        updateDoc(userDocRef, {
+            blockedUsers: [...blockedUsers, toBlock],
+        })
+
+        const filteredPosts = data.filter((post) => post.userId !== userId);
+        setData(filteredPosts);
+    };
+
+    const unblockUser = async (userId) => {
+        const userDocRef = doc(db, 'users', savedUser.id);
+        
+        updateDoc(userDocRef, {
+            blockedUsers: blockedUsers.filter((user) => user.userId !== userId),
+        })
+
+        const filteredPosts = data.filter((post) => post.userId !== userId);
+        setData(filteredPosts);
+    }
+
     return (
         <div className='flex h-screen overflow-hidden'>
             {/* Sidebar */}
@@ -206,6 +255,8 @@ function Feed() {
                                                 <Message className='w-4 h-4 shrink-0 text-primary' />
                                             </Link>
                                             <DropdownLinks />
+                                            
+                                            <DropdownBlock blockedUsers={blockedUsers} handleUnblockUser={unblockUser} />
                                         </div>
                                     </header>
                                 )}
@@ -361,7 +412,7 @@ function Feed() {
                                             </div>
 
                                             {/* Posts */}
-                                            <FeedPosts posts={filteredData} />
+                                            <FeedPosts posts={filteredData} handleBlockUser={handleBlockUser} />
                                         </div>
                                     </div>
                                 </div>

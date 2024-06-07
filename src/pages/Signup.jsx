@@ -211,7 +211,7 @@ function Signup() {
 
                                     {error && <p className='text-xs text-pink-500'>{error}</p>}
                                 </div>
-                                <div className='flex items-center justify-between mt-6'>
+                                <div className='flex flex-col items-center justify-center mt-6'>
                                     <button
                                         disabled={isDisabled}
                                         className={`btn mt-2 ${

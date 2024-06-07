@@ -15,6 +15,7 @@ import { RWebShare } from 'react-web-share';
 import axios from 'axios';
 import { set } from 'firebase/database';
 import sendEmail from '../../utils/sendEmail';
+import DropdownEditMenu from '../../components/DropdownEditMenu';
 
 const getLocaleDateTime = () => {
     let d = new Date();
@@ -36,7 +37,7 @@ const doIHaveSignaledThisPost = (item, user) => {
     return false;
 };
 
-function FeedPost({ item }) {
+function FeedPost({ item, handleBlockUser }) {
     dayjs.extend(LocalizedFormat);
     dayjs.extend(RelativeTime);
 
@@ -252,23 +253,16 @@ function FeedPost({ item }) {
                     </div>
                 </div>
                 {/* Menu button */}
-                {/* <EditMenu align='right' className='relative inline-flex shrink-0'>
+                <DropdownEditMenu align='right' className='relative inline-flex shrink-0'>
                     <li>
-                        <Link className='font-medium text-sm text-primary hover:text-slate-800 flex py-1 px-3' to='#0'>
-                            Option 1
-                        </Link>
+                        <div onClick={() => {
+                            handleBlockUser(item.userId, item.username);
+                        }} className='font-medium text-sm text-primary hover:text-pink-500 cursor-pointer flex py-1 px-3' to='#0'>
+                            Bloquer
+                        </div>
                     </li>
-                    <li>
-                        <Link className='font-medium text-sm text-primary hover:text-slate-800 flex py-1 px-3' to='#0'>
-                            Option 2
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className='font-medium text-sm text-primary hover:text-rose-600 flex py-1 px-3' to='#0'>
-                            Remove
-                        </Link>
-                    </li>
-                </EditMenu> */}
+                    
+                </DropdownEditMenu>
             </header>
             {/* Body */}
             <div className='text-sm text-primary space-y-2 mb-5'>
