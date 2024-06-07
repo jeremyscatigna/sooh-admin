@@ -69,6 +69,20 @@ function Feed() {
             const res = await getDocs(query(collection(db, 'posts'), orderBy('timestamp', 'desc')));
             const posts = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
+            setGetDataLoading(false);
+            setData(posts);
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setGetDataLoading(true);
+
+            const res = await getDocs(query(collection(db, 'posts'), orderBy('timestamp', 'desc')));
+            const posts = res.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
             // Filter out posts from blocked users
             if (user) {
                 const userDoc = await getDocs(query(collection(db, 'users'), where('uid', '==', user.uid)));
@@ -223,6 +237,7 @@ function Feed() {
         });
 
         const filteredPosts = data.filter((post) => post.userId !== userId);
+        setBlockedUsers([...blockedUsers, toBlock]);
         setData(filteredPosts);
     };
 
@@ -234,6 +249,7 @@ function Feed() {
         });
 
         const filteredPosts = data.filter((post) => post.userId !== userId);
+        setBlockedUsers(blockedUsers.filter((user) => user.userId !== userId));
         setData(filteredPosts);
     };
 
