@@ -1131,6 +1131,9 @@ function CreateHappyHour() {
                                 )}
 
                                 <div className='space-x-4'>
+                                    <p className='text-xs text-gray-400'>
+                                        Attention, si le paiement n&apos;est pas effectué, l&apos;Happy Hour sera automatiquement supprimé.
+                                    </p>
                                     <button
                                         className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white mt-4'
                                         onClick={(e) => {
@@ -1142,7 +1145,9 @@ function CreateHappyHour() {
                                         {previsualisation === true ? 'Modifier' : 'Previsualiser'}
                                     </button>
                                     <button
-                                        className='btn bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-full text-white mt-4'
+                                        className={`btn rounded-full text-white mt-4 ${
+                                            isSubscribed === false ? 'bg-gray-400' : 'bg-gradient-to-r from-fuchsia-600 to-pink-600'
+                                        } `}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             handleCreate();
