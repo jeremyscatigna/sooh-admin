@@ -1147,7 +1147,7 @@ function CreateHappyHour() {
                                             e.stopPropagation();
                                             handleCreate();
                                         }}
-                                        disabled={!isSubscribed}
+                                        disabled={isSubscribed === false}
                                     >
                                         <Check className='mr-2' />
                                         {loading ? 'Chargement...' : 'Créer'}
